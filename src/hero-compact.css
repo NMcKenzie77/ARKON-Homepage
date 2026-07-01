@@ -1,0 +1,143 @@
+/* Second compact pass after reviewing first live screenshot. */
+
+.hero {
+  min-height: auto;
+  padding-top: 104px;
+  padding-bottom: 42px;
+}
+
+.hero-inner {
+  grid-template-columns: minmax(0, 0.92fr) minmax(380px, 0.82fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.hero-copy {
+  padding-top: 18px;
+}
+
+.hero-copy h1 {
+  max-width: 650px;
+  font-size: clamp(2.35rem, 4.55vw, 4.45rem);
+  line-height: 0.98;
+  letter-spacing: -0.058em;
+}
+
+.hero-subtitle {
+  max-width: 650px;
+  margin-top: 18px;
+  font-size: clamp(0.96rem, 1.08vw, 1.06rem);
+  line-height: 1.55;
+}
+
+.hero-actions {
+  margin-top: 22px;
+}
+
+.proof-line {
+  margin-top: 20px;
+}
+
+.hero-product {
+  padding-top: 56px;
+}
+
+.flow-panel {
+  max-width: 520px;
+  margin-left: auto;
+  padding: 16px;
+  border-radius: 25px;
+}
+
+.customer-card {
+  min-height: 108px;
+  padding: 16px;
+  border-radius: 20px;
+}
+
+.customer-card h3 {
+  font-size: clamp(1.18rem, 1.85vw, 1.58rem);
+  max-width: 330px;
+}
+
+.customer-card p {
+  font-size: 0.72rem;
+}
+
+.customer-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 17px;
+}
+
+.panel-topline {
+  font-size: 0.78rem;
+  margin-bottom: 12px;
+}
+
+.flow-detail {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 12px 0;
+}
+
+.context-strip {
+  padding: 10px 12px;
+}
+
+.context-strip strong {
+  font-size: 0.78rem;
+}
+
+.flow-timeline {
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.timeline-step {
+  padding: 8px 11px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+}
+
+.orb {
+  width: 280px;
+  height: 280px;
+  opacity: 0.2;
+}
+
+.grid-glow {
+  opacity: 0.2;
+}
+
+@media (max-width: 1080px) {
+  .hero-product {
+    padding-top: 0;
+  }
+
+  .flow-panel {
+    max-width: none;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 780px) {
+  .hero {
+    padding-top: 94px;
+    padding-bottom: 38px;
+  }
+
+  .hero-copy {
+    padding-top: 0;
+  }
+
+  .hero-copy h1 {
+    max-width: 100%;
+    font-size: clamp(2.1rem, 10.5vw, 3.15rem);
+    letter-spacing: -0.05em;
+  }
+
+  .hero-product {
+    padding-top: 0;
+  }
+}
