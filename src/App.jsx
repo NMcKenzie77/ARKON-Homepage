@@ -126,8 +126,8 @@ function Hero() {
           </p>
 
           <div className="hero-actions">
-            <a className="primary-button" href="#solutions">Choose your business type</a>
-            <a className="secondary-button" href="#how">See how it works</a>
+            <a className="primary-button" href="#how">See how it works</a>
+            <a className="secondary-button" href="#solutions">Choose your business type</a>
           </div>
 
           <div className="proof-line" aria-label="Homepage proof points">
