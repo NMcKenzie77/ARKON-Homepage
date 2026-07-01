@@ -34,9 +34,9 @@ function Header() {
 
       <nav className="desktop-nav" aria-label="Primary navigation">
         <a href="#how">How it works</a>
+        <a href="#voice">Your voice</a>
         <a href="#roles">Role views</a>
         <a href="#coverage">Coverage</a>
-        <a href="#solutions">Solutions</a>
       </nav>
 
       <a className="nav-cta" href="#demo">Book a demo</a>
@@ -59,7 +59,7 @@ function FlowPanel() {
     <div className="flow-panel" aria-label="Animated after-hours customer flow">
       <div className="panel-topline">
         <span className="live-dot" />
-        Live operating coverage
+        Responding in your business voice
         <strong>{step.time}</strong>
       </div>
 
@@ -106,24 +106,24 @@ function Hero() {
 
       <div className="hero-inner">
         <div className="hero-copy" data-reveal>
-          <p className="eyebrow">Role-specific operational clarity</p>
+          <p className="eyebrow">Calls. Context. Your voice. Clear handoffs.</p>
           <h1>Your business runs better when everyone knows what needs their attention.</h1>
           <p className="hero-subtitle">
-            ARKON gives every role a clearer view of the day — so calls, messages,
-            follow-up, records, documents, and handoffs keep moving without making the owner
-            carry every detail.
+            ARKON remembers the customer, responds the way your business would,
+            and prepares the right person with the context they need — so the owner is not
+            the only one holding the day together.
           </p>
 
           <div className="hero-actions">
             <a className="primary-button" href="#demo">Book a demo</a>
-            <a className="secondary-button" href="#how">See how it works</a>
+            <a className="secondary-button" href="#voice">See the voice layer</a>
           </div>
 
           <div className="proof-line" aria-label="Homepage proof points">
-            <span>Calls</span>
-            <span>Messages</span>
-            <span>Follow-up</span>
-            <span>Handoffs</span>
+            <span>Customer memory</span>
+            <span>Business voice</span>
+            <span>Warm handoffs</span>
+            <span>Role views</span>
             <span>Owner visibility</span>
           </div>
         </div>
@@ -145,13 +145,13 @@ function HowItWorks() {
     },
     {
       number: '02',
-      title: 'The handoff is warm, not overloaded',
-      body: 'The employee sees who is reaching out, what it is about, and what happened last.'
+      title: 'The response sounds like your team',
+      body: 'Replies follow your tone, your standards, your rules, and the way your employees would handle the moment.'
     },
     {
       number: '03',
-      title: 'Each role sees what matters today',
-      body: 'Owners, managers, agents, receptionists, technicians, and admins get the right view of the day.'
+      title: 'The handoff is warm, not overloaded',
+      body: 'The employee sees who is reaching out, what it is about, what was said, and what needs attention next.'
     }
   ];
 
@@ -161,8 +161,8 @@ function HowItWorks() {
         <p className="eyebrow">The business-day system</p>
         <h2>The business remembers the customer before the customer has to repeat themselves.</h2>
         <p>
-          ARKON is not a page full of random automation cards. It is a clearer operating layer for
-          the moments where customer experience, team readiness, and owner visibility meet.
+          ARKON is not a generic answering layer. It learns how the business communicates,
+          keeps the customer context attached, and prepares the person who needs to act next.
         </p>
       </div>
 
@@ -174,6 +174,34 @@ function HowItWorks() {
             <p>{card.body}</p>
           </article>
         ))}
+      </div>
+    </section>
+  );
+}
+
+function VoiceLayer() {
+  return (
+    <section className="section split-section" id="voice">
+      <div className="section-copy" data-reveal>
+        <p className="eyebrow">Your voice, not a generic script</p>
+        <h2>Customers should feel like they are still dealing with your business.</h2>
+        <p>
+          ARKON should respond like the owner, receptionist, agent, manager, or host would:
+          warm when the moment needs warmth, direct when the answer should be direct, and careful
+          when the issue needs a human handoff.
+        </p>
+      </div>
+
+      <div className="role-console voice-console" data-reveal>
+        <div className="role-card">
+          <p className="role-badge">Voice standards</p>
+          <h3>Same standards. Same tone. Clear escalation when needed.</h3>
+          <ul>
+            <li>Uses the business’s preferred greetings, tone, and boundaries.</li>
+            <li>Keeps answers aligned with how employees actually speak to customers.</li>
+            <li>Routes sensitive or urgent issues instead of pretending everything is automated.</li>
+          </ul>
+        </div>
       </div>
     </section>
   );
@@ -263,7 +291,7 @@ function DashboardProof() {
         <div className="metric-row">
           <div><span>Items needing attention</span><strong>4</strong></div>
           <div><span>Warm handoffs ready</span><strong>7</strong></div>
-          <div><span>Owner escalations</span><strong>1</strong></div>
+          <div><span>Voice-matched replies</span><strong>12</strong></div>
         </div>
 
         <div className="dashboard-table">
@@ -330,7 +358,7 @@ function Solutions() {
 }
 
 function Impact() {
-  const items = ['Customers feel remembered', 'Employees feel prepared', 'Owners see what matters', 'Handoffs keep moving'];
+  const items = ['Customers feel remembered', 'Responses sound like the business', 'Employees feel prepared', 'Owners see what matters'];
   return (
     <section className="impact-band" data-reveal>
       <p className="eyebrow">How it feels different</p>
@@ -347,10 +375,10 @@ function DemoCta() {
     <section className="demo-cta" id="demo" data-reveal>
       <div>
         <p className="eyebrow">Build the first homepage experience</p>
-        <h2>Show the business day getting clearer.</h2>
+        <h2>Make the business feel present, even when the owner is not.</h2>
         <p>
-          This first homepage is designed to prove the ARKON idea quickly: premium motion,
-          role-specific clarity, warm handoffs, and a live-feeling product story.
+          ARKON should make customers feel remembered, employees feel prepared, and owners feel
+          confident that the business is responding the way it should.
         </p>
       </div>
       <form className="demo-form" onSubmit={event => event.preventDefault()}>
@@ -390,7 +418,7 @@ function Footer() {
           <small>Systems</small>
         </span>
       </div>
-      <p>© {year} ARKON Systems. Role-specific operational clarity for the business day.</p>
+      <p>© {year} ARKON Systems. Customer memory, business voice, and role-specific clarity.</p>
     </footer>
   );
 }
@@ -404,6 +432,7 @@ export default function App() {
       <main>
         <Hero />
         <HowItWorks />
+        <VoiceLayer />
         <RoleViews />
         <DashboardProof />
         <Coverage />
