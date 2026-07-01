@@ -1,3 +1,58 @@
+.walkthrough-section {
+  padding-top: 40px;
+}
+
+.walkthrough-heading {
+  max-width: 880px;
+}
+
+.walkthrough-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(420px, 1.18fr);
+  gap: 34px;
+  align-items: center;
+}
+
+.walkthrough-copy {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  background: radial-gradient(circle at top left, rgba(103,216,255,0.12), transparent 42%), rgba(255,255,255,0.032);
+}
+
+.walkthrough-copy h3 {
+  margin: 0 0 14px;
+  font-size: clamp(1.65rem, 2.6vw, 2.45rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.walkthrough-copy p,
+.walkthrough-copy li {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.walkthrough-copy ul {
+  display: grid;
+  gap: 10px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.walkthrough-copy li {
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.035);
+}
+
+.walkthrough-product .flow-panel {
+  max-width: none;
+  margin: 0;
+}
+
 .walkthrough-panel {
   display: grid;
   gap: 12px;
@@ -114,14 +169,15 @@
 }
 
 @media (max-width: 1080px) {
+  .walkthrough-layout,
   .vertical-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 780px) {
-  .vertical-grid {
-    grid-template-columns: 1fr;
+  .walkthrough-copy {
+    padding: 24px;
   }
 
   .decision-card {
