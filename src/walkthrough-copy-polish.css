@@ -3,7 +3,7 @@
 }
 
 .walkthrough-heading > .eyebrow::before {
-  content: "How ARKON decides what happens next";
+  content: "How ARKON moves work forward";
   font-size: 0.78rem;
 }
 
@@ -12,7 +12,7 @@
 }
 
 .walkthrough-heading > h2::before {
-  content: "One request. The right next step.";
+  content: "One request. The right action.";
   display: block;
   font-size: clamp(2.1rem, 4vw, 4rem);
   line-height: 0.98;
@@ -24,7 +24,7 @@
 }
 
 .walkthrough-heading > p::before {
-  content: "When something comes in, ARKON checks who it is, what they need, what already happened, and whether the work should be answered, routed, scheduled, prepared, or escalated.";
+  content: "When something comes in, ARKON checks who it is, what they need, what already happened, and what the business rules allow. It handles the repeatable work it can complete, prepares the work that needs a person, and flags anything that needs judgment.";
   display: block;
   font-size: 1rem;
   line-height: 1.68;
@@ -35,7 +35,7 @@
 }
 
 .walkthrough-copy > h3::before {
-  content: "The right roles wake up behind the scenes.";
+  content: "The right roles take the next step.";
   display: block;
   font-size: clamp(1.65rem, 2.6vw, 2.45rem);
   line-height: 1;
@@ -47,7 +47,7 @@
 }
 
 .walkthrough-copy > p::before {
-  content: "The customer sees one clean response. Your team sees the context, owner, and next action before the work falls through the cracks.";
+  content: "ARKON can answer, schedule, follow up, update records, prepare documents, route the handoff, and notify the right person before work falls through the cracks.";
   display: block;
   font-size: 1rem;
   line-height: 1.65;
