@@ -115,10 +115,10 @@ function Hero() {
         <span className="grid-glow" />
       </div>
 
-      <div className="hero-inner hero-inner-simple">
-        <div className="hero-copy" data-reveal>
+      <div className="hero-inner hero-inner-simple" style={{ width: 'min(1120px, 100%)' }}>
+        <div className="hero-copy" data-reveal style={{ maxWidth: '1100px' }}>
           <p className="eyebrow">ARKON Systems</p>
-          <h1>Let your existing team focus<br />on the work only they can do.</h1>
+          <h1 style={{ maxWidth: '1100px', fontSize: 'clamp(2.2rem, 4.25vw, 4rem)', lineHeight: 1.02 }}>Let your existing team focus<br />on the work only they can do.</h1>
           <p className="hero-subtitle">
             ARKON handles the repeatable tasks around calls, messages, follow-ups, scheduling,
             documents, estimates, invoices, and handoffs — so your staff can spend less time
