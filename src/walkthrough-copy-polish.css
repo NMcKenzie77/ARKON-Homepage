@@ -1,0 +1,54 @@
+.walkthrough-heading > .eyebrow {
+  font-size: 0;
+}
+
+.walkthrough-heading > .eyebrow::before {
+  content: "How ARKON decides what happens next";
+  font-size: 0.78rem;
+}
+
+.walkthrough-heading > h2 {
+  font-size: 0;
+}
+
+.walkthrough-heading > h2::before {
+  content: "One request. The right next step.";
+  display: block;
+  font-size: clamp(2.1rem, 4vw, 4rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.walkthrough-heading > p {
+  font-size: 0;
+}
+
+.walkthrough-heading > p::before {
+  content: "When something comes in, ARKON checks who it is, what they need, what already happened, and whether the work should be answered, routed, scheduled, prepared, or escalated.";
+  display: block;
+  font-size: 1rem;
+  line-height: 1.68;
+}
+
+.walkthrough-copy > h3 {
+  font-size: 0;
+}
+
+.walkthrough-copy > h3::before {
+  content: "The right roles wake up behind the scenes.";
+  display: block;
+  font-size: clamp(1.65rem, 2.6vw, 2.45rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.walkthrough-copy > p {
+  font-size: 0;
+}
+
+.walkthrough-copy > p::before {
+  content: "The customer sees one clean response. Your team sees the context, owner, and next action before the work falls through the cracks.";
+  display: block;
+  font-size: 1rem;
+  line-height: 1.65;
+}
