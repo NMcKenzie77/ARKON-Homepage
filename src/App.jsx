@@ -117,12 +117,12 @@ function Hero() {
 
       <div className="hero-inner hero-inner-simple">
         <div className="hero-copy" data-reveal>
-          <p className="eyebrow">Customer memory. Business voice. Clean handoffs.</p>
-          <h1>Stop being the only person who knows what happened.</h1>
+          <p className="eyebrow">One message. The right response. The right handoff.</p>
+          <h1>Your business should know what to do next.</h1>
           <p className="hero-subtitle">
-            When a call, text, email, form, or after-hours request comes in, ARKON checks
-            who it is, what they need, what happened last, and how your team would normally
-            respond — then answers, routes, schedules, or briefs the right person.
+            ARKON checks who is reaching out, what they need, what happened last,
+            and how your team would normally respond — then replies, routes, schedules,
+            or briefs the right person.
           </p>
 
           <div className="hero-actions">
@@ -132,9 +132,10 @@ function Hero() {
 
           <div className="proof-line" aria-label="Homepage proof points">
             <span>Known or new?</span>
-            <span>What do they need?</span>
-            <span>How would we answer?</span>
-            <span>Who needs to know?</span>
+            <span>Need understood</span>
+            <span>Business voice</span>
+            <span>Safe routing</span>
+            <span>Team brief</span>
           </div>
         </div>
       </div>
