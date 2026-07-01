@@ -1,0 +1,38 @@
+.walkthrough-layout,
+.split-section,
+.dashboard-section,
+.demo-cta {
+  align-items: stretch !important;
+}
+
+.walkthrough-copy,
+.walkthrough-product,
+.walkthrough-product .flow-panel,
+.role-console,
+.dashboard-frame,
+.demo-form {
+  height: 100%;
+}
+
+.walkthrough-copy,
+.walkthrough-product .flow-panel,
+.role-console,
+.dashboard-frame {
+  display: flex;
+  flex-direction: column;
+}
+
+.walkthrough-product .flow-panel {
+  justify-content: space-between;
+}
+
+@media (max-width: 1080px) {
+  .walkthrough-copy,
+  .walkthrough-product,
+  .walkthrough-product .flow-panel,
+  .role-console,
+  .dashboard-frame,
+  .demo-form {
+    height: auto;
+  }
+}
