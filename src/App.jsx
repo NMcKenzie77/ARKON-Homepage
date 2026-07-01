@@ -226,33 +226,33 @@ function CoreTeam() {
   const coreTeam = [
     {
       name: 'Naya',
-      role: 'Coordination',
-      copy: 'Keeps the work moving across calls, messages, follow-ups, scheduling, and the next step the business expects.'
+      role: 'Client and guest communication',
+      copy: 'Handles inbound and outbound messages in the owner’s voice, answers questions, coordinates requests, and follows up after Porter or Vera captures a lead.'
     },
     {
       name: 'Vera',
-      role: 'Front Desk',
-      copy: 'Receives calls and messages, gathers what is needed, answers when allowed, and starts the right workflow.'
+      role: 'Voice reception',
+      copy: 'Answers inbound calls, greets callers in the business name, qualifies the caller, gathers key details, and routes the call when a person is needed.'
     },
     {
       name: 'Porter',
-      role: 'Routing',
-      copy: 'Makes sure the right person, file, task, or next step is connected before work gets stuck or forgotten.'
+      role: 'Website leads',
+      copy: 'Sits on the website, answers questions before someone books or asks for service, captures lead details, and hands the warm lead to the business.'
     },
     {
       name: 'Grant',
-      role: 'Owner Brief',
-      copy: 'Keeps the owner or manager updated on what happened, what was handled, and what needs attention.'
+      role: 'Owner intelligence',
+      copy: 'Reads across the active team, spots patterns, surfaces risks, and gives the owner the digest of what matters, what needs action, and what can be ignored.'
     },
     {
       name: 'Marcus',
-      role: 'Memory',
-      copy: 'Checks history, notes, prior conversations, records, and what already happened so the next step has context.'
+      role: 'CRM and relationship memory',
+      copy: 'Stores contact records, interaction history, pipeline stages, notes, tags, follow-up reminders, and relationship context for the rest of the team.'
     },
     {
       name: 'Iris',
-      role: 'Understanding',
-      copy: 'Figures out what the person needs and whether it is routine, urgent, sensitive, or ready for a person.'
+      role: 'Inbox triage',
+      copy: 'Reads incoming email, scores urgency and importance, surfaces a prioritized inbox, sends urgent alerts, and flags new client or lead inquiries to Marcus.'
     }
   ];
 
@@ -263,7 +263,7 @@ function CoreTeam() {
         <h2>Not one chatbot trying to do everything.</h2>
         <p>
           ARKON is organized around trained roles. Naya, Vera, Porter, Grant, Marcus, and Iris
-          cover the work every business needs before the specialized team is added for your business type.
+          handle communication, calls, website leads, owner visibility, relationship history, and inbox triage.
         </p>
       </div>
 
