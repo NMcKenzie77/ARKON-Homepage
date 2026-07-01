@@ -182,18 +182,18 @@ function HowItWorks() {
   const cards = [
     {
       number: '01',
-      title: 'It checks who the person is',
-      body: 'Known customer, new lead, vendor, guest, client, tenant, prospect — ARKON does not treat every message the same.'
+      title: 'Know who is reaching out',
+      body: 'ARKON recognizes whether it is a customer, lead, vendor, guest, client, tenant, or prospect. The message is handled with the right context from the start.'
     },
     {
       number: '02',
-      title: 'It decides what should happen next',
-      body: 'Answer, ask a follow-up, schedule, route, escalate, or brief the right person depending on context and risk.'
+      title: 'Move the work forward',
+      body: 'ARKON can answer, follow up, schedule, route, prepare, or flag the issue based on what the business allows and what the situation needs.'
     },
     {
       number: '03',
-      title: 'It sounds like the business',
-      body: 'The response follows the business’s tone, standards, rules, and employee style instead of a generic bot voice.'
+      title: 'Keep it sounding like your business',
+      body: 'Messages follow your tone, standards, and rules, so customers feel like they are still dealing with your team.'
     }
   ];
 
