@@ -117,12 +117,12 @@ function Hero() {
 
       <div className="hero-inner hero-inner-simple">
         <div className="hero-copy" data-reveal>
-          <p className="eyebrow">One message. The right response. The right handoff.</p>
-          <h1>Your business should know what to do next.</h1>
+          <p className="eyebrow">ARKON Systems</p>
+          <h1>Let your existing team focus on the work only they can do.</h1>
           <p className="hero-subtitle">
-            ARKON checks who is reaching out, what they need, what happened last,
-            and how your team would normally respond — then replies, routes, schedules,
-            or briefs the right person.
+            ARKON handles the repeatable tasks around calls, messages, follow-ups, scheduling,
+            documents, estimates, invoices, and handoffs — so your staff can spend less time
+            chasing details and more time moving the business forward.
           </p>
 
           <div className="hero-actions">
@@ -131,11 +131,11 @@ function Hero() {
           </div>
 
           <div className="proof-line" aria-label="Homepage proof points">
-            <span>Known or new?</span>
-            <span>Need understood</span>
-            <span>Business voice</span>
-            <span>Safe routing</span>
-            <span>Team brief</span>
+            <span>Repeatable tasks handled</span>
+            <span>Team stays focused</span>
+            <span>Follow-up covered</span>
+            <span>Handoffs prepared</span>
+            <span>Owner visibility</span>
           </div>
         </div>
       </div>
@@ -147,21 +147,21 @@ function WalkthroughSection() {
   return (
     <section className="section walkthrough-section" id="how">
       <div className="section-heading walkthrough-heading" data-reveal>
-        <p className="eyebrow">What happens after something comes in</p>
-        <h2>One message becomes a decision, a response, and a handoff.</h2>
+        <p className="eyebrow">How ARKON moves work forward</p>
+        <h2>One request. The right action.</h2>
         <p>
-          The hero gives the owner the idea. This is the proof: ARKON does not just answer.
-          It checks context, decides the safest next step, uses the business voice, and briefs
-          the person responsible.
+          When something comes in, ARKON checks who it is, what they need, what already happened,
+          and what the business rules allow. ARKON handles the repeatable work it can complete,
+          prepares anything that needs a person, and flags anything that needs judgment.
         </p>
       </div>
 
       <div className="walkthrough-layout">
         <div className="walkthrough-copy" data-reveal>
-          <h3>It is not one bot answering everything.</h3>
+          <h3>The right roles take the next step.</h3>
           <p>
-            The customer experiences one smooth response. Behind the scenes, the right ARKON
-            roles wake up for memory, intent, safety, voice, scheduling, and owner visibility.
+            ARKON can answer, schedule, follow up, update records, prepare documents, route the
+            handoff, and notify the right person before work falls through the cracks.
           </p>
           <ul>
             <li>Known contact? Pull the history and last touchpoint.</li>
