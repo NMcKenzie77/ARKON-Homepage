@@ -121,7 +121,7 @@ function Hero() {
           <h1 style={{ maxWidth: '1100px', fontSize: 'clamp(2.2rem, 4.25vw, 4rem)', lineHeight: 1.02 }}>Let your existing team focus<br />on the work only they can do.</h1>
           <p className="hero-subtitle">
             ARKON handles the repeatable tasks around calls, messages, follow-ups, scheduling,
-            documents, estimates, invoices, and handoffs — so your staff can spend less time
+            documents, estimates, invoices, and handoffs. Your staff can spend less time
             chasing details and more time moving the business forward.
           </p>
 
