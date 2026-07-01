@@ -108,38 +108,68 @@ function FlowPanel() {
 
 function Hero() {
   return (
-    <section className="hero" id="top">
+    <section className="hero hero-simple" id="top">
       <div className="hero-background" aria-hidden="true">
         <span className="orb orb-one" />
         <span className="orb orb-two" />
         <span className="grid-glow" />
       </div>
 
-      <div className="hero-inner">
+      <div className="hero-inner hero-inner-simple">
         <div className="hero-copy" data-reveal>
-          <p className="eyebrow">One message. The right response. The right handoff.</p>
-          <h1>Your business should know what to do next.</h1>
+          <p className="eyebrow">Customer memory. Business voice. Clean handoffs.</p>
+          <h1>Stop being the only person who knows what happened.</h1>
           <p className="hero-subtitle">
-            ARKON checks who is reaching out, what they need, what happened last,
-            and how your team would normally respond — then replies, routes, schedules,
-            or briefs the right person.
+            When a call, text, email, form, or after-hours request comes in, ARKON checks
+            who it is, what they need, what happened last, and how your team would normally
+            respond — then answers, routes, schedules, or briefs the right person.
           </p>
 
           <div className="hero-actions">
             <a className="primary-button" href="#solutions">Choose your business type</a>
-            <a className="secondary-button" href="#how">Watch the walkthrough</a>
+            <a className="secondary-button" href="#how">See how it works</a>
           </div>
 
           <div className="proof-line" aria-label="Homepage proof points">
             <span>Known or new?</span>
-            <span>Need understood</span>
-            <span>Business voice</span>
-            <span>Safe routing</span>
-            <span>Team brief</span>
+            <span>What do they need?</span>
+            <span>How would we answer?</span>
+            <span>Who needs to know?</span>
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
 
-        <div data-reveal className="hero-product">
+function WalkthroughSection() {
+  return (
+    <section className="section walkthrough-section" id="how">
+      <div className="section-heading walkthrough-heading" data-reveal>
+        <p className="eyebrow">What happens after something comes in</p>
+        <h2>One message becomes a decision, a response, and a handoff.</h2>
+        <p>
+          The hero gives the owner the idea. This is the proof: ARKON does not just answer.
+          It checks context, decides the safest next step, uses the business voice, and briefs
+          the person responsible.
+        </p>
+      </div>
+
+      <div className="walkthrough-layout">
+        <div className="walkthrough-copy" data-reveal>
+          <h3>It is not one bot answering everything.</h3>
+          <p>
+            The customer experiences one smooth response. Behind the scenes, the right ARKON
+            roles wake up for memory, intent, safety, voice, scheduling, and owner visibility.
+          </p>
+          <ul>
+            <li>Known contact? Pull the history and last touchpoint.</li>
+            <li>Unknown contact? Capture only what the business needs.</li>
+            <li>Sensitive issue? Route it instead of pretending to solve it.</li>
+          </ul>
+        </div>
+
+        <div data-reveal className="walkthrough-product">
           <FlowPanel />
         </div>
       </div>
@@ -167,13 +197,13 @@ function HowItWorks() {
   ];
 
   return (
-    <section className="section" id="how">
+    <section className="section">
       <div className="section-heading" data-reveal>
         <p className="eyebrow">The universal ARKON idea</p>
-        <h2>Every incoming message becomes a decision, a response, and a handoff.</h2>
+        <h2>The category does not matter yet. Every owner understands the same problem.</h2>
         <p>
-          The category does not matter yet. Every owner understands the same problem:
-          customers reach out, context gets lost, employees need direction, and the owner becomes the safety net.
+          Customers reach out, context gets lost, employees need direction, and the owner becomes
+          the safety net. ARKON turns those moments into organized action.
         </p>
       </div>
 
@@ -197,8 +227,8 @@ function Solutions() {
         <p className="eyebrow">Choose your business type</p>
         <h2>Start with the idea. Then go deeper in your vertical.</h2>
         <p>
-          The homepage shows the operating logic. Each vertical page can show the exact calls,
-          messages, handoffs, documents, and role views for that kind of business.
+          Each vertical page can show the exact calls, messages, documents, customers, employees,
+          and owner view for that kind of business.
         </p>
       </div>
 
@@ -448,6 +478,7 @@ export default function App() {
       <Header />
       <main>
         <Hero />
+        <WalkthroughSection />
         <HowItWorks />
         <Solutions />
         <VoiceLayer />
