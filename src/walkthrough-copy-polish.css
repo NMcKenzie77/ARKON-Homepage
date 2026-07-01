@@ -24,7 +24,7 @@
 }
 
 .walkthrough-heading > p::before {
-  content: "When something comes in, ARKON checks who it is, what they need, what already happened, and what the business rules allow. It handles the repeatable work it can complete, prepares the work that needs a person, and flags anything that needs judgment.";
+  content: "When something comes in, ARKON checks who it is, what they need, what already happened, and what the business rules allow. ARKON handles the repeatable work it can complete, prepares anything that needs a person, and flags anything that needs judgment.";
   display: block;
   font-size: 1rem;
   line-height: 1.68;
