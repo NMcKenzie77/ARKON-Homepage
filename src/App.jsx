@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { coverageLanes, dashboardRows, roleViews, solutions, workflowSteps } from './data.js';
+import { agentRoster, coverageLanes, dashboardRows, roleViews, solutions, workflowSteps } from './data.js';
 
 function useReveal() {
   useEffect(() => {
@@ -34,8 +34,8 @@ function Header() {
 
       <nav className="desktop-nav" aria-label="Primary navigation">
         <a href="#how">How it works</a>
+        <a href="#solutions">Verticals</a>
         <a href="#voice">Your voice</a>
-        <a href="#roles">Role views</a>
         <a href="#coverage">Coverage</a>
       </nav>
 
@@ -47,35 +47,46 @@ function Header() {
 function FlowPanel() {
   const [active, setActive] = useState(0);
   const step = workflowSteps[active];
+  const activeAgents = new Set(step.agents);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
       setActive(index => (index + 1) % workflowSteps.length);
-    }, 3200);
+    }, 3300);
     return () => window.clearInterval(timer);
   }, []);
 
   return (
-    <div className="flow-panel" aria-label="Animated after-hours customer flow">
+    <div className="flow-panel walkthrough-panel" aria-label="Universal ARKON message walkthrough">
       <div className="panel-topline">
         <span className="live-dot" />
-        Responding in your business voice
+        How ARKON handles one message
         <strong>{step.time}</strong>
       </div>
 
-      <div className="customer-card">
+      <div className="incoming-message">
+        <span>Incoming message</span>
+        <p>“Hi, I reached out last week. Can someone follow up with me tomorrow?”</p>
+      </div>
+
+      <div className="decision-card">
+        <div className="decision-marker">{step.marker}</div>
         <div>
           <p>{step.eyebrow}</p>
           <h3>{step.title}</h3>
+          <span>{step.detail}</span>
         </div>
-        <span className="customer-avatar">MR</span>
       </div>
 
-      <p className="flow-detail">{step.detail}</p>
-
       <div className="context-strip">
-        <span>Context</span>
+        <span>Decision note</span>
         <strong>{step.meta}</strong>
+      </div>
+
+      <div className="agent-rail" aria-label="Active ARKON roles">
+        {agentRoster.map(agent => (
+          <span className={activeAgents.has(agent) ? 'active' : ''} key={agent}>{agent}</span>
+        ))}
       </div>
 
       <div className="flow-timeline" role="list" aria-label="Flow timeline">
@@ -86,8 +97,8 @@ function FlowPanel() {
             onClick={() => setActive(index)}
             type="button"
           >
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            {item.eyebrow}
+            <span>{item.marker}</span>
+            {item.time}
           </button>
         ))}
       </div>
@@ -106,25 +117,25 @@ function Hero() {
 
       <div className="hero-inner">
         <div className="hero-copy" data-reveal>
-          <p className="eyebrow">Calls. Context. Your voice. Clear handoffs.</p>
-          <h1>Your business runs better when everyone knows what needs their attention.</h1>
+          <p className="eyebrow">One message. The right response. The right handoff.</p>
+          <h1>Your business should know what to do next.</h1>
           <p className="hero-subtitle">
-            ARKON remembers the customer, responds the way your business would,
-            and prepares the right person with the context they need — so the owner is not
-            the only one holding the day together.
+            ARKON checks who is reaching out, what they need, what happened last,
+            and how your team would normally respond — then replies, routes, schedules,
+            or briefs the right person.
           </p>
 
           <div className="hero-actions">
-            <a className="primary-button" href="#demo">Book a demo</a>
-            <a className="secondary-button" href="#voice">See the voice layer</a>
+            <a className="primary-button" href="#solutions">Choose your business type</a>
+            <a className="secondary-button" href="#how">Watch the walkthrough</a>
           </div>
 
           <div className="proof-line" aria-label="Homepage proof points">
-            <span>Customer memory</span>
+            <span>Known or new?</span>
+            <span>Need understood</span>
             <span>Business voice</span>
-            <span>Warm handoffs</span>
-            <span>Role views</span>
-            <span>Owner visibility</span>
+            <span>Safe routing</span>
+            <span>Team brief</span>
           </div>
         </div>
 
@@ -140,29 +151,29 @@ function HowItWorks() {
   const cards = [
     {
       number: '01',
-      title: 'The business remembers the customer',
-      body: 'ARKON connects the call, message, record, and last meaningful touchpoint before anyone has to start over.'
+      title: 'It checks who the person is',
+      body: 'Known customer, new lead, vendor, guest, client, tenant, prospect — ARKON does not treat every message the same.'
     },
     {
       number: '02',
-      title: 'The response sounds like your team',
-      body: 'Replies follow your tone, your standards, your rules, and the way your employees would handle the moment.'
+      title: 'It decides what should happen next',
+      body: 'Answer, ask a follow-up, schedule, route, escalate, or brief the right person depending on context and risk.'
     },
     {
       number: '03',
-      title: 'The handoff is warm, not overloaded',
-      body: 'The employee sees who is reaching out, what it is about, what was said, and what needs attention next.'
+      title: 'It sounds like the business',
+      body: 'The response follows the business’s tone, standards, rules, and employee style instead of a generic bot voice.'
     }
   ];
 
   return (
     <section className="section" id="how">
       <div className="section-heading" data-reveal>
-        <p className="eyebrow">The business-day system</p>
-        <h2>The business remembers the customer before the customer has to repeat themselves.</h2>
+        <p className="eyebrow">The universal ARKON idea</p>
+        <h2>Every incoming message becomes a decision, a response, and a handoff.</h2>
         <p>
-          ARKON is not a generic answering layer. It learns how the business communicates,
-          keeps the customer context attached, and prepares the person who needs to act next.
+          The category does not matter yet. Every owner understands the same problem:
+          customers reach out, context gets lost, employees need direction, and the owner becomes the safety net.
         </p>
       </div>
 
@@ -173,6 +184,32 @@ function HowItWorks() {
             <h3>{card.title}</h3>
             <p>{card.body}</p>
           </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Solutions() {
+  return (
+    <section className="section solutions-section" id="solutions">
+      <div className="section-heading" data-reveal>
+        <p className="eyebrow">Choose your business type</p>
+        <h2>Start with the idea. Then go deeper in your vertical.</h2>
+        <p>
+          The homepage shows the operating logic. Each vertical page can show the exact calls,
+          messages, handoffs, documents, and role views for that kind of business.
+        </p>
+      </div>
+
+      <div className="solution-grid vertical-grid">
+        {solutions.map(solution => (
+          <a className="solution-card vertical-card" href={solution.href} key={solution.name} data-reveal>
+            <span>{solution.name}</span>
+            <h3>{solution.title}</h3>
+            <p>{solution.details}</p>
+            <strong>Explore this vertical →</strong>
+          </a>
         ))}
       </div>
     </section>
@@ -271,11 +308,11 @@ function DashboardProof() {
   return (
     <section className="section dashboard-section" data-reveal>
       <div className="dashboard-copy">
-        <p className="eyebrow">Dashboard proof</p>
-        <h2>The owner sees what needs attention without carrying every detail.</h2>
+        <p className="eyebrow">Owner visibility</p>
+        <h2>The owner sees what happened without carrying every detail.</h2>
         <p>
-          This preview keeps the proof focused: the business day is not a mystery,
-          the handoffs are visible, and every priority has an owner.
+          The point is not another dashboard. The point is that messages become organized actions,
+          owners see what matters, and employees start with context.
         </p>
       </div>
 
@@ -289,9 +326,9 @@ function DashboardProof() {
         </div>
 
         <div className="metric-row">
-          <div><span>Items needing attention</span><strong>4</strong></div>
+          <div><span>Messages classified</span><strong>18</strong></div>
           <div><span>Warm handoffs ready</span><strong>7</strong></div>
-          <div><span>Voice-matched replies</span><strong>12</strong></div>
+          <div><span>Owner escalations</span><strong>2</strong></div>
         </div>
 
         <div className="dashboard-table">
@@ -313,11 +350,11 @@ function Coverage() {
   return (
     <section className="section" id="coverage">
       <div className="section-heading" data-reveal>
-        <p className="eyebrow">Amplify the existing team</p>
-        <h2>Coverage lanes, not a bot marketplace.</h2>
+        <p className="eyebrow">The operating team behind the walkthrough</p>
+        <h2>Not one bot answering everything. The right roles wake up.</h2>
         <p>
-          ARKON organizes the operating coverage around work that already exists in the business.
-          The names support the system without making the homepage feel like a wall of agents.
+          The customer experiences one smooth response. Behind the scenes, ARKON activates the
+          roles needed for memory, voice, scheduling, preparation, routing, or owner visibility.
         </p>
       </div>
 
@@ -336,33 +373,12 @@ function Coverage() {
   );
 }
 
-function Solutions() {
-  return (
-    <section className="section" id="solutions">
-      <div className="section-heading" data-reveal>
-        <p className="eyebrow">Solutions</p>
-        <h2>Start with focused business lanes. Expand from there.</h2>
-      </div>
-
-      <div className="solution-grid">
-        {solutions.map(solution => (
-          <article className="solution-card" key={solution.name} data-reveal>
-            <span>{solution.name}</span>
-            <h3>{solution.title}</h3>
-            <p>{solution.details}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function Impact() {
-  const items = ['Customers feel remembered', 'Responses sound like the business', 'Employees feel prepared', 'Owners see what matters'];
+  const items = ['Customers feel remembered', 'Responses sound like the business', 'Employees know what to do', 'Owners see what matters'];
   return (
     <section className="impact-band" data-reveal>
       <p className="eyebrow">How it feels different</p>
-      <h2>The business becomes more aware, responsive, prepared, and coordinated.</h2>
+      <h2>The business feels present, prepared, and coordinated — even when the owner is not.</h2>
       <div className="impact-list">
         {items.map(item => <span key={item}>{item}</span>)}
       </div>
@@ -374,11 +390,11 @@ function DemoCta() {
   return (
     <section className="demo-cta" id="demo" data-reveal>
       <div>
-        <p className="eyebrow">Build the first homepage experience</p>
-        <h2>Make the business feel present, even when the owner is not.</h2>
+        <p className="eyebrow">Go deeper by vertical</p>
+        <h2>Pick the business lane, then show the exact workflow.</h2>
         <p>
-          ARKON should make customers feel remembered, employees feel prepared, and owners feel
-          confident that the business is responding the way it should.
+          The homepage gives the owner the idea. The vertical page should show the actual
+          calls, messages, documents, customers, employees, and owner view for their industry.
         </p>
       </div>
       <form className="demo-form" onSubmit={event => event.preventDefault()}>
@@ -397,7 +413,8 @@ function DemoCta() {
             <option>Real estate</option>
             <option>Insurance</option>
             <option>Short-term rentals</option>
-            <option>Other service business</option>
+            <option>Home services</option>
+            <option>Professional services</option>
           </select>
         </label>
         <button className="primary-button" type="submit">Request demo</button>
@@ -418,7 +435,7 @@ function Footer() {
           <small>Systems</small>
         </span>
       </div>
-      <p>© {year} ARKON Systems. Customer memory, business voice, and role-specific clarity.</p>
+      <p>© {year} ARKON Systems. Customer memory, business voice, and role-specific handoffs.</p>
     </footer>
   );
 }
@@ -432,11 +449,11 @@ export default function App() {
       <main>
         <Hero />
         <HowItWorks />
+        <Solutions />
         <VoiceLayer />
         <RoleViews />
         <DashboardProof />
         <Coverage />
-        <Solutions />
         <Impact />
         <DemoCta />
       </main>
