@@ -118,7 +118,7 @@ function Hero() {
       <div className="hero-inner hero-inner-simple">
         <div className="hero-copy" data-reveal>
           <p className="eyebrow">ARKON Systems</p>
-          <h1>Let your existing team focus on the work only they can do.</h1>
+          <h1>Let your existing team focus<br />on the work only they can do.</h1>
           <p className="hero-subtitle">
             ARKON handles the repeatable tasks around calls, messages, follow-ups, scheduling,
             documents, estimates, invoices, and handoffs — so your staff can spend less time
