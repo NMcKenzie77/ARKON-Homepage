@@ -34,7 +34,7 @@ function Header() {
 
       <nav className="desktop-nav" aria-label="Primary navigation">
         <a href="#how">How it works</a>
-        <a href="#solutions">Verticals</a>
+        <a href="#solutions">Business types</a>
         <a href="#voice">Your voice</a>
         <a href="#coverage">Coverage</a>
       </nav>
@@ -198,10 +198,10 @@ function HowItWorks() {
   ];
 
   return (
-    <section className="section">
+    <section className="section idea-section">
       <div className="section-heading" data-reveal>
         <p className="eyebrow">The universal ARKON idea</p>
-        <h2>The category does not matter yet. Every owner understands the same problem.</h2>
+        <h2>The kind of business does not matter yet. Every owner understands the same problem.</h2>
         <p>
           Customers reach out, context gets lost, employees need direction, and the owner becomes
           the safety net. ARKON turns those moments into organized action.
@@ -226,9 +226,9 @@ function Solutions() {
     <section className="section solutions-section" id="solutions">
       <div className="section-heading" data-reveal>
         <p className="eyebrow">Choose your business type</p>
-        <h2>Start with the idea. Then go deeper in your vertical.</h2>
+        <h2>Start with the idea. Then choose your kind of business.</h2>
         <p>
-          Each vertical page can show the exact calls, messages, documents, customers, employees,
+          Each business page shows the exact calls, messages, documents, customers, staff,
           and owner view for that kind of business.
         </p>
       </div>
@@ -239,7 +239,7 @@ function Solutions() {
             <span>{solution.name}</span>
             <h3>{solution.title}</h3>
             <p>{solution.details}</p>
-            <strong>Explore this vertical →</strong>
+            <strong>See this business type →</strong>
           </a>
         ))}
       </div>
@@ -421,11 +421,11 @@ function DemoCta() {
   return (
     <section className="demo-cta" id="demo" data-reveal>
       <div>
-        <p className="eyebrow">Go deeper by vertical</p>
-        <h2>Pick the business lane, then show the exact workflow.</h2>
+        <p className="eyebrow">Go deeper by business type</p>
+        <h2>Pick the kind of business, then show the exact workflow.</h2>
         <p>
-          The homepage gives the owner the idea. The vertical page should show the actual
-          calls, messages, documents, customers, employees, and owner view for their industry.
+          The homepage gives the owner the idea. The business page should show the actual
+          calls, messages, documents, customers, staff, and owner view for their industry.
         </p>
       </div>
       <form className="demo-form" onSubmit={event => event.preventDefault()}>
