@@ -26,11 +26,13 @@
   justify-content: space-between;
 }
 
-.walkthrough-section {
+.walkthrough-section,
+.idea-section {
   padding-bottom: 34px !important;
 }
 
-.walkthrough-section + .section {
+.walkthrough-section + .section,
+.solutions-section {
   padding-top: 34px !important;
 }
 
@@ -44,11 +46,13 @@
     height: auto;
   }
 
-  .walkthrough-section {
+  .walkthrough-section,
+  .idea-section {
     padding-bottom: 42px !important;
   }
 
-  .walkthrough-section + .section {
+  .walkthrough-section + .section,
+  .solutions-section {
     padding-top: 42px !important;
   }
 }
