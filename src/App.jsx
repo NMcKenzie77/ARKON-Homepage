@@ -200,11 +200,12 @@ function HowItWorks() {
   return (
     <section className="section idea-section">
       <div className="section-heading" data-reveal>
-        <p className="eyebrow">The universal ARKON idea</p>
-        <h2>The kind of business does not matter yet. Every owner understands the same problem.</h2>
+        <p className="eyebrow">The ARKON idea</p>
+        <h2>Every business has work that gets dropped when people get busy.</h2>
         <p>
-          Customers reach out, context gets lost, employees need direction, and the owner becomes
-          the safety net. ARKON turns those moments into organized action.
+          Customers call. Messages pile up. Follow-ups get missed. Details live in someone’s head.
+          ARKON handles the repeatable work, keeps the right people updated, and helps the day keep
+          moving without everything falling back on the owner.
         </p>
       </div>
 
