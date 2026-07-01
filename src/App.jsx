@@ -34,9 +34,9 @@ function Header() {
 
       <nav className="desktop-nav" aria-label="Primary navigation">
         <a href="#how">How it works</a>
+        <a href="#team">Core team</a>
         <a href="#solutions">Business types</a>
         <a href="#voice">Your voice</a>
-        <a href="#coverage">Coverage</a>
       </nav>
 
       <a className="nav-cta" href="#demo">Book a demo</a>
@@ -215,6 +215,64 @@ function HowItWorks() {
             <span>{card.number}</span>
             <h3>{card.title}</h3>
             <p>{card.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function CoreTeam() {
+  const coreTeam = [
+    {
+      name: 'Naya',
+      role: 'Coordination',
+      copy: 'Keeps the work moving across calls, messages, follow-ups, scheduling, and the next step the business expects.'
+    },
+    {
+      name: 'Vera',
+      role: 'Front Desk',
+      copy: 'Receives calls and messages, gathers what is needed, answers when allowed, and starts the right workflow.'
+    },
+    {
+      name: 'Porter',
+      role: 'Routing',
+      copy: 'Makes sure the right person, file, task, or next step is connected before work gets stuck or forgotten.'
+    },
+    {
+      name: 'Grant',
+      role: 'Owner Brief',
+      copy: 'Keeps the owner or manager updated on what happened, what was handled, and what needs attention.'
+    },
+    {
+      name: 'Marcus',
+      role: 'Memory',
+      copy: 'Checks history, notes, prior conversations, records, and what already happened so the next step has context.'
+    },
+    {
+      name: 'Iris',
+      role: 'Understanding',
+      copy: 'Figures out what the person needs and whether it is routine, urgent, sensitive, or ready for a person.'
+    }
+  ];
+
+  return (
+    <section className="section core-team-section" id="team">
+      <div className="section-heading" data-reveal>
+        <p className="eyebrow">Meet the core team</p>
+        <h2>Not one chatbot trying to do everything.</h2>
+        <p>
+          ARKON is organized around trained roles. Naya, Vera, Porter, Grant, Marcus, and Iris
+          cover the work every business needs before the specialized team is added for your business type.
+        </p>
+      </div>
+
+      <div className="coverage-grid core-team-grid">
+        {coreTeam.map(member => (
+          <article className="coverage-card core-team-card" key={member.name} data-reveal>
+            <span className="role-badge">{member.role}</span>
+            <h3>{member.name}</h3>
+            <p>{member.copy}</p>
           </article>
         ))}
       </div>
@@ -482,6 +540,7 @@ export default function App() {
         <Hero />
         <WalkthroughSection />
         <HowItWorks />
+        <CoreTeam />
         <Solutions />
         <VoiceLayer />
         <RoleViews />
