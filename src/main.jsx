@@ -5,5 +5,6 @@ import './styles.css';
 import './hero-compact.css';
 import './walkthrough.css';
 import './hero-shrink.css';
+import './background-fix.css';
 const container = document.getElementById('root');
 createRoot(container).render(<React.StrictMode><App /></React.StrictMode>);
