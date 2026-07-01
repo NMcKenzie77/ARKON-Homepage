@@ -1,0 +1,73 @@
+.hero-copy > .eyebrow {
+  font-size: 0;
+}
+
+.hero-copy > .eyebrow::before {
+  content: "Customer memory. Business voice. Team handoffs.";
+  font-size: 0.78rem;
+}
+
+.hero-copy > h1 {
+  font-size: 0;
+}
+
+.hero-copy > h1::before {
+  content: "Amplify the team you already have.";
+  display: block;
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: clamp(2.35rem, 4.9vw, 4.65rem);
+  line-height: 1;
+  letter-spacing: -0.058em;
+}
+
+.hero-copy > .hero-subtitle {
+  font-size: 0;
+}
+
+.hero-copy > .hero-subtitle::before {
+  content: "ARKON gives your existing team the context, voice, and next steps they need when calls, messages, follow-ups, and after-hours requests come in — so the business responds like itself and everyone knows what needs attention.";
+  display: block;
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: clamp(0.96rem, 1.08vw, 1.06rem);
+  line-height: 1.55;
+}
+
+.proof-line span:nth-child(1) {
+  font-size: 0;
+}
+
+.proof-line span:nth-child(1)::before {
+  content: "Existing team";
+  font-size: 0.84rem;
+}
+
+.proof-line span:nth-child(2) {
+  font-size: 0;
+}
+
+.proof-line span:nth-child(2)::before {
+  content: "Customer context";
+  font-size: 0.84rem;
+}
+
+.proof-line span:nth-child(5) {
+  font-size: 0;
+}
+
+.proof-line span:nth-child(5)::before {
+  content: "Owner visibility";
+  font-size: 0.84rem;
+}
+
+@media (max-width: 780px) {
+  .hero-copy > h1::before {
+    font-size: clamp(2rem, 9.4vw, 3rem);
+    letter-spacing: -0.048em;
+  }
+
+  .hero-copy > .hero-subtitle::before {
+    font-size: 0.94rem;
+  }
+}
