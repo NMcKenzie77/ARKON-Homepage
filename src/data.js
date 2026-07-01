@@ -1,69 +1,97 @@
 export const workflowSteps = [
   {
-    time: '10:30 PM',
-    eyebrow: 'Incoming call',
-    title: 'Michael Rivera calls after hours',
-    detail: 'ARKON recognizes the customer and keeps the conversation in the same voice your team would use.',
-    meta: 'Last touchpoint: quote follow-up last Thursday'
+    marker: '01',
+    time: 'Message received',
+    eyebrow: 'A customer reaches out',
+    title: 'Message received',
+    detail: '“Hi, I reached out last week. Can someone follow up with me tomorrow?”',
+    meta: 'Works for calls, texts, email, website forms, or app messages',
+    agents: ['VERA']
   },
   {
-    time: '10:31 PM',
-    eyebrow: 'Customer remembered',
-    title: 'The reply sounds like your business',
-    detail: 'The response follows your tone, your standards, your rules, and the way your employees would handle the moment.',
-    meta: 'Voice profile: warm, direct, professional'
+    marker: '02',
+    time: 'Sender checked',
+    eyebrow: 'Known or new?',
+    title: 'Known contact found',
+    detail: 'ARKON checks the phone number, email, name, and relationship history before anyone starts from zero.',
+    meta: 'Last touchpoint attached: reached out last week',
+    agents: ['VERA', 'MARCUS']
   },
   {
-    time: '10:34 PM',
-    eyebrow: 'Handled or routed',
-    title: 'The right next step is captured',
-    detail: 'Questions are answered, urgent issues are escalated, and follow-up is scheduled without sounding like a generic script.',
-    meta: 'No loose end left overnight'
+    marker: '03',
+    time: 'Need understood',
+    eyebrow: 'What are they asking for?',
+    title: 'Follow-up request detected',
+    detail: 'ARKON identifies what they need, how urgent it is, and whether it can safely respond or should route to a person.',
+    meta: 'Normal urgency • no sensitive issue detected',
+    agents: ['IRIS', 'CLARA']
   },
   {
-    time: '7:45 AM',
-    eyebrow: 'Morning brief',
-    title: 'The team sees what happened',
-    detail: 'The employee starts with the customer context, the response history, and what needs attention next.',
-    meta: 'Priority: Review first'
+    marker: '04',
+    time: 'Voice selected',
+    eyebrow: 'How should we sound?',
+    title: 'Business voice selected',
+    detail: 'The reply follows the business’s tone, standards, boundaries, and employee style — not a generic bot script.',
+    meta: 'Warm • direct • professional',
+    agents: ['NAYA']
+  },
+  {
+    marker: '05',
+    time: 'Response path',
+    eyebrow: 'Reply, schedule, or route?',
+    title: 'Response prepared',
+    detail: 'ARKON answers what it can, asks for the right callback timing, or routes the message to the person who owns it.',
+    meta: 'Suggested reply: “Is morning or afternoon better?”',
+    agents: ['NAYA', 'CALEB']
+  },
+  {
+    marker: '06',
+    time: 'Handoff created',
+    eyebrow: 'Who needs to know?',
+    title: 'The right person is briefed',
+    detail: 'The employee sees who reached out, what happened last, what was said, and what needs attention next.',
+    meta: 'Brief ready for the responsible person',
+    agents: ['GRANT', 'MARCUS']
   }
 ];
+
+export const agentRoster = ['VERA', 'MARCUS', 'IRIS', 'CLARA', 'NAYA', 'CALEB', 'GRANT'];
 
 export const roleViews = [
   {
     role: 'Owner',
-    headline: 'Decisions, escalations, voice, and visibility first.',
-    items: ['Urgent customer issue from overnight', 'Response matched business standards', 'One proposal is ready for review'],
+    headline: 'What needs attention, what was handled, and what should be reviewed.',
+    items: ['Overnight customer follow-up prepared', 'Sensitive messages routed instead of answered blindly', 'Morning brief shows who owns the next action'],
     badge: 'Owner brief'
   },
   {
     role: 'Agent',
     headline: 'Customers, leads, handoffs, and context they own.',
-    items: ['3 warm follow-ups due today', 'New lead captured in agency voice', 'Quote conversation ready to continue'],
+    items: ['Known customer follow-up ready', 'New lead captured in business voice', 'Conversation history attached before the callback'],
     badge: 'Producer view'
   },
   {
     role: 'Receptionist',
     headline: 'Calls, messages, routing, and warm handoffs.',
-    items: ['5 calls logged with reason', '2 messages need routing', '1 customer reply used front-desk tone'],
+    items: ['Messages sorted by what they need', 'Known and new contacts separated', 'Customer replies match front-desk tone'],
     badge: 'Front desk view'
   },
   {
     role: 'Manager',
     headline: 'Schedules, handoffs, inbox triage, and coordination.',
-    items: ['Crew schedule conflict flagged', 'Two appointments confirmed', 'One customer waiting on document'],
+    items: ['Follow-up timing collected', 'Team ownership visible', 'Escalations separated from normal messages'],
     badge: 'Manager view'
   },
   {
     role: 'Technician',
     headline: 'Jobs, appointments, customer notes, and completion details.',
-    items: ['Morning job has customer history attached', 'Parts note added to appointment', 'Customer update drafted in team voice'],
+    items: ['Customer context attached to the job', 'Appointment notes prepared', 'Customer update drafted in team voice'],
     badge: 'Field view'
   },
   {
     role: 'Admin',
-    headline: 'Prepared details, invoices, payouts, and review-ready work.',
-    items: ['Invoice draft ready', 'Expense note needs review', 'Document package prepared'],
+    headline: 'Prepared details, invoices, documents, and review-ready work.',
+    items: ['Document requests routed', 'Invoice questions flagged', 'Follow-up notes ready for review'],
     badge: 'Admin view'
   }
 ];
@@ -71,17 +99,17 @@ export const roleViews = [
 export const coverageLanes = [
   {
     lane: 'First response',
-    copy: 'Calls get answered. Messages get handled. New interest is captured in the voice and standards of the business.',
+    copy: 'Calls and messages are received, acknowledged, and handled according to the business’s standards.',
     chips: ['VERA', 'NAYA', 'PORTER']
   },
   {
     lane: 'Relationship memory',
-    copy: 'The team knows who the customer is, what happened last, how they were treated, and what needs to happen next.',
+    copy: 'The system checks who the person is, what happened last, and what relationship context matters.',
     chips: ['MARCUS', 'IRIS']
   },
   {
     lane: 'Coordination',
-    copy: 'Appointments, jobs, showings, reminders, and handoffs keep moving without living in someone’s head.',
+    copy: 'Appointments, callbacks, reminders, and handoffs keep moving without living in someone’s head.',
     chips: ['CALEB', 'CHARLIE']
   },
   {
@@ -99,24 +127,39 @@ export const coverageLanes = [
 export const solutions = [
   {
     name: 'Real Estate',
-    title: 'Calls, showings, leads, and follow-up stay connected.',
-    details: 'ARKON prepares agents and owners with customer context, showing history, and follow-up that sounds like the brokerage.'
+    title: 'Leads, showings, seller calls, buyer questions, and agent handoffs.',
+    details: 'See how ARKON keeps property conversations, follow-up, and agent context from slipping.',
+    href: '#demo'
   },
   {
     name: 'Insurance',
-    title: 'Customers and prospects feel remembered before they repeat themselves.',
-    details: 'Producers, admins, and owners see conversations, documents, quotes, and replies that follow the agency’s tone and standards.'
+    title: 'Quotes, renewals, documents, client questions, and producer follow-up.',
+    details: 'See how ARKON keeps prospects, policyholders, producers, and admins coordinated.',
+    href: '#demo'
   },
   {
-    name: 'HostHalo / Naya',
-    title: 'Guest, host, cleaner, and vendor communication stays coordinated.',
-    details: 'Stay operations keep moving with guest context, cleaner confirmations, escalations, and communication that sounds like the host.'
+    name: 'Short-Term Rentals',
+    title: 'Guests, cleaners, vendors, urgent issues, and host visibility.',
+    details: 'See how ARKON keeps stay operations moving without every message hitting the host.',
+    href: '#demo'
+  },
+  {
+    name: 'Home Services',
+    title: 'Calls, estimates, repairs, technicians, invoices, and customer updates.',
+    details: 'See how ARKON helps service businesses answer, schedule, update, and brief the team.',
+    href: '#demo'
+  },
+  {
+    name: 'Professional Services',
+    title: 'Intake, scheduling, documents, client follow-up, and owner visibility.',
+    details: 'See how ARKON protects the first response and keeps client context attached.',
+    href: '#demo'
   }
 ];
 
 export const dashboardRows = [
-  { label: 'Overnight customer call', owner: 'Nathan', status: 'Review first', priority: 'High' },
-  { label: 'Reply matched business voice', owner: 'Front desk', status: 'Handled', priority: 'Done' },
-  { label: 'Showing request captured', owner: 'Agent', status: 'Routed', priority: 'Now' },
-  { label: 'Invoice packet drafted', owner: 'Admin', status: 'Ready', priority: 'Review' }
+  { label: 'Universal message walkthrough', owner: 'ARKON', status: 'Handled', priority: 'Live' },
+  { label: 'Known contact found', owner: 'MARCUS', status: 'Context attached', priority: 'Done' },
+  { label: 'Business voice selected', owner: 'NAYA', status: 'Reply prepared', priority: 'Done' },
+  { label: 'Handoff brief created', owner: 'GRANT', status: 'Ready', priority: 'Next' }
 ];
