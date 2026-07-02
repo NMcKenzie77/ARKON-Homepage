@@ -111,31 +111,31 @@ export const solutions = [
     name: 'Real Estate',
     title: 'Leads, showings, seller calls, buyer questions, and agent handoffs.',
     details: 'See how ARKON keeps property conversations, follow-up, and agent context from slipping.',
-    href: '#demo'
+    href: '/real-estate'
   },
   {
     name: 'Insurance',
     title: 'Quotes, renewals, documents, client questions, and producer follow-up.',
     details: 'See how ARKON keeps prospects, policyholders, producers, and admins coordinated.',
-    href: '#demo'
+    href: '/insurance'
   },
   {
     name: 'Short-Term Rentals',
     title: 'Guests, cleaners, vendors, urgent issues, and host visibility.',
     details: 'See how ARKON keeps stay operations moving without every message hitting the host.',
-    href: '#demo'
+    href: '/short-term-rentals'
   },
   {
     name: 'Home Services',
     title: 'Calls, estimates, repairs, technicians, invoices, and customer updates.',
     details: 'See how ARKON helps service businesses answer, schedule, update, and brief the team.',
-    href: '#demo'
+    href: '/home-services'
   },
   {
     name: 'Professional Services',
     title: 'Intake, scheduling, documents, client follow-up, and owner visibility.',
     details: 'See how ARKON protects the first response and keeps client context attached.',
-    href: '#demo'
+    href: '/professional-services'
   }
 ];
 
