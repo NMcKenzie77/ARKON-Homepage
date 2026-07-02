@@ -13,35 +13,35 @@
 }
 
 #solutions .solution-grid {
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)) !important;
-  gap: 14px !important;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)) !important;
+  gap: 12px !important;
 }
 
 #solutions .solution-card {
-  min-height: 220px !important;
-  padding: 18px !important;
-  border-radius: 20px !important;
+  min-height: 168px !important;
+  padding: 15px !important;
+  border-radius: 17px !important;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28) !important;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.22) !important;
 }
 
 #solutions .solution-card span {
-  font-size: 0.88rem !important;
+  font-size: 0.78rem !important;
   line-height: 1.2;
 }
 
 #solutions .solution-card h3 {
-  margin: 14px 0 10px !important;
-  font-size: clamp(1.05rem, 1.7vw, 1.28rem) !important;
+  margin: 10px 0 8px !important;
+  font-size: clamp(0.92rem, 1.35vw, 1.08rem) !important;
   line-height: 1.18 !important;
-  letter-spacing: -0.035em !important;
+  letter-spacing: -0.03em !important;
 }
 
 #solutions .solution-card p {
-  margin: 0 0 16px;
-  font-size: 0.9rem !important;
-  line-height: 1.48 !important;
+  margin: 0 0 12px;
+  font-size: 0.78rem !important;
+  line-height: 1.42 !important;
 }
 
 #solutions .solution-card strong {
@@ -50,8 +50,9 @@
 }
 
 #solutions .solution-card strong::before {
-  content: 'View example →';
-  font-size: 0.88rem;
+  content: 'See how ARKON can help you →';
+  font-size: 0.76rem;
+  line-height: 1.25;
 }
 
 @media (max-width: 680px) {
