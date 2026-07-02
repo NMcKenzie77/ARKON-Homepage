@@ -81,6 +81,67 @@ function Hero() {
   );
 }
 
+function RequestFlowAnimation({ compact = false }) {
+  const entries = [
+    { channel: 'Phone call', agent: 'Vera' },
+    { channel: 'Website inquiry', agent: 'Porter' },
+    { channel: 'Text or client message', agent: 'Naya' },
+    { channel: 'Email', agent: 'Iris' }
+  ];
+
+  return (
+    <div className={compact ? 'request-animation compact' : 'request-animation'} data-reveal aria-label="Animated ARKON request workflow">
+      <div className="request-animation-header">
+        <p className="eyebrow">Workflow animation</p>
+        <h3>See how a request moves through ARKON.</h3>
+        <p>
+          The first response depends on how the person reaches out. The right role picks it up,
+          Marcus keeps the history attached, and Grant keeps the owner informed.
+        </p>
+      </div>
+
+      <div className="animation-stage">
+        <div className="request-source-node">
+          <span>Request comes in</span>
+          <strong>Customer, lead, guest, or client</strong>
+        </div>
+
+        <div className="entry-node-grid">
+          {entries.map(entry => (
+            <div className="entry-node" key={entry.channel}>
+              <span>{entry.channel}</span>
+              <strong>{entry.agent}</strong>
+            </div>
+          ))}
+        </div>
+
+        <div className="flow-connector connector-one"><span /></div>
+
+        <div className="hub-node memory-node">
+          <span>Relationship history</span>
+          <strong>Marcus</strong>
+          <small>Contact record, notes, last touchpoint, and follow-up history.</small>
+        </div>
+
+        <div className="flow-connector connector-two"><span /></div>
+
+        <div className="action-node">
+          <span>Right next step</span>
+          <strong>Respond, follow up, route, schedule, or flag for review.</strong>
+        </div>
+
+        <div className="flow-connector connector-three"><span /></div>
+
+        <div className="hub-node owner-node">
+          <span>Owner visibility</span>
+          <strong>Grant</strong>
+          <small>What happened, what was handled, and what needs attention.</small>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function WalkthroughSection() {
   const channels = [
     { label: 'Phone call', owner: 'Vera', copy: 'Answers the call, qualifies the caller, captures the details, and routes it when a person is needed.' },
@@ -100,6 +161,8 @@ function WalkthroughSection() {
           and brings in a person when judgment is needed.
         </p>
       </div>
+
+      <RequestFlowAnimation compact />
 
       <div className="request-entry-layout">
         <div className="request-channel-grid" data-reveal>
@@ -511,6 +574,10 @@ function RequestFlowPage() {
             </button>
           </div>
         </div>
+      </section>
+
+      <section className="section request-animation-section">
+        <RequestFlowAnimation />
       </section>
 
       <section className="section request-route-section">
