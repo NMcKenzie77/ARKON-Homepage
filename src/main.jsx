@@ -10,5 +10,6 @@ import './alignment-fix.css';
 import './request-flow.css';
 import './seo-pages.css';
 import './core-team-polish.css';
+import './copy-polish.css';
 const container = document.getElementById('root');
 createRoot(container).render(<React.StrictMode><App /></React.StrictMode>);
