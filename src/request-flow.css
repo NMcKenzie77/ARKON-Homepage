@@ -15,7 +15,8 @@
 .request-channel-card,
 .request-route-card,
 .request-entry-panel,
-.request-step-card {
+.request-step-card,
+.request-animation {
   border: 1px solid var(--line);
   background: linear-gradient(180deg, var(--panel-strong), rgba(9, 16, 31, 0.76));
   box-shadow: var(--shadow);
@@ -51,7 +52,9 @@
 .request-entry-panel p,
 .request-step-card p,
 .request-flow-inner p,
-.request-script-band p {
+.request-script-band p,
+.request-animation p,
+.hub-node small {
   color: var(--muted);
   line-height: 1.7;
 }
@@ -61,6 +64,175 @@
   flex-direction: column;
   justify-content: center;
   background: radial-gradient(circle at top right, rgba(130,247,202,0.14), transparent 42%), rgba(255,255,255,0.045);
+}
+
+.request-animation {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  margin: 8px 0 28px;
+}
+
+.request-animation::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(103,216,255,0.22), transparent 40%, rgba(130,247,202,0.14));
+  z-index: -1;
+}
+
+.request-animation.compact {
+  margin-bottom: 24px;
+}
+
+.request-animation-header {
+  max-width: 760px;
+  margin-bottom: 24px;
+}
+
+.request-animation-header h3 {
+  margin: 0;
+  font-size: clamp(1.8rem, 3.4vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+.request-animation-header p:not(.eyebrow) {
+  margin: 14px 0 0;
+}
+
+.animation-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.request-source-node,
+.entry-node,
+.hub-node,
+.action-node {
+  position: relative;
+  border: 1px solid var(--line-strong);
+  background: rgba(255,255,255,0.045);
+  border-radius: 20px;
+  padding: 18px;
+  z-index: 2;
+}
+
+.request-source-node {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  background: radial-gradient(circle at top left, rgba(103,216,255,0.18), transparent 48%), rgba(255,255,255,0.045);
+}
+
+.request-source-node span,
+.entry-node span,
+.hub-node span,
+.action-node span {
+  display: block;
+  color: var(--blue);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.request-source-node strong,
+.entry-node strong,
+.hub-node strong,
+.action-node strong {
+  display: block;
+  margin-top: 8px;
+  font-size: clamp(1.05rem, 1.8vw, 1.45rem);
+  letter-spacing: -0.03em;
+}
+
+.entry-node-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.entry-node {
+  min-height: 126px;
+  animation: nodeLift 16s ease-in-out infinite;
+}
+
+.entry-node:nth-child(1) { animation-delay: 0s; }
+.entry-node:nth-child(2) { animation-delay: 1.1s; }
+.entry-node:nth-child(3) { animation-delay: 2.2s; }
+.entry-node:nth-child(4) { animation-delay: 3.3s; }
+
+.hub-node,
+.action-node {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hub-node small {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.92rem;
+}
+
+.memory-node {
+  animation: hubPulse 16s ease-in-out infinite;
+  animation-delay: 4.8s;
+}
+
+.action-node {
+  animation: hubPulse 16s ease-in-out infinite;
+  animation-delay: 7.2s;
+}
+
+.owner-node {
+  animation: hubPulse 16s ease-in-out infinite;
+  animation-delay: 9.6s;
+}
+
+.flow-connector {
+  position: relative;
+  height: 28px;
+  width: 3px;
+  margin: -2px auto;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.09);
+  overflow: hidden;
+}
+
+.flow-connector span {
+  position: absolute;
+  inset: -100% 0 100%;
+  border-radius: inherit;
+  background: linear-gradient(180deg, transparent, var(--blue), var(--mint), transparent);
+  animation: flowDown 16s ease-in-out infinite;
+}
+
+.connector-one span { animation-delay: 3.8s; }
+.connector-two span { animation-delay: 6.2s; }
+.connector-three span { animation-delay: 8.6s; }
+
+@keyframes flowDown {
+  0%, 18% { transform: translateY(-120%); opacity: 0; }
+  24%, 34% { opacity: 1; }
+  42%, 100% { transform: translateY(220%); opacity: 0; }
+}
+
+@keyframes nodeLift {
+  0%, 12%, 100% { transform: translateY(0); border-color: var(--line-strong); background: rgba(255,255,255,0.045); }
+  18%, 30% { transform: translateY(-8px); border-color: rgba(103,216,255,0.72); background: rgba(103,216,255,0.12); }
+  38% { transform: translateY(0); }
+}
+
+@keyframes hubPulse {
+  0%, 26%, 100% { transform: scale(1); border-color: var(--line-strong); background: rgba(255,255,255,0.045); }
+  34%, 46% { transform: scale(1.018); border-color: rgba(130,247,202,0.72); background: rgba(130,247,202,0.10); }
+  54% { transform: scale(1); }
 }
 
 .request-flow-page {
@@ -94,6 +266,7 @@
   font-size: clamp(1rem, 1.4vw, 1.18rem);
 }
 
+.request-animation-section,
 .request-route-section,
 .request-steps-section {
   padding-top: 44px;
@@ -145,11 +318,16 @@
   .request-entry-layout {
     grid-template-columns: 1fr;
   }
+
+  .entry-node-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 780px) {
   .request-channel-grid,
-  .request-route-grid {
+  .request-route-grid,
+  .entry-node-grid {
     grid-template-columns: 1fr;
   }
 
@@ -157,7 +335,21 @@
     font-size: clamp(2.25rem, 12vw, 3.6rem);
   }
 
+  .request-source-node {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .request-step-card {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry-node,
+  .hub-node,
+  .action-node,
+  .flow-connector span {
+    animation: none !important;
   }
 }
