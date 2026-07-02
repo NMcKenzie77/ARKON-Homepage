@@ -4,7 +4,7 @@
 }
 
 #solutions .section-heading h2::before {
-  content: 'Choose the business that looks most like yours.';
+  content: 'Choose the type of business you run.';
   display: block;
   color: var(--text);
   font-size: clamp(2rem, 4vw, 4.2rem);
