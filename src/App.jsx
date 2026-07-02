@@ -180,8 +180,6 @@ function WalkthroughSection() {
         </p>
       </div>
 
-      <RequestFlowAnimation compact />
-
       <div className="request-entry-layout">
         <div className="request-channel-grid" data-reveal>
           {channels.map(channel => (
