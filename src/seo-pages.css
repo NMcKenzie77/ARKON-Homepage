@@ -1,0 +1,132 @@
+.industry-page {
+  padding-top: 0;
+}
+
+.industry-hero {
+  min-height: 68svh;
+  display: flex;
+  align-items: center;
+}
+
+.industry-hero-inner {
+  position: relative;
+  width: min(1060px, calc(100% - 40px));
+  margin: 0 auto;
+  padding-top: 64px;
+}
+
+.industry-hero-inner h1 {
+  max-width: 1060px;
+  margin: 0;
+  font-size: clamp(2.5rem, 5.6vw, 5.15rem);
+  line-height: 0.96;
+  letter-spacing: -0.065em;
+}
+
+.industry-hero-inner p:not(.eyebrow) {
+  max-width: 780px;
+  margin: 22px 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.35vw, 1.16rem);
+  line-height: 1.7;
+}
+
+.industry-intro-section,
+.industry-workflow-section,
+.industry-faq-section {
+  padding-top: 52px;
+}
+
+.industry-card-grid,
+.industry-faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.industry-card,
+.industry-faq,
+.industry-step {
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--panel-strong), rgba(9, 16, 31, 0.76));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.industry-card h3,
+.industry-faq h3,
+.industry-step h3 {
+  margin: 0 0 10px;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  letter-spacing: -0.03em;
+}
+
+.industry-card p,
+.industry-faq p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.68;
+}
+
+.industry-workflow-list {
+  display: grid;
+  gap: 14px;
+}
+
+.industry-step {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  align-items: center;
+  gap: 18px;
+}
+
+.industry-step span {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--blue), var(--mint));
+  color: #06111f;
+  font-weight: 900;
+}
+
+.industry-step h3 {
+  margin: 0;
+}
+
+.industry-cta {
+  align-items: center;
+}
+
+.industry-cta > a {
+  justify-self: end;
+}
+
+@media (max-width: 1080px) {
+  .industry-cta > a {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 780px) {
+  .industry-hero {
+    min-height: auto;
+    padding-top: 96px;
+  }
+
+  .industry-hero-inner h1 {
+    font-size: clamp(2.25rem, 12vw, 3.6rem);
+  }
+
+  .industry-card-grid,
+  .industry-faq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .industry-step {
+    grid-template-columns: 1fr;
+  }
+}
