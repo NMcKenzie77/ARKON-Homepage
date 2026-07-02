@@ -1,6 +1,94 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { coverageLanes, dashboardRows, roleViews, solutions } from './data.js';
 
+const industryPages = {
+  '/real-estate': {
+    eyebrow: 'Real estate workflow automation',
+    title: 'AI workflow automation for real estate teams.',
+    description: 'ARKON helps real estate teams protect lead response, showing requests, seller calls, buyer questions, follow-up, agent handoffs, and owner visibility.',
+    primary: 'Real estate teams lose deals when leads wait, showing requests sit, seller calls are missed, or agent follow-up depends on someone remembering every detail. ARKON gives the team trained roles for calls, website inquiries, client messages, relationship history, and owner visibility.',
+    cards: [
+      ['Lead response', 'Porter and Naya help capture website inquiries, answer approved questions, and follow up before a lead goes cold.'],
+      ['Calls and showings', 'Vera handles inbound calls, captures what matters, and routes showing or seller requests to the right person.'],
+      ['Agent context', 'Marcus keeps lead history, notes, pipeline stage, prior touchpoints, and follow-up context attached.'],
+      ['Owner view', 'Grant surfaces what came in, what was handled, who owns the next step, and what needs attention.']
+    ],
+    workflow: ['Buyer lead asks a question', 'Seller calls about listing timing', 'Showing request comes in', 'Agent gets context before follow-up'],
+    faq: [
+      ['Can ARKON replace my agents?', 'No. ARKON handles repeatable work and prepares the handoff so agents can focus on conversations, showings, sellers, buyers, and decisions.'],
+      ['Can it work with my CRM?', 'ARKON is designed around contact history, notes, pipeline stages, and follow-up records. Specific CRM integrations are handled during implementation.']
+    ]
+  },
+  '/insurance': {
+    eyebrow: 'Insurance agency workflow automation',
+    title: 'AI workflow automation for insurance agencies.',
+    description: 'ARKON helps insurance agencies handle quote requests, policyholder questions, renewals, documents, producer follow-up, CRM updates, and owner visibility.',
+    primary: 'Insurance agencies lose time when quote requests, renewal questions, document requests, and producer follow-up scatter across calls, email, texts, and the CRM. ARKON keeps the front office, producers, admins, and owner view connected.',
+    cards: [
+      ['Quote requests', 'Porter captures website leads and Naya follows up with approved messaging before prospects go cold.'],
+      ['Inbound calls', 'Vera answers, qualifies, captures details, and routes policy or quote questions to the right person.'],
+      ['CRM memory', 'Marcus keeps contact records, relationship notes, pipeline stage, tags, and follow-up reminders attached.'],
+      ['Inbox triage', 'Iris scores urgency and importance so policyholder, carrier, and prospect emails do not get buried.']
+    ],
+    workflow: ['Prospect asks for a quote', 'Policyholder sends a document request', 'Renewal question comes in', 'Producer gets context before the callback'],
+    faq: [
+      ['Does ARKON give insurance advice?', 'ARKON should follow the business rules and route licensed or judgment-based questions to the right person.'],
+      ['Can it help producers follow up?', 'Yes. ARKON can help prepare follow-up, attach context, update records, and keep the owner informed.']
+    ]
+  },
+  '/short-term-rentals': {
+    eyebrow: 'Short-term rental workflow automation',
+    title: 'AI workflow automation for short-term rental operators.',
+    description: 'ARKON helps short-term rental operators manage guest messages, cleaner coordination, vendor updates, urgent issues, follow-up, and host visibility.',
+    primary: 'Short-term rental operators deal with guest messages, cleaner coordination, vendor updates, urgent issues, check-in questions, and host visibility. ARKON keeps stay operations moving without every message landing on the host.',
+    cards: [
+      ['Guest messages', 'Naya responds in the host’s voice, answers approved questions, and routes sensitive or urgent issues.'],
+      ['Website inquiries', 'Porter captures direct booking inquiries and hands warm leads to the business.'],
+      ['Inbox triage', 'Iris separates urgent issues, guest needs, vendor messages, and routine inbox activity.'],
+      ['Host visibility', 'Grant shows what happened, what was handled, and what needs attention across the stay.']
+    ],
+    workflow: ['Guest asks a check-in question', 'Cleaner update comes in', 'Vendor issue needs attention', 'Host receives the owner summary'],
+    faq: [
+      ['Does ARKON handle emergencies?', 'ARKON can flag urgent issues and route them based on business rules. Emergency workflows should be defined before launch.'],
+      ['Can it sound like the host?', 'Yes. ARKON is designed to follow the host’s tone, standards, boundaries, and escalation rules.']
+    ]
+  },
+  '/home-services': {
+    eyebrow: 'Home services workflow automation',
+    title: 'AI workflow automation for home service businesses.',
+    description: 'ARKON helps home service businesses handle calls, estimates, repairs, technician updates, scheduling, invoices, customer messages, and owner visibility.',
+    primary: 'Home service businesses lose money when calls are missed, estimate requests wait, technicians lack context, invoices create confusion, or customers need updates. ARKON keeps the front desk, field team, admin work, and owner view connected.',
+    cards: [
+      ['Inbound calls', 'Vera answers calls, qualifies customers, captures job details, and routes urgent or judgment-based requests.'],
+      ['Estimate requests', 'Porter captures website requests and Naya follows up when a customer does not convert.'],
+      ['Job context', 'Marcus keeps customer history, notes, prior work, and appointment details attached.'],
+      ['Owner visibility', 'Grant shows open issues, handled requests, escalations, and next actions.']
+    ],
+    workflow: ['Customer calls for service', 'Website estimate request comes in', 'Technician needs notes', 'Owner sees what needs attention'],
+    faq: [
+      ['Can ARKON schedule jobs?', 'ARKON can support scheduling when rules, availability, and calendar workflows are defined.'],
+      ['What if a customer needs a price decision?', 'ARKON routes pricing, approval, and judgment calls to a person instead of guessing.']
+    ]
+  },
+  '/professional-services': {
+    eyebrow: 'Professional services workflow automation',
+    title: 'AI workflow automation for professional service firms.',
+    description: 'ARKON helps professional service firms manage intake, scheduling, client questions, document requests, follow-up, handoffs, and owner visibility.',
+    primary: 'Professional service firms need clean intake, reliable scheduling, client follow-up, document requests, and owner visibility. ARKON helps keep client context attached so work does not depend on memory or scattered messages.',
+    cards: [
+      ['Client intake', 'Vera and Porter capture the right details from calls and website inquiries.'],
+      ['Client communication', 'Naya responds with the firm’s approved tone, standards, and boundaries.'],
+      ['Relationship memory', 'Marcus keeps notes, prior conversations, relationship history, and follow-up context attached.'],
+      ['Owner visibility', 'Grant shows what came in, what was handled, who owns the next step, and what needs review.']
+    ],
+    workflow: ['New client inquiry arrives', 'Document request comes in', 'Follow-up needs to be sent', 'Owner sees what requires attention'],
+    faq: [
+      ['Can ARKON handle confidential matters?', 'Sensitive workflows should be defined carefully. ARKON can route anything requiring judgment, approval, or privacy review.'],
+      ['Does it replace staff?', 'No. ARKON handles repeatable intake and follow-up work so staff can focus on client service and decisions.']
+    ]
+  }
+};
+
 function useReveal(deps = []) {
   useEffect(() => {
     const nodes = document.querySelectorAll('[data-reveal]');
@@ -21,10 +109,28 @@ function useReveal(deps = []) {
   }, deps);
 }
 
+function useClientSeo(route) {
+  useEffect(() => {
+    const page = industryPages[route];
+    const title = route === '/how-it-works'
+      ? 'How ARKON Works | Request Routing, Business Rules, and Owner Visibility'
+      : page
+        ? `${page.title.replace(/\.$/, '')} | ARKON Systems`
+        : 'ARKON Systems | AI Workflow Automation for Service Businesses';
+    const description = route === '/how-it-works'
+      ? 'See how ARKON handles calls, website inquiries, text messages, email, relationship history, business rules, safe next steps, and owner summaries.'
+      : page?.description || 'ARKON Systems gives service businesses an AI operating team for calls, messages, follow-up, scheduling, records, handoffs, and owner visibility.';
+
+    document.title = title;
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', description);
+  }, [route]);
+}
+
 function Header() {
   return (
     <header className="site-header">
-      <a className="brand" href="#top" aria-label="ARKON Systems home">
+      <a className="brand" href="/" aria-label="ARKON Systems home">
         <span className="brand-mark">A</span>
         <span>
           <strong>ARKON</strong>
@@ -33,13 +139,13 @@ function Header() {
       </a>
 
       <nav className="desktop-nav" aria-label="Primary navigation">
-        <a href="#how">How it works</a>
-        <a href="#team">Core team</a>
-        <a href="#solutions">Business types</a>
-        <a href="#voice">Your voice</a>
+        <a href="/#how">How it works</a>
+        <a href="/#team">Core team</a>
+        <a href="/#solutions">Business types</a>
+        <a href="/#voice">Your voice</a>
       </nav>
 
-      <a className="nav-cta" href="#demo">Book a demo</a>
+      <a className="nav-cta" href="/#demo">Book a demo</a>
     </header>
   );
 }
@@ -64,8 +170,8 @@ function Hero() {
           </p>
 
           <div className="hero-actions">
-            <a className="primary-button" href="#how">See how it works</a>
-            <a className="secondary-button" href="#solutions">Choose your business type</a>
+            <a className="primary-button" href="/#how">See how it works</a>
+            <a className="secondary-button" href="/#solutions">Choose your business type</a>
           </div>
 
           <div className="proof-line" aria-label="Homepage proof points">
@@ -199,7 +305,7 @@ function WalkthroughSection() {
             what ARKON is allowed to do, how Marcus keeps history attached, and how Grant keeps the owner informed.
           </p>
           <div className="hero-actions">
-            <a className="primary-button" href="#request-flow">See how ARKON handles a request</a>
+            <a className="primary-button" href="/how-it-works">See how ARKON handles a request</a>
             <button
               className="secondary-button audio-button"
               type="button"
@@ -551,6 +657,24 @@ function DemoCta() {
   );
 }
 
+function HomePage() {
+  return (
+    <main>
+      <Hero />
+      <WalkthroughSection />
+      <HowItWorks />
+      <CoreTeam />
+      <Solutions />
+      <VoiceLayer />
+      <RoleViews />
+      <DashboardProof />
+      <Coverage />
+      <Impact />
+      <DemoCta />
+    </main>
+  );
+}
+
 function RequestFlowPage() {
   const channelCards = [
     { label: 'Phone call', name: 'Vera', detail: 'Vera answers, qualifies the caller, gathers details, and routes the call when a person is needed.' },
@@ -584,7 +708,7 @@ function RequestFlowPage() {
             Marcus keeps the relationship history attached, and Grant keeps the owner informed.
           </p>
           <div className="hero-actions">
-            <a className="primary-button" href="#top">Back to homepage</a>
+            <a className="primary-button" href="/">Back to homepage</a>
             <button className="secondary-button audio-button" type="button" data-elevenlabs-hook="naya-request-flow">
               Hear Naya explain it
             </button>
@@ -653,6 +777,108 @@ function RequestFlowPage() {
   );
 }
 
+function IndustryPage({ page }) {
+  return (
+    <main className="industry-page">
+      <section className="hero industry-hero">
+        <div className="hero-background" aria-hidden="true">
+          <span className="orb orb-one" />
+          <span className="orb orb-two" />
+          <span className="grid-glow" />
+        </div>
+        <div className="industry-hero-inner" data-reveal>
+          <p className="eyebrow">{page.eyebrow}</p>
+          <h1>{page.title}</h1>
+          <p>{page.description}</p>
+          <div className="hero-actions">
+            <a className="primary-button" href="/#demo">Request demo</a>
+            <a className="secondary-button" href="/how-it-works">See how ARKON works</a>
+          </div>
+        </div>
+      </section>
+
+      <section className="section industry-intro-section">
+        <div className="section-heading" data-reveal>
+          <p className="eyebrow">Why it matters</p>
+          <h2>Repeatable work should not depend on memory.</h2>
+          <p>{page.primary}</p>
+        </div>
+        <div className="industry-card-grid">
+          {page.cards.map(([title, copy]) => (
+            <article className="industry-card" key={title} data-reveal>
+              <h3>{title}</h3>
+              <p>{copy}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section industry-workflow-section">
+        <div className="section-heading" data-reveal>
+          <p className="eyebrow">Example workflows</p>
+          <h2>What ARKON can keep moving.</h2>
+          <p>
+            Each business gets workflow rules based on its calls, messages, documents, staff roles, and owner view.
+          </p>
+        </div>
+        <div className="industry-workflow-list">
+          {page.workflow.map((item, index) => (
+            <article className="industry-step" key={item} data-reveal>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{item}</h3>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section industry-faq-section">
+        <div className="section-heading" data-reveal>
+          <p className="eyebrow">Questions business owners ask</p>
+          <h2>Built for control, not guesswork.</h2>
+        </div>
+        <div className="industry-faq-grid">
+          {page.faq.map(([question, answer]) => (
+            <article className="industry-faq" key={question} data-reveal>
+              <h3>{question}</h3>
+              <p>{answer}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="demo-cta industry-cta" data-reveal>
+        <div>
+          <p className="eyebrow">See it for your business</p>
+          <h2>Walk through the real workflow with ARKON.</h2>
+          <p>
+            Choose the closest business type, then review the calls, messages, follow-ups, records,
+            handoffs, and owner visibility that matter most.
+          </p>
+        </div>
+        <a className="primary-button" href="/#demo">Request demo</a>
+      </section>
+    </main>
+  );
+}
+
+function NotFoundPage() {
+  return (
+    <main className="industry-page">
+      <section className="hero industry-hero">
+        <div className="industry-hero-inner" data-reveal>
+          <p className="eyebrow">Page not found</p>
+          <h1>This ARKON page is not available.</h1>
+          <p>Return to the homepage or choose a business type to continue.</p>
+          <div className="hero-actions">
+            <a className="primary-button" href="/">Go home</a>
+            <a className="secondary-button" href="/#solutions">Choose business type</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
 function Footer() {
   const year = useMemo(() => new Date().getFullYear(), []);
   return (
@@ -669,44 +895,32 @@ function Footer() {
   );
 }
 
+function getRoute() {
+  const pathname = window.location.pathname.replace(/\/$/, '') || '/';
+  return pathname;
+}
+
 export default function App() {
-  const [isRequestFlow, setIsRequestFlow] = useState(() => window.location.hash === '#request-flow');
-  useReveal([isRequestFlow]);
+  const [route, setRoute] = useState(getRoute);
+  useReveal([route]);
+  useClientSeo(route);
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const nextIsRequestFlow = window.location.hash === '#request-flow';
-      setIsRequestFlow(nextIsRequestFlow);
-      if (nextIsRequestFlow) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+    const handleRouteChange = () => {
+      setRoute(getRoute());
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    handleHashChange();
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handleRouteChange);
+    return () => window.removeEventListener('popstate', handleRouteChange);
   }, []);
+
+  const page = industryPages[route];
 
   return (
     <>
       <Header />
-      {isRequestFlow ? (
-        <RequestFlowPage />
-      ) : (
-        <main>
-          <Hero />
-          <WalkthroughSection />
-          <HowItWorks />
-          <CoreTeam />
-          <Solutions />
-          <VoiceLayer />
-          <RoleViews />
-          <DashboardProof />
-          <Coverage />
-          <Impact />
-          <DemoCta />
-        </main>
-      )}
+      {route === '/' ? <HomePage /> : route === '/how-it-works' ? <RequestFlowPage /> : page ? <IndustryPage page={page} /> : <NotFoundPage />}
       <Footer />
     </>
   );
