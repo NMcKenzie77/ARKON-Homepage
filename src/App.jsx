@@ -89,14 +89,17 @@ function RequestFlowAnimation({ compact = false }) {
     { channel: 'Email', agent: 'Iris' }
   ];
 
+  const safeActions = ['Answer', 'Follow up', 'Schedule', 'Update record', 'Create task', 'Route'];
+  const ownerStatuses = ['Handled', 'Waiting', 'Escalated', 'Needs review'];
+
   return (
     <div className={compact ? 'request-animation compact' : 'request-animation'} data-reveal aria-label="Animated ARKON request workflow">
       <div className="request-animation-header">
         <p className="eyebrow">Workflow animation</p>
         <h3>See how a request moves through ARKON.</h3>
         <p>
-          The first response depends on how the person reaches out. The right role picks it up,
-          Marcus keeps the history attached, and Grant keeps the owner informed.
+          The visual shows the control points: who responds first, what ARKON is allowed to do,
+          where the history comes from, and what the owner sees.
         </p>
       </div>
 
@@ -117,25 +120,40 @@ function RequestFlowAnimation({ compact = false }) {
 
         <div className="flow-connector connector-one"><span /></div>
 
-        <div className="hub-node memory-node">
-          <span>Relationship history</span>
-          <strong>Marcus</strong>
-          <small>Contact record, notes, last touchpoint, and follow-up history.</small>
+        <div className="hub-node rules-node">
+          <span>Business rules checked</span>
+          <strong>Your rules decide what ARKON can handle.</strong>
+          <small>Approved answers, scheduling limits, routing rules, escalation triggers, and business voice.</small>
         </div>
 
         <div className="flow-connector connector-two"><span /></div>
 
-        <div className="action-node">
-          <span>Right next step</span>
-          <strong>Respond, follow up, route, schedule, or flag for review.</strong>
+        <div className="hub-node memory-node">
+          <span>Relationship history</span>
+          <strong>Marcus attaches context.</strong>
+          <small>Contact record, notes, last touchpoint, pipeline stage, and follow-up history.</small>
         </div>
 
         <div className="flow-connector connector-three"><span /></div>
 
+        <div className="action-node">
+          <span>Safe next step</span>
+          <strong>ARKON takes the allowed action.</strong>
+          <div className="safe-action-grid">
+            {safeActions.map(action => <em key={action}>{action}</em>)}
+          </div>
+          <small>If it needs judgment, pricing, approval, or a person, ARKON routes it instead of guessing.</small>
+        </div>
+
+        <div className="flow-connector connector-four"><span /></div>
+
         <div className="hub-node owner-node">
           <span>Owner visibility</span>
-          <strong>Grant</strong>
-          <small>What happened, what was handled, and what needs attention.</small>
+          <strong>Grant shows what matters.</strong>
+          <div className="owner-status-grid">
+            {ownerStatuses.map(status => <em key={status}>{status}</em>)}
+          </div>
+          <small>What came in, what was handled, who owns the next step, and what needs attention.</small>
         </div>
       </div>
     </div>
@@ -180,7 +198,7 @@ function WalkthroughSection() {
           <h3>See how a request moves through ARKON.</h3>
           <p>
             The homepage gives the idea. The full walkthrough shows which role responds first,
-            how Marcus keeps the relationship history attached, and how Grant keeps the owner informed.
+            what ARKON is allowed to do, how Marcus keeps history attached, and how Grant keeps the owner informed.
           </p>
           <div className="hero-actions">
             <a className="primary-button" href="#request-flow">See how ARKON handles a request</a>
@@ -546,9 +564,10 @@ function RequestFlowPage() {
   const steps = [
     { number: '01', title: 'The request comes in', copy: 'A call, text, email, website form, guest message, or client message reaches the business.' },
     { number: '02', title: 'The right role responds first', copy: 'Vera, Porter, Naya, or Iris responds based on the channel and the job that needs to be done.' },
-    { number: '03', title: 'Marcus keeps the history attached', copy: 'Marcus connects the contact record, relationship timeline, pipeline stage, notes, tags, and prior touchpoints.' },
-    { number: '04', title: 'ARKON moves only what it should move', copy: 'Routine work can be handled. Anything requiring judgment, pricing, approval, or a real person gets routed instead of forced.' },
-    { number: '05', title: 'Grant keeps the owner informed', copy: 'Grant surfaces what happened, what was handled, what needs attention, and what can be ignored.' }
+    { number: '03', title: 'Business rules are checked', copy: 'Your rules decide what ARKON can answer, schedule, send, update, or route to a person.' },
+    { number: '04', title: 'Marcus keeps the history attached', copy: 'Marcus connects the contact record, relationship timeline, pipeline stage, notes, tags, and prior touchpoints.' },
+    { number: '05', title: 'ARKON takes the safe next step', copy: 'It can answer, follow up, schedule, update a record, create a task, or route the request for review.' },
+    { number: '06', title: 'Grant keeps the owner informed', copy: 'Grant shows what came in, what was handled, who owns the next step, and what needs attention.' }
   ];
 
   return (
@@ -563,9 +582,8 @@ function RequestFlowPage() {
           <p className="eyebrow">How ARKON handles a request</p>
           <h1>One business. Different ways people reach out.</h1>
           <p>
-            The first response depends on how the person contacted the business. The customer should feel one smooth experience.
-            Behind the scenes, the right ARKON role handles the request, Marcus keeps the relationship history attached,
-            and Grant keeps the owner informed.
+            The first response depends on how the person contacted the business. Your business rules decide what ARKON is allowed to do.
+            Marcus keeps the relationship history attached, and Grant keeps the owner informed.
           </p>
           <div className="hero-actions">
             <a className="primary-button" href="#top">Back to homepage</a>
@@ -630,7 +648,7 @@ function RequestFlowPage() {
         <p>
           When someone reaches out, the request is handled by the role built for that channel.
           Vera answers calls. Porter handles website inquiries. Iris sorts email. I handle client and guest messages in your voice.
-          Marcus keeps the relationship history attached, and Grant keeps the owner informed.
+          Your business rules decide what ARKON can handle, Marcus keeps the relationship history attached, and Grant keeps the owner informed.
         </p>
       </section>
     </main>
