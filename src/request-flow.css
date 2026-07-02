@@ -1,0 +1,163 @@
+.request-entry-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.request-channel-grid,
+.request-route-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.request-channel-card,
+.request-route-card,
+.request-entry-panel,
+.request-step-card {
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--panel-strong), rgba(9, 16, 31, 0.76));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius);
+}
+
+.request-channel-card,
+.request-route-card,
+.request-entry-panel {
+  padding: 24px;
+}
+
+.request-channel-card span,
+.request-route-card span {
+  color: var(--blue);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.request-channel-card h3,
+.request-route-card h3,
+.request-entry-panel h3 {
+  margin: 12px 0 10px;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  letter-spacing: -0.04em;
+}
+
+.request-channel-card p,
+.request-route-card p,
+.request-entry-panel p,
+.request-step-card p,
+.request-flow-inner p,
+.request-script-band p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.request-entry-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: radial-gradient(circle at top right, rgba(130,247,202,0.14), transparent 42%), rgba(255,255,255,0.045);
+}
+
+.request-flow-page {
+  padding-top: 0;
+}
+
+.request-flow-hero {
+  min-height: 70svh;
+  display: flex;
+  align-items: center;
+}
+
+.request-flow-inner {
+  position: relative;
+  width: min(1020px, calc(100% - 40px));
+  margin: 0 auto;
+  padding-top: 64px;
+}
+
+.request-flow-inner h1 {
+  max-width: 980px;
+  margin: 0;
+  font-size: clamp(2.6rem, 6vw, 5.4rem);
+  line-height: 0.96;
+  letter-spacing: -0.065em;
+}
+
+.request-flow-inner p {
+  max-width: 780px;
+  margin: 22px 0 0;
+  font-size: clamp(1rem, 1.4vw, 1.18rem);
+}
+
+.request-route-section,
+.request-steps-section {
+  padding-top: 44px;
+}
+
+.request-step-list {
+  display: grid;
+  gap: 14px;
+}
+
+.request-step-card {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 18px;
+  align-items: start;
+  padding: 22px;
+}
+
+.request-step-card > span {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--blue), var(--mint));
+  color: #06111f;
+  font-weight: 900;
+}
+
+.request-step-card h3 {
+  margin: 0 0 8px;
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  letter-spacing: -0.03em;
+}
+
+.request-step-card p {
+  margin: 0;
+}
+
+.request-script-band h2 {
+  max-width: 760px;
+}
+
+.audio-button {
+  cursor: pointer;
+}
+
+@media (max-width: 1080px) {
+  .request-entry-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 780px) {
+  .request-channel-grid,
+  .request-route-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .request-flow-inner h1 {
+    font-size: clamp(2.25rem, 12vw, 3.6rem);
+  }
+
+  .request-step-card {
+    grid-template-columns: 1fr;
+  }
+}
