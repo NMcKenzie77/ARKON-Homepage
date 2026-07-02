@@ -8,5 +8,6 @@ import './hero-shrink.css';
 import './background-fix.css';
 import './alignment-fix.css';
 import './request-flow.css';
+import './seo-pages.css';
 const container = document.getElementById('root');
 createRoot(container).render(<React.StrictMode><App /></React.StrictMode>);
