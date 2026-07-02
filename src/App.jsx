@@ -260,7 +260,7 @@ function CoreTeam() {
     <section className="section core-team-section" id="team">
       <div className="section-heading" data-reveal>
         <p className="eyebrow">Meet the core team</p>
-        <h2>Not one chatbot trying to do everything.</h2>
+        <h2>One team, with the right role for each job.</h2>
         <p>
           ARKON is organized around trained roles. Naya, Vera, Porter, Grant, Marcus, and Iris
           handle communication, calls, website leads, owner visibility, relationship history, and inbox triage.
@@ -441,7 +441,7 @@ function Coverage() {
     <section className="section" id="coverage">
       <div className="section-heading" data-reveal>
         <p className="eyebrow">The operating team behind the walkthrough</p>
-        <h2>Not one bot answering everything. The right roles wake up.</h2>
+        <h2>One customer experience. The right role behind each step.</h2>
         <p>
           The customer experiences one smooth response. Behind the scenes, ARKON activates the
           roles needed for memory, voice, scheduling, preparation, routing, or owner visibility.
