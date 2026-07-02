@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { agentRoster, coverageLanes, dashboardRows, roleViews, solutions, workflowSteps } from './data.js';
+import { coverageLanes, dashboardRows, roleViews, solutions } from './data.js';
 
-function useReveal() {
+function useReveal(deps = []) {
   useEffect(() => {
     const nodes = document.querySelectorAll('[data-reveal]');
     const observer = new IntersectionObserver(
@@ -18,7 +18,7 @@ function useReveal() {
 
     nodes.forEach(node => observer.observe(node));
     return () => observer.disconnect();
-  }, []);
+  }, deps);
 }
 
 function Header() {
@@ -41,68 +41,6 @@ function Header() {
 
       <a className="nav-cta" href="#demo">Book a demo</a>
     </header>
-  );
-}
-
-function FlowPanel() {
-  const [active, setActive] = useState(0);
-  const step = workflowSteps[active];
-  const activeAgents = new Set(step.agents);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActive(index => (index + 1) % workflowSteps.length);
-    }, 3300);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  return (
-    <div className="flow-panel walkthrough-panel" aria-label="Universal ARKON message walkthrough">
-      <div className="panel-topline">
-        <span className="live-dot" />
-        How ARKON handles one message
-        <strong>{step.time}</strong>
-      </div>
-
-      <div className="incoming-message">
-        <span>Incoming message</span>
-        <p>“Hi, I reached out last week. Can someone follow up with me tomorrow?”</p>
-      </div>
-
-      <div className="decision-card">
-        <div className="decision-marker">{step.marker}</div>
-        <div>
-          <p>{step.eyebrow}</p>
-          <h3>{step.title}</h3>
-          <span>{step.detail}</span>
-        </div>
-      </div>
-
-      <div className="context-strip">
-        <span>Decision note</span>
-        <strong>{step.meta}</strong>
-      </div>
-
-      <div className="agent-rail" aria-label="Active ARKON roles">
-        {agentRoster.map(agent => (
-          <span className={activeAgents.has(agent) ? 'active' : ''} key={agent}>{agent}</span>
-        ))}
-      </div>
-
-      <div className="flow-timeline" role="list" aria-label="Flow timeline">
-        {workflowSteps.map((item, index) => (
-          <button
-            key={item.eyebrow}
-            className={index === active ? 'timeline-step active' : 'timeline-step'}
-            onClick={() => setActive(index)}
-            type="button"
-          >
-            <span>{item.marker}</span>
-            {item.time}
-          </button>
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -144,34 +82,54 @@ function Hero() {
 }
 
 function WalkthroughSection() {
+  const channels = [
+    { label: 'Phone call', owner: 'Vera', copy: 'Answers the call, qualifies the caller, captures the details, and routes it when a person is needed.' },
+    { label: 'Website inquiry', owner: 'Porter', copy: 'Answers questions before someone books or asks for service, captures the lead, and hands it to the business.' },
+    { label: 'Text or client message', owner: 'Naya', copy: 'Responds in the owner’s voice, answers what she can, and follows up when a lead does not convert.' },
+    { label: 'Email', owner: 'Iris', copy: 'Reads the inbox, scores urgency and importance, and surfaces what needs attention first.' }
+  ];
+
   return (
-    <section className="section walkthrough-section" id="how">
+    <section className="section walkthrough-section request-entry-section" id="how">
       <div className="section-heading walkthrough-heading" data-reveal>
         <p className="eyebrow">How ARKON moves work forward</p>
-        <h2>One request. The right action.</h2>
+        <h2>When someone reaches out, the right role responds.</h2>
         <p>
-          When something comes in, ARKON checks who it is, what they need, what already happened,
-          and what the business rules allow. ARKON handles the repeatable work it can complete,
-          prepares anything that needs a person, and flags anything that needs judgment.
+          Calls, texts, emails, website inquiries, follow-ups, and owner alerts are not handled the same way.
+          ARKON routes each request to the role built for that job, keeps the business voice consistent,
+          and brings in a person when judgment is needed.
         </p>
       </div>
 
-      <div className="walkthrough-layout">
-        <div className="walkthrough-copy" data-reveal>
-          <h3>The right roles take the next step.</h3>
-          <p>
-            ARKON can answer, schedule, follow up, update records, prepare documents, route the
-            handoff, and notify the right person before work falls through the cracks.
-          </p>
-          <ul>
-            <li>Known contact? Pull the history and last touchpoint.</li>
-            <li>Unknown contact? Capture only what the business needs.</li>
-            <li>Sensitive issue? Route it instead of pretending to solve it.</li>
-          </ul>
+      <div className="request-entry-layout">
+        <div className="request-channel-grid" data-reveal>
+          {channels.map(channel => (
+            <article className="request-channel-card" key={channel.label}>
+              <span>{channel.label}</span>
+              <h3>{channel.owner}</h3>
+              <p>{channel.copy}</p>
+            </article>
+          ))}
         </div>
 
-        <div data-reveal className="walkthrough-product">
-          <FlowPanel />
+        <div className="request-entry-panel" data-reveal>
+          <p className="eyebrow">Deeper walkthrough</p>
+          <h3>See how a request moves through ARKON.</h3>
+          <p>
+            The homepage gives the idea. The full walkthrough shows which role responds first,
+            how Marcus keeps the relationship history attached, and how Grant keeps the owner informed.
+          </p>
+          <div className="hero-actions">
+            <a className="primary-button" href="#request-flow">See how ARKON handles a request</a>
+            <button
+              className="secondary-button audio-button"
+              type="button"
+              data-elevenlabs-hook="naya-request-flow"
+              aria-label="Hear Naya explain the ARKON request workflow"
+            >
+              Hear Naya explain it
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -357,8 +315,8 @@ function RoleViews() {
   return (
     <section className="section split-section" id="roles">
       <div className="section-copy" data-reveal>
-        <p className="eyebrow">Chief of Staff view for every role</p>
-        <h2>Not one dashboard. The right view for the person about to act.</h2>
+        <p className="eyebrow">The right view for the person about to act</p>
+        <h2>Your team sees what needs attention.</h2>
         <p>
           ARKON briefs, coordinates, watches for attention, and prepares each person before
           the call, message, handoff, job, document, or decision.
@@ -440,7 +398,7 @@ function Coverage() {
   return (
     <section className="section" id="coverage">
       <div className="section-heading" data-reveal>
-        <p className="eyebrow">The operating team behind the walkthrough</p>
+        <p className="eyebrow">The work behind each response</p>
         <h2>One customer experience. The right role behind each step.</h2>
         <p>
           The customer experiences one smooth response. Behind the scenes, ARKON activates the
@@ -468,7 +426,7 @@ function Impact() {
   return (
     <section className="impact-band" data-reveal>
       <p className="eyebrow">How it feels different</p>
-      <h2>The business feels present, prepared, and coordinated — even when the owner is not.</h2>
+      <h2>The business feels present, prepared, and coordinated, even when the owner is not.</h2>
       <div className="impact-list">
         {items.map(item => <span key={item}>{item}</span>)}
       </div>
@@ -480,11 +438,11 @@ function DemoCta() {
   return (
     <section className="demo-cta" id="demo" data-reveal>
       <div>
-        <p className="eyebrow">Go deeper by business type</p>
-        <h2>Pick the kind of business, then show the exact workflow.</h2>
+        <p className="eyebrow">See it for your business</p>
+        <h2>Choose the closest business type and walk through the real workflow.</h2>
         <p>
-          The homepage gives the owner the idea. The business page should show the actual
-          calls, messages, documents, customers, staff, and owner view for their industry.
+          See how ARKON would handle the calls, messages, follow-ups, documents, staff updates,
+          and owner visibility in a business like yours.
         </p>
       </div>
       <form className="demo-form" onSubmit={event => event.preventDefault()}>
@@ -514,6 +472,104 @@ function DemoCta() {
   );
 }
 
+function RequestFlowPage() {
+  const channelCards = [
+    { label: 'Phone call', name: 'Vera', detail: 'Vera answers, qualifies the caller, gathers details, and routes the call when a person is needed.' },
+    { label: 'Website inquiry', name: 'Porter', detail: 'Porter answers pre-booking or pre-service questions, captures the lead, and hands the warm inquiry to the business.' },
+    { label: 'Text or client message', name: 'Naya', detail: 'Naya responds in the owner’s voice, handles allowed questions, coordinates requests, and follows up when needed.' },
+    { label: 'Email', name: 'Iris', detail: 'Iris reads the inbox, scores urgency and importance, surfaces what matters, and flags new inquiries to Marcus.' }
+  ];
+
+  const steps = [
+    { number: '01', title: 'The request comes in', copy: 'A call, text, email, website form, guest message, or client message reaches the business.' },
+    { number: '02', title: 'The right role responds first', copy: 'Vera, Porter, Naya, or Iris responds based on the channel and the job that needs to be done.' },
+    { number: '03', title: 'Marcus keeps the history attached', copy: 'Marcus connects the contact record, relationship timeline, pipeline stage, notes, tags, and prior touchpoints.' },
+    { number: '04', title: 'ARKON moves only what it should move', copy: 'Routine work can be handled. Anything requiring judgment, pricing, approval, or a real person gets routed instead of forced.' },
+    { number: '05', title: 'Grant keeps the owner informed', copy: 'Grant surfaces what happened, what was handled, what needs attention, and what can be ignored.' }
+  ];
+
+  return (
+    <main className="request-flow-page" id="request-flow">
+      <section className="hero request-flow-hero">
+        <div className="hero-background" aria-hidden="true">
+          <span className="orb orb-one" />
+          <span className="orb orb-two" />
+          <span className="grid-glow" />
+        </div>
+        <div className="request-flow-inner" data-reveal>
+          <p className="eyebrow">How ARKON handles a request</p>
+          <h1>One business. Different ways people reach out.</h1>
+          <p>
+            The first response depends on how the person contacted the business. The customer should feel one smooth experience.
+            Behind the scenes, the right ARKON role handles the request, Marcus keeps the relationship history attached,
+            and Grant keeps the owner informed.
+          </p>
+          <div className="hero-actions">
+            <a className="primary-button" href="#top">Back to homepage</a>
+            <button className="secondary-button audio-button" type="button" data-elevenlabs-hook="naya-request-flow">
+              Hear Naya explain it
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="section request-route-section">
+        <div className="section-heading" data-reveal>
+          <p className="eyebrow">Who responds first?</p>
+          <h2>The channel decides the first role.</h2>
+          <p>
+            Every request does not run through every agent. The role built for that channel responds first,
+            then the rest of the team supports only when needed.
+          </p>
+        </div>
+
+        <div className="request-route-grid">
+          {channelCards.map(card => (
+            <article className="request-route-card" key={card.label} data-reveal>
+              <span>{card.label}</span>
+              <h3>{card.name}</h3>
+              <p>{card.detail}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section request-steps-section">
+        <div className="section-heading" data-reveal>
+          <p className="eyebrow">What happens next?</p>
+          <h2>The request moves forward without hiding the judgment calls.</h2>
+          <p>
+            ARKON can handle routine work, prepare the next step, or bring in a person.
+            The point is not to pretend everything is automatic. The point is to keep the business moving.
+          </p>
+        </div>
+
+        <div className="request-step-list">
+          {steps.map(step => (
+            <article className="request-step-card" key={step.number} data-reveal>
+              <span>{step.number}</span>
+              <div>
+                <h3>{step.title}</h3>
+                <p>{step.copy}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="impact-band request-script-band" data-reveal>
+        <p className="eyebrow">Naya narration script</p>
+        <h2>“Here’s how ARKON works.”</h2>
+        <p>
+          When someone reaches out, the request is handled by the role built for that channel.
+          Vera answers calls. Porter handles website inquiries. Iris sorts email. I handle client and guest messages in your voice.
+          Marcus keeps the relationship history attached, and Grant keeps the owner informed.
+        </p>
+      </section>
+    </main>
+  );
+}
+
 function Footer() {
   const year = useMemo(() => new Date().getFullYear(), []);
   return (
@@ -525,30 +581,49 @@ function Footer() {
           <small>Systems</small>
         </span>
       </div>
-      <p>© {year} ARKON Systems. Customer memory, business voice, and role-specific handoffs.</p>
+      <p>© {year} ARKON Systems. Repeatable work handled. Your team stays focused.</p>
     </footer>
   );
 }
 
 export default function App() {
-  useReveal();
+  const [isRequestFlow, setIsRequestFlow] = useState(() => window.location.hash === '#request-flow');
+  useReveal([isRequestFlow]);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const nextIsRequestFlow = window.location.hash === '#request-flow';
+      setIsRequestFlow(nextIsRequestFlow);
+      if (nextIsRequestFlow) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange();
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   return (
     <>
       <Header />
-      <main>
-        <Hero />
-        <WalkthroughSection />
-        <HowItWorks />
-        <CoreTeam />
-        <Solutions />
-        <VoiceLayer />
-        <RoleViews />
-        <DashboardProof />
-        <Coverage />
-        <Impact />
-        <DemoCta />
-      </main>
+      {isRequestFlow ? (
+        <RequestFlowPage />
+      ) : (
+        <main>
+          <Hero />
+          <WalkthroughSection />
+          <HowItWorks />
+          <CoreTeam />
+          <Solutions />
+          <VoiceLayer />
+          <RoleViews />
+          <DashboardProof />
+          <Coverage />
+          <Impact />
+          <DemoCta />
+        </main>
+      )}
       <Footer />
     </>
   );
