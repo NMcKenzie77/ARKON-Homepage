@@ -109,32 +109,32 @@ export const coverageLanes = [
 export const solutions = [
   {
     name: 'Real Estate',
-    title: 'Leads, showings, seller calls, buyer questions, and agent handoffs.',
-    details: 'See how ARKON keeps property conversations, follow-up, and agent context from slipping.',
+    title: 'Leads, showings, and agent handoffs.',
+    details: 'For teams that need faster response and cleaner follow-up.',
     href: '/real-estate'
   },
   {
     name: 'Insurance',
-    title: 'Quotes, renewals, documents, client questions, and producer follow-up.',
-    details: 'See how ARKON keeps prospects, policyholders, producers, and admins coordinated.',
+    title: 'Quotes, renewals, and policyholder requests.',
+    details: 'For agencies managing prospects, clients, producers, and admins.',
     href: '/insurance'
   },
   {
     name: 'Short-Term Rentals',
-    title: 'Guests, cleaners, vendors, urgent issues, and host visibility.',
-    details: 'See how ARKON keeps stay operations moving without every message hitting the host.',
+    title: 'Guests, cleaners, and urgent stay issues.',
+    details: 'For operators who need guest and property details organized.',
     href: '/short-term-rentals'
   },
   {
     name: 'Home Services',
-    title: 'Calls, estimates, repairs, technicians, invoices, and customer updates.',
-    details: 'See how ARKON helps service businesses answer, schedule, update, and brief the team.',
+    title: 'Calls, estimates, and job updates.',
+    details: 'For service businesses handling customers, schedules, and field work.',
     href: '/home-services'
   },
   {
     name: 'Professional Services',
-    title: 'Intake, scheduling, documents, client follow-up, and owner visibility.',
-    details: 'See how ARKON protects the first response and keeps client context attached.',
+    title: 'Intake, scheduling, and client follow-up.',
+    details: 'For firms that need clean handoffs and client context attached.',
     href: '/professional-services'
   }
 ];
