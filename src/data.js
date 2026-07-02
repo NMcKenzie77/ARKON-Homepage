@@ -1,61 +1,43 @@
 export const workflowSteps = [
   {
     marker: '01',
-    time: 'Message received',
-    eyebrow: 'A customer reaches out',
-    title: 'Message received',
-    detail: '“Hi, I reached out last week. Can someone follow up with me tomorrow?”',
-    meta: 'Works for calls, texts, email, website forms, or app messages',
-    agents: ['VERA']
+    time: 'Request received',
+    eyebrow: 'Someone reaches out',
+    title: 'The channel decides who responds first',
+    detail: 'Calls, texts, emails, and website inquiries are handled by the role built for that channel.',
+    meta: 'Phone: Vera • Website: Porter • Text: Naya • Email: Iris',
+    agents: ['VERA', 'PORTER', 'NAYA', 'IRIS']
   },
   {
     marker: '02',
-    time: 'Sender checked',
-    eyebrow: 'Known or new?',
-    title: 'Known contact found',
-    detail: 'ARKON checks the phone number, email, name, and relationship history before anyone starts from zero.',
-    meta: 'Last touchpoint attached: reached out last week',
-    agents: ['VERA', 'MARCUS']
+    time: 'Context attached',
+    eyebrow: 'Who is this person?',
+    title: 'Marcus checks the relationship history',
+    detail: 'Contact record, prior conversations, notes, tags, pipeline stage, and follow-up history stay attached to the request.',
+    meta: 'Relationship memory added before the next step',
+    agents: ['MARCUS']
   },
   {
     marker: '03',
-    time: 'Need understood',
-    eyebrow: 'What are they asking for?',
-    title: 'Follow-up request detected',
-    detail: 'ARKON identifies what they need, how urgent it is, and whether it can safely respond or should route to a person.',
-    meta: 'Normal urgency • no sensitive issue detected',
-    agents: ['IRIS', 'CLARA']
+    time: 'Next step prepared',
+    eyebrow: 'Can this move forward?',
+    title: 'Routine work moves, judgment calls route',
+    detail: 'ARKON handles what the business allows and routes anything needing approval, pricing, availability, or a real person.',
+    meta: 'No forced automation on judgment calls',
+    agents: ['NAYA', 'VERA', 'PORTER', 'IRIS']
   },
   {
     marker: '04',
-    time: 'Voice selected',
-    eyebrow: 'How should we sound?',
-    title: 'Business voice selected',
-    detail: 'The reply follows the business’s tone, standards, boundaries, and employee style — not a generic bot script.',
-    meta: 'Warm • direct • professional',
-    agents: ['NAYA']
-  },
-  {
-    marker: '05',
-    time: 'Response path',
-    eyebrow: 'Reply, schedule, or route?',
-    title: 'Response prepared',
-    detail: 'ARKON answers what it can, asks for the right callback timing, or routes the message to the person who owns it.',
-    meta: 'Suggested reply: “Is morning or afternoon better?”',
-    agents: ['NAYA', 'CALEB']
-  },
-  {
-    marker: '06',
-    time: 'Handoff created',
-    eyebrow: 'Who needs to know?',
-    title: 'The right person is briefed',
-    detail: 'The employee sees who reached out, what happened last, what was said, and what needs attention next.',
-    meta: 'Brief ready for the responsible person',
-    agents: ['GRANT', 'MARCUS']
+    time: 'Owner informed',
+    eyebrow: 'What matters now?',
+    title: 'Grant surfaces what needs attention',
+    detail: 'The owner sees what happened, what was handled, what needs action, and what can be ignored.',
+    meta: 'Owner visibility without carrying every detail',
+    agents: ['GRANT']
   }
 ];
 
-export const agentRoster = ['VERA', 'MARCUS', 'IRIS', 'CLARA', 'NAYA', 'CALEB', 'GRANT'];
+export const agentRoster = ['NAYA', 'VERA', 'PORTER', 'IRIS', 'MARCUS', 'GRANT'];
 
 export const roleViews = [
   {
@@ -158,8 +140,8 @@ export const solutions = [
 ];
 
 export const dashboardRows = [
-  { label: 'Universal message walkthrough', owner: 'ARKON', status: 'Handled', priority: 'Live' },
+  { label: 'Website inquiry captured', owner: 'PORTER', status: 'Lead ready', priority: 'Live' },
   { label: 'Known contact found', owner: 'MARCUS', status: 'Context attached', priority: 'Done' },
-  { label: 'Business voice selected', owner: 'NAYA', status: 'Reply prepared', priority: 'Done' },
-  { label: 'Handoff brief created', owner: 'GRANT', status: 'Ready', priority: 'Next' }
+  { label: 'Client message followed up', owner: 'NAYA', status: 'Reply prepared', priority: 'Done' },
+  { label: 'Owner brief created', owner: 'GRANT', status: 'Ready', priority: 'Next' }
 ];
