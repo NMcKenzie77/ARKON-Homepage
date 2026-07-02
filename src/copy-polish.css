@@ -1,0 +1,13 @@
+#solutions .section-heading h2 {
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+#solutions .section-heading h2::before {
+  content: 'Choose the business that looks most like yours.';
+  display: block;
+  color: var(--text);
+  font-size: clamp(2rem, 4vw, 4.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
