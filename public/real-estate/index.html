@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><!--SEO_TITLE-->ARKON Systems | AI Workflow Automation for Service Businesses<!--/SEO_TITLE--></title>
+    <meta name="description" content="<!--SEO_DESCRIPTION-->ARKON Systems gives service businesses an AI operating team for calls, messages, follow-up, scheduling, records, handoffs, and owner visibility.<!--/SEO_DESCRIPTION-->" />
+    <link rel="canonical" href="<!--SEO_CANONICAL-->https://arkonsystems.com/<!--/SEO_CANONICAL-->" />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg:#050914;
+        --panel:rgba(15,26,47,.94);
+        --panel-soft:rgba(255,255,255,.04);
+        --line:rgba(175,199,255,.16);
+        --line-strong:rgba(155,206,255,.28);
+        --text:#eef5ff;
+        --muted:#9fb0ca;
+        --subtle:#6f7f99;
+        --blue:#67d8ff;
+        --mint:#82f7ca;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin:0;
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top left, rgba(80,140,255,.16), transparent 34rem), radial-gradient(circle at top right, rgba(130,247,202,.12), transparent 30rem), var(--bg);
+        color:var(--text);
+      }
+      a { color: inherit; text-decoration: none; }
+      .wrap { width:min(1120px, calc(100% - 40px)); margin:0 auto; }
+      header { display:flex; align-items:center; justify-content:space-between; padding:24px 0; }
+      .brand { display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.08em; }
+      .mark { width:34px; height:34px; display:grid; place-items:center; border-radius:12px; background:linear-gradient(135deg,var(--blue),var(--mint)); color:#06111f; }
+      .nav { display:flex; gap:18px; color:var(--muted); font-size:.9rem; }
+      .button { display:inline-flex; align-items:center; justify-content:center; min-height:40px; padding:0 16px; border-radius:999px; background:linear-gradient(135deg,var(--blue),var(--mint)); color:#06111f; font-weight:800; }
+      .secondary { border:1px solid var(--line-strong); color:var(--text); background:rgba(255,255,255,.04); }
+      .hero { padding:72px 0 44px; }
+      .eyebrow { margin:0 0 14px; color:var(--blue); text-transform:uppercase; letter-spacing:.16em; font-size:.72rem; font-weight:900; }
+      h1 { max-width:900px; margin:0 0 18px; font-size:clamp(2.35rem,5vw,4.8rem); line-height:.98; letter-spacing:-.06em; }
+      .lead { max-width:760px; color:var(--muted); font-size:1.08rem; line-height:1.7; }
+      .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
+      .section { padding:52px 0; }
+      .section-head { max-width:780px; margin-bottom:24px; }
+      h2 { margin:0 0 12px; font-size:clamp(1.9rem,3.8vw,3.6rem); line-height:1; letter-spacing:-.05em; }
+      .section-head p { color:var(--muted); line-height:1.72; font-size:1rem; }
+      .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+      .build-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
+      .card, .build-card {
+        border:1px solid var(--line);
+        border-radius:20px;
+        background:linear-gradient(180deg,var(--panel),rgba(9,16,31,.78));
+        box-shadow:0 18px 54px rgba(0,0,0,.28);
+      }
+      .card { min-height:170px; padding:18px; }
+      .card span, .build-card span { color:var(--mint); font-weight:900; font-size:.76rem; text-transform:uppercase; letter-spacing:.08em; }
+      .card h3 { margin:12px 0 8px; font-size:1.12rem; line-height:1.2; }
+      .card p, .build-card p { margin:0; color:var(--muted); line-height:1.55; font-size:.9rem; }
+      .build-card { min-height:178px; padding:16px; }
+      .build-card h3 { margin:10px 0 8px; font-size:1.22rem; letter-spacing:-.03em; }
+      .workflow { display:grid; gap:10px; }
+      .step { display:grid; grid-template-columns:52px minmax(0,1fr); gap:14px; align-items:center; padding:14px; border:1px solid var(--line); border-radius:18px; background:var(--panel-soft); }
+      .step span { color:var(--blue); font-weight:900; }
+      .step h3 { margin:0; font-size:1.05rem; }
+      .cta { margin:48px 0 80px; padding:28px; border:1px solid var(--line); border-radius:28px; background:rgba(255,255,255,.035); }
+      .cta p { color:var(--muted); line-height:1.65; max-width:720px; }
+      @media (max-width: 980px) { .build-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+      @media (max-width: 700px) { .build-grid, .grid { grid-template-columns:1fr; } header { gap:16px; align-items:flex-start; flex-direction:column; } .nav { flex-wrap:wrap; } }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <a class="brand" href="/"><span class="mark">A</span><span>ARKON Systems</span></a>
+        <nav class="nav" aria-label="Page navigation">
+          <a href="/#solutions">Business types</a>
+          <a href="/how-it-works">How it works</a>
+        </nav>
+        <a class="button" href="/#demo">Book a demo</a>
+      </header>
+
+      <main>
+        <section class="hero">
+          <p class="eyebrow">Real estate workflow automation</p>
+          <h1>Keep real estate leads, showing requests, and agent follow-up moving.</h1>
+          <p class="lead">Real estate teams lose deals when leads wait, showing requests sit, seller calls are missed, or follow-up depends on someone remembering every detail. ARKON gives the team trained roles for calls, website inquiries, client messages, relationship history, and owner visibility.</p>
+          <div class="actions">
+            <a class="button" href="/#demo">Request demo</a>
+            <a class="button secondary" href="/how-it-works">See how ARKON works</a>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <p class="eyebrow">Your real estate ARKON build</p>
+            <h2>The roles assigned to this business.</h2>
+            <p>This is not the entire ARKON team. This is the practical build a real estate office would use first: calls, website leads, client follow-up, relationship memory, and owner visibility.</p>
+          </div>
+          <div class="build-grid">
+            <article class="build-card"><span>Voice reception</span><h3>Vera</h3><p>Answers inbound calls, captures buyer or seller details, and routes showing or listing requests when a person is needed.</p></article>
+            <article class="build-card"><span>Website leads</span><h3>Porter</h3><p>Captures website inquiries, answers approved questions, and turns casual interest into a handoff-ready lead.</p></article>
+            <article class="build-card"><span>Client follow-up</span><h3>Naya</h3><p>Follows up with leads and clients in the business voice so warm opportunities do not go cold.</p></article>
+            <article class="build-card"><span>Relationship memory</span><h3>Marcus</h3><p>Keeps lead history, notes, pipeline stage, prior touchpoints, and follow-up context attached.</p></article>
+            <article class="build-card"><span>Owner visibility</span><h3>Grant</h3><p>Shows what came in, what was handled, who owns the next step, and what needs attention.</p></article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <p class="eyebrow">Where it helps</p>
+            <h2>Real estate work that should not slip.</h2>
+          </div>
+          <div class="grid">
+            <article class="card"><span>Lead response</span><h3>New buyer lead asks a question.</h3><p>Porter captures the inquiry and Naya helps follow up before the lead goes cold.</p></article>
+            <article class="card"><span>Seller calls</span><h3>A seller calls about timing.</h3><p>Vera captures the reason for the call and routes anything requiring agent judgment.</p></article>
+            <article class="card"><span>Showing requests</span><h3>A showing request comes in.</h3><p>Details are collected cleanly so the agent starts with context instead of chasing information.</p></article>
+            <article class="card"><span>Agent handoff</span><h3>An agent needs the history.</h3><p>Marcus keeps prior touchpoints and notes attached before the callback or follow-up.</p></article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <p class="eyebrow">Example flow</p>
+            <h2>How a lead moves through the build.</h2>
+          </div>
+          <div class="workflow">
+            <article class="step"><span>01</span><h3>Lead comes from the website, a call, or a message.</h3></article>
+            <article class="step"><span>02</span><h3>Porter, Vera, or Naya responds based on the channel.</h3></article>
+            <article class="step"><span>03</span><h3>Marcus attaches contact history, notes, and pipeline context.</h3></article>
+            <article class="step"><span>04</span><h3>The agent gets a cleaner handoff and Grant keeps the owner informed.</h3></article>
+          </div>
+        </section>
+
+        <section class="cta">
+          <p class="eyebrow">See it for your business</p>
+          <h2>Walk through the real estate workflow with ARKON.</h2>
+          <p>Review how ARKON would handle your calls, lead sources, follow-up standards, CRM handoffs, showing requests, and owner visibility.</p>
+          <a class="button" href="/#demo">Request demo</a>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
