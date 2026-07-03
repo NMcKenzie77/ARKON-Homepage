@@ -157,8 +157,8 @@ export const solutions = [
   },
   {
     name: 'Law Firms',
-    title: 'Intake, consultations, and document requests.',
-    details: 'For firms that need faster first response and organized client follow-up.',
+    title: 'Attorney schedules, email, and client follow-up.',
+    details: 'For firms where paralegals keep calendars, inboxes, and attorney handoffs moving.',
     href: '/law-firms'
   },
   {
