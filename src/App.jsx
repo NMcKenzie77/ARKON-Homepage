@@ -92,11 +92,20 @@ const industryPages = {
     title: 'AI workflow automation for gyms and fitness studios.',
     description: 'ARKON helps gyms and fitness studios protect trial lead response, tour bookings, personal training revenue, member follow-up, cancellation handoffs, and owner visibility.',
     primary: 'Gyms and fitness studios lose revenue when trial leads are not followed up, tours do not get booked, personal training interest goes cold, cancellation questions sit, or members stop showing up without anyone noticing. ARKON gives the studio trained roles for calls, website inquiries, member messages, booking support, relationship history, and owner visibility.',
+    reality: {
+      eyebrow: 'The studio reality',
+      title: 'Members do not disappear all at once.',
+      body: [
+        'Trial leads go cold when no one follows up. Tours get missed when the front desk is busy. Personal training interest fades when no one owns the next step. Members stop showing up before they officially cancel.',
+        'Retention is not one message. It is the follow-up, context, reminders, handoffs, and visibility that keep the studio from leaking revenue quietly.'
+      ],
+      callout: 'The owner stays in control. ARKON supports the work around membership, retention, and follow-up.'
+    },
     cards: [
-      ['Trial leads and tours', 'When trial leads wait, prospects book elsewhere or never come in. Porter captures the inquiry, answers approved questions, and keeps the tour moving.'],
-      ['Class and front desk calls', 'When class, billing, or cancellation questions sit, the front desk becomes the bottleneck. Vera captures what matters and routes the next step.'],
-      ['Training and member follow-up', 'When training interest or missed visits go unnoticed, revenue and retention slip. Marcus keeps member history and follow-up context attached.'],
-      ['Owner view', 'When leads, cancellations, and bookings scatter across staff, the owner cannot see what is slipping. Grant shows who owns the next step.']
+      ['Keep trial leads warm', 'Trial interest should not go cold because the front desk is busy. Porter captures the inquiry and keeps the tour moving.'],
+      ['Protect training revenue', 'Personal training interest needs a clear next step before the member moves on. Marcus keeps follow-up context attached.'],
+      ['Route front desk pressure', 'Class, billing, and cancellation questions create bottlenecks. Vera captures what matters and routes the next step.'],
+      ['Brief the owner', 'Leads, bookings, and cancellations scatter across staff. Grant shows what is slipping and who owns it.']
     ],
     workflow: ['Trial lead asks about joining', 'Tour or class question comes in', 'Training interest needs follow-up', 'Owner sees what is slipping'],
     faq: [
@@ -813,6 +822,19 @@ function IndustryPage({ page }) {
           </div>
         </div>
       </section>
+
+      {page.reality ? (
+        <section className="industry-reality-panel" data-reveal>
+          <p className="eyebrow">{page.reality.eyebrow}</p>
+          <h2>{page.reality.title}</h2>
+          {page.reality.body.map(paragraph => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+          <div className="industry-reality-callout">
+            <strong>{page.reality.callout}</strong>
+          </div>
+        </section>
+      ) : null}
 
       <section className="section industry-intro-section">
         <div className="section-heading" data-reveal>
