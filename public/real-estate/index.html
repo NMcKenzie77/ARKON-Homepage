@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><!--SEO_TITLE-->ARKON Systems | AI Workflow Automation for Service Businesses<!--/SEO_TITLE--></title>
-    <meta name="description" content="<!--SEO_DESCRIPTION-->ARKON Systems gives service businesses an AI operating team for calls, messages, follow-up, scheduling, records, handoffs, and owner visibility.<!--/SEO_DESCRIPTION-->" />
+    <meta name="description" content="<!--SEO_DESCRIPTION-->ARKON Systems supports service businesses with calls, messages, follow-up, scheduling, records, handoffs, and owner visibility.<!--/SEO_DESCRIPTION-->" />
     <link rel="canonical" href="<!--SEO_CANONICAL-->https://arkonsystems.com/<!--/SEO_CANONICAL-->" />
     <style>
       :root {
@@ -43,22 +43,35 @@
       .section { padding:52px 0; }
       .section-head { max-width:840px; margin-bottom:24px; }
       h2 { margin:0 0 12px; font-size:clamp(1.9rem,3.8vw,3.6rem); line-height:1; letter-spacing:-.05em; }
+      h3 { letter-spacing:-.03em; }
       .section-head p { color:var(--muted); line-height:1.72; font-size:1rem; }
       .section-head .support-copy { max-width:790px; }
-      .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
-      .build-layer-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
-      .card, .layer-card {
+      .story-panel, .story-card, .card, .layer-card {
         border:1px solid var(--line);
-        border-radius:20px;
+        border-radius:24px;
         background:linear-gradient(180deg,var(--panel),rgba(9,16,31,.78));
         box-shadow:0 18px 54px rgba(0,0,0,.28);
       }
-      .card { min-height:170px; padding:18px; }
+      .story-panel { padding:28px; }
+      .story-panel h2 { max-width:850px; }
+      .story-panel p { max-width:860px; color:var(--muted); font-size:1rem; line-height:1.72; }
+      .story-panel strong, .story-card strong { color:var(--text); }
+      .story-panel .pull { margin-top:20px; padding:18px 20px; border-left:3px solid var(--mint); border-radius:18px; background:rgba(255,255,255,.035); color:var(--text); font-weight:800; line-height:1.5; }
+      .story-grid { display:grid; grid-template-columns:1.2fr .8fr; gap:14px; }
+      .story-column { display:grid; gap:14px; }
+      .story-card { padding:22px; }
+      .story-card h3 { margin:0 0 10px; font-size:1.35rem; line-height:1.08; }
+      .story-card p { margin:0; color:var(--muted); line-height:1.65; font-size:.96rem; }
+      .story-card p + p { margin-top:12px; }
+      .story-card.highlight { background:linear-gradient(180deg,rgba(103,216,255,.11),rgba(9,16,31,.78)); border-color:rgba(103,216,255,.34); }
+      .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+      .build-layer-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
+      .card { min-height:170px; padding:18px; border-radius:20px; }
       .card span, .layer-card span { color:var(--mint); font-weight:900; font-size:.76rem; text-transform:uppercase; letter-spacing:.08em; }
       .card h3 { margin:12px 0 8px; font-size:1.12rem; line-height:1.2; }
       .card p, .layer-card p { margin:0; color:var(--muted); line-height:1.55; font-size:.9rem; }
-      .layer-card { min-height:245px; padding:16px; display:flex; flex-direction:column; }
-      .layer-card h3 { margin:10px 0 8px; font-size:1.15rem; line-height:1.15; letter-spacing:-.03em; }
+      .layer-card { min-height:245px; padding:16px; display:flex; flex-direction:column; border-radius:20px; }
+      .layer-card h3 { margin:10px 0 8px; font-size:1.15rem; line-height:1.15; }
       .name-row { display:flex; flex-wrap:wrap; gap:6px; margin:14px 0 12px; }
       .name-row b { display:inline-flex; align-items:center; min-height:24px; padding:0 8px; border-radius:999px; color:#06111f; background:var(--blue); font-size:.68rem; font-weight:900; letter-spacing:.05em; }
       .layer-card p { margin-top:auto; }
@@ -68,9 +81,9 @@
       .step h3 { margin:0; font-size:1.05rem; }
       .cta { margin:48px 0 80px; padding:28px; border:1px solid var(--line); border-radius:28px; background:rgba(255,255,255,.035); }
       .cta p { color:var(--muted); line-height:1.65; max-width:720px; }
-      @media (max-width: 1080px) { .build-layer-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+      @media (max-width: 1080px) { .build-layer-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } .story-grid { grid-template-columns:1fr; } }
       @media (max-width: 980px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-      @media (max-width: 700px) { .build-layer-grid, .grid { grid-template-columns:1fr; } header { gap:16px; align-items:flex-start; flex-direction:column; } .nav { flex-wrap:wrap; } .layer-card { min-height:0; } }
+      @media (max-width: 700px) { .build-layer-grid, .grid { grid-template-columns:1fr; } header { gap:16px; align-items:flex-start; flex-direction:column; } .nav { flex-wrap:wrap; } .layer-card { min-height:0; } .story-panel, .story-card { padding:20px; } }
     </style>
   </head>
   <body>
@@ -96,10 +109,20 @@
         </section>
 
         <section class="section">
+          <article class="story-panel">
+            <p class="eyebrow">The broker reality</p>
+            <h2>When every lead needs a fast response, memory is not a system.</h2>
+            <p>Your agents are busy with conversations, showings, relationships, negotiations, and closings. But the work around the deal never stops. New inquiries come in. Older leads need nurturing. Showing requests need attention. Follow-up windows pass quietly. The broker needs visibility, but agents should not have to stop their day just to recap every update.</p>
+            <p><strong>Old leads are not lost business.</strong> The first conversation is not always the closing conversation. A buyer may ask about a listing today and not be ready for months. A seller may start asking questions now, then wait until the timing feels right. That does not mean the opportunity is gone. It means the relationship needs to be nurtured until the person is ready to move.</p>
+            <p class="pull">The goal is not to rush the relationship. The goal is to make sure opportunity does not sit untouched.</p>
+          </article>
+        </section>
+
+        <section class="section">
           <div class="section-head">
             <p class="eyebrow">Meet the ARKON team built for real estate</p>
             <h2>What ARKON covers for a real estate team.</h2>
-            <p class="support-copy">Your agents cannot answer every call, chase every lead, remember every detail, prepare every handoff, and keep the owner updated at the same time. ARKON covers the repeatable work around leads, calls, showings, follow-up, client history, preparation, and visibility, including after-hours inquiries when your team is unavailable.</p>
+            <p class="support-copy">ARKON works behind the team so leads, calls, showings, follow-up, client history, preparation, and visibility keep moving. The agent owns the relationship. ARKON supports the work around it.</p>
           </div>
           <div class="build-layer-grid">
             <article class="layer-card">
@@ -128,7 +151,7 @@
             </article>
             <article class="layer-card">
               <span>Visibility</span>
-              <h3>The owner sees what needs action.</h3>
+              <h3>The broker sees what needs action.</h3>
               <div class="name-row"><b>GRANT</b><b>GRACE</b><b>ARNOLD</b><b>RILEY</b><b>MAX</b></div>
               <p>Open issues, missed opportunities, patterns, next actions, and team ownership are surfaced clearly.</p>
             </article>
@@ -136,15 +159,53 @@
         </section>
 
         <section class="section">
-          <div class="section-head">
-            <p class="eyebrow">Where it helps</p>
-            <h2>Real estate work that should not slip.</h2>
+          <div class="story-grid">
+            <article class="story-card highlight">
+              <p class="eyebrow">Agent support</p>
+              <h3>Every agent gets a support team.</h3>
+              <p>Agents should be focused on conversations, showings, relationships, negotiations, and closings. But the work around the deal never stops: new inquiries, older lead nurture, reminders, client context, showing requests, follow-up windows, and clean handoffs.</p>
+              <p>ARKON works behind each agent so those pieces keep moving without the agent having to carry every detail alone.</p>
+            </article>
+            <div class="story-column">
+              <article class="story-card">
+                <p class="eyebrow">Broker brief</p>
+                <h3>ARKON briefs the broker so agents can stay focused.</h3>
+                <p>A broker needs to know what is happening across the business, but agents should not have to stop between showings, calls, negotiations, and client work just to recap every update.</p>
+                <p>The broker gets a clearer picture. The agent gets fewer interruptions.</p>
+              </article>
+              <article class="story-card">
+                <p class="eyebrow">After hours</p>
+                <h3>Your business is still being contacted when your team is unavailable.</h3>
+                <p>A buyer may ask about a listing at night. A seller may reach out over the weekend. An older lead may finally reply at a time when the agent is unavailable.</p>
+                <p>ARKON keeps the conversation alive in the agent's voice until the agent is ready to step in.</p>
+              </article>
+            </div>
           </div>
-          <div class="grid">
-            <article class="card"><span>Lead response</span><h3>New buyer lead asks a question.</h3><p>Porter captures the inquiry and Naya helps follow up before the lead goes cold.</p></article>
-            <article class="card"><span>Seller calls</span><h3>A seller calls about timing.</h3><p>Vera captures the reason for the call and routes anything requiring agent judgment.</p></article>
-            <article class="card"><span>Showing requests</span><h3>A showing request comes in.</h3><p>Coordination roles keep callbacks, reminders, and handoffs visible so the next step does not disappear.</p></article>
-            <article class="card"><span>Agent handoff</span><h3>An agent needs the history.</h3><p>Marcus, Iris, and Grant keep prior touchpoints, inbox context, and owner visibility attached before follow-up.</p></article>
+        </section>
+
+        <section class="section">
+          <div class="story-grid">
+            <div class="story-column">
+              <article class="story-card">
+                <p class="eyebrow">Handoffs</p>
+                <h3>A handoff should not create more work.</h3>
+                <p>When a conversation needs the agent, ARKON does not just pass along a name and phone number. It sends the reason for the handoff, the lead context, what was asked, what has already happened, and what needs attention next.</p>
+                <p>The agent steps in with the background already attached instead of starting from zero.</p>
+              </article>
+              <article class="story-card">
+                <p class="eyebrow">Control</p>
+                <h3>ARKON knows when to stop.</h3>
+                <p>ARKON is built around the way your team works: what it should say, what it should collect, what it should avoid, and when the agent needs to step in.</p>
+                <p>It can keep the conversation alive, ask for context, organize the lead, and prepare the handoff, but it does not negotiate, price, promise, approve, or make judgment calls for the agent.</p>
+              </article>
+            </div>
+            <article class="story-card highlight">
+              <p class="eyebrow">Relationship data</p>
+              <h3>One place for the relationship.</h3>
+              <p>A buyer may call once, text later, reply to an email, and ask about another property through the website. A seller may leave a voicemail, answer a follow-up, then send another question days later.</p>
+              <p>ARKON keeps the lead data, conversation history, notes, timing, follow-up activity, and handoff context together so the team is not piecing the relationship together from scattered messages.</p>
+              <p>When the agent steps in, they have the entire background at their fingertips.</p>
+            </article>
           </div>
         </section>
 
@@ -155,16 +216,16 @@
           </div>
           <div class="workflow">
             <article class="step"><span>01</span><h3>Lead comes from the website, a call, a message, or the inbox.</h3></article>
-            <article class="step"><span>02</span><h3>The inquiry is captured and routed to the right next step.</h3></article>
-            <article class="step"><span>03</span><h3>History, timing, ownership, and follow-up details stay attached.</h3></article>
-            <article class="step"><span>04</span><h3>The agent gets a cleaner handoff and the owner sees what needs attention.</h3></article>
+            <article class="step"><span>02</span><h3>The inquiry is captured and the relationship stays warm in the agent's voice.</h3></article>
+            <article class="step"><span>03</span><h3>History, timing, ownership, nurture, and follow-up details stay together.</h3></article>
+            <article class="step"><span>04</span><h3>The agent gets a cleaner handoff and the broker gets briefed on what needs attention.</h3></article>
           </div>
         </section>
 
         <section class="cta">
           <p class="eyebrow">See it for your business</p>
           <h2>Walk through the real estate workflow with ARKON.</h2>
-          <p>Review how ARKON would handle your calls, lead sources, follow-up standards, CRM handoffs, showing requests, preparation work, role visibility, and owner summaries.</p>
+          <p>Review how ARKON would handle your calls, lead sources, lead nurture, CRM handoffs, showing requests, preparation work, role visibility, and broker summaries.</p>
           <a class="button" href="/#demo">Request demo</a>
         </section>
       </main>
