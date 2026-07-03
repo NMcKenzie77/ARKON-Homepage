@@ -74,7 +74,7 @@ const seoPages = {
   },
   '/law-firms': {
     title: 'AI Workflow Automation for Law Firms | ARKON Systems',
-    description: 'ARKON helps law firms manage intake calls, consultation requests, document questions, client follow-up, staff handoffs, and owner visibility.',
+    description: 'ARKON helps law firms support paralegals with attorney schedules, email triage, client follow-up, document requests, daily briefs, handoffs, and owner visibility.',
     schemaType: 'Service'
   },
   '/gyms-fitness-studios': {
