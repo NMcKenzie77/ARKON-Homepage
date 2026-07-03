@@ -148,6 +148,24 @@ export const solutions = [
     title: 'Calls, repair updates, and customer questions.',
     details: 'For auto shops that need intake, status updates, and front-desk coverage.',
     href: '/garages'
+  },
+  {
+    name: 'Medical & Dental',
+    title: 'Appointments, intake, and patient questions.',
+    details: 'For offices that need front-desk coverage and cleaner patient handoffs.',
+    href: '/medical-dental-offices'
+  },
+  {
+    name: 'Law Firms',
+    title: 'Intake, consultations, and document requests.',
+    details: 'For firms that need faster first response and organized client follow-up.',
+    href: '/law-firms'
+  },
+  {
+    name: 'Gyms & Fitness',
+    title: 'Membership questions, bookings, and reminders.',
+    details: 'For studios that need leads, scheduling, and member messages covered.',
+    href: '/gyms-fitness-studios'
   }
 ];
 
