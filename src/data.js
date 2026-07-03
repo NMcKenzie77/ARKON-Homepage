@@ -136,6 +136,18 @@ export const solutions = [
     title: 'Intake, scheduling, and client follow-up.',
     details: 'For firms that need clean handoffs and client context attached.',
     href: '/professional-services'
+  },
+  {
+    name: 'Salons',
+    title: 'Bookings, client messages, and follow-up.',
+    details: 'For salons that need missed calls, appointments, and client requests covered.',
+    href: '/salons'
+  },
+  {
+    name: 'Garages',
+    title: 'Calls, repair updates, and customer questions.',
+    details: 'For auto shops that need intake, status updates, and front-desk coverage.',
+    href: '/garages'
   }
 ];
 
