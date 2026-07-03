@@ -144,9 +144,9 @@ export const solutions = [
     href: '/salons'
   },
   {
-    name: 'Garages',
-    title: 'Calls, repair updates, and customer questions.',
-    details: 'For auto shops that need intake, status updates, and front-desk coverage.',
+    name: 'Auto Repair Shops',
+    title: 'Repair calls, declined work, and return visits.',
+    details: 'For shops that need intake, vehicle context, status updates, and recommended-work follow-up.',
     href: '/garages'
   },
   {
