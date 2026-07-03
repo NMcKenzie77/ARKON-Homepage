@@ -93,10 +93,10 @@ const industryPages = {
     description: 'ARKON helps gyms and fitness studios protect trial lead response, class questions, personal training interest, member follow-up, staff handoffs, and owner visibility.',
     primary: 'Gyms and fitness studios lose momentum when trial leads wait, class questions sit, personal training interest is not followed up, cancellation conversations scatter, or member context depends on whoever is working the desk. ARKON gives the studio trained roles for calls, website inquiries, member messages, booking support, relationship history, and owner visibility.',
     cards: [
-      ['Trial lead response', 'Porter and Naya help capture website inquiries, answer approved membership questions, and follow up before a trial lead goes cold.'],
-      ['Calls and bookings', 'Vera handles inbound calls, captures what matters, and routes class, membership, billing, or cancellation requests to the right person.'],
-      ['Member context', 'Marcus keeps member history, visit notes, training interest, follow-up timing, and prior touchpoints attached.'],
-      ['Owner view', 'Grant surfaces what came in, what was handled, who owns the next step, and where leads, members, or bookings need attention.']
+      ['Trial lead response', 'When trial requests wait, prospects book somewhere else or never come in. Porter and Naya capture the inquiry, answer approved membership questions, and follow up before the lead goes cold.'],
+      ['Calls and bookings', 'When class, billing, or cancellation calls sit, the front desk becomes the bottleneck. Vera captures what matters and routes the request to the right person.'],
+      ['Member context', 'When notes live with whoever worked the desk, members feel unknown and follow-up gets missed. Marcus keeps visit history, training interest, timing, and prior touchpoints attached.'],
+      ['Owner view', 'When leads, members, and bookings scatter across staff, the owner cannot see what is slipping. Grant surfaces what was handled, who owns the next step, and what needs attention.']
     ],
     workflow: ['Trial lead asks about joining', 'Member has a class or schedule question', 'Personal training request comes in', 'Owner sees what needs attention'],
     faq: [
