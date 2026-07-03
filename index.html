@@ -157,19 +157,8 @@
             else form.appendChild(message);
           }
 
-          if (!form.querySelector('[name="companyWebsite"]')) {
-            const honeypot = document.createElement('input');
-            honeypot.type = 'text';
-            honeypot.name = 'companyWebsite';
-            honeypot.tabIndex = -1;
-            honeypot.autocomplete = 'off';
-            honeypot.setAttribute('aria-hidden', 'true');
-            honeypot.style.position = 'absolute';
-            honeypot.style.left = '-9999px';
-            honeypot.style.width = '1px';
-            honeypot.style.height = '1px';
-            form.appendChild(honeypot);
-          }
+          const honeypot = form.querySelector('[name="companyWebsite"]');
+          if (honeypot) honeypot.value = '';
 
           form.querySelectorAll('small').forEach(note => {
             if ((note.textContent || '').toLowerCase().includes('front-end only')) note.remove();
@@ -194,7 +183,6 @@
           const website = String(data.get('website') || '').trim();
           const businessType = String(data.get('businessType') || '').trim();
           const message = String(data.get('message') || '').trim();
-          const companyWebsite = String(data.get('companyWebsite') || '').trim();
 
           if (!name || !email || !phone || !companyName || !businessType) {
             setStatus(form, 'Please enter your name, email, telephone number, company name, and business type.');
@@ -225,7 +213,7 @@
                 businessType,
                 sourcePath: window.location.pathname,
                 message: emailMessage,
-                companyWebsite
+                companyWebsite: ''
               })
             });
             const result = await response.json().catch(() => ({}));
