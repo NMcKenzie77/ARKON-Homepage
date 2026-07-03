@@ -43,6 +43,8 @@
       .lead { max-width:730px; color:var(--muted); font-size:1.1rem; line-height:1.7; }
       .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
       .section { padding:48px 0; }
+      .section-tight-bottom { padding-bottom:22px; }
+      .section-tight-top { padding-top:22px; }
       .panel, .card, .strip {
         border:1px solid var(--line);
         border-radius:26px;
@@ -69,7 +71,7 @@
       .cta { margin:48px 0 80px; padding:30px; border:1px solid var(--line); border-radius:30px; background:rgba(255,255,255,.035); }
       .cta p { max-width:690px; }
       @media (max-width: 980px) { .outcome-grid { grid-template-columns:1fr; } }
-      @media (max-width: 700px) { header { gap:16px; align-items:flex-start; flex-direction:column; } .nav { flex-wrap:wrap; } .panel, .card, .strip, .cta { padding:22px; } }
+      @media (max-width: 700px) { header { gap:16px; align-items:flex-start; flex-direction:column; } .nav { flex-wrap:wrap; } .section-tight-bottom { padding-bottom:18px; } .section-tight-top { padding-top:18px; } .panel, .card, .strip, .cta { padding:22px; } }
     </style>
   </head>
   <body>
@@ -104,7 +106,7 @@
           </article>
         </section>
 
-        <section class="section">
+        <section class="section section-tight-bottom">
           <div class="outcome-grid">
             <article class="card highlight">
               <p class="eyebrow">Keep leads warm</p>
@@ -124,7 +126,7 @@
           </div>
         </section>
 
-        <section class="section">
+        <section class="section section-tight-top">
           <article class="strip">
             <p class="eyebrow">Prepared for agent review</p>
             <h2>ARKON also prepares the work around the decision.</h2>
