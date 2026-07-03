@@ -86,6 +86,23 @@ const industryPages = {
       ['Can ARKON handle confidential matters?', 'Sensitive workflows should be defined carefully. ARKON can route anything requiring judgment, approval, or privacy review.'],
       ['Does it replace staff?', 'No. ARKON handles repeatable intake and follow-up work so staff can focus on client service and decisions.']
     ]
+  },
+  '/gyms-fitness-studios': {
+    eyebrow: 'Gym and fitness studio workflow automation',
+    title: 'AI workflow automation for gyms and fitness studios.',
+    description: 'ARKON helps gyms and fitness studios handle trial leads, membership questions, class bookings, personal training inquiries, member messages, reminders, and owner visibility.',
+    primary: 'Gyms and fitness studios leak money when trial leads wait, class questions pile up, no-shows are not followed up, cancellation questions get messy, or the front desk has to remember every member detail. ARKON keeps lead response, member messages, scheduling support, handoffs, and owner visibility organized.',
+    cards: [
+      ['Trial and membership leads', 'Porter captures website inquiries, trial pass questions, membership interest, and personal training requests before they disappear.'],
+      ['Front desk calls', 'Vera answers calls, captures the reason for the call, handles approved questions, and routes pricing, cancellation, billing, or safety issues to a person.'],
+      ['Member messages', 'Naya sends reminders, answers routine questions in the studio voice, follows up after missed visits, and prepares warm handoffs when a person needs to step in.'],
+      ['Owner visibility', 'Grant shows missed leads, unresolved messages, no-show patterns, cancellation risk, and the next actions the team needs to handle.']
+    ],
+    workflow: ['Trial pass inquiry comes in', 'Member asks about class timing', 'Personal training lead needs a callback', 'Owner sees no-shows, cancellations, and open follow-up'],
+    faq: [
+      ['Can ARKON handle membership cancellations?', 'ARKON should follow the studio’s approved cancellation policy, collect the right details, and route contract, billing, or judgment-based issues to staff.'],
+      ['Can it help with retention?', 'Yes. ARKON can help follow up with trial leads, missed visits, no-shows, inactive members, and personal training prospects when the rules are defined.']
+    ]
   }
 };
 
