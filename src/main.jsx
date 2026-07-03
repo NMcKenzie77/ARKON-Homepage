@@ -11,5 +11,6 @@ import './request-flow.css';
 import './seo-pages.css';
 import './core-team-polish.css';
 import './copy-polish.css';
+import './homepage-logo.css';
 const container = document.getElementById('root');
 createRoot(container).render(<React.StrictMode><App /></React.StrictMode>);
