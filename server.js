@@ -134,6 +134,197 @@ function escapeHtml(value) {
     .replaceAll('"', '&quot;');
 }
 
+function cleanText(value, maxLength = 500) {
+  return String(value || '')
+    .replace(/[\u0000-\u001f\u007f]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, maxLength);
+}
+
+function cleanMessage(value, maxLength = 2500) {
+  return String(value || '')
+    .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, '')
+    .trim()
+    .slice(0, maxLength);
+}
+
+function isValidEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function jsonResponse(res, statusCode, payload) {
+  res.writeHead(statusCode, {
+    'content-type': 'application/json; charset=utf-8',
+    'cache-control': 'no-store'
+  });
+  res.end(JSON.stringify(payload));
+}
+
+function readJsonBody(req, limitBytes = 32_000) {
+  return new Promise((resolveBody, rejectBody) => {
+    let body = '';
+
+    req.on('data', chunk => {
+      body += chunk;
+      if (body.length > limitBytes) {
+        rejectBody(new Error('Request body too large'));
+        req.destroy();
+      }
+    });
+
+    req.on('end', () => {
+      try {
+        resolveBody(body ? JSON.parse(body) : {});
+      } catch {
+        rejectBody(new Error('Invalid JSON'));
+      }
+    });
+
+    req.on('error', rejectBody);
+  });
+}
+
+function getClientIp(req) {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (typeof forwarded === 'string' && forwarded.trim()) return forwarded.split(',')[0].trim();
+  return req.socket?.remoteAddress || 'unknown';
+}
+
+async function sendWithResend({ from, to, replyTo, subject, text }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return false;
+
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      authorization: `Bearer ${apiKey}`,
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      from,
+      to: [to],
+      subject,
+      text,
+      reply_to: replyTo
+    })
+  });
+
+  if (!response.ok) {
+    const detail = await response.text().catch(() => '');
+    throw new Error(`Resend failed with ${response.status}: ${detail.slice(0, 300)}`);
+  }
+
+  return true;
+}
+
+async function sendWithPostmark({ from, to, replyTo, subject, text }) {
+  const token = process.env.POSTMARK_SERVER_TOKEN || process.env.POSTMARK_API_TOKEN;
+  if (!token) return false;
+
+  const response = await fetch('https://api.postmarkapp.com/email', {
+    method: 'POST',
+    headers: {
+      'x-postmark-server-token': token,
+      accept: 'application/json',
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      From: from,
+      To: to,
+      Subject: subject,
+      TextBody: text,
+      ReplyTo: replyTo
+    })
+  });
+
+  if (!response.ok) {
+    const detail = await response.text().catch(() => '');
+    throw new Error(`Postmark failed with ${response.status}: ${detail.slice(0, 300)}`);
+  }
+
+  return true;
+}
+
+async function sendDemoRequestEmail(payload, req) {
+  const to = process.env.DEMO_REQUEST_TO_EMAIL;
+  const from = process.env.DEMO_REQUEST_FROM_EMAIL;
+  const preferredProvider = cleanText(process.env.DEMO_EMAIL_PROVIDER, 30).toLowerCase();
+
+  if (!to || !from) {
+    throw new Error('Demo request email recipient or sender is not configured.');
+  }
+
+  const subject = `ARKON demo request: ${payload.businessType || 'General inquiry'}`;
+  const text = [
+    'New ARKON demo request',
+    '',
+    `Name: ${payload.name}`,
+    `Email: ${payload.email}`,
+    `Phone: ${payload.phone || 'Not provided'}`,
+    `Business type: ${payload.businessType || 'Not selected'}`,
+    `Source page: ${payload.sourcePath || '/'}`,
+    `IP: ${getClientIp(req)}`,
+    `User agent: ${cleanText(req.headers['user-agent'], 300) || 'unknown'}`,
+    '',
+    'Message:',
+    payload.message || 'No message provided'
+  ].join('\n');
+
+  const mail = {
+    from,
+    to,
+    replyTo: payload.email,
+    subject,
+    text
+  };
+
+  if (preferredProvider === 'postmark') return sendWithPostmark(mail);
+  if (preferredProvider === 'resend') return sendWithResend(mail);
+
+  if (process.env.RESEND_API_KEY) return sendWithResend(mail);
+  if (process.env.POSTMARK_SERVER_TOKEN || process.env.POSTMARK_API_TOKEN) return sendWithPostmark(mail);
+
+  throw new Error('No email provider configured for demo requests.');
+}
+
+async function handleDemoRequest(req, res) {
+  if (req.method !== 'POST') {
+    res.writeHead(405, { allow: 'POST', 'content-type': 'application/json; charset=utf-8' });
+    res.end(JSON.stringify({ ok: false, message: 'Method not allowed.' }));
+    return;
+  }
+
+  try {
+    const body = await readJsonBody(req);
+
+    if (cleanText(body.companyWebsite, 200)) {
+      jsonResponse(res, 200, { ok: true, message: 'Request received.' });
+      return;
+    }
+
+    const payload = {
+      name: cleanText(body.name, 120),
+      email: cleanText(body.email, 180).toLowerCase(),
+      phone: cleanText(body.phone, 80),
+      businessType: cleanText(body.businessType, 140),
+      sourcePath: cleanText(body.sourcePath, 220),
+      message: cleanMessage(body.message, 2500)
+    };
+
+    if (!payload.name || !isValidEmail(payload.email)) {
+      jsonResponse(res, 400, { ok: false, message: 'Please enter your name and a valid email.' });
+      return;
+    }
+
+    await sendDemoRequestEmail(payload, req);
+    jsonResponse(res, 200, { ok: true, message: 'Request received. We will follow up shortly.' });
+  } catch (error) {
+    console.error('Demo request failed:', error);
+    jsonResponse(res, 500, { ok: false, message: 'Request could not be sent. Please try again.' });
+  }
+}
+
 function buildSchema(route, seo) {
   const url = `${siteUrl}${route === '/' ? '/' : route}`;
   const base = {
@@ -165,6 +356,146 @@ function injectSeo(html, route) {
     .replace(/<!--SEO_DESCRIPTION-->[\s\S]*?<!--\/SEO_DESCRIPTION-->/g, escapeHtml(seo.description))
     .replace(/<!--SEO_CANONICAL-->[\s\S]*?<!--\/SEO_CANONICAL-->/g, escapeHtml(canonical))
     .replace(/<!--SEO_SCHEMA-->[\s\S]*?<!--\/SEO_SCHEMA-->/, buildSchema(route, seo));
+}
+
+function injectDemoRequestScript(html) {
+  if (html.includes('data-demo-request-script')) return html;
+
+  const script = `<script data-demo-request-script>
+(() => {
+  const endpoint = '/api/demo-request';
+
+  function findLabelText(label) {
+    return (label.childNodes[0]?.textContent || label.textContent || '').trim().toLowerCase();
+  }
+
+  function styleTextarea(textarea) {
+    textarea.style.width = '100%';
+    textarea.style.minHeight = '108px';
+    textarea.style.border = '1px solid var(--line)';
+    textarea.style.borderRadius = '14px';
+    textarea.style.padding = '12px 14px';
+    textarea.style.color = 'var(--text)';
+    textarea.style.background = 'rgba(5, 9, 20, 0.62)';
+    textarea.style.outline = 'none';
+    textarea.style.resize = 'vertical';
+  }
+
+  function enhanceDemoForm() {
+    const form = document.querySelector('.demo-form');
+    if (!form || form.dataset.demoEnhanced === 'true') return;
+    form.dataset.demoEnhanced = 'true';
+    form.setAttribute('action', endpoint);
+    form.setAttribute('method', 'post');
+
+    form.querySelectorAll('label').forEach(label => {
+      const text = findLabelText(label);
+      const input = label.querySelector('input');
+      const select = label.querySelector('select');
+      if (input && text.includes('name')) input.name = 'name';
+      if (input && text.includes('email')) input.name = 'email';
+      if (select && text.includes('business')) select.name = 'businessType';
+    });
+
+    const select = form.querySelector('select[name="businessType"]');
+    if (select) {
+      const existing = new Set([...select.options].map(option => option.textContent.trim()));
+      ['Salons', 'Auto repair shops', 'Medical and dental offices', 'Law firms', 'Gyms and fitness studios'].forEach(label => {
+        if (!existing.has(label)) {
+          const option = document.createElement('option');
+          option.textContent = label;
+          option.value = label;
+          select.appendChild(option);
+        }
+      });
+    }
+
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    if (!form.querySelector('[name="message"]')) {
+      const messageLabel = document.createElement('label');
+      messageLabel.textContent = 'Message';
+      const textarea = document.createElement('textarea');
+      textarea.name = 'message';
+      textarea.placeholder = 'Tell us what kind of workflow you want ARKON to handle.';
+      styleTextarea(textarea);
+      messageLabel.appendChild(textarea);
+      submitButton?.insertAdjacentElement('beforebegin', messageLabel);
+    }
+
+    if (!form.querySelector('[name="companyWebsite"]')) {
+      const honeypot = document.createElement('input');
+      honeypot.type = 'text';
+      honeypot.name = 'companyWebsite';
+      honeypot.tabIndex = -1;
+      honeypot.autocomplete = 'off';
+      honeypot.setAttribute('aria-hidden', 'true');
+      honeypot.style.position = 'absolute';
+      honeypot.style.left = '-9999px';
+      honeypot.style.width = '1px';
+      honeypot.style.height = '1px';
+      form.appendChild(honeypot);
+    }
+
+    form.querySelectorAll('small').forEach(note => {
+      if ((note.textContent || '').toLowerCase().includes('front-end only')) note.remove();
+    });
+
+    const status = document.createElement('small');
+    status.setAttribute('role', 'status');
+    status.style.minHeight = '20px';
+    status.style.display = 'block';
+    status.style.color = 'var(--subtle)';
+    form.appendChild(status);
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation?.();
+
+      const data = new FormData(form);
+      const payload = {
+        name: String(data.get('name') || '').trim(),
+        email: String(data.get('email') || '').trim(),
+        businessType: String(data.get('businessType') || '').trim(),
+        message: String(data.get('message') || '').trim(),
+        companyWebsite: String(data.get('companyWebsite') || '').trim(),
+        sourcePath: window.location.pathname
+      };
+
+      if (!payload.name || !payload.email) {
+        status.textContent = 'Please enter your name and email.';
+        return;
+      }
+
+      if (submitButton) submitButton.disabled = true;
+      status.textContent = 'Sending request...';
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || result.ok === false) throw new Error(result.message || 'Request failed.');
+        form.reset();
+        status.textContent = result.message || 'Request received. We will follow up shortly.';
+      } catch {
+        status.textContent = 'Request could not be sent. Please try again.';
+      } finally {
+        if (submitButton) submitButton.disabled = false;
+      }
+    }, true);
+  }
+
+  enhanceDemoForm();
+  window.addEventListener('DOMContentLoaded', enhanceDemoForm);
+  new MutationObserver(enhanceDemoForm).observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>`;
+
+  return html.replace(/<\/body>/i, `${script}\n</body>`);
 }
 
 function applySharedShell(html) {
@@ -200,15 +531,21 @@ function robotsTxt() {
   return `User-agent: *\nAllow: /\nSitemap: ${siteUrl}/sitemap.xml\n`;
 }
 
-createServer((req, res) => {
+createServer(async (req, res) => {
+  const reqUrl = req.url || '/';
+  const pathname = reqUrl.split('?')[0];
+
+  if (pathname === '/api/demo-request') {
+    await handleDemoRequest(req, res);
+    return;
+  }
+
   if (!existsSync(distDir)) {
     res.writeHead(500, { 'content-type': 'text/plain; charset=utf-8' });
     res.end('Build folder not found. Run npm run build before npm start.');
     return;
   }
 
-  const reqUrl = req.url || '/';
-  const pathname = reqUrl.split('?')[0];
   const route = normalizeRoute(reqUrl);
   const normalizedPathname = pathname.replace(/\/$/, '') || '/';
 
@@ -250,9 +587,10 @@ createServer((req, res) => {
     const isStandaloneStaticPage = filePath !== appShellPath;
     const rawHtml = readFileSync(filePath, 'utf8');
     const htmlWithShell = isKnownRoute && isStandaloneStaticPage ? applySharedShell(rawHtml) : rawHtml;
+    const htmlWithSeo = injectSeo(htmlWithShell, route);
 
     res.writeHead(isKnownRoute ? 200 : 404, headers);
-    res.end(injectSeo(htmlWithShell, route));
+    res.end(injectDemoRequestScript(htmlWithSeo));
     return;
   }
 
