@@ -66,6 +66,21 @@ const seoPages = {
     title: 'AI Workflow Automation for Garages and Auto Shops | ARKON Systems',
     description: 'ARKON helps garages and auto repair shops manage customer calls, repair updates, estimate requests, appointment intake, and owner visibility.',
     schemaType: 'Service'
+  },
+  '/medical-dental-offices': {
+    title: 'AI Workflow Automation for Medical and Dental Offices | ARKON Systems',
+    description: 'ARKON helps medical and dental offices manage appointment calls, intake, reminders, patient questions, front-desk handoffs, and owner visibility.',
+    schemaType: 'Service'
+  },
+  '/law-firms': {
+    title: 'AI Workflow Automation for Law Firms | ARKON Systems',
+    description: 'ARKON helps law firms manage intake calls, consultation requests, document questions, client follow-up, staff handoffs, and owner visibility.',
+    schemaType: 'Service'
+  },
+  '/gyms-fitness-studios': {
+    title: 'AI Workflow Automation for Gyms and Fitness Studios | ARKON Systems',
+    description: 'ARKON helps gyms and fitness studios manage membership questions, booking requests, reminders, lead follow-up, staff handoffs, and owner visibility.',
+    schemaType: 'Service'
   }
 };
 
