@@ -31,8 +31,70 @@
     <script type="module" src="/src/main.jsx"></script>
     <script>
       (() => {
+        const endpoint = '/api/demo-request';
+
         function normalize(value) {
           return String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+        }
+
+        function setStatus(form, message) {
+          let status = form.querySelector('[data-demo-status="true"]');
+          if (!status) {
+            status = document.createElement('small');
+            status.dataset.demoStatus = 'true';
+            status.setAttribute('role', 'status');
+            status.style.minHeight = '20px';
+            status.style.display = 'block';
+            status.style.color = 'var(--subtle)';
+            form.appendChild(status);
+          }
+          status.textContent = message;
+        }
+
+        function makeInputLabel(labelText, name, type, placeholder, required = true) {
+          const label = document.createElement('label');
+          label.dataset.demoInjected = name;
+          label.textContent = labelText;
+
+          const input = document.createElement('input');
+          input.name = name;
+          input.type = type;
+          input.placeholder = placeholder;
+          input.autocomplete = name === 'companyName' ? 'organization' : name;
+          if (required) input.required = true;
+
+          label.appendChild(input);
+          return label;
+        }
+
+        function makeMessageLabel() {
+          const label = document.createElement('label');
+          label.dataset.demoInjected = 'message';
+          label.textContent = 'Message';
+
+          const textarea = document.createElement('textarea');
+          textarea.name = 'message';
+          textarea.placeholder = 'Tell us what kind of workflow you want ARKON to handle.';
+          textarea.style.width = '100%';
+          textarea.style.minHeight = '108px';
+          textarea.style.border = '1px solid var(--line)';
+          textarea.style.borderRadius = '14px';
+          textarea.style.padding = '12px 14px';
+          textarea.style.color = 'var(--text)';
+          textarea.style.background = 'rgba(5, 9, 20, 0.62)';
+          textarea.style.outline = 'none';
+          textarea.style.resize = 'vertical';
+
+          label.appendChild(textarea);
+          return label;
+        }
+
+        function insertBeforeBusinessOrButton(form, node) {
+          const businessLabel = [...form.querySelectorAll('label')].find(label => normalize(label.textContent).includes('business'));
+          const submitButton = form.querySelector('button[type="submit"]');
+          const target = businessLabel || submitButton;
+          if (target) target.insertAdjacentElement('beforebegin', node);
+          else form.appendChild(node);
         }
 
         function mapDemoFields() {
@@ -57,15 +119,128 @@
             if (!control.name && combined.includes('name')) control.name = 'name';
             if (!control.name && (combined.includes('email') || control.type === 'email')) control.name = 'email';
             if (!control.name && (combined.includes('business') || control.tagName === 'SELECT')) control.name = 'businessType';
+            if (!control.name && combined.includes('telephone')) control.name = 'phone';
+            if (!control.name && combined.includes('phone')) control.name = 'phone';
+            if (!control.name && combined.includes('company')) control.name = 'companyName';
+            if (!control.name && combined.includes('website')) control.name = 'website';
+            if (!control.name && combined.includes('webpage')) control.name = 'website';
             if (!control.name && combined.includes('message')) control.name = 'message';
           });
 
           if (textInputs[0] && !form.querySelector('[name="name"]')) textInputs[0].name = 'name';
           if (emailInput && !form.querySelector('[name="email"]')) emailInput.name = 'email';
           if (select && !form.querySelector('[name="businessType"]')) select.name = 'businessType';
+
+          const nameInput = form.querySelector('[name="name"]');
+          const email = form.querySelector('[name="email"]');
+          const business = form.querySelector('[name="businessType"]');
+          if (nameInput) nameInput.required = true;
+          if (email) email.required = true;
+          if (business) business.required = true;
+
+          if (!form.querySelector('[name="companyName"]')) {
+            insertBeforeBusinessOrButton(form, makeInputLabel('Company name', 'companyName', 'text', 'Company name', true));
+          }
+
+          if (!form.querySelector('[name="phone"]')) {
+            insertBeforeBusinessOrButton(form, makeInputLabel('Telephone number', 'phone', 'tel', 'Best phone number', true));
+          }
+
+          if (!form.querySelector('[name="website"]')) {
+            insertBeforeBusinessOrButton(form, makeInputLabel('Website link', 'website', 'url', 'https://example.com', false));
+          }
+
+          if (!form.querySelector('[name="message"]')) {
+            const submitButton = form.querySelector('button[type="submit"]');
+            const message = makeMessageLabel();
+            if (submitButton) submitButton.insertAdjacentElement('beforebegin', message);
+            else form.appendChild(message);
+          }
+
+          if (!form.querySelector('[name="companyWebsite"]')) {
+            const honeypot = document.createElement('input');
+            honeypot.type = 'text';
+            honeypot.name = 'companyWebsite';
+            honeypot.tabIndex = -1;
+            honeypot.autocomplete = 'off';
+            honeypot.setAttribute('aria-hidden', 'true');
+            honeypot.style.position = 'absolute';
+            honeypot.style.left = '-9999px';
+            honeypot.style.width = '1px';
+            honeypot.style.height = '1px';
+            form.appendChild(honeypot);
+          }
+
+          form.querySelectorAll('small').forEach(note => {
+            if ((note.textContent || '').toLowerCase().includes('front-end only')) note.remove();
+          });
+        }
+
+        async function submitDemoRequest(event) {
+          const form = event.target?.closest?.('.demo-form');
+          if (!form) return;
+
+          event.preventDefault();
+          event.stopPropagation();
+          event.stopImmediatePropagation?.();
+
+          mapDemoFields();
+
+          const data = new FormData(form);
+          const name = String(data.get('name') || '').trim();
+          const email = String(data.get('email') || '').trim();
+          const phone = String(data.get('phone') || '').trim();
+          const companyName = String(data.get('companyName') || '').trim();
+          const website = String(data.get('website') || '').trim();
+          const businessType = String(data.get('businessType') || '').trim();
+          const message = String(data.get('message') || '').trim();
+          const companyWebsite = String(data.get('companyWebsite') || '').trim();
+
+          if (!name || !email || !phone || !companyName || !businessType) {
+            setStatus(form, 'Please enter your name, email, telephone number, company name, and business type.');
+            return;
+          }
+
+          const submitButton = form.querySelector('button[type="submit"]');
+          if (submitButton) submitButton.disabled = true;
+          setStatus(form, 'Sending request...');
+
+          const emailMessage = [
+            `Company name: ${companyName}`,
+            `Telephone number: ${phone}`,
+            `Website link: ${website || 'Not provided'}`,
+            '',
+            'Lead message:',
+            message || 'No message provided'
+          ].join('\n');
+
+          try {
+            const response = await fetch(endpoint, {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({
+                name,
+                email,
+                phone,
+                businessType,
+                sourcePath: window.location.pathname,
+                message: emailMessage,
+                companyWebsite
+              })
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok || result.ok === false) throw new Error(result.message || 'Request failed.');
+            form.reset();
+            setStatus(form, result.message || 'Request received. We will follow up shortly.');
+          } catch {
+            setStatus(form, 'Request could not be sent. Please try again.');
+          } finally {
+            if (submitButton) submitButton.disabled = false;
+          }
         }
 
         mapDemoFields();
+        document.addEventListener('submit', submitDemoRequest, true);
         window.addEventListener('DOMContentLoaded', mapDemoFields);
         window.addEventListener('load', mapDemoFields);
         new MutationObserver(mapDemoFields).observe(document.documentElement, { childList: true, subtree: true });
