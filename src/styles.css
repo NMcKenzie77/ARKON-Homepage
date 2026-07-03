@@ -279,13 +279,13 @@ button, input, select { font: inherit; }
   padding: 88px 0;
 }
 .section-heading { max-width: 760px; margin-bottom: 34px; }
-.section-heading h2, .section-copy h2, .dashboard-copy h2, .impact-band h2, .demo-cta h2 {
+.section-heading h2, .section-copy h2, .dashboard-copy h2, .impact-band h2, .demo-cta h2, .industry-reality-panel h2 {
   margin: 0;
   font-size: clamp(2rem, 4.4vw, 4.2rem);
   line-height: 0.98;
   letter-spacing: -0.055em;
 }
-.section-heading p:not(.eyebrow), .section-copy p, .dashboard-copy p, .impact-band p:not(.eyebrow), .demo-cta p {
+.section-heading p:not(.eyebrow), .section-copy p, .dashboard-copy p, .impact-band p:not(.eyebrow), .demo-cta p, .industry-reality-panel p:not(.eyebrow) {
   color: var(--muted);
   line-height: 1.75;
   font-size: 1.03rem;
@@ -372,6 +372,37 @@ button, input, select { font: inherit; }
   background: linear-gradient(135deg, rgba(103,216,255,0.13), rgba(155,124,255,0.10), rgba(130,247,202,0.09));
   box-shadow: var(--shadow);
 }
+.industry-reality-panel {
+  width: min(var(--max), calc(100% - 40px));
+  margin: 28px auto 0;
+  padding: 52px 56px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(15, 26, 47, 0.96), rgba(8, 15, 29, 0.84));
+  box-shadow: var(--shadow);
+}
+.industry-reality-panel h2 {
+  max-width: 980px;
+  margin-bottom: 22px;
+}
+.industry-reality-panel p:not(.eyebrow) {
+  max-width: 980px;
+  margin: 0 0 18px;
+}
+.industry-reality-callout {
+  margin-top: 28px;
+  padding: 20px 24px;
+  border: 1px solid rgba(130,247,202,0.34);
+  border-left: 4px solid var(--mint);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.045);
+}
+.industry-reality-callout strong {
+  display: block;
+  color: var(--text);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
 .impact-list { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
 .impact-list span { border: 1px solid var(--line-strong); border-radius: 999px; padding: 10px 14px; background: rgba(255,255,255,0.055); }
 
@@ -424,7 +455,7 @@ button, input, select { font: inherit; }
   .hero-subtitle { font-size: 0.98rem; }
   .customer-card { min-height: 112px; }
   .three-card-grid, .solution-grid, .coverage-grid, .metric-row { grid-template-columns: 1fr; }
-  .dashboard-section, .demo-cta, .impact-band { padding: 28px; }
+  .dashboard-section, .demo-cta, .impact-band, .industry-reality-panel { padding: 28px; }
   .dash-row { align-items: flex-start; flex-direction: column; }
   .site-footer { flex-direction: column; align-items: flex-start; }
 }
