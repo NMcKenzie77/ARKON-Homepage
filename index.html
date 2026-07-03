@@ -29,5 +29,47 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      (() => {
+        function normalize(value) {
+          return String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+        }
+
+        function mapDemoFields() {
+          const form = document.querySelector('.demo-form');
+          if (!form) return;
+
+          const controls = [...form.querySelectorAll('input, select, textarea')];
+          const textInputs = controls.filter(control => control.tagName === 'INPUT' && control.type !== 'hidden' && control.type !== 'submit');
+          const emailInput = controls.find(control => control.tagName === 'INPUT' && control.type === 'email');
+          const select = controls.find(control => control.tagName === 'SELECT');
+
+          controls.forEach(control => {
+            const label = control.closest('label');
+            const combined = normalize([
+              control.name,
+              control.id,
+              control.getAttribute('aria-label'),
+              control.placeholder,
+              label?.textContent
+            ].filter(Boolean).join(' '));
+
+            if (!control.name && combined.includes('name')) control.name = 'name';
+            if (!control.name && (combined.includes('email') || control.type === 'email')) control.name = 'email';
+            if (!control.name && (combined.includes('business') || control.tagName === 'SELECT')) control.name = 'businessType';
+            if (!control.name && combined.includes('message')) control.name = 'message';
+          });
+
+          if (textInputs[0] && !form.querySelector('[name="name"]')) textInputs[0].name = 'name';
+          if (emailInput && !form.querySelector('[name="email"]')) emailInput.name = 'email';
+          if (select && !form.querySelector('[name="businessType"]')) select.name = 'businessType';
+        }
+
+        mapDemoFields();
+        window.addEventListener('DOMContentLoaded', mapDemoFields);
+        window.addEventListener('load', mapDemoFields);
+        new MutationObserver(mapDemoFields).observe(document.documentElement, { childList: true, subtree: true });
+      })();
+    </script>
   </body>
 </html>
