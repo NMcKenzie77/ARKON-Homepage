@@ -90,18 +90,18 @@ const industryPages = {
   '/gyms-fitness-studios': {
     eyebrow: 'Gym and fitness studio workflow automation',
     title: 'AI workflow automation for gyms and fitness studios.',
-    description: 'ARKON helps gyms and fitness studios handle membership questions, trial leads, class bookings, personal training inquiries, reminders, staff handoffs, and owner visibility.',
-    primary: 'Gyms and fitness studios deal with trial leads, membership questions, class bookings, personal training interest, schedule changes, and member follow-up. ARKON keeps the front desk, coaches, trainers, admin work, and owner view connected.',
+    description: 'ARKON helps gyms and fitness studios protect trial lead response, class questions, personal training interest, member follow-up, staff handoffs, and owner visibility.',
+    primary: 'Gyms and fitness studios lose momentum when trial leads wait, class questions sit, personal training interest is not followed up, cancellation conversations scatter, or member context depends on whoever is working the desk. ARKON gives the studio trained roles for calls, website inquiries, member messages, booking support, relationship history, and owner visibility.',
     cards: [
-      ['Membership inquiries', 'Porter captures website inquiries, trial pass requests, class questions, and personal training interest.'],
-      ['Front desk calls', 'Vera answers calls, captures what matters, and routes membership, billing, scheduling, or cancellation questions to the right person.'],
-      ['Member communication', 'Naya responds with the studio’s approved tone, sends reminders, follows up on routine questions, and prepares handoffs when staff need to step in.'],
-      ['Owner visibility', 'Grant shows what came in, what was handled, who owns the next step, and what needs attention across leads, members, and bookings.']
+      ['Trial lead response', 'Porter and Naya help capture website inquiries, answer approved membership questions, and follow up before a trial lead goes cold.'],
+      ['Calls and bookings', 'Vera handles inbound calls, captures what matters, and routes class, membership, billing, or cancellation requests to the right person.'],
+      ['Member context', 'Marcus keeps member history, visit notes, training interest, follow-up timing, and prior touchpoints attached.'],
+      ['Owner view', 'Grant surfaces what came in, what was handled, who owns the next step, and where leads, members, or bookings need attention.']
     ],
-    workflow: ['Trial lead asks about joining', 'Member asks about class timing', 'Personal training request comes in', 'Owner sees what needs attention'],
+    workflow: ['Trial lead asks about joining', 'Member has a class or schedule question', 'Personal training request comes in', 'Owner sees what needs attention'],
     faq: [
-      ['Can ARKON manage membership or cancellation questions?', 'ARKON can collect the right details, follow approved studio rules, and route billing, contract, or judgment-based questions to staff.'],
-      ['Can it help with member follow-up?', 'Yes. ARKON can help prepare reminders, follow-up messages, booking support, and staff handoffs when the workflow rules are defined.']
+      ['Can ARKON replace my front desk?', 'No. ARKON handles repeatable work and prepares the handoff so staff can focus on members, tours, classes, training, and decisions.'],
+      ['Can it help with retention and follow-up?', 'Yes. ARKON can help prepare reminders, follow-up messages, booking support, member context, and staff handoffs when the workflow rules are defined.']
     ]
   }
 };
