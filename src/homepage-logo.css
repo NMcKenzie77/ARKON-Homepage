@@ -1,0 +1,29 @@
+/* Homepage header logo override.
+   React still renders the legacy A mark text, so this CSS replaces the visible brand with the SVG asset. */
+.site-header .brand {
+  min-width: 174px;
+}
+
+.site-header .brand::before {
+  content: "";
+  display: block;
+  width: 174px;
+  height: 45px;
+  background: url('/arkon-logo.svg') left center / contain no-repeat;
+}
+
+.site-header .brand .brand-mark,
+.site-header .brand > span:not(.brand-mark) {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .site-header .brand {
+    min-width: 166px;
+  }
+
+  .site-header .brand::before {
+    width: 166px;
+    height: 43px;
+  }
+}
