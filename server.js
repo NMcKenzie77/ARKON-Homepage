@@ -87,6 +87,50 @@ const seoPages = {
 const crawlablePaths = Object.keys(seoPages);
 const appShellPath = join(distDir, 'index.html');
 
+const sharedHeaderCss = `
+  .site-header{position:fixed!important;top:14px!important;left:50%!important;transform:translateX(-50%)!important;width:min(1120px,calc(100% - 32px))!important;height:62px!important;z-index:50!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;padding:0 14px!important;border:1px solid rgba(175,199,255,.16)!important;border-radius:999px!important;background:rgba(5,9,20,.72)!important;backdrop-filter:blur(18px)!important;box-shadow:0 18px 60px rgba(0,0,0,.3)!important}
+  .site-header .brand{display:inline-flex!important;align-items:center!important;gap:10px!important;min-width:max-content!important;color:inherit!important;text-decoration:none!important;font-weight:900!important;letter-spacing:normal!important}
+  .site-header .brand-mark{width:34px!important;height:34px!important;display:inline-grid!important;place-items:center!important;border-radius:12px!important;background:linear-gradient(135deg,#67d8ff,#9b7cff)!important;color:#03101f!important;font-weight:900!important;box-shadow:0 10px 34px rgba(103,216,255,.28)!important}
+  .site-header .brand strong{display:block!important;color:#eef5ff!important;font-size:.92rem!important;line-height:1.05!important;letter-spacing:.08em!important}
+  .site-header .brand small{display:block!important;margin-top:1px!important;color:#9fb0ca!important;font-size:.68rem!important;line-height:1.05!important;letter-spacing:normal!important}
+  .site-header .desktop-nav{display:flex!important;gap:22px!important;align-items:center!important;color:#9fb0ca!important;font-size:.86rem!important}
+  .site-header .desktop-nav a{color:inherit!important;text-decoration:none!important;transition:color 180ms ease!important}
+  .site-header .desktop-nav a:hover{color:#eef5ff!important}
+  .site-header .nav-cta{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:40px!important;padding:0 16px!important;border-radius:999px!important;background:linear-gradient(135deg,#67d8ff,#82f7ca)!important;color:#06111f!important;font-weight:700!important;text-decoration:none!important;box-shadow:0 16px 42px rgba(103,216,255,.24)!important;white-space:nowrap!important}
+  .wrap>main{padding-top:86px!important}
+  @media(max-width:760px){.site-header{position:relative!important;top:auto!important;left:auto!important;transform:none!important;width:100%!important;height:auto!important;min-height:62px!important;margin:18px 0 0!important;align-items:flex-start!important;flex-direction:column!important;border-radius:24px!important;padding:14px!important}.site-header .desktop-nav{flex-wrap:wrap!important}.wrap>main{padding-top:0!important}}
+`;
+
+function sharedHeaderHtml() {
+  return `<header class="site-header" data-shared-header="true">
+      <a class="brand" href="/" aria-label="ARKON Systems home">
+        <span class="brand-mark">A</span>
+        <span><strong>ARKON</strong><small>Systems</small></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="/#how">How it works</a>
+        <a href="/#team">Core team</a>
+        <a href="/#solutions">Business types</a>
+        <a href="/#voice">Your voice</a>
+      </nav>
+      <a class="nav-cta" href="/#demo">Book a demo</a>
+    </header>`;
+}
+
+function applySharedHeader(html) {
+  let next = html;
+
+  if (!next.includes('data-shared-header="true"')) {
+    next = next.replace(/\s*<header[\s\S]*?<\/header>\s*/i, `\n    ${sharedHeaderHtml()}\n`);
+  }
+
+  if (!next.includes('data-shared-header-css')) {
+    next = next.replace(/<\/style>/i, `${sharedHeaderCss}\n  </style>`);
+  }
+
+  return next;
+}
+
 function safePath(urlPath) {
   const decoded = decodeURIComponent(urlPath.split('?')[0]);
   const normalized = normalize(decoded).replace(/^([/\\])+/, '');
@@ -473,7 +517,7 @@ function injectDemoRequestScript(html) {
 function sitemapXml() {
   const urls = crawlablePaths.map(path => {
     const loc = `${siteUrl}${path === '/' ? '/' : path}`;
-    return `  <url>\n    <loc>${loc}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${path === '/' ? '1.0' : '0.8'}</priority>\n  </url>`;
+    return `  <url>\n    <loc>${loc}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${path === '/' ? '1.0' : '0.8'}<\/priority>\n  <\/url>`;
   }).join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
@@ -536,8 +580,10 @@ createServer(async (req, res) => {
 
   if (ext === '.html') {
     const isKnownRoute = Boolean(seoPages[normalizedPathname]);
+    const isStandaloneStaticPage = filePath !== appShellPath;
     const rawHtml = readFileSync(filePath, 'utf8');
-    const htmlWithSeo = injectSeo(rawHtml, route);
+    const htmlWithHeader = isStandaloneStaticPage ? applySharedHeader(rawHtml) : rawHtml;
+    const htmlWithSeo = injectSeo(htmlWithHeader, route);
 
     res.writeHead(isKnownRoute ? 200 : 404, headers);
     res.end(injectDemoRequestScript(htmlWithSeo));
