@@ -163,8 +163,8 @@ export const solutions = [
   },
   {
     name: 'Gyms & Fitness',
-    title: 'Cold trial leads, missed follow-up, and member drift.',
-    details: 'For studios where class questions, personal training interest, cancellations, and front-desk handoffs cannot sit.',
+    title: 'Trial leads, cancellations, and missed follow-up.',
+    details: 'For studios where tours, training interest, member questions, and front-desk handoffs cannot sit.',
     href: '/gyms-fitness-studios'
   }
 ];
