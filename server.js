@@ -56,6 +56,16 @@ const seoPages = {
     title: 'AI Workflow Automation for Professional Services | ARKON Systems',
     description: 'ARKON helps professional service firms manage intake, scheduling, client questions, document requests, follow-up, handoffs, and owner visibility.',
     schemaType: 'Service'
+  },
+  '/salons': {
+    title: 'AI Workflow Automation for Salons | ARKON Systems',
+    description: 'ARKON helps salons manage missed calls, booking requests, client messages, appointment follow-up, staff handoffs, and owner visibility.',
+    schemaType: 'Service'
+  },
+  '/garages': {
+    title: 'AI Workflow Automation for Garages and Auto Shops | ARKON Systems',
+    description: 'ARKON helps garages and auto repair shops manage customer calls, repair updates, estimate requests, appointment intake, and owner visibility.',
+    schemaType: 'Service'
   }
 };
 
