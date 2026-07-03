@@ -163,8 +163,8 @@ export const solutions = [
   },
   {
     name: 'Gyms & Fitness',
-    title: 'Membership questions, bookings, and reminders.',
-    details: 'For studios that need leads, scheduling, and member messages covered.',
+    title: 'Cold trial leads, missed follow-up, and member drift.',
+    details: 'For studios where class questions, personal training interest, cancellations, and front-desk handoffs cannot sit.',
     href: '/gyms-fitness-studios'
   }
 ];
