@@ -87,34 +87,6 @@ const seoPages = {
 const crawlablePaths = Object.keys(seoPages);
 const appShellPath = join(distDir, 'index.html');
 
-const sharedShellCss = `
-  .arkon-shared-header{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;padding:24px 0!important;position:relative!important;z-index:5!important}
-  .arkon-shared-brand{display:flex!important;align-items:center!important;gap:10px!important;font-weight:900!important;letter-spacing:.08em!important;color:inherit!important;text-decoration:none!important}
-  .arkon-shared-mark{width:34px!important;height:34px!important;display:grid!important;place-items:center!important;border-radius:12px!important;background:linear-gradient(135deg,#67d8ff,#82f7ca)!important;color:#06111f!important;font-weight:900!important}
-  .arkon-shared-nav{display:flex!important;gap:18px!important;align-items:center!important;color:#9fb0ca!important;font-size:.9rem!important}
-  .arkon-shared-nav a{color:inherit!important;text-decoration:none!important}
-  .arkon-shared-cta{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:42px!important;padding:0 18px!important;border-radius:999px!important;background:linear-gradient(135deg,#67d8ff,#82f7ca)!important;color:#06111f!important;font-weight:850!important;text-decoration:none!important;white-space:nowrap!important}
-  .arkon-shared-footer{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;margin:24px 0 42px!important;padding:26px 0 0!important;border-top:1px solid rgba(175,199,255,.16)!important;color:#9fb0ca!important;font-size:.92rem!important}
-  .arkon-shared-footer p{margin:0!important;color:#9fb0ca!important;line-height:1.55!important}
-  @media(max-width:760px){.arkon-shared-header,.arkon-shared-footer{align-items:flex-start!important;flex-direction:column!important}.arkon-shared-nav{flex-wrap:wrap!important}.arkon-shared-cta{width:auto!important}}
-`;
-
-function sharedHeaderHtml() {
-  return `<header class="arkon-shared-header" data-shared-shell="header">
-        <a class="arkon-shared-brand" href="/" aria-label="ARKON Systems home"><span class="arkon-shared-mark">A</span><span>ARKON Systems</span></a>
-        <nav class="arkon-shared-nav" aria-label="Primary navigation"><a href="/#how">How it works</a><a href="/#team">Core team</a><a href="/#solutions">Business types</a><a href="/#voice">Your voice</a></nav>
-        <a class="arkon-shared-cta" href="/#demo">Book a demo</a>
-      </header>`;
-}
-
-function sharedFooterHtml() {
-  const year = new Date().getFullYear();
-  return `<footer class="arkon-shared-footer" data-shared-shell="footer">
-        <a class="arkon-shared-brand" href="/" aria-label="ARKON Systems home"><span class="arkon-shared-mark">A</span><span>ARKON Systems</span></a>
-        <p>© ${year} ARKON Systems. Repeatable work handled. Your team stays focused.</p>
-      </footer>`;
-}
-
 function safePath(urlPath) {
   const decoded = decodeURIComponent(urlPath.split('?')[0]);
   const normalized = normalize(decoded).replace(/^([/\\])+/, '');
@@ -498,26 +470,6 @@ function injectDemoRequestScript(html) {
   return html.replace(/<\/body>/i, `${script}\n</body>`);
 }
 
-function applySharedShell(html) {
-  let next = html;
-
-  if (!next.includes('data-shared-shell="header"')) {
-    next = next.replace(/\s*<header[\s\S]*?<\/header>\s*/i, '\n');
-    next = next.replace(/<div class="wrap">\s*/i, `<div class="wrap">\n      ${sharedHeaderHtml()}\n`);
-  }
-
-  if (!next.includes('data-shared-shell="footer"')) {
-    next = next.replace(/\s*<\/main>\s*<\/div>\s*<\/body>/i, `\n    </main>\n      ${sharedFooterHtml()}\n    </div>\n  </body>`);
-  }
-
-  if (!next.includes('arkon-shared-header')) return next;
-  if (!next.includes('.arkon-shared-header')) {
-    next = next.replace(/<\/style>/i, `${sharedShellCss}\n  </style>`);
-  }
-
-  return next;
-}
-
 function sitemapXml() {
   const urls = crawlablePaths.map(path => {
     const loc = `${siteUrl}${path === '/' ? '/' : path}`;
@@ -584,10 +536,8 @@ createServer(async (req, res) => {
 
   if (ext === '.html') {
     const isKnownRoute = Boolean(seoPages[normalizedPathname]);
-    const isStandaloneStaticPage = filePath !== appShellPath;
     const rawHtml = readFileSync(filePath, 'utf8');
-    const htmlWithShell = isKnownRoute && isStandaloneStaticPage ? applySharedShell(rawHtml) : rawHtml;
-    const htmlWithSeo = injectSeo(htmlWithShell, route);
+    const htmlWithSeo = injectSeo(rawHtml, route);
 
     res.writeHead(isKnownRoute ? 200 : 404, headers);
     res.end(injectDemoRequestScript(htmlWithSeo));
