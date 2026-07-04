@@ -1,8 +1,8 @@
-# ARKON Backend Architecture Decisions
+# ARKON Backend and Frontend Architecture Decisions
 
-This document is the permanent source of truth for the ARKON backend direction.
+This document is the permanent source of truth for the ARKON backend and frontend direction.
 
-Do not rely on chat memory. Do not rely on the founder remembering the full architecture conversation. Any AI assistant, developer, or future contributor should read this file before making backend decisions for ARKON.
+Do not rely on chat memory. Do not rely on the founder remembering the full architecture conversation. Do not rely on any one vertical repo, including the real estate repo, being available forever. Any AI assistant, developer, or future contributor should read this file before making backend or frontend decisions for ARKON.
 
 ## Business understanding
 
@@ -31,6 +31,10 @@ The strongest positioning is:
 > Your team stays focused. ARKON handles the repeatable work around them.
 
 ARKON sells control, memory, follow-up, and visibility. The product is not only automation. It is a business operating layer that keeps repeatable work from leaking revenue, time, and customer trust.
+
+---
+
+# Backend architecture decision
 
 ## Core backend decision
 
@@ -158,11 +162,11 @@ The key boundary is this:
 
 > Separate vertical backends are acceptable. Separate custom backends for every individual business should be avoided unless there is a strong enterprise reason later.
 
-## Shared ARKON core concepts
+## Shared ARKON core backend concepts
 
 Even though each vertical can have a separate backend environment, ARKON should keep a shared mental model and shared core concepts.
 
-Common ARKON concepts include:
+Common ARKON backend concepts include:
 
 ```text
 businesses
@@ -181,11 +185,12 @@ integrations
 custom_fields
 workflow_rules
 escalation_rules
+routing_rules
 audit_logs
 owner_briefs
 ```
 
-The name of the contact may change by vertical:
+The name of the relationship record may change by vertical:
 
 ```text
 Auto repair: customer
@@ -331,25 +336,9 @@ custom_field_definitions
 - show_on_staff_handoff
 - ai_can_ask
 - ai_can_summarize
+- display_order
 - created_at
 - updated_at
-```
-
-Example:
-
-```text
-business_id: Mike's Auto
-vertical: auto_repair
-object_type: repair_request
-field_key: fleet_account_number
-field_label: Fleet Account Number
-field_type: text
-required: false
-show_on_intake: true
-show_on_owner_brief: true
-show_on_staff_handoff: true
-ai_can_ask: true
-ai_can_summarize: true
 ```
 
 This lets ARKON know:
@@ -360,6 +349,7 @@ This lets ARKON know:
 - What to include in summaries
 - What is required for that business
 - What can be ignored for another business
+- What order fields should appear in the frontend
 
 ## Workflow rules
 
@@ -653,125 +643,375 @@ open_items
 owner_briefs
 ```
 
-## First build order
+---
 
-Do not try to build every vertical at once.
+# Frontend architecture decision
 
-The recommended build order is:
+## Core frontend decision
+
+All ARKON vertical frontends should look and feel like the ARKON real estate frontend.
+
+The real estate frontend is the reference UI standard for ARKON. It should be treated as the visual and interaction model, not as a one-off design locked only inside the real estate repo.
+
+If the real estate repo disappears, breaks, gets renamed, or becomes unavailable, this document should still tell any AI assistant or developer what the frontend direction is.
+
+The frontend decision is:
 
 ```text
-Step 1: Keep this backend architecture decision doc in the repo.
-Step 2: Choose the first vertical backend, likely auto repair or salons.
-Step 3: Define that vertical's core objects.
-Step 4: Define the business configuration tables.
-Step 5: Define custom fields.
-Step 6: Define workflow rules.
-Step 7: Build one working business inside that vertical.
-Step 8: Add a second business in the same vertical to prove configuration works.
-Step 9: Only then duplicate the pattern to another vertical.
+Same ARKON product look and feel
+Same shell and layout pattern
+Same interaction style
+Same visual language
+Different fields per vertical
+Different labels per vertical
+Different object names per vertical
+Different workflow screens per vertical
 ```
 
-The purpose of Step 8 is critical. The system is not proven until two businesses in the same vertical can operate differently without requiring a custom schema or separate backend for each business.
+The frontend should not be redesigned from scratch for each vertical.
 
-## AI assistant instructions
+The frontend should use one shared ARKON interface system that renders different verticals based on configuration.
 
-Any AI assistant working on ARKON backend should follow these instructions:
+## What must stay consistent across verticals
 
-1. Read this document before proposing backend changes.
-2. Do not assume ARKON is a generic chatbot.
-3. Treat ARKON as a workflow operating layer for service businesses.
-4. Keep the owner and staff in control.
-5. Do not design business-specific database columns unless the field belongs to most of the vertical.
-6. Use shared core fields plus `custom_data` for business-specific needs.
-7. Use `custom_field_definitions` so custom data is understandable, validated, and useful.
-8. Use `workflow_rules`, `escalation_rules`, and `routing_rules` so each business can behave differently.
-9. Keep verticals separate enough to respect their unique workflows.
-10. Keep businesses inside the same vertical configurable so ARKON can scale.
-11. Build the first vertical deeply before copying the pattern to another vertical.
-12. Always prove the design with at least two businesses in the same vertical.
-13. Do not hardcode rules for one client unless there is a clear reason and the decision is documented.
-14. Use audit logs for important AI actions, handoffs, escalations, and owner-visible summaries.
-15. When uncertain, prefer configuration over branching code.
+Every ARKON vertical should feel like the same product.
 
-## Do not do this
+Keep consistent:
+
+- Left sidebar
+- Top header
+- Main workspace
+- Search and filter area
+- Record cards or tables
+- Detail panel
+- Action buttons
+- Status badges
+- Notes area
+- Activity timeline
+- AI summary panel
+- Owner brief panel
+- Handoff panel
+- Modal style
+- Button style
+- Badge style
+- Card style
+- Form spacing
+- Typography
+- Color system
+- Empty states
+- Loading states
+- Error states
+
+The frontend should make a salon owner, auto shop owner, law firm, dental office, gym owner, or real estate agent feel like they are using ARKON, not a different product each time.
+
+## What can change by vertical
+
+The fields, objects, labels, workflows, and dashboards can change by vertical.
+
+For real estate, the frontend may show:
+
+```text
+Lead
+Buyer / seller
+Property
+Showing request
+Price range
+Bedrooms
+Bathrooms
+Timeline
+Agent handoff
+```
+
+For auto repair, the frontend may show:
+
+```text
+Customer
+Vehicle
+Year / make / model
+VIN
+Mileage
+Repair issue
+Estimate status
+Declined work
+Advisor handoff
+```
+
+For salons, the frontend may show:
+
+```text
+Client
+Service type
+Stylist
+Appointment request
+Photo intake
+Rebooking
+No-show
+Consultation needed
+```
+
+For dental, the frontend may show:
+
+```text
+Patient
+Appointment request
+Cancellation
+No-show
+Routine reminder
+Form needed
+Front desk handoff
+```
+
+For gyms, the frontend may show:
+
+```text
+Lead / member
+Trial interest
+Tour request
+Personal training interest
+Cancellation risk
+Class question
+Staff handoff
+```
+
+The product shell stays the same. The data and language change.
+
+## Frontend structure
+
+The correct frontend structure is:
+
+```text
+ARKON Frontend Shell
+│
+├── Shared layout
+├── Shared navigation
+├── Shared cards
+├── Shared tables
+├── Shared forms
+├── Shared badges
+├── Shared detail panels
+├── Shared AI summary panel
+├── Shared owner brief panel
+├── Shared handoff panel
+├── Shared activity timeline
+└── Vertical-specific field configuration
+```
+
+The wrong structure is:
+
+```text
+A completely separate custom frontend design for every vertical.
+```
+
+The right structure is:
+
+```text
+One ARKON interface system
+Many vertical configurations
+Many business configurations
+```
+
+## Configuration-driven frontend rendering
+
+The frontend should eventually render vertical-specific screens using configuration instead of hardcoding every vertical screen from scratch.
+
+Example vertical config:
+
+```json
+{
+  "vertical": "auto_repair",
+  "display_name": "Auto Repair",
+  "primary_record": "repair_request",
+  "relationship_label": "Customer",
+  "fields": [
+    { "key": "customer_name", "label": "Customer name", "type": "text", "required": true },
+    { "key": "phone", "label": "Phone", "type": "phone", "required": true },
+    { "key": "vehicle_year", "label": "Vehicle year", "type": "number" },
+    { "key": "vehicle_make", "label": "Make", "type": "text" },
+    { "key": "vehicle_model", "label": "Model", "type": "text" },
+    { "key": "mileage", "label": "Mileage", "type": "number" },
+    { "key": "issue_description", "label": "Issue description", "type": "textarea" },
+    { "key": "urgency", "label": "Urgency", "type": "select" },
+    { "key": "estimate_status", "label": "Estimate status", "type": "select" },
+    { "key": "assigned_advisor", "label": "Assigned advisor", "type": "staff_select" }
+  ]
+}
+```
+
+The frontend should use this kind of configuration to know:
+
+- What fields to render
+- What labels to display
+- Which fields are required
+- Which fields are visible in intake
+- Which fields appear in cards
+- Which fields appear in detail panels
+- Which fields appear in owner briefs
+- Which actions should be available
+- Which statuses and badges matter for that vertical
+
+## Frontend relationship to custom fields
+
+The frontend must respect the backend custom field model.
+
+If a business has custom fields defined in `custom_field_definitions`, the frontend should be able to render those fields without a new custom page.
+
+Example:
+
+```text
+Business A in auto repair requires VIN and mileage.
+Business B in auto repair requires fleet account number and truck unit number.
+Business C in auto repair requires tire size and alignment requested.
+```
+
+The frontend should not need three separate custom forms.
+
+It should render the core auto repair fields plus each business's custom fields.
+
+This means the frontend depends on:
+
+```text
+vertical_config
+business_profile
+custom_field_definitions
+workflow_rules
+routing_rules
+escalation_rules
+```
+
+## Real estate frontend as the visual reference
+
+The real estate frontend should be treated as the visual model for:
+
+```text
+Left navigation
+Dashboard layout
+Record list
+Record cards
+Record detail panel
+Action buttons
+Status badges
+Forms
+Modals
+Search/filter controls
+AI summary area
+Owner/admin feel
+Spacing
+Typography
+Color system
+```
+
+Future verticals should not invent a new visual identity unless the founder explicitly changes this decision in this document.
+
+The rule is:
+
+> Make every vertical look like ARKON. Do not make every vertical look like a separate startup.
+
+## Frontend build order
+
+Do not build every frontend from scratch.
+
+Recommended frontend build order:
+
+```text
+Step 1: Treat the real estate frontend as the reference UI.
+Step 2: Document or extract the shared shell and shared components.
+Step 3: Define the shared ARKON design system.
+Step 4: Define vertical field configs.
+Step 5: Build one second vertical using the same shell.
+Step 6: Prove that different fields can render without redesign.
+Step 7: Add a second business inside that same vertical with custom fields.
+Step 8: Prove the frontend can show different business fields without a custom frontend.
+Step 9: Only then duplicate the pattern to other verticals.
+```
+
+The frontend is not proven until two businesses inside the same vertical can show different fields while still using the same interface.
+
+## Frontend AI assistant instructions
+
+Any AI assistant working on ARKON frontend should follow these instructions:
+
+1. Read this document before proposing frontend changes.
+2. Do not assume each vertical needs a new design.
+3. Use the real estate frontend as the ARKON reference UI.
+4. Keep the same visual language across verticals.
+5. Change fields, labels, objects, and workflow language by vertical.
+6. Do not redesign the shell for every vertical.
+7. Prefer configuration-driven forms and tables.
+8. Respect backend `custom_field_definitions`.
+9. Support business-specific custom fields without creating business-specific frontend code whenever possible.
+10. Keep owner/staff control visible.
+11. Keep handoffs, notes, activity, and AI summaries consistent.
+12. Do not let vertical-specific wording turn into a separate visual product.
+13. When uncertain, preserve the ARKON look and change the data configuration.
+
+## Do not do this on the frontend
 
 Do not build this:
 
 ```text
-One giant generic backend that ignores vertical differences.
+A totally different frontend design for every vertical.
 ```
 
 Do not build this:
 
 ```text
-A separate custom backend and custom schema for every client.
+A totally different frontend design for every business.
 ```
 
 Do not build this:
 
 ```text
-Tables full of client-specific columns.
+Hardcoded one-off forms that cannot render custom fields from configuration.
 ```
 
 Do not build this:
 
 ```text
-Hardcoded one-off workflow logic that cannot be reused by another business in the same vertical.
+A generic blank UI that loses the real estate frontend's polished ARKON feel.
 ```
 
-## Build this instead
+## Build this on the frontend instead
 
 Build this:
 
 ```text
-ARKON Core Pattern
+ARKON Frontend System
 │
-├── Vertical backend services where needed
-│
-├── Shared core concepts
-│
-├── Vertical-specific objects
-│
-├── Business-level configuration
-│
-├── Custom field definitions
-│
-├── Workflow rules
-│
-├── Escalation rules
-│
-├── Staff routing rules
-│
-├── Audit logs
-└── Owner briefs
+├── Real-estate-inspired reference shell
+├── Shared layout
+├── Shared components
+├── Shared design tokens
+├── Vertical field configs
+├── Business custom field rendering
+├── Shared AI summary panels
+├── Shared handoff panels
+├── Shared owner brief panels
+├── Shared activity timelines
+└── Vertical-specific labels and objects
 ```
 
-The architecture should let ARKON say:
+The frontend architecture should let ARKON say:
 
 ```text
-This business is an auto shop.
-This auto shop handles fleet customers differently.
-This specific customer has a vehicle and repair request.
-This request has core fields and custom fields.
-This business requires VIN and mileage.
-This estimate is over the escalation threshold.
-This should be routed to Mike.
-The owner should see this in the daily brief.
+This user is looking at an auto repair business.
+Use the ARKON shell.
+Use the auto repair labels.
+Render customers, vehicles, repair requests, estimates, declined work, and advisor handoffs.
+This specific shop also requires VIN and mileage.
+Render those custom fields.
+Keep the UI looking like ARKON.
 ```
 
-That is the backend reality ARKON needs.
+---
 
-## Final principle
+# Combined product principle
 
-The backend should be:
+The full ARKON architecture should be:
 
 ```text
-Vertical-aware.
-Business-configurable.
-Owner-controlled.
-Staff-friendly.
-Audit-ready.
-Scalable without becoming generic.
+Backend: Vertical-aware and business-configurable.
+Frontend: Visually consistent and configuration-driven.
+Product: Owner-controlled, staff-friendly, audit-ready, and scalable without becoming generic.
 ```
 
 That is the architecture direction unless a future documented decision changes it.
