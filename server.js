@@ -2,6 +2,7 @@ import { createServer } from 'node:http';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { extname, join, normalize, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { handlePorterChat } from './porter-api.js';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const distDir = resolve(__dirname, 'dist');
@@ -478,6 +479,10 @@ createServer(async (req, res) => {
   const pathname = reqUrl.split('?')[0];
   if (pathname === '/api/demo-request') {
     await handleDemoRequest(req, res);
+    return;
+  }
+  if (pathname === '/api/porter/chat') {
+    await handlePorterChat(req, res);
     return;
   }
   if (!existsSync(distDir)) {
