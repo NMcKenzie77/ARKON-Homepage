@@ -1,4 +1,5 @@
 const PORTER_ENDPOINT = '/api/demo-request';
+const PORTER_HELLO_KEY = 'arkon_porter_hello_seen';
 
 function ready(fn) {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn, { once: true });
@@ -45,6 +46,11 @@ function createPorterWidget() {
   root.className = 'porter-widget';
   root.dataset.porterWidget = 'true';
   root.innerHTML = `
+    <div class="porter-hello" data-porter-hello hidden>
+      <button class="porter-hello-close" type="button" aria-label="Dismiss Porter greeting">×</button>
+      <p>Hi, I’m Porter. I can help route your question.</p>
+    </div>
+
     <button class="porter-launcher" type="button" aria-expanded="false" aria-controls="porter-panel">
       <span class="porter-dot" aria-hidden="true"></span>
       <span>Ask Porter</span>
@@ -114,8 +120,25 @@ function createPorterWidget() {
   const panel = root.querySelector('.porter-panel');
   const close = root.querySelector('.porter-close');
   const form = root.querySelector('.porter-form');
+  const hello = root.querySelector('[data-porter-hello]');
+  const helloClose = root.querySelector('.porter-hello-close');
+
+  function hideHello() {
+    hello.hidden = true;
+    root.classList.remove('has-hello');
+  }
+
+  function markHelloSeen() {
+    try {
+      window.sessionStorage.setItem(PORTER_HELLO_KEY, 'true');
+    } catch {
+      // Ignore storage failures.
+    }
+  }
 
   function openPanel() {
+    hideHello();
+    markHelloSeen();
     panel.hidden = false;
     launcher.setAttribute('aria-expanded', 'true');
     root.classList.add('is-open');
@@ -130,11 +153,45 @@ function createPorterWidget() {
     launcher.focus?.();
   }
 
+  function scheduleHello() {
+    let alreadySeen = false;
+    try {
+      alreadySeen = window.sessionStorage.getItem(PORTER_HELLO_KEY) === 'true';
+    } catch {
+      alreadySeen = false;
+    }
+
+    if (alreadySeen) return;
+
+    const isMobile = window.matchMedia('(max-width: 760px)').matches;
+    const delay = isMobile ? 12000 : 7000;
+
+    window.setTimeout(() => {
+      if (!panel.hidden) return;
+      hello.hidden = false;
+      root.classList.add('has-hello');
+      markHelloSeen();
+    }, delay);
+  }
+
   launcher.addEventListener('click', () => {
     if (panel.hidden) openPanel();
     else closePanel();
   });
+
   close.addEventListener('click', closePanel);
+
+  hello.addEventListener('click', event => {
+    if (event.target === helloClose) return;
+    openPanel();
+  });
+
+  helloClose.addEventListener('click', event => {
+    event.stopPropagation();
+    hideHello();
+    markHelloSeen();
+  });
+
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && !panel.hidden) closePanel();
   });
@@ -184,6 +241,8 @@ function createPorterWidget() {
       submit.disabled = false;
     }
   });
+
+  scheduleHello();
 }
 
 ready(createPorterWidget);
