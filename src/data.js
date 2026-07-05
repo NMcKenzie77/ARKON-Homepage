@@ -81,8 +81,13 @@ export const roleViews = [
 export const coverageLanes = [
   {
     lane: 'First response',
-    copy: 'Calls and messages are received, acknowledged, and handled according to the business’s standards.',
+    copy: 'Calls, messages, and website inquiries are received, acknowledged, and handled according to the business’s standards.',
     chips: ['VERA', 'NAYA', 'PORTER']
+  },
+  {
+    lane: 'Website inquiry and lead intake',
+    copy: 'Porter watches website forms, quote requests, service requests, appointment interest, and after-hours inquiries so online interest does not sit unseen.',
+    chips: ['PORTER', 'MARCUS', 'NAYA']
   },
   {
     lane: 'Relationship memory',
@@ -171,6 +176,7 @@ export const solutions = [
 
 export const dashboardRows = [
   { label: 'Website inquiry captured', owner: 'PORTER', status: 'Lead ready', priority: 'Live' },
+  { label: 'Quote or appointment request routed', owner: 'PORTER', status: 'Next step prepared', priority: 'Live' },
   { label: 'Known contact found', owner: 'MARCUS', status: 'Context attached', priority: 'Done' },
   { label: 'Client message followed up', owner: 'NAYA', status: 'Reply prepared', priority: 'Done' },
   { label: 'Owner brief created', owner: 'GRANT', status: 'Ready', priority: 'Next' }
