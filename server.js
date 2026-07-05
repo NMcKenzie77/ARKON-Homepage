@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const distDir = resolve(__dirname, 'dist');
 const port = process.env.PORT || 3000;
-const siteUrl = (process.env.SITE_URL || 'https://arkonsystems.com').replace(/\/$/, '');
+const siteUrl = (process.env.SITE_URL || 'https://arkonsysai.com').replace(/\/$/, '');
 
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
