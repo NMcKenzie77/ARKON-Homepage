@@ -2,7 +2,7 @@
 
 Last updated: July 6, 2026
 
-This document estimates ARKON's monthly cost of goods sold per customer using the current pricing tiers, the current vendor stack, and conservative usage assumptions.
+This document estimates ARKON's monthly cost of goods sold per customer using the current pricing tiers, the current vendor stack, conservative usage assumptions, and the per-client ElevenLabs agent strategy.
 
 This is not customer-facing homepage copy. This is an internal margin-control document.
 
@@ -19,7 +19,7 @@ ARKON should separate cost by layer:
 | LLM reasoning | Anthropic / Claude | Routing, extraction, summaries, tool-use decisions, owner briefs, customer context | Input/output tokens |
 | ARKON application | ARKON | Workflow rules, memory, dashboards, handoffs, integrations, support | Support labor, QA, monitoring, custom work |
 
-The important point: SignalWire is not the AI voice agent. ElevenLabs is the live voice-agent layer. Anthropic is the LLM reasoning layer.
+The important point: SignalWire is not the AI voice agent. ElevenLabs is the live voice-agent layer. Anthropic is the LLM reasoning layer. ARKON is the control layer that decides which client can use how much voice, messaging, and workflow capacity.
 
 ---
 
@@ -50,6 +50,8 @@ ElevenAgents is priced around call minutes and concurrency. Current published pl
 | Business | $990 | 12,375 | 40 |
 
 ElevenLabs also lists additional call minutes at $0.08/min, burst minutes at $0.16/min, and text messages at $0.003/message. ElevenLabs states that LLM and telephony are billed separately.
+
+ElevenLabs also states that there is no limit to how many agents can be created on a plan, but usage is still limited by the workspace's concurrent calls and monthly credit limit. This means ARKON can create one agent per client, but the shared ElevenLabs workspace will not automatically divide usage by client. ARKON must enforce client-level budgets.
 
 Internal planning rate used in this model: **$0.08 per ElevenLabs call minute**.
 
@@ -125,7 +127,128 @@ Usage philosophy:
 
 ---
 
-## 5. Estimated hard vendor COGS per customer per month
+## 5. ElevenLabs agent and credit allocation strategy
+
+### Recommendation
+
+Each client with live voice should have its own ElevenLabs agent.
+
+However, ARKON should not build every client from scratch. The right approach is:
+
+> One ARKON master agent template -> one configured ElevenLabs production agent per client -> one ARKON usage ledger per client.
+
+This gives each client its own voice behavior, greeting, knowledge base, escalation rules, and call analytics while keeping ARKON in control of product behavior.
+
+### Why not one shared agent for all clients?
+
+A shared agent creates too much risk:
+
+- Wrong shop greeting
+- Wrong escalation rule
+- Wrong business hours
+- Wrong service policy
+- Wrong knowledge base
+- Dirty analytics across clients
+- Harder QA and debugging
+
+The voice agent is client-facing. It must be isolated enough that one client's messaging and voice cannot leak into another client's calls.
+
+### Why not one totally separate ElevenLabs workspace per normal client?
+
+That can waste money early. ElevenLabs usage is constrained by workspace credits and concurrency. If every small client has a separate paid plan, unused minutes get trapped in small accounts.
+
+Early-stage ARKON should use:
+
+- One shared ElevenLabs workspace for normal clients
+- One ElevenLabs agent per client
+- ARKON-enforced usage budgets per client
+- Dedicated workspace or custom commercial setup for Enterprise clients when needed
+
+### Does ElevenLabs divide credits by client automatically?
+
+No. The practical assumption should be that ElevenLabs gives the workspace a shared pool of minutes/credits and concurrency. It does not automatically say Client A gets 275 minutes and Client B gets 1,238 minutes.
+
+ARKON must divide usage internally.
+
+That means ARKON needs a usage ledger.
+
+### ARKON usage ledger fields
+
+| Field | Example |
+|---|---|
+| ClientID | client_001 |
+| Plan | Operator |
+| ElevenLabsAgentID | agent_xxx |
+| IncludedVoiceMinutes | 1238 |
+| UsedVoiceMinutesThisMonth | 421 |
+| IncludedSMS | 3000 |
+| UsedSMS | 842 |
+| IncludedInteractions | 1500 |
+| UsedInteractions | 613 |
+| SoftLimitPercent | 80% |
+| HardLimitPercent | 100% |
+| OverageAllowed | Yes / No |
+| OverageVoiceRate | $0.20/min |
+
+### How ARKON should track it
+
+ElevenLabs post-call webhooks can provide conversation-level information such as the agent ID, conversation ID, transcript, metadata, analysis, call timing, costs, and phone details. ARKON should use those webhook payloads to update the client usage ledger after each Vera call.
+
+Required flow:
+
+1. SignalWire routes the call to the correct client phone flow.
+2. ARKON identifies the client and maps the call to the correct ElevenLabs agent.
+3. ARKON passes runtime dynamic variables such as client ID, caller ID, caller name, shop name, known customer status, and prior context.
+4. ElevenLabs handles the live voice conversation.
+5. ElevenLabs sends the post-call webhook.
+6. ARKON updates UsedVoiceMinutesThisMonth, UsedInteractions, call summary, outcome, escalation status, and QA queue.
+7. ARKON checks whether the client crossed 80% or 100% of included usage.
+
+### Usage budget by ARKON plan
+
+| ARKON tier | ElevenLabs agent? | Included voice budget | Shared ElevenLabs pool? | Rule |
+|---|---|---:|---|---|
+| Follow-Up Starter | Maybe, only if voice is active | 75 min | Yes | No full Vera; capture/follow-up first |
+| Follow-Up Plus | Yes if Vera enabled | 275 min | Yes | Limited Vera only |
+| Shop Operator | Yes | 1,238 min | Yes | First real Vera-capable tier |
+| Shop Command | Yes | 3,738 min | Yes | Premium Vera and owner reporting |
+| Enterprise | Yes, possibly multiple agents | Custom / 12,375+ min | Prefer separate pool/workspace | Discovery-first only |
+
+### Soft and hard limit behavior
+
+At 80% usage:
+
+> Notify the owner/admin that the account has reached 80% of included Vera voice usage.
+
+At 100% usage:
+
+ARKON should not keep eating cost silently. Use one of three actions:
+
+| Action | Best fit |
+|---|---|
+| Allow overage billing | Operator, Command, Enterprise |
+| Downgrade to message capture only | Starter, Plus |
+| Route to human/front desk | Any tier when voice cap is hit |
+
+### Recommended overage policy
+
+| Tier | Overage voice policy |
+|---|---|
+| Starter | No default overage; upgrade required |
+| Plus | $0.25/min or upgrade |
+| Operator | $0.20/min |
+| Command | $0.18/min |
+| Enterprise | Contracted rate |
+
+Do not charge customers the raw ElevenLabs cost. Extra call minutes may cost $0.08/min before Anthropic, SignalWire, support, QA, and risk. Overage should include margin and operational buffer.
+
+### Practical rule
+
+> One agent per live-voice client. One ARKON usage ledger per client. Shared ElevenLabs pool for normal clients. Dedicated workspace or custom terms for Enterprise.
+
+---
+
+## 6. Estimated hard vendor COGS per customer per month
 
 This includes ElevenLabs, SignalWire, and Anthropic only. It excludes payroll, support, monitoring, QA, engineering, and customer success.
 
@@ -154,7 +277,7 @@ Anthropic estimate =
 
 ---
 
-## 6. Gross margin before support/labor
+## 7. Gross margin before support/labor
 
 | ARKON tier | Price used | Vendor COGS | Gross margin before labor/support |
 |---|---:|---:|---:|
@@ -172,7 +295,7 @@ The hard vendor COGS are healthy. The real margin risk is support labor, over-cu
 
 ---
 
-## 7. True COGS planning reserve
+## 8. True COGS planning reserve
 
 Vendor COGS alone is not enough. ARKON should reserve for monitoring, customer success, QA, tuning, support, and workflow changes.
 
@@ -188,7 +311,7 @@ The support reserve is the real discipline. If every customer requires weekly cu
 
 ---
 
-## 8. Margin guardrails
+## 9. Margin guardrails
 
 ### Starter
 
@@ -227,10 +350,11 @@ Enterprise must be discovery-first. Do not quote Enterprise off a menu without k
 - reporting requirements
 - fleet/unit/customer memory requirements
 - support expectations
+- whether Enterprise needs a dedicated ElevenLabs workspace or custom commercial terms
 
 ---
 
-## 9. Recommended public pricing language
+## 10. Recommended public pricing language
 
 Do not publish token limits or exact AI minute limits on the homepage yet.
 
@@ -250,11 +374,11 @@ For proposals or SOWs, use internal caps:
 
 ---
 
-## 10. Bottom line
+## 11. Bottom line
 
 Vendor COGS are not the main threat.
 
-The threat is selling too much custom work too early.
+The threat is selling too much custom work too early and failing to enforce per-client usage.
 
 The pricing is workable if the tiers are protected:
 
@@ -262,6 +386,8 @@ The pricing is workable if the tiers are protected:
 - Operator and Command = Vera-capable operating plans
 - Enterprise = custom system design, routing, reporting, and integrations
 
-The practical rule:
+The practical rules:
 
 > Protect live voice, protect custom integrations, and never let Starter become Enterprise in disguise.
+
+> Do not rely on ElevenLabs to divide credits by client. ARKON must own the usage ledger.
