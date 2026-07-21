@@ -94,6 +94,35 @@ function buildPricingCard(plan) {
   `;
 }
 
+function LegacyContactBannerRemover() {
+  useEffect(() => {
+    const matchesLegacyContactBanner = node => {
+      const text = String(node.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      const phoneDigits = text.replace(/\D/g, '');
+      return text.includes('contact nathan')
+        && text.includes('nathan@arkonsysai.com')
+        && phoneDigits.includes('8136931669');
+    };
+
+    const removeLegacyContactBanner = () => {
+      const candidates = [...document.querySelectorAll('section, article, aside, footer, div')]
+        .filter(matchesLegacyContactBanner);
+
+      candidates
+        .filter(node => ![...node.children].some(matchesLegacyContactBanner))
+        .forEach(node => node.remove());
+    };
+
+    removeLegacyContactBanner();
+    const observer = new MutationObserver(removeLegacyContactBanner);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return null;
+}
+
 function PricingInjector() {
   useEffect(() => {
     let scrollAfterInsert = false;
@@ -184,6 +213,7 @@ function AppWithPricing() {
   return (
     <>
       <App />
+      <LegacyContactBannerRemover />
       <PricingInjector />
     </>
   );
