@@ -33,11 +33,11 @@ function createPorterWidget() {
       <span>Ask Porter</span>
     </button>
 
-    <section class="porter-panel" id="porter-panel" aria-label="Porter website intake" hidden>
+    <section class="porter-panel" id="porter-panel" aria-label="Porter website assistant" hidden>
       <div class="porter-panel-header">
         <div>
           <p>Porter</p>
-          <h2>Website Inquiry and Lead Intake</h2>
+          <h2>ARKON Website Assistant</h2>
         </div>
         <button class="porter-close" type="button" aria-label="Close Porter">×</button>
       </div>
@@ -46,10 +46,10 @@ function createPorterWidget() {
 
       <form class="porter-composer" data-porter-composer>
         <label class="porter-sr-only" for="porter-input">Message Porter</label>
-        <textarea id="porter-input" name="message" placeholder="Type your answer..." rows="1" autocomplete="off"></textarea>
+        <textarea id="porter-input" name="message" placeholder="Ask about ARKON, pricing, or your workflow..." rows="1" autocomplete="off"></textarea>
         <button class="porter-submit" type="submit">Send</button>
       </form>
-      <small class="porter-status" data-porter-status>Porter collects the details through conversation and routes the next step.</small>
+      <small class="porter-status" data-porter-status>Ask a question or describe what your business is struggling to keep up with.</small>
     </section>
   `;
 
@@ -92,7 +92,7 @@ function createPorterWidget() {
 
   function greet() {
     if (state.history.length) return;
-    const greeting = 'Hi, I’m Porter. What’s your name?';
+    const greeting = 'Hi, I’m Porter. I can explain what ARKON does, help match it to your business, discuss published pricing, or prepare a demo request. What are you trying to improve?';
     state.history.push(createMessage('assistant', greeting));
     addBubble('assistant', greeting);
   }
@@ -118,6 +118,7 @@ function createPorterWidget() {
     panel.hidden = true;
     launcher.setAttribute('aria-expanded', 'false');
     root.classList.remove('is-open');
+    markConversationSeen();
     launcher.focus?.();
   }
 
@@ -147,7 +148,7 @@ function createPorterWidget() {
     input.style.height = 'auto';
     state.isWaiting = true;
     submit.disabled = true;
-    setStatus('Porter is reading that...');
+    setStatus('Porter is reviewing that...');
     addTyping();
 
     try {
@@ -165,20 +166,24 @@ function createPorterWidget() {
       if (!response.ok || result.ok === false) throw new Error(result.message || 'Porter failed.');
 
       removeTyping();
-      const reply = clean(result.reply) || 'Got it. Tell me a little more.';
+      const reply = clean(result.reply) || 'Tell me a little more about what you want ARKON to handle.';
       state.lead = result.lead || state.lead;
       state.history.push(createMessage('assistant', reply));
       addBubble('assistant', reply);
 
-      if (result.routed || result.readyToRoute) {
+      if (result.routed) {
         state.alreadyRouted = true;
-        setStatus('Porter captured the inquiry and routed the next step.', 'success');
+        setStatus('Your request was sent to the ARKON team.', 'success');
+      } else if (result.routingError) {
+        setStatus('The handoff needs another try. You can also use the demo form below.', 'error');
+      } else if (result.readyToRoute) {
+        setStatus('Porter has enough information to prepare the handoff.');
       } else {
-        setStatus('Porter is collecting the details through conversation.');
+        setStatus('Ask another question or tell Porter what work is being missed.');
       }
     } catch {
       removeTyping();
-      const fallback = 'I’m having trouble connecting right now. Please try again in a moment.';
+      const fallback = 'I’m having trouble connecting right now. The demo request form on this page can still send your information to the ARKON team.';
       state.history.push(createMessage('assistant', fallback));
       addBubble('assistant', fallback);
       setStatus('Porter could not connect.', 'error');
