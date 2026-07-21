@@ -5,8 +5,8 @@ const ARKON_KNOWLEDGE = {
   roles: {
     Vera: 'Inbound phone reception, caller qualification, detail capture, and routing.',
     Porter: 'Website questions, lead intake, workflow guidance, and warm handoff.',
-    Naya: 'Customer, client, or guest messaging and follow-up in the business voice.',
-    Marcus: 'CRM records, relationship history, notes, stages, reminders, and context.',
+    Naya: 'Customer, client, or guest messaging, confirmations, reminders, and follow-up in the business voice.',
+    Marcus: 'CRM records, relationship history, notes, stages, reminders, scheduling context, and handoff memory.',
     Iris: 'Inbox triage, urgency scoring, and surfacing important email.',
     Grant: 'Owner summaries, visibility, risk signals, and next-action reporting.'
   },
@@ -29,9 +29,10 @@ const ARKON_KNOWLEDGE = {
     'Shop Command: founder pilot $1,750/month, target $2,500/month, $2,500-$3,500 setup.',
     'Enterprise: discovery first, target $5,000+/month, $7,500+ setup.'
   ],
+  scheduling: 'ARKON can capture appointment requests from calls or the website, apply the business rules, coordinate confirmations or rescheduling, preserve the customer context, and hand the appointment into the business scheduling process. Exact calendar or software integration depends on discovery.',
   boundaries: [
     'ARKON does not replace licensed, legal, medical, financial, underwriting, pricing, or judgment-based decisions.',
-    'ARKON should route sensitive, urgent, approval-based, or judgment-based matters to a person.',
+    'ARKON routes sensitive, urgent, approval-based, or judgment-based matters to a person.',
     'Final pricing depends on call volume, locations, team size, current software, coverage hours, and integration depth.'
   ]
 };
@@ -101,11 +102,9 @@ function normalizeHistory(history) {
       .filter(message => message.content)
     : [];
 
-  // Anthropic conversations must begin with a user turn. The widget greeting is
-  // displayed locally, so remove any leading assistant-only UI messages.
+  // The greeting is rendered in the browser. Anthropic must receive a user turn first.
   while (messages[0]?.role === 'assistant') messages.shift();
 
-  // Collapse same-role messages so the API receives a clean alternating history.
   const normalized = [];
   for (const message of messages) {
     const previous = normalized[normalized.length - 1];
@@ -131,7 +130,7 @@ function normalizeLead(rawLead = {}) {
     mainProblem: cleanText(rawLead.mainProblem, 280),
     urgency: cleanText(rawLead.urgency, 120),
     bestContact: cleanText(rawLead.bestContact, 180),
-    recommendedWorkflow: cleanText(rawLead.recommendedWorkflow, 180)
+    recommendedWorkflow: cleanText(rawLead.recommendedWorkflow, 220)
   };
 }
 
@@ -149,8 +148,10 @@ function parsePorterJson(text) {
     .replace(/```$/i, '')
     .trim();
 
+  const candidate = cleaned.match(/\{[\s\S]*\}/)?.[0] || cleaned;
+
   try {
-    const parsed = JSON.parse(cleaned);
+    const parsed = JSON.parse(candidate);
     return {
       reply: cleanMessage(parsed.reply, 900),
       lead: normalizeLead(parsed.lead || {}),
@@ -185,9 +186,14 @@ function latestUserMessage(history) {
   return [...history].reverse().find(message => message.role === 'user')?.content || '';
 }
 
+function latestAssistantMessage(history) {
+  return [...history].reverse().find(message => message.role === 'assistant')?.content || '';
+}
+
 function extractLocalLead(history, existingLead) {
   const lead = normalizeLead(existingLead);
-  const text = history.filter(message => message.role === 'user').map(message => message.content).join(' ');
+  const userMessages = history.filter(message => message.role === 'user');
+  const text = userMessages.map(message => message.content).join(' ');
   const latest = latestUserMessage(history);
 
   const email = text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0];
@@ -225,8 +231,8 @@ function extractLocalLead(history, existingLead) {
     lead.intent = 'Evaluate ARKON for the business';
   }
 
-  if (!lead.mainProblem && latest.length > 10 && !isValidEmail(latest)) {
-    const problemPattern = /missed|follow[- ]?up|calls?|messages?|scheduling|inbox|email|leads?|customers?|clients?|records?|handoff|visibility|documents?|appointments?|renewals?/i;
+  if (!lead.mainProblem && latest.length > 6 && !isValidEmail(latest)) {
+    const problemPattern = /missed|follow[- ]?up|calls?|messages?|schedul|calendar|book(?:ing)?|reschedul|reminders?|inbox|email|leads?|customers?|clients?|records?|handoff|visibility|documents?|appointments?|renewals?/i;
     if (problemPattern.test(latest)) lead.mainProblem = cleanText(latest, 280);
   }
 
@@ -236,12 +242,21 @@ function extractLocalLead(history, existingLead) {
   }
 
   if (!lead.recommendedWorkflow) {
-    if (/miss(?:ed|ing)? calls?|phone|front desk|inbound call/i.test(text)) lead.recommendedWorkflow = 'Vera: calls and front-desk intake';
-    else if (/website|web lead|form|quote request|online inquiry/i.test(text)) lead.recommendedWorkflow = 'Porter: website inquiry and lead intake';
-    else if (/text|message|follow[- ]?up|guest|client communication/i.test(text)) lead.recommendedWorkflow = 'Naya: communication and follow-up';
-    else if (/crm|history|record|notes?|context/i.test(text)) lead.recommendedWorkflow = 'Marcus: CRM and relationship memory';
-    else if (/email|inbox|triage/i.test(text)) lead.recommendedWorkflow = 'Iris: inbox triage';
-    else if (/owner|dashboard|summary|visibility|report/i.test(text)) lead.recommendedWorkflow = 'Grant: owner visibility';
+    if (/schedul|calendar|appointment|booking|reschedul|reminder/i.test(text)) {
+      lead.recommendedWorkflow = 'Scheduling coordination: Porter or Vera intake, Naya confirmations, and Marcus context';
+    } else if (/miss(?:ed|ing)? calls?|phone|front desk|inbound call/i.test(text)) {
+      lead.recommendedWorkflow = 'Vera: calls and front-desk intake';
+    } else if (/website|web lead|form|quote request|online inquiry/i.test(text)) {
+      lead.recommendedWorkflow = 'Porter: website inquiry and lead intake';
+    } else if (/text|message|follow[- ]?up|guest|client communication/i.test(text)) {
+      lead.recommendedWorkflow = 'Naya: communication and follow-up';
+    } else if (/crm|history|record|notes?|context/i.test(text)) {
+      lead.recommendedWorkflow = 'Marcus: CRM and relationship memory';
+    } else if (/email|inbox|triage/i.test(text)) {
+      lead.recommendedWorkflow = 'Iris: inbox triage';
+    } else if (/owner|dashboard|summary|visibility|report/i.test(text)) {
+      lead.recommendedWorkflow = 'Grant: owner visibility';
+    }
   }
 
   return normalizeLead(lead);
@@ -263,6 +278,8 @@ function localPorterResponse({ history, lead, sourcePath }) {
     reply = 'Published founder pilots start at $799/month. Current target plans range from about $999 to $2,500/month, while Enterprise starts with discovery. Final pricing depends on volume, locations, coverage, and integrations.';
   } else if (/replace (my|our) (staff|employees|team)|fire|lay off/i.test(lower)) {
     reply = 'ARKON is designed to handle repeatable work around your team, not replace judgment, licensed work, or the people who own customer relationships and decisions.';
+  } else if (/schedul|calendar|appointment|booking|reschedul|reminder/i.test(lower)) {
+    reply = `${ARKON_KNOWLEDGE.scheduling} The usual mix is Porter or Vera for intake, Naya for confirmations and reminders, and Marcus for context. Which part breaks most: booking, rescheduling, reminders, or the staff handoff?`;
   } else if (/vera|naya|marcus|iris|grant|porter/i.test(lower)) {
     const matchedRole = Object.keys(ARKON_KNOWLEDGE.roles).find(role => lower.includes(role.toLowerCase()));
     reply = matchedRole
@@ -287,7 +304,10 @@ function localPorterResponse({ history, lead, sourcePath }) {
   } else if (/owner|dashboard|summary|visibility|report/i.test(lower)) {
     reply = 'Grant gives the owner a clear view of what came in, what was handled, what is waiting, and what needs attention without forcing the team to recap everything.';
   } else {
-    reply = 'Tell me what is getting missed, delayed, or repeated in the business. I’ll match it to the right ARKON workflow and explain the next step.';
+    const subject = cleanText(latest, 90);
+    reply = subject
+      ? `I understand the issue is “${subject}.” I can narrow that down by where the problem starts: a call, website request, message, email, or internal handoff. Where does it usually begin?`
+      : 'Tell me where the work first enters the business: call, website, message, email, or internal handoff.';
   }
 
   const readyToRoute = hasMinimumLeadInfo(extractedLead);
@@ -296,6 +316,23 @@ function localPorterResponse({ history, lead, sourcePath }) {
     lead: extractedLead,
     readyToRoute,
     routingLabel: extractedLead.recommendedWorkflow || extractedLead.businessType || sourcePath || ''
+  };
+}
+
+function isDeterministicQuestion(text) {
+  return /what (can|do) you do|who are you|help me|what is arkon|what does arkon do|how does arkon work|price|pricing|cost|how much|schedul|calendar|appointment|booking|reschedul|reminder|vera|naya|marcus|iris|grant|porter|demo|talk to|speak to|contact|sign up|insurance|real estate|airbnb|rental|home service|contractor|auto repair|garage|law firm|dental|medical|gym|fitness|salon|miss(?:ed|ing)? calls?|phone|front desk|follow[- ]?up|text|message|guest|email|inbox|crm|record|history|notes|context|owner|dashboard|summary|visibility|report/i.test(text);
+}
+
+function preventRepeatedReply(result, history, localResult) {
+  const previous = cleanText(latestAssistantMessage(history), 900).toLowerCase();
+  const next = cleanText(result.reply, 900).toLowerCase();
+  if (!previous || !next || previous !== next) return result;
+
+  return {
+    ...localResult,
+    reply: localResult.reply.toLowerCase() === previous
+      ? 'Let me narrow that down instead of repeating myself. Does the problem begin with a call, a website request, a message, an email, or an internal handoff?'
+      : localResult.reply
   };
 }
 
@@ -324,7 +361,15 @@ Conversation rules:
 - Do not give legal, medical, financial, insurance coverage, underwriting, or technical guarantees.
 - Route sensitive, licensed, pricing-approval, or judgment-based matters to the ARKON team.
 - Do not repeatedly ask for information the visitor already provided.
+- Never repeat the same answer you gave in the prior turn.
 - Never ask more than one question in a reply.
+
+Scheduling guidance:
+- Scheduling is usually a combined workflow, not one agent pretending to do everything.
+- Porter or Vera can capture the request.
+- Naya can confirm, remind, or coordinate a reschedule.
+- Marcus keeps customer and appointment context attached.
+- Exact calendar or scheduling-software integration must be confirmed during discovery.
 
 Lead collection:
 Collect naturally only when useful:
@@ -341,6 +386,7 @@ Collect naturally only when useful:
 Workflow matching:
 - missed phone calls, front desk, inbound callers => Vera / calls and front desk
 - website forms, quote requests, appointment interest, after-hours web leads => Porter / website inquiry and lead intake
+- scheduling, appointments, confirmations, reminders, or rescheduling => Porter or Vera intake + Naya coordination + Marcus context
 - texts, follow-up, customer or guest messages => Naya / communication and follow-up
 - records, CRM, customer history, prior conversations => Marcus / relationship memory
 - owner summaries, visibility, what happened today => Grant / owner visibility
@@ -391,15 +437,25 @@ async function askAnthropic({ history, lead, sourcePath }) {
 
 async function getPorterResponse({ history, lead, sourcePath }) {
   const localLead = extractLocalLead(history, lead);
+  const localResult = localPorterResponse({ history, lead: localLead, sourcePath });
+  const latest = latestUserMessage(history);
+
+  // Common website questions receive deterministic answers so Porter remains useful
+  // even if the external model or its configuration is unavailable.
+  if (isDeterministicQuestion(latest)) {
+    return preventRepeatedReply(localResult, history, localResult);
+  }
+
   try {
     const modelResult = await askAnthropic({ history, lead: localLead, sourcePath });
-    return {
+    const merged = {
       ...modelResult,
       lead: mergeLeads(localLead, modelResult.lead)
     };
+    return preventRepeatedReply(merged, history, localResult);
   } catch (error) {
     console.error('Porter AI fallback activated:', error);
-    return localPorterResponse({ history, lead: localLead, sourcePath });
+    return preventRepeatedReply(localResult, history, localResult);
   }
 }
 
