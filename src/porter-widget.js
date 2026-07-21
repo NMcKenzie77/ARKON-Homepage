@@ -1,5 +1,6 @@
 const PORTER_ENDPOINT = '/api/porter/chat';
 const PORTER_HELLO_KEY = 'arkon_porter_conversation_seen';
+const PORTER_AUTO_OPEN_DELAY_MS = 20_000;
 
 function ready(fn) {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn, { once: true });
@@ -21,7 +22,8 @@ function createPorterWidget() {
     history: [],
     lead: {},
     alreadyRouted: false,
-    isWaiting: false
+    isWaiting: false,
+    autoOpenTimer: null
   };
 
   const root = document.createElement('aside');
@@ -70,9 +72,17 @@ function createPorterWidget() {
   }
 
   function addBubble(role, text) {
+    const normalized = clean(text);
+    if (!normalized) return;
+
+    const lastMessage = state.history[state.history.length - 1];
+    if (role === 'assistant' && lastMessage?.role === 'assistant' && clean(lastMessage.content) === normalized) {
+      return;
+    }
+
     const bubble = document.createElement('div');
     bubble.className = `porter-bubble ${role === 'assistant' ? 'from-porter' : 'from-visitor'}`;
-    bubble.textContent = text;
+    bubble.textContent = normalized;
     chat.appendChild(bubble);
     chat.scrollTop = chat.scrollHeight;
   }
@@ -97,6 +107,14 @@ function createPorterWidget() {
     addBubble('assistant', greeting);
   }
 
+  function hasConversationBeenSeen() {
+    try {
+      return window.sessionStorage.getItem(PORTER_HELLO_KEY) === 'true';
+    } catch {
+      return false;
+    }
+  }
+
   function markConversationSeen() {
     try {
       window.sessionStorage.setItem(PORTER_HELLO_KEY, 'true');
@@ -105,16 +123,26 @@ function createPorterWidget() {
     }
   }
 
+  function cancelAutoOpen() {
+    if (!state.autoOpenTimer) return;
+    window.clearTimeout(state.autoOpenTimer);
+    state.autoOpenTimer = null;
+  }
+
   function openPanel({ auto = false } = {}) {
+    if (!auto) cancelAutoOpen();
     panel.hidden = false;
     launcher.setAttribute('aria-expanded', 'true');
     root.classList.add('is-open');
     greet();
-    if (auto) markConversationSeen();
-    window.setTimeout(() => input?.focus?.(), 80);
+    markConversationSeen();
+
+    // Do not steal keyboard focus when Porter opens himself.
+    if (!auto) window.setTimeout(() => input?.focus?.(), 80);
   }
 
   function closePanel() {
+    cancelAutoOpen();
     panel.hidden = true;
     launcher.setAttribute('aria-expanded', 'false');
     root.classList.remove('is-open');
@@ -123,23 +151,20 @@ function createPorterWidget() {
   }
 
   function scheduleConversationStart() {
-    let alreadySeen = false;
-    try {
-      alreadySeen = window.sessionStorage.getItem(PORTER_HELLO_KEY) === 'true';
-    } catch {
-      alreadySeen = false;
-    }
+    if (hasConversationBeenSeen()) return;
 
-    if (alreadySeen) return;
-
-    window.setTimeout(() => {
-      if (!panel.hidden) return;
+    state.autoOpenTimer = window.setTimeout(() => {
+      state.autoOpenTimer = null;
+      if (hasConversationBeenSeen() || !panel.hidden || document.visibilityState !== 'visible') return;
       openPanel({ auto: true });
-    }, 5000);
+    }, PORTER_AUTO_OPEN_DELAY_MS);
   }
 
   async function sendToPorter(visitorText) {
     if (state.isWaiting) return;
+
+    cancelAutoOpen();
+    markConversationSeen();
 
     const visitorMessage = createMessage('user', visitorText);
     state.history.push(visitorMessage);
@@ -184,8 +209,11 @@ function createPorterWidget() {
     } catch {
       removeTyping();
       const fallback = 'I’m having trouble connecting right now. The demo request form on this page can still send your information to the ARKON team.';
-      state.history.push(createMessage('assistant', fallback));
-      addBubble('assistant', fallback);
+      const previous = state.history[state.history.length - 1];
+      if (previous?.role !== 'assistant' || clean(previous.content) !== fallback) {
+        state.history.push(createMessage('assistant', fallback));
+        addBubble('assistant', fallback);
+      }
       setStatus('Porter could not connect.', 'error');
     } finally {
       state.isWaiting = false;
@@ -195,12 +223,9 @@ function createPorterWidget() {
   }
 
   launcher.addEventListener('click', () => {
-    if (panel.hidden) {
-      markConversationSeen();
-      openPanel();
-    } else {
-      closePanel();
-    }
+    cancelAutoOpen();
+    if (panel.hidden) openPanel();
+    else closePanel();
   });
 
   close.addEventListener('click', closePanel);
