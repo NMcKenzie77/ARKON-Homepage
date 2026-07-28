@@ -8,9 +8,9 @@
   },
   "scripts": {
     "dev": "node scripts/build-public-source.mjs && vite --host 0.0.0.0",
-    "build": "node scripts/build-public-source.mjs && node scripts/build-server-runtime.mjs && node scripts/build-og-image.mjs && vite build",
+    "build": "node scripts/build-public-source.mjs && node scripts/build-og-image.mjs && vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "start": "node server.runtime.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

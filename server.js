@@ -2,7 +2,6 @@ import { createServer } from 'node:http';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { extname, join, normalize, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { handlePorterChat } from './porter-api.js';
 import { coverageLanes, solutions } from './src/data.js';
 import { crawlablePaths, industryPages, seoPages, SITE_URL } from './src/site-content.js';
 import { buildStructuredData, getBreadcrumbItems, getRelatedPages } from './src/seo-structure.js';
@@ -507,77 +506,6 @@ function injectCrawlableStyles(html) {
   return html.replace('</head>', `${style}\n  </head>`);
 }
 
-function injectDemoRequestScript(html) {
-  if (html.includes('data-demo-request-script')) return html;
-  if (html.includes("const endpoint = '/api/demo-request'")) return html;
-
-  const script = `<script data-demo-request-script>
-(() => {
-  const endpoint = '/api/demo-request';
-  function normalize(value) { return String(value || '').replace(/\\s+/g, ' ').trim().toLowerCase(); }
-  function setStatus(form, message) {
-    let status = form.querySelector('[data-demo-status="true"]');
-    if (!status) { status = document.createElement('small'); status.dataset.demoStatus = 'true'; status.setAttribute('role', 'status'); status.style.minHeight = '20px'; status.style.display = 'block'; status.style.color = 'var(--subtle)'; form.appendChild(status); }
-    status.textContent = message;
-  }
-  function mapDemoFields() {
-    const form = document.querySelector('.demo-form');
-    if (!form) return;
-    const controls = [...form.querySelectorAll('input, select, textarea')];
-    controls.forEach(control => {
-      const label = control.closest('label');
-      const combined = normalize([control.name, control.id, control.getAttribute('aria-label'), control.placeholder, label?.textContent].filter(Boolean).join(' '));
-      if (!control.name && combined.includes('name')) control.name = 'name';
-      if (!control.name && (combined.includes('email') || control.type === 'email')) control.name = 'email';
-      if (!control.name && (combined.includes('business') || control.tagName === 'SELECT')) control.name = 'businessType';
-      if (!control.name && combined.includes('phone')) control.name = 'phone';
-      if (!control.name && combined.includes('company')) control.name = 'companyName';
-      if (!control.name && combined.includes('website')) control.name = 'website';
-      if (!control.name && combined.includes('message')) control.name = 'message';
-    });
-    const nameInput = form.querySelector('[name="name"]');
-    const email = form.querySelector('[name="email"]');
-    const business = form.querySelector('[name="businessType"]');
-    if (nameInput) nameInput.required = true;
-    if (email) email.required = true;
-    if (business) business.required = true;
-    form.querySelectorAll('small').forEach(note => { if ((note.textContent || '').toLowerCase().includes('front-end only')) note.remove(); });
-  }
-  async function submitDemoRequest(event) {
-    const form = event.target?.closest?.('.demo-form');
-    if (!form) return;
-    event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation?.(); mapDemoFields();
-    const data = new FormData(form);
-    const payload = {
-      name: String(data.get('name') || '').trim(),
-      email: String(data.get('email') || '').trim(),
-      phone: String(data.get('phone') || '').trim(),
-      companyName: String(data.get('companyName') || '').trim(),
-      website: String(data.get('website') || '').trim(),
-      businessType: String(data.get('businessType') || '').trim(),
-      message: String(data.get('message') || '').trim(),
-      companyWebsite: '',
-      sourcePath: window.location.pathname
-    };
-    if (!payload.name || !payload.email || !payload.businessType) { setStatus(form, 'Please enter your name, email, and business type.'); return; }
-    const submitButton = form.querySelector('button[type="submit"]');
-    if (submitButton) submitButton.disabled = true;
-    setStatus(form, 'Sending request...');
-    try {
-      const response = await fetch(endpoint, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) });
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok || result.ok === false) throw new Error(result.message || 'Request failed.');
-      form.reset(); setStatus(form, result.message || 'Request received. We will follow up shortly.');
-    } catch { setStatus(form, 'Request could not be sent. Please try again.'); }
-    finally { if (submitButton) submitButton.disabled = false; }
-  }
-  mapDemoFields(); document.addEventListener('submit', submitDemoRequest, true); window.addEventListener('DOMContentLoaded', mapDemoFields); window.addEventListener('load', mapDemoFields);
-})();
-</script>`;
-
-  return html.replace(/<\/body>/i, `${script}\n</body>`);
-}
-
 function sitemapXml() {
   const urls = crawlablePaths.map(path => {
     const loc = `${siteUrl}${path === '/' ? '/' : path}`;
@@ -634,11 +562,6 @@ createServer(async (req, res) => {
     return;
   }
 
-  if (pathname === '/api/porter/chat') {
-    await handlePorterChat(req, res);
-    return;
-  }
-
   if (!existsSync(distDir)) {
     res.writeHead(500, { 'content-type': 'text/plain; charset=utf-8' });
     res.end('Build folder not found. Run npm run build before npm start.');
@@ -685,14 +608,12 @@ createServer(async (req, res) => {
 
   if (ext === '.html') {
     const rawHtml = readFileSync(filePath, 'utf8');
-    const html = injectDemoRequestScript(
-      injectCrawlableContent(
-        injectCrawlableStyles(
-          injectSeo(rawHtml, route, isKnownRoute, requestedPath)
-        ),
-        route,
-        isKnownRoute
-      )
+    const html = injectCrawlableContent(
+      injectCrawlableStyles(
+        injectSeo(rawHtml, route, isKnownRoute, requestedPath)
+      ),
+      route,
+      isKnownRoute
     );
 
     res.writeHead(isKnownRoute ? 200 : 404, headers);
