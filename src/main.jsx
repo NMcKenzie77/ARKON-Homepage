@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
 import { industryPages, seoPages, SITE_URL } from './site-content.js';
+import { getBreadcrumbItems, getRelatedPages } from './seo-structure.js';
 import './styles.css';
 import './hero-compact.css';
 import './walkthrough.css';
@@ -202,6 +203,24 @@ function UnifiedFooter() {
   );
 }
 
+function Breadcrumbs({ route, page }) {
+  const items = getBreadcrumbItems(route, { schemaName: page.name }, SITE_URL);
+
+  return (
+    <nav className="industry-breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        {items.map((item, index) => (
+          <li key={item.url}>
+            {index < items.length - 1
+              ? <a href={index === 0 ? '/' : item.url}>{item.name}</a>
+              : <span aria-current="page">{item.name}</span>}
+          </li>
+        ))}
+      </ol>
+    </nav>
+  );
+}
+
 function PricingSection({ plans }) {
   if (!plans?.length) return null;
 
@@ -239,6 +258,31 @@ function PricingSection({ plans }) {
   );
 }
 
+function RelatedBusinessPages({ route }) {
+  const relatedPages = getRelatedPages(route, industryPages);
+  if (!relatedPages.length) return null;
+
+  return (
+    <section className="section industry-related-section">
+      <div className="section-heading" data-reveal>
+        <p className="eyebrow">Related business workflows</p>
+        <h2>See how the same operating approach applies elsewhere.</h2>
+        <p>Each page focuses on the calls, messages, records, handoffs, and owner visibility that matter in that kind of business.</p>
+      </div>
+      <div className="industry-related-grid">
+        {relatedPages.map(({ path, page }) => (
+          <a className="industry-related-card" href={path} key={path} data-reveal>
+            <span>{page.eyebrow}</span>
+            <h3>{page.title}</h3>
+            <p>{page.description}</p>
+            <strong>View workflow</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function UnifiedIndustryPage({ page, route }) {
   usePageReveal();
 
@@ -247,6 +291,7 @@ function UnifiedIndustryPage({ page, route }) {
       <ClientSeoSync route={route} />
       <UnifiedHeader showPricing={Boolean(page.pricing)} />
       <main className="industry-page">
+        <Breadcrumbs route={route} page={page} />
         <section className="hero industry-hero">
           <div className="hero-background" aria-hidden="true">
             <span className="orb orb-one" />
@@ -321,6 +366,8 @@ function UnifiedIndustryPage({ page, route }) {
             ))}
           </div>
         </section>
+
+        <RelatedBusinessPages route={route} />
 
         <section className="demo-cta industry-cta" data-reveal>
           <div>
