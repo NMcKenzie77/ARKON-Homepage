@@ -2,8 +2,8 @@ export const SITE_URL = 'https://www.arkonsysai.com';
 
 export const homeSeo = {
   path: '/',
-  title: 'ARKON Systems | AI Workflow Automation for Service Businesses',
-  description: 'ARKON Systems gives service businesses an AI operating team for calls, messages, follow-up, scheduling, records, handoffs, and owner visibility.',
+  title: 'AI Workflow Automation for Service Businesses | ARKON Systems',
+  description: 'ARKON Systems handles repeatable calls, messages, follow-up, scheduling, records, and handoffs so service-business teams can stay focused.',
   schemaType: 'SoftwareApplication',
   schemaName: 'ARKON Systems',
   eyebrow: 'ARKON Systems',
@@ -12,10 +12,10 @@ export const homeSeo = {
 
 export const howItWorksSeo = {
   path: '/how-it-works',
-  title: 'How ARKON Works | Request Routing, Business Rules, and Owner Visibility',
-  description: 'See how ARKON handles calls, website inquiries, text messages, email, relationship history, business rules, safe next steps, and owner summaries.',
-  schemaType: 'SoftwareApplication',
-  schemaName: 'ARKON Systems',
+  title: 'How ARKON Works | AI Workflow Automation for Service Businesses',
+  description: 'See how ARKON routes calls, website inquiries, messages, email, records, follow-up, and owner alerts using the business’s rules.',
+  schemaType: 'WebPage',
+  schemaName: 'How ARKON Works',
   eyebrow: 'How ARKON handles a request',
   h1: 'One business. Different ways people reach out.'
 };
@@ -54,7 +54,7 @@ export const pricingPlans = [
     pilot: '$1,750/mo',
     target: '$2,500/mo after proof',
     setup: '$2,500-$3,500 setup',
-    summary: 'A fuller operating layer with Vera, Naya, Marcus, handoffs, reminders, reviews, owner briefs, and tech/advisor voice notes.',
+    summary: 'A fuller operating layer with Vera, Naya, Marcus, handoffs, reminders, reviews, owner briefs, and tech or advisor voice notes.',
     includes: ['Vera voice intake', 'Naya follow-up', 'Grant owner brief', 'Tech and advisor notes']
   },
   {
@@ -72,15 +72,15 @@ export const pricingPlans = [
 export const industryPages = {
   '/real-estate': {
     path: '/real-estate',
-    name: 'Real Estate',
+    name: 'Real Estate Workflow Automation',
     schemaType: 'Service',
-    seoTitle: 'AI Workflow Automation for Real Estate Teams | ARKON Systems',
+    seoTitle: 'Real Estate Lead Follow-Up & Workflow Automation | ARKON',
     eyebrow: 'Real estate workflow automation',
-    title: 'AI workflow automation for real estate teams.',
-    description: 'ARKON helps real estate teams protect lead response, showing requests, seller calls, buyer questions, follow-up, agent handoffs, and owner visibility.',
-    primary: 'Real estate teams lose deals when leads wait, showing requests sit, seller calls are missed, or agent follow-up depends on someone remembering every detail. ARKON gives the team trained roles for calls, website inquiries, client messages, relationship history, and owner visibility.',
+    title: 'Keep real estate leads, showing requests, and follow-up moving.',
+    description: 'ARKON gives real estate teams structured lead response, showing-request routing, seller and buyer follow-up, CRM context, and owner visibility.',
+    primary: 'Real estate teams lose deals when leads wait, showing requests sit, seller calls are missed, or agent follow-up depends on someone remembering every detail. ARKON keeps calls, website inquiries, client messages, relationship history, and agent handoffs connected.',
     cards: [
-      ['Lead response', 'Porter and Naya help capture website inquiries, answer approved questions, and follow up before a lead goes cold.'],
+      ['Lead response', 'ARKON captures website inquiries, answers approved questions, and prepares follow-up before a lead goes cold.'],
       ['Calls and showings', 'Vera handles inbound calls, captures what matters, and routes showing or seller requests to the right person.'],
       ['Agent context', 'Marcus keeps lead history, notes, pipeline stage, prior touchpoints, and follow-up context attached.'],
       ['Owner view', 'Grant surfaces what came in, what was handled, who owns the next step, and what needs attention.']
@@ -93,37 +93,37 @@ export const industryPages = {
   },
   '/insurance': {
     path: '/insurance',
-    name: 'Insurance',
+    name: 'Insurance Agency Workflow Automation',
     schemaType: 'Service',
-    seoTitle: 'AI Workflow Automation for Insurance Agencies | ARKON Systems',
+    seoTitle: 'Insurance Agency Workflow Automation & Follow-Up | ARKON',
     eyebrow: 'Insurance agency workflow automation',
-    title: 'AI workflow automation for insurance agencies.',
-    description: 'ARKON helps insurance agencies handle quote requests, policyholder questions, renewals, documents, producer follow-up, CRM updates, and owner visibility.',
+    title: 'Keep quote requests, policyholder questions, and producer follow-up organized.',
+    description: 'ARKON organizes insurance quote requests, policyholder questions, renewal follow-up, documents, producer handoffs, CRM updates, and agency visibility.',
     primary: 'Insurance agencies lose time when quote requests, renewal questions, document requests, and producer follow-up scatter across calls, email, texts, and the CRM. ARKON keeps the front office, producers, admins, and owner view connected.',
     cards: [
-      ['Quote requests', 'Porter captures website leads and Naya follows up with approved messaging before prospects go cold.'],
+      ['Quote requests', 'ARKON captures website leads and prepares approved follow-up before prospects go cold.'],
       ['Inbound calls', 'Vera answers, qualifies, captures details, and routes policy or quote questions to the right person.'],
       ['CRM memory', 'Marcus keeps contact records, relationship notes, pipeline stage, tags, and follow-up reminders attached.'],
       ['Inbox triage', 'Iris scores urgency and importance so policyholder, carrier, and prospect emails do not get buried.']
     ],
     workflow: ['Prospect asks for a quote', 'Policyholder sends a document request', 'Renewal question comes in', 'Producer gets context before the callback'],
     faq: [
-      ['Does ARKON give insurance advice?', 'ARKON follows the business rules and routes licensed or judgment-based questions to the right person.'],
-      ['Can it help producers follow up?', 'Yes. ARKON can help prepare follow-up, attach context, update records, and keep the owner informed.']
+      ['Does ARKON give insurance advice?', 'No. ARKON follows the agency’s rules and routes licensed or judgment-based questions to the right person.'],
+      ['Can it help producers follow up?', 'Yes. ARKON can prepare follow-up, attach context, update records, and keep the owner informed.']
     ]
   },
   '/short-term-rentals': {
     path: '/short-term-rentals',
-    name: 'Short-Term Rentals',
+    name: 'Short-Term Rental Workflow Automation',
     schemaType: 'Service',
-    seoTitle: 'AI Workflow Automation for Short-Term Rentals | ARKON Systems',
+    seoTitle: 'Short-Term Rental Guest Messaging Automation | ARKON',
     eyebrow: 'Short-term rental workflow automation',
-    title: 'AI workflow automation for short-term rental operators.',
-    description: 'ARKON helps short-term rental operators manage guest messages, cleaner coordination, vendor updates, urgent issues, follow-up, and host visibility.',
+    title: 'Keep guest, cleaner, and vendor communication moving.',
+    description: 'ARKON organizes short-term rental guest messaging, cleaner coordination, vendor updates, urgent-issue routing, follow-up, and host visibility.',
     primary: 'Short-term rental operators deal with guest messages, cleaner coordination, vendor updates, urgent issues, check-in questions, and host visibility. ARKON keeps stay operations moving without every message landing on the host.',
     cards: [
       ['Guest messages', 'Naya responds in the host’s voice, answers approved questions, and routes sensitive or urgent issues.'],
-      ['Website inquiries', 'Porter captures direct booking inquiries and hands warm leads to the business.'],
+      ['Direct-booking inquiries', 'ARKON captures website inquiries and prepares the handoff before a potential guest moves on.'],
       ['Inbox triage', 'Iris separates urgent issues, guest needs, vendor messages, and routine inbox activity.'],
       ['Host visibility', 'Grant shows what happened, what was handled, and what needs attention across the stay.']
     ],
@@ -135,16 +135,16 @@ export const industryPages = {
   },
   '/home-services': {
     path: '/home-services',
-    name: 'Home Services',
+    name: 'Home Service Workflow Automation',
     schemaType: 'Service',
-    seoTitle: 'AI Workflow Automation for Home Service Businesses | ARKON Systems',
+    seoTitle: 'Home Service Call & Scheduling Automation | ARKON',
     eyebrow: 'Home services workflow automation',
-    title: 'AI workflow automation for home service businesses.',
-    description: 'ARKON helps home service businesses handle calls, estimates, repairs, technician updates, scheduling, invoices, customer messages, and owner visibility.',
-    primary: 'Home service businesses lose money when calls are missed, estimate requests wait, technicians lack context, invoices create confusion, or customers need updates. ARKON keeps the front desk, field team, admin work, and owner view connected.',
+    title: 'Turn missed calls and estimate requests into organized next steps.',
+    description: 'ARKON helps home service businesses manage inbound calls, estimate requests, scheduling, technician context, customer updates, and owner visibility.',
+    primary: 'Home service businesses lose money when calls are missed, estimate requests wait, technicians lack context, invoices create confusion, or customers need updates. ARKON keeps front-desk work, field updates, customer communication, and the owner view connected.',
     cards: [
       ['Inbound calls', 'Vera answers calls, qualifies customers, captures job details, and routes urgent or judgment-based requests.'],
-      ['Estimate requests', 'Porter captures website requests and Naya follows up when a customer does not convert.'],
+      ['Estimate requests', 'ARKON captures website requests and prepares follow-up when a customer does not convert.'],
       ['Job context', 'Marcus keeps customer history, notes, prior work, and appointment details attached.'],
       ['Owner visibility', 'Grant shows open issues, handled requests, escalations, and next actions.']
     ],
@@ -156,15 +156,15 @@ export const industryPages = {
   },
   '/professional-services': {
     path: '/professional-services',
-    name: 'Professional Services',
+    name: 'Professional Services Workflow Automation',
     schemaType: 'Service',
-    seoTitle: 'AI Workflow Automation for Professional Services | ARKON Systems',
+    seoTitle: 'Professional Services Client Intake Automation | ARKON',
     eyebrow: 'Professional services workflow automation',
-    title: 'AI workflow automation for professional service firms.',
-    description: 'ARKON helps professional service firms manage intake, scheduling, client questions, document requests, follow-up, handoffs, and owner visibility.',
-    primary: 'Professional service firms need clean intake, reliable scheduling, client follow-up, document requests, and owner visibility. ARKON helps keep client context attached so work does not depend on memory or scattered messages.',
+    title: 'Keep client intake, documents, scheduling, and follow-up connected.',
+    description: 'ARKON organizes client intake, scheduling, document requests, approved communication, relationship history, staff handoffs, and owner visibility.',
+    primary: 'Professional service firms need clean intake, reliable scheduling, client follow-up, document requests, and owner visibility. ARKON keeps client context attached so work does not depend on memory or scattered messages.',
     cards: [
-      ['Client intake', 'Vera and Porter capture the right details from calls and website inquiries.'],
+      ['Client intake', 'Vera captures call details while ARKON organizes website inquiries and the next handoff.'],
       ['Client communication', 'Naya responds with the firm’s approved tone, standards, and boundaries.'],
       ['Relationship memory', 'Marcus keeps notes, prior conversations, relationship history, and follow-up context attached.'],
       ['Owner visibility', 'Grant shows what came in, what was handled, who owns the next step, and what needs review.']
@@ -177,16 +177,16 @@ export const industryPages = {
   },
   '/salons': {
     path: '/salons',
-    name: 'Salons',
+    name: 'Salon Booking Workflow Automation',
     schemaType: 'Service',
-    seoTitle: 'AI Workflow Automation for Salons | ARKON Systems',
+    seoTitle: 'Salon Booking & Client Follow-Up Automation | ARKON',
     eyebrow: 'Salon workflow automation',
-    title: 'AI workflow automation for salons.',
-    description: 'ARKON helps salons manage missed calls, booking requests, client messages, appointment follow-up, staff handoffs, and owner visibility.',
+    title: 'Protect bookings when the salon is too busy to answer.',
+    description: 'ARKON helps salons manage missed calls, online booking requests, client messages, appointment follow-up, staff handoffs, and owner visibility.',
     primary: 'Salons miss revenue when calls go unanswered, booking requests sit, client messages pile up, or appointment follow-up depends on the busiest person in the room. ARKON keeps booking communication, client context, staff handoffs, and the owner view connected.',
     cards: [
       ['Missed call coverage', 'Vera captures what the client needs and routes requests that require a stylist or manager.'],
-      ['Booking requests', 'Porter captures website interest and Naya follows up before the client books somewhere else.'],
+      ['Booking requests', 'ARKON captures website interest and prepares follow-up before the client books somewhere else.'],
       ['Client memory', 'Marcus keeps service history, preferences, notes, and prior conversations attached.'],
       ['Owner visibility', 'Grant shows missed opportunities, open requests, follow-up, and staff handoffs.']
     ],
@@ -198,16 +198,16 @@ export const industryPages = {
   },
   '/garages': {
     path: '/garages',
-    name: 'Auto Repair Shops',
+    name: 'Auto Repair Shop Workflow Automation',
     schemaType: 'Service',
-    seoTitle: 'AI Workflow Automation for Auto Repair Shops | ARKON Systems',
+    seoTitle: 'Auto Repair Shop Call & Follow-Up Automation | ARKON',
     eyebrow: 'Auto repair shop workflow automation',
-    title: 'AI workflow automation for auto repair shops.',
-    description: 'ARKON helps auto repair shops manage repair calls, estimate requests, declined work follow-up, vehicle context, status updates, return visits, and owner visibility.',
-    primary: 'Auto repair shops lose time when repair calls interrupt the bay, estimate requests wait, declined work is never followed up, or customers call repeatedly for status updates. ARKON supports the front desk, customer intake, vehicle context, scheduling, declined-work follow-up, status updates, and owner visibility.',
+    title: 'Stop losing repair work to missed calls and weak follow-up.',
+    description: 'ARKON helps auto repair shops manage repair calls, estimate requests, vehicle context, status updates, declined-work follow-up, return visits, and owner visibility.',
+    primary: 'Auto repair shops lose time when repair calls interrupt the bay, estimate requests wait, declined work is never followed up, or customers call repeatedly for status updates. ARKON supports front-desk intake, vehicle context, scheduling, declined-work follow-up, status updates, and owner visibility.',
     cards: [
       ['Repair calls', 'Vera answers, captures the vehicle and concern, and routes urgent or judgment-based requests.'],
-      ['Estimate requests', 'Porter captures online requests and Naya follows up when a customer does not schedule.'],
+      ['Estimate requests', 'ARKON captures online requests and prepares follow-up when a customer does not schedule.'],
       ['Vehicle context', 'Marcus keeps customer, vehicle, prior repair, estimate, and follow-up history attached.'],
       ['Declined work follow-up', 'Naya follows approved timing and messaging so recommended work does not disappear after the first visit.']
     ],
@@ -220,16 +220,16 @@ export const industryPages = {
   },
   '/medical-dental-offices': {
     path: '/medical-dental-offices',
-    name: 'Medical & Dental',
+    name: 'Medical and Dental Front Desk Automation',
     schemaType: 'Service',
-    seoTitle: 'AI Workflow Automation for Medical and Dental Offices | ARKON Systems',
+    seoTitle: 'Medical & Dental Front Desk Workflow Automation | ARKON',
     eyebrow: 'Medical and dental office workflow automation',
-    title: 'AI workflow automation for medical and dental offices.',
-    description: 'ARKON helps medical and dental offices manage front-desk calls, appointment requests, cancellations, no-shows, routine reminders, patient handoffs, and owner visibility.',
+    title: 'Reduce front-desk pressure without hiding clinical judgment calls.',
+    description: 'ARKON supports medical and dental front desks with call intake, appointment requests, cancellations, no-show follow-up, reminders, handoffs, and office visibility.',
     primary: 'Medical and dental offices face front-desk pressure from calls, appointment requests, cancellations, no-shows, routine reminders, patient questions, and staff handoffs. ARKON supports repeatable scheduling communication while routing clinical, sensitive, or judgment-based matters to the right person.',
     cards: [
       ['Front desk calls', 'Vera captures the reason for the call and routes urgent, clinical, or sensitive questions.'],
-      ['Appointment requests', 'Porter captures website interest and Naya supports approved scheduling follow-up.'],
+      ['Appointment requests', 'ARKON captures website interest and supports approved scheduling follow-up.'],
       ['Reminder workflows', 'Naya prepares routine reminders, confirmations, and no-show follow-up based on office rules.'],
       ['Office visibility', 'Grant shows open requests, missed follow-up, escalations, and next actions.']
     ],
@@ -241,15 +241,15 @@ export const industryPages = {
   },
   '/law-firms': {
     path: '/law-firms',
-    name: 'Law Firms',
+    name: 'Law Firm Intake Workflow Automation',
     schemaType: 'Service',
-    seoTitle: 'AI Workflow Automation for Law Firms | ARKON Systems',
+    seoTitle: 'Law Firm Intake & Client Follow-Up Automation | ARKON',
     eyebrow: 'Law firm workflow automation',
-    title: 'AI workflow automation for law firms.',
-    description: 'ARKON helps law firms support intake, attorney schedules, email triage, client follow-up, document requests, daily briefs, handoffs, and owner visibility.',
+    title: 'Keep intake, documents, schedules, and client follow-up organized.',
+    description: 'ARKON supports law firms with approved intake, attorney scheduling handoffs, email triage, document requests, client follow-up, daily briefs, and owner visibility.',
     primary: 'Law firms need support around intake, attorney schedules, email triage, client follow-up, document requests, daily briefs, and handoffs. ARKON keeps communication and next steps organized while routing legal advice, sensitive matters, and judgment calls to the right person.',
     cards: [
-      ['Intake support', 'Vera and Porter capture approved intake details without pretending to evaluate the legal matter.'],
+      ['Intake support', 'Vera captures approved call details while ARKON organizes website inquiries without evaluating the legal matter.'],
       ['Email triage', 'Iris separates urgent client, court, opposing counsel, and routine messages.'],
       ['Document requests', 'Naya follows approved checklists and timing for missing documents and client updates.'],
       ['Attorney context', 'Marcus keeps contact history, notes, matter context, and follow-up attached before the handoff.']
@@ -262,13 +262,13 @@ export const industryPages = {
   },
   '/gyms-fitness-studios': {
     path: '/gyms-fitness-studios',
-    name: 'Gyms & Fitness',
+    name: 'Gym Lead and Member Follow-Up Automation',
     schemaType: 'Service',
-    seoTitle: 'AI Workflow Automation for Gyms and Fitness Studios | ARKON Systems',
+    seoTitle: 'Gym Lead Follow-Up & Member Retention Automation | ARKON',
     eyebrow: 'Gym and fitness studio workflow automation',
-    title: 'AI workflow automation for gyms and fitness studios.',
-    description: 'ARKON helps gyms and fitness studios protect trial lead response, tour bookings, personal training revenue, member follow-up, cancellation handoffs, and owner visibility.',
-    primary: 'Gyms and fitness studios lose revenue when trial leads are not followed up, tours do not get booked, personal training interest goes cold, cancellation questions sit, or members stop showing up without anyone noticing. ARKON gives the studio trained roles for calls, website inquiries, member messages, booking support, relationship history, and owner visibility.',
+    title: 'Protect trial leads, tours, training revenue, and member follow-up.',
+    description: 'ARKON helps gyms and fitness studios manage trial leads, tour bookings, personal-training follow-up, member messages, cancellation handoffs, and owner visibility.',
+    primary: 'Gyms and fitness studios lose revenue when trial leads are not followed up, tours do not get booked, personal training interest goes cold, cancellation questions sit, or members stop showing up without anyone noticing. ARKON keeps calls, website inquiries, member messages, booking support, relationship history, and owner visibility connected.',
     reality: {
       eyebrow: 'The studio reality',
       title: 'Members do not disappear all at once.',
@@ -279,7 +279,7 @@ export const industryPages = {
       callout: 'The owner stays in control. ARKON supports the work around membership, retention, and follow-up.'
     },
     cards: [
-      ['Keep trial leads warm', 'Trial interest should not go cold because the front desk is busy. Porter captures the inquiry and keeps the tour moving.'],
+      ['Keep trial leads warm', 'ARKON captures the inquiry and keeps the tour handoff moving when the front desk is busy.'],
       ['Protect training revenue', 'Personal training interest needs a clear next step before the member moves on. Marcus keeps follow-up context attached.'],
       ['Route front desk pressure', 'Class, billing, and cancellation questions create bottlenecks. Vera captures what matters and routes the next step.'],
       ['Brief the owner', 'Leads, bookings, and cancellations scatter across staff. Grant shows what is slipping and who owns it.']
@@ -287,7 +287,7 @@ export const industryPages = {
     workflow: ['Trial lead asks about joining', 'Tour or class question comes in', 'Training interest needs follow-up', 'Owner sees what is slipping'],
     faq: [
       ['Can ARKON replace my front desk?', 'No. ARKON handles repeatable work and prepares the handoff so staff can focus on members, tours, classes, training, and decisions.'],
-      ['Can it help with retention and follow-up?', 'Yes. ARKON can help prepare reminders, follow-up messages, booking support, member context, and staff handoffs when the workflow rules are defined.']
+      ['Can it help with retention and follow-up?', 'Yes. ARKON can prepare reminders, follow-up messages, booking support, member context, and staff handoffs when the workflow rules are defined.']
     ]
   }
 };
