@@ -1,0 +1,38 @@
+.demo-form textarea {
+  width: 100%;
+  min-height: 108px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  color: var(--text);
+  background: rgba(5, 9, 20, 0.62);
+  font: inherit;
+  outline: none;
+  resize: vertical;
+}
+
+.demo-form textarea:focus {
+  border-color: var(--blue);
+}
+
+.demo-form .primary-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.demo-status {
+  min-height: 20px;
+  display: block;
+}
+
+.demo-honeypot {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
