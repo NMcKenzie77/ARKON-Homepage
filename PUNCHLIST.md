@@ -21,4 +21,4 @@
 - [x] Submit `https://www.arkonsysai.com/sitemap.xml` in Search Console. The XML is publicly accessible; Search Console initially reported `Couldn't fetch` and should be rechecked after Google retries.
 - [x] Request indexing for all 12 public routes. The daily limit was reached after submitting `https://www.arkonsysai.com/gyms-fitness-studios`, the final route.
 - [ ] Recheck Search Console sitemap and indexing status after Google has had time to process the requests.
-- [ ] Remove remaining legacy client-side cleanup hooks and duplicate homepage/how-it-works content sources after indexing is stabilized.
+- [x] Remove the runtime DOM cleanup hooks from the production bundle, remove Porter from public homepage/how-it-works copy, and remove duplicate industry-page and client-SEO sources from the generated homepage bundle. Completed in PR #10, merge commit `019c8384c6a03dbd5e6930643c3ff26a14de4329`.
