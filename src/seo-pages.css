@@ -1,5 +1,51 @@
 .industry-page {
+  position: relative;
   padding-top: 0;
+}
+
+.industry-breadcrumbs {
+  position: absolute;
+  z-index: 5;
+  top: 92px;
+  left: 50%;
+  width: min(1060px, calc(100% - 40px));
+  transform: translateX(-50%);
+}
+
+.industry-breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.industry-breadcrumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.industry-breadcrumbs li:not(:last-child)::after {
+  content: '/';
+  color: rgba(184, 199, 223, 0.5);
+}
+
+.industry-breadcrumbs a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.industry-breadcrumbs a:hover {
+  color: var(--mint);
+}
+
+.industry-breadcrumbs [aria-current='page'] {
+  color: var(--text);
 }
 
 .industry-hero {
@@ -33,7 +79,8 @@
 
 .industry-intro-section,
 .industry-workflow-section,
-.industry-faq-section {
+.industry-faq-section,
+.industry-related-section {
   padding-top: 52px;
 }
 
@@ -97,6 +144,56 @@
   margin: 0;
 }
 
+.industry-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.industry-related-card {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  background: linear-gradient(180deg, var(--panel-strong), rgba(9, 16, 31, 0.76));
+  box-shadow: var(--shadow);
+  color: var(--text);
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.industry-related-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(130, 247, 202, 0.58);
+}
+
+.industry-related-card > span {
+  color: var(--mint);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.industry-related-card h3 {
+  margin: 14px 0 10px;
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  letter-spacing: -0.03em;
+}
+
+.industry-related-card p {
+  margin: 0 0 22px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.industry-related-card strong {
+  margin-top: auto;
+  color: var(--mint);
+}
+
 .industry-cta {
   align-items: center;
 }
@@ -106,15 +203,23 @@
 }
 
 @media (max-width: 1080px) {
+  .industry-related-grid {
+    grid-template-columns: 1fr;
+  }
+
   .industry-cta > a {
     justify-self: start;
   }
 }
 
 @media (max-width: 780px) {
+  .industry-breadcrumbs {
+    top: 78px;
+  }
+
   .industry-hero {
     min-height: auto;
-    padding-top: 96px;
+    padding-top: 112px;
   }
 
   .industry-hero-inner h1 {
