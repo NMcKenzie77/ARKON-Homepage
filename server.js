@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { handlePorterChat } from './porter-api.js';
 import { coverageLanes, solutions } from './src/data.js';
 import { crawlablePaths, industryPages, seoPages, SITE_URL } from './src/site-content.js';
+import { buildStructuredData, getBreadcrumbItems, getRelatedPages } from './src/seo-structure.js';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const distDir = resolve(__dirname, 'dist');
@@ -212,37 +213,7 @@ async function handleDemoRequest(req, res) {
 }
 
 function buildSchema(route, seo) {
-  const url = `${siteUrl}${route === '/' ? '/' : route}`;
-  const organization = {
-    '@type': 'Organization',
-    '@id': `${siteUrl}/#organization`,
-    name: 'ARKON Systems',
-    url: `${siteUrl}/`
-  };
-
-  const pageEntity = {
-    '@type': seo.schemaType,
-    '@id': `${url}#primary`,
-    name: seo.schemaName || 'ARKON Systems',
-    description: seo.description,
-    url
-  };
-
-  if (seo.schemaType === 'Service') {
-    pageEntity.provider = { '@id': organization['@id'] };
-    pageEntity.areaServed = 'United States';
-  }
-
-  if (seo.schemaType === 'SoftwareApplication') {
-    pageEntity.applicationCategory = 'BusinessApplication';
-    pageEntity.operatingSystem = 'Web';
-    pageEntity.provider = { '@id': organization['@id'] };
-  }
-
-  return JSON.stringify({
-    '@context': 'https://schema.org',
-    '@graph': [organization, pageEntity]
-  });
+  return buildStructuredData({ route, seo, industryPages, siteUrl });
 }
 
 function renderCards(cards = []) {
@@ -259,6 +230,39 @@ function renderSimpleCards(cards = []) {
       <h3>${escapeHtml(card.title)}</h3>
       <p>${escapeHtml(card.copy)}</p>
     </article>`).join('');
+}
+
+function renderBreadcrumbs(route, seo) {
+  const items = getBreadcrumbItems(route, seo, siteUrl);
+  if (items.length < 2) return '';
+
+  return `<nav class="crawlable-breadcrumbs" aria-label="Breadcrumb">
+    <ol>${items.map((item, index) => {
+      const content = index < items.length - 1
+        ? `<a href="${escapeHtml(item.url)}">${escapeHtml(item.name)}</a>`
+        : `<span aria-current="page">${escapeHtml(item.name)}</span>`;
+      return `<li>${content}</li>`;
+    }).join('')}</ol>
+  </nav>`;
+}
+
+function renderRelatedPages(route) {
+  const relatedPages = getRelatedPages(route, industryPages);
+  if (!relatedPages.length) return '';
+
+  const cards = relatedPages.map(({ path, page }) => `
+    <a class="crawlable-card crawlable-link-card" href="${escapeHtml(path)}">
+      <p><strong>${escapeHtml(page.eyebrow)}</strong></p>
+      <h3>${escapeHtml(page.title)}</h3>
+      <p>${escapeHtml(page.description)}</p>
+    </a>`).join('');
+
+  return `<section>
+    <p class="crawlable-eyebrow">Related business workflows</p>
+    <h2>See how the same operating approach applies elsewhere.</h2>
+    <p>Each page focuses on the calls, messages, records, handoffs, and owner visibility that matter in that kind of business.</p>
+    <div class="crawlable-grid">${cards}</div>
+  </section>`;
 }
 
 function renderPricing(plans = []) {
@@ -388,6 +392,7 @@ function crawlableHowItWorksHtml() {
   ];
 
   return `<main class="crawlable-page" data-crawlable-page="true">
+    ${renderBreadcrumbs('/how-it-works', seoPages['/how-it-works'])}
     <section>
       <p class="crawlable-eyebrow">How ARKON handles a request</p>
       <h1>One business. Different ways people reach out.</h1>
@@ -402,7 +407,7 @@ function crawlableHowItWorksHtml() {
   </main>`;
 }
 
-function crawlableIndustryHtml(page) {
+function crawlableIndustryHtml(page, route) {
   const reality = page.reality ? `
     <section>
       <p class="crawlable-eyebrow">${escapeHtml(page.reality.eyebrow)}</p>
@@ -412,6 +417,7 @@ function crawlableIndustryHtml(page) {
     </section>` : '';
 
   return `<main class="crawlable-page" data-crawlable-page="true">
+    ${renderBreadcrumbs(route, { schemaName: page.name })}
     <section>
       <p class="crawlable-eyebrow">${escapeHtml(page.eyebrow)}</p>
       <h1>${escapeHtml(page.title)}</h1>
@@ -436,6 +442,7 @@ function crawlableIndustryHtml(page) {
       <h2>Built for control, not guesswork.</h2>
       <div class="crawlable-grid">${renderCards(page.faq)}</div>
     </section>
+    ${renderRelatedPages(route)}
     <section>
       <p class="crawlable-eyebrow">See it for your business</p>
       <h2>Walk through the real workflow with ARKON.</h2>
@@ -460,7 +467,7 @@ function crawlableHtml(route, isKnownRoute) {
   if (!isKnownRoute) return crawlableNotFoundHtml();
   if (route === '/') return crawlableHomeHtml();
   if (route === '/how-it-works') return crawlableHowItWorksHtml();
-  return crawlableIndustryHtml(industryPages[route]);
+  return crawlableIndustryHtml(industryPages[route], route);
 }
 
 function injectSeo(html, route, isKnownRoute, requestedPath) {
@@ -494,7 +501,7 @@ function injectCrawlableStyles(html) {
   if (html.includes('data-crawlable-style')) return html;
 
   const style = `<style data-crawlable-style>
-    html{background:#050914}.crawlable-page{max-width:1120px;margin:0 auto;padding:96px 24px 64px;color:#eef5ff;background:#050914;font-family:Inter,Arial,sans-serif;line-height:1.6}.crawlable-page section{padding:28px 0;border-bottom:1px solid rgba(184,199,223,.14)}.crawlable-page h1{font-size:clamp(2rem,5vw,4rem);line-height:1.05;margin:.25em 0 .4em}.crawlable-page h2{font-size:clamp(1.55rem,3vw,2.5rem);line-height:1.15;margin:.25em 0 .5em}.crawlable-page h3{margin:.2em 0 .45em}.crawlable-page p{max-width:820px;color:#b8c7df;font-size:1.02rem}.crawlable-page ul{color:#e8f2ff}.crawlable-page a{color:#82f7ca;font-weight:700;margin-right:14px}.crawlable-eyebrow{color:#82f7ca!important;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem!important;font-weight:800}.crawlable-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:22px}.crawlable-card{display:block;padding:20px;border:1px solid rgba(184,199,223,.18);border-radius:16px;background:rgba(12,20,38,.72);text-decoration:none}.crawlable-card p{font-size:.95rem}.crawlable-link-card:hover{border-color:#82f7ca}
+    html{background:#050914}.crawlable-page{max-width:1120px;margin:0 auto;padding:96px 24px 64px;color:#eef5ff;background:#050914;font-family:Inter,Arial,sans-serif;line-height:1.6}.crawlable-page section{padding:28px 0;border-bottom:1px solid rgba(184,199,223,.14)}.crawlable-page h1{font-size:clamp(2rem,5vw,4rem);line-height:1.05;margin:.25em 0 .4em}.crawlable-page h2{font-size:clamp(1.55rem,3vw,2.5rem);line-height:1.15;margin:.25em 0 .5em}.crawlable-page h3{margin:.2em 0 .45em}.crawlable-page p{max-width:820px;color:#b8c7df;font-size:1.02rem}.crawlable-page ul{color:#e8f2ff}.crawlable-page a{color:#82f7ca;font-weight:700;margin-right:14px}.crawlable-eyebrow{color:#82f7ca!important;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem!important;font-weight:800}.crawlable-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:22px}.crawlable-card{display:block;padding:20px;border:1px solid rgba(184,199,223,.18);border-radius:16px;background:rgba(12,20,38,.72);text-decoration:none}.crawlable-card p{font-size:.95rem}.crawlable-link-card:hover{border-color:#82f7ca}.crawlable-breadcrumbs{padding:0 0 20px;border-bottom:1px solid rgba(184,199,223,.14)}.crawlable-breadcrumbs ol{display:flex;flex-wrap:wrap;gap:9px;margin:0;padding:0;list-style:none}.crawlable-breadcrumbs li{display:flex;gap:9px;color:#b8c7df;font-size:.88rem}.crawlable-breadcrumbs li:not(:last-child)::after{content:'/';color:rgba(184,199,223,.5)}
   </style>`;
 
   return html.replace('</head>', `${style}\n  </head>`);
