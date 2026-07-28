@@ -105,19 +105,19 @@ function PublicRoleCopyCleanup() {
     ];
 
     const cleanPublicCopy = () => {
-      document.querySelectorAll('.core-team-card').forEach(card => {
+      const root = document.getElementById('root');
+      if (!root) return;
+
+      root.querySelectorAll('.core-team-card').forEach(card => {
         const name = card.querySelector('h3')?.textContent?.trim();
         if (name === 'Porter') card.remove();
       });
 
-      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
       const nodes = [];
       while (walker.nextNode()) nodes.push(walker.currentNode);
 
       nodes.forEach(node => {
-        const parentTag = node.parentElement?.tagName;
-        if (parentTag === 'SCRIPT' || parentTag === 'STYLE') return;
-
         let next = node.nodeValue || '';
         replacements.forEach(([from, to]) => {
           next = next.replaceAll(from, to);
@@ -129,8 +129,11 @@ function PublicRoleCopyCleanup() {
     };
 
     cleanPublicCopy();
+    const root = document.getElementById('root');
+    if (!root) return undefined;
+
     const observer = new MutationObserver(cleanPublicCopy);
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(root, { childList: true, subtree: true });
     return () => observer.disconnect();
   }, []);
 
