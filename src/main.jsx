@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
-import { industryPages } from './site-content.js';
+import { industryPages, seoPages, SITE_URL } from './site-content.js';
 import './styles.css';
 import './hero-compact.css';
 import './walkthrough.css';
@@ -17,6 +17,35 @@ import './pricing.css';
 
 function getCurrentRoute() {
   return window.location.pathname.replace(/\/$/, '') || '/';
+}
+
+function setMetaContent(selector, value) {
+  const element = document.querySelector(selector);
+  if (element && value) element.setAttribute('content', value);
+}
+
+function syncDocumentSeo(route) {
+  const seo = seoPages[route] || seoPages['/'];
+  const canonical = `${SITE_URL}${route === '/' ? '/' : route}`;
+
+  document.title = seo.title;
+  setMetaContent('meta[name="description"]', seo.description);
+  setMetaContent('meta[property="og:title"]', seo.title);
+  setMetaContent('meta[property="og:description"]', seo.description);
+  setMetaContent('meta[property="og:url"]', canonical);
+  setMetaContent('meta[name="twitter:title"]', seo.title);
+  setMetaContent('meta[name="twitter:description"]', seo.description);
+
+  const canonicalLink = document.querySelector('link[rel="canonical"]');
+  if (canonicalLink) canonicalLink.setAttribute('href', canonical);
+}
+
+function ClientSeoSync({ route }) {
+  useEffect(() => {
+    syncDocumentSeo(route);
+  }, [route]);
+
+  return null;
 }
 
 function LegacyContactBannerRemover() {
@@ -58,6 +87,49 @@ function BrandTextNormalizer() {
 
     normalizeBrandMarks();
     const observer = new MutationObserver(normalizeBrandMarks);
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
+  return null;
+}
+
+function PublicRoleCopyCleanup() {
+  useEffect(() => {
+    const replacements = [
+      ['Naya, Vera, Porter, Grant, Marcus, and Iris', 'Naya, Vera, Grant, Marcus, and Iris'],
+      ['follows up after Porter or Vera captures a lead', 'follows up after calls or website inquiries create a lead'],
+      ['Vera answers calls. Porter handles website inquiries.', 'Vera answers calls. ARKON handles website inquiries.'],
+      ['Porter handles website inquiries', 'ARKON handles website inquiries'],
+      ['Porter or Vera', 'calls or website inquiries']
+    ];
+
+    const cleanPublicCopy = () => {
+      document.querySelectorAll('.core-team-card').forEach(card => {
+        const name = card.querySelector('h3')?.textContent?.trim();
+        if (name === 'Porter') card.remove();
+      });
+
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+
+      nodes.forEach(node => {
+        const parentTag = node.parentElement?.tagName;
+        if (parentTag === 'SCRIPT' || parentTag === 'STYLE') return;
+
+        let next = node.nodeValue || '';
+        replacements.forEach(([from, to]) => {
+          next = next.replaceAll(from, to);
+        });
+        next = next.replace(/\bPorter\b/g, 'ARKON');
+
+        if (next !== node.nodeValue) node.nodeValue = next;
+      });
+    };
+
+    cleanPublicCopy();
+    const observer = new MutationObserver(cleanPublicCopy);
     observer.observe(document.body, { childList: true, subtree: true });
     return () => observer.disconnect();
   }, []);
@@ -161,17 +233,12 @@ function PricingSection({ plans }) {
   );
 }
 
-function UnifiedIndustryPage({ page }) {
+function UnifiedIndustryPage({ page, route }) {
   usePageReveal();
-
-  useEffect(() => {
-    document.title = page.seoTitle;
-    const description = document.querySelector('meta[name="description"]');
-    if (description) description.setAttribute('content', page.description);
-  }, [page]);
 
   return (
     <>
+      <ClientSeoSync route={route} />
       <UnifiedHeader showPricing={Boolean(page.pricing)} />
       <main className="industry-page">
         <section className="hero industry-hero">
@@ -263,12 +330,14 @@ function UnifiedIndustryPage({ page }) {
   );
 }
 
-function AppWithCleanup() {
+function AppWithCleanup({ route }) {
   return (
     <>
+      <ClientSeoSync route={route} />
       <App />
       <LegacyContactBannerRemover />
       <BrandTextNormalizer />
+      <PublicRoleCopyCleanup />
     </>
   );
 }
@@ -279,6 +348,8 @@ const container = document.getElementById('root');
 
 createRoot(container).render(
   <React.StrictMode>
-    {industryPage ? <UnifiedIndustryPage page={industryPage} /> : <AppWithCleanup />}
+    {industryPage
+      ? <UnifiedIndustryPage page={industryPage} route={route} />
+      : <AppWithCleanup route={route} />}
   </React.StrictMode>
 );
