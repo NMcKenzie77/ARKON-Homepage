@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
+import { industryPages, seoPages, SITE_URL } from './site-content.js';
 import './styles.css';
 import './hero-compact.css';
 import './walkthrough.css';
@@ -14,84 +15,37 @@ import './copy-polish.css';
 import './homepage-logo.css';
 import './pricing.css';
 
-const pricingPlans = [
-  {
-    name: 'Follow-Up Starter',
-    fit: 'Smaller shops, mobile mechanics, price-sensitive general repair',
-    pilot: '$799/mo',
-    target: '$999-$1,250/mo after proof',
-    setup: '$1,000 setup',
-    summary: 'Start with customer follow-up, simple notes, missed-call capture, review requests, and an owner weekly brief.',
-    includes: ['Naya follow-up', 'Marcus customer memory', 'Voice memo notes', 'Review requests']
-  },
-  {
-    name: 'Follow-Up Plus',
-    fit: 'Diagnostic and general shops with moderate volume',
-    pilot: '$999/mo',
-    target: '$1,500/mo after proof',
-    setup: '$1,250 setup',
-    summary: 'Adds more structure around inspection notes, diagnostic follow-up, and owner visibility without heavy integrations.',
-    includes: ['Starter features', 'Structured notes', 'Diagnostic follow-up', 'Better owner dashboard']
-  },
-  {
-    name: 'Shop Operator',
-    fit: 'Busy independent shops, tire, brake, and alignment shops',
-    pilot: '$1,250/mo',
-    target: '$1,750/mo after proof',
-    setup: '$1,500 setup',
-    summary: 'For shops where calls, texts, declined work, tech notes, scheduling handoffs, reviews, and owner visibility all matter.',
-    includes: ['Calls and texts workflow', 'Declined-work recovery', 'Tech voice notes', 'Scheduling handoffs']
-  },
-  {
-    name: 'Shop Command',
-    fit: 'Premium independent, European, import, performance, or serious owner-operated shops',
-    pilot: '$1,750/mo',
-    target: '$2,500/mo after proof',
-    setup: '$2,500-$3,500 setup',
-    summary: 'A fuller operating layer with Vera, Naya, Marcus, handoffs, reminders, reviews, owner briefs, and tech/advisor voice notes.',
-    includes: ['Vera voice intake', 'Naya follow-up', 'Grant owner brief', 'Tech and advisor notes']
-  },
-  {
-    name: 'Enterprise',
-    fit: 'Multi-location, fleet-heavy, dealership, or larger service operations',
-    pilot: 'Discovery first',
-    target: '$5,000+/mo',
-    setup: '$7,500+ setup',
-    summary: 'Custom operating layer for locations that need deeper routing, management reporting, fleet or unit memory, and scoped integrations.',
-    includes: ['Multi-location dashboards', 'Fleet or unit memory', 'Custom routing', 'Management reports'],
-    enterprise: true
-  }
-];
-
 function getCurrentRoute() {
   return window.location.pathname.replace(/\/$/, '') || '/';
 }
 
-function buildPricingCard(plan) {
-  const className = plan.enterprise ? 'pricing-card enterprise-pricing-card' : 'pricing-card';
-  return `
-    <article class="${className}">
-      <div class="pricing-card-topline">
-        <span>${plan.fit}</span>
-      </div>
-      <h3>${plan.name}</h3>
-      <p class="pricing-summary">${plan.summary}</p>
-      <div class="pricing-price-row">
-        <div>
-          <small>Founder pilot</small>
-          <strong>${plan.pilot}</strong>
-        </div>
-        <div>
-          <small>Target monthly</small>
-          <strong>${plan.target}</strong>
-        </div>
-      </div>
-      <p class="pricing-setup">${plan.setup}</p>
-      <ul>
-        ${plan.includes.map(item => `<li>${item}</li>`).join('')}
-      </ul>
-    </article>
-  `;
+function setMetaContent(selector, value) {
+  const element = document.querySelector(selector);
+  if (element && value) element.setAttribute('content', value);
+}
+
+function syncDocumentSeo(route) {
+  const seo = seoPages[route] || seoPages['/'];
+  const canonical = `${SITE_URL}${route === '/' ? '/' : route}`;
+
+  document.title = seo.title;
+  setMetaContent('meta[name="description"]', seo.description);
+  setMetaContent('meta[property="og:title"]', seo.title);
+  setMetaContent('meta[property="og:description"]', seo.description);
+  setMetaContent('meta[property="og:url"]', canonical);
+  setMetaContent('meta[name="twitter:title"]', seo.title);
+  setMetaContent('meta[name="twitter:description"]', seo.description);
+
+  const canonicalLink = document.querySelector('link[rel="canonical"]');
+  if (canonicalLink) canonicalLink.setAttribute('href', canonical);
+}
+
+function ClientSeoSync({ route }) {
+  useEffect(() => {
+    syncDocumentSeo(route);
+  }, [route]);
+
+  return null;
 }
 
 function LegacyContactBannerRemover() {
@@ -116,108 +70,292 @@ function LegacyContactBannerRemover() {
     removeLegacyContactBanner();
     const observer = new MutationObserver(removeLegacyContactBanner);
     observer.observe(document.body, { childList: true, subtree: true });
-
     return () => observer.disconnect();
   }, []);
 
   return null;
 }
 
-function PricingInjector() {
+function BrandTextNormalizer() {
   useEffect(() => {
-    let scrollAfterInsert = false;
-
-    const addPricingNavLink = () => {
-      const nav = document.querySelector('.desktop-nav');
-      if (!nav || nav.querySelector('a[href="/#pricing"]')) return;
-
-      const link = document.createElement('a');
-      link.href = '/#pricing';
-      link.textContent = 'Pricing';
-      nav.appendChild(link);
+    const normalizeBrandMarks = () => {
+      document.querySelectorAll('.brand-mark').forEach(mark => {
+        if (mark.textContent) mark.textContent = '';
+        mark.setAttribute('aria-hidden', 'true');
+      });
     };
 
-    const syncPricingSection = () => {
-      addPricingNavLink();
-
-      const existing = document.getElementById('pricing');
-      const route = getCurrentRoute();
-
-      if (route !== '/') {
-        if (existing) existing.remove();
-        return;
-      }
-
-      if (existing) {
-        if (scrollAfterInsert || window.location.hash === '#pricing') {
-          existing.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          scrollAfterInsert = false;
-        }
-        return;
-      }
-
-      const solutionsSection = document.getElementById('solutions');
-      if (!solutionsSection) return;
-
-      const section = document.createElement('section');
-      section.id = 'pricing';
-      section.className = 'section pricing-section';
-      section.innerHTML = `
-        <div class="section-heading pricing-heading">
-          <p class="eyebrow">Pricing schemes</p>
-          <h2>Start with the right operating layer.</h2>
-          <p>
-            These are starting points for scoping ARKON. The founder pilot proves recovered work and follow-up first,
-            then the account moves to the right monthly level after the workflow is proven.
-          </p>
-        </div>
-        <div class="pricing-grid">
-          ${pricingPlans.map(buildPricingCard).join('')}
-        </div>
-        <div class="pricing-note">
-          <strong>Pricing is scoped after discovery.</strong>
-          <span>Call volume, number of locations, team size, existing software, live-call coverage, and integration depth can change the final quote.</span>
-        </div>
-      `;
-
-      solutionsSection.insertAdjacentElement('afterend', section);
-
-      if (scrollAfterInsert || window.location.hash === '#pricing') {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        scrollAfterInsert = false;
-      }
-    };
-
-    const handleHashChange = () => {
-      if (window.location.hash === '#pricing') scrollAfterInsert = true;
-      window.setTimeout(syncPricingSection, 0);
-    };
-
-    const timer = window.setTimeout(syncPricingSection, 0);
-    window.addEventListener('popstate', syncPricingSection);
-    window.addEventListener('hashchange', handleHashChange);
-
-    return () => {
-      window.clearTimeout(timer);
-      window.removeEventListener('popstate', syncPricingSection);
-      window.removeEventListener('hashchange', handleHashChange);
-      const existing = document.getElementById('pricing');
-      if (existing) existing.remove();
-    };
+    normalizeBrandMarks();
+    const observer = new MutationObserver(normalizeBrandMarks);
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
   }, []);
 
   return null;
 }
 
-function AppWithPricing() {
+function PublicRoleCopyCleanup() {
+  useEffect(() => {
+    const replacements = [
+      ['Naya, Vera, Porter, Grant, Marcus, and Iris', 'Naya, Vera, Grant, Marcus, and Iris'],
+      ['follows up after Porter or Vera captures a lead', 'follows up after calls or website inquiries create a lead'],
+      ['Vera answers calls. Porter handles website inquiries.', 'Vera answers calls. ARKON handles website inquiries.'],
+      ['Porter handles website inquiries', 'ARKON handles website inquiries'],
+      ['Porter or Vera', 'calls or website inquiries']
+    ];
+
+    const cleanPublicCopy = () => {
+      const root = document.getElementById('root');
+      if (!root) return;
+
+      root.querySelectorAll('.core-team-card').forEach(card => {
+        const name = card.querySelector('h3')?.textContent?.trim();
+        if (name === 'Porter') card.remove();
+      });
+
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+
+      nodes.forEach(node => {
+        const parentTag = node.parentElement?.tagName;
+        if (parentTag === 'SCRIPT' || parentTag === 'STYLE' || parentTag === 'TEXTAREA' || parentTag === 'INPUT') return;
+
+        let next = node.nodeValue || '';
+        replacements.forEach(([from, to]) => {
+          next = next.replaceAll(from, to);
+        });
+        next = next.replace(/\bPorter\b/g, 'ARKON');
+
+        if (next !== node.nodeValue) node.nodeValue = next;
+      });
+    };
+
+    cleanPublicCopy();
+    const root = document.getElementById('root');
+    if (!root) return undefined;
+
+    const observer = new MutationObserver(cleanPublicCopy);
+    observer.observe(root, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
+  return null;
+}
+
+function usePageReveal() {
+  useEffect(() => {
+    const nodes = document.querySelectorAll('[data-reveal]');
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    nodes.forEach(node => observer.observe(node));
+    return () => observer.disconnect();
+  }, []);
+}
+
+function UnifiedHeader({ showPricing = false }) {
+  return (
+    <header className="site-header">
+      <a className="brand" href="/" aria-label="ARKON Systems home">
+        <span className="brand-mark" aria-hidden="true" />
+        <span>
+          <strong>ARKON</strong>
+          <small>Systems</small>
+        </span>
+      </a>
+
+      <nav className="desktop-nav" aria-label="Primary navigation">
+        <a href="/#how">How it works</a>
+        <a href="/#team">Core team</a>
+        <a href="/#solutions">Business types</a>
+        <a href="/#voice">Your voice</a>
+        {showPricing ? <a href="#pricing">Pricing</a> : null}
+      </nav>
+
+      <a className="nav-cta" href="/#demo">Book a demo</a>
+    </header>
+  );
+}
+
+function UnifiedFooter() {
+  return (
+    <footer className="site-footer">
+      <div className="brand muted-brand">
+        <span className="brand-mark" aria-hidden="true" />
+        <span>
+          <strong>ARKON</strong>
+          <small>Systems</small>
+        </span>
+      </div>
+      <p>© {new Date().getFullYear()} ARKON Systems. Repeatable work handled. Your team stays focused.</p>
+    </footer>
+  );
+}
+
+function PricingSection({ plans }) {
+  if (!plans?.length) return null;
+
+  return (
+    <section className="section pricing-section" id="pricing">
+      <div className="section-heading pricing-heading" data-reveal>
+        <p className="eyebrow">Auto repair pricing</p>
+        <h2>Start with the right operating layer for the shop.</h2>
+        <p>
+          These are starting points for scoping ARKON for an auto repair operation. The founder pilot proves recovered work and follow-up first, then the account moves to the right monthly level after the workflow is proven.
+        </p>
+      </div>
+
+      <div className="pricing-grid">
+        {plans.map(plan => (
+          <article className={plan.enterprise ? 'pricing-card enterprise-pricing-card' : 'pricing-card'} key={plan.name} data-reveal>
+            <div className="pricing-card-topline"><span>{plan.fit}</span></div>
+            <h3>{plan.name}</h3>
+            <p className="pricing-summary">{plan.summary}</p>
+            <div className="pricing-price-row">
+              <div><small>Founder pilot</small><strong>{plan.pilot}</strong></div>
+              <div><small>Target monthly</small><strong>{plan.target}</strong></div>
+            </div>
+            <p className="pricing-setup">{plan.setup}</p>
+            <ul>{plan.includes.map(item => <li key={item}>{item}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+
+      <div className="pricing-note" data-reveal>
+        <strong>Pricing is scoped after discovery.</strong>
+        <span>Call volume, number of locations, team size, existing software, live-call coverage, and integration depth can change the final quote.</span>
+      </div>
+    </section>
+  );
+}
+
+function UnifiedIndustryPage({ page, route }) {
+  usePageReveal();
+
   return (
     <>
-      <App />
-      <LegacyContactBannerRemover />
-      <PricingInjector />
+      <ClientSeoSync route={route} />
+      <UnifiedHeader showPricing={Boolean(page.pricing)} />
+      <main className="industry-page">
+        <section className="hero industry-hero">
+          <div className="hero-background" aria-hidden="true">
+            <span className="orb orb-one" />
+            <span className="orb orb-two" />
+            <span className="grid-glow" />
+          </div>
+          <div className="industry-hero-inner" data-reveal>
+            <p className="eyebrow">{page.eyebrow}</p>
+            <h1>{page.title}</h1>
+            <p>{page.description}</p>
+            <div className="hero-actions">
+              <a className="primary-button" href="/#demo">Request demo</a>
+              <a className="secondary-button" href="/how-it-works">See how ARKON works</a>
+            </div>
+          </div>
+        </section>
+
+        {page.reality ? (
+          <section className="industry-reality-panel" data-reveal>
+            <p className="eyebrow">{page.reality.eyebrow}</p>
+            <h2>{page.reality.title}</h2>
+            {page.reality.body.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+            <div className="industry-reality-callout"><strong>{page.reality.callout}</strong></div>
+          </section>
+        ) : null}
+
+        <section className="section industry-intro-section">
+          <div className="section-heading" data-reveal>
+            <p className="eyebrow">Why it matters</p>
+            <h2>Repeatable work should not depend on memory.</h2>
+            <p>{page.primary}</p>
+          </div>
+          <div className="industry-card-grid">
+            {page.cards.map(([title, copy]) => (
+              <article className="industry-card" key={title} data-reveal>
+                <h3>{title}</h3>
+                <p>{copy}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <PricingSection plans={page.pricing} />
+
+        <section className="section industry-workflow-section">
+          <div className="section-heading" data-reveal>
+            <p className="eyebrow">Example workflows</p>
+            <h2>What ARKON can keep moving.</h2>
+            <p>Each business gets workflow rules based on its calls, messages, documents, staff roles, and owner view.</p>
+          </div>
+          <div className="industry-workflow-list">
+            {page.workflow.map((item, index) => (
+              <article className="industry-step" key={item} data-reveal>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{item}</h3>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section industry-faq-section">
+          <div className="section-heading" data-reveal>
+            <p className="eyebrow">Questions business owners ask</p>
+            <h2>Built for control, not guesswork.</h2>
+          </div>
+          <div className="industry-faq-grid">
+            {page.faq.map(([question, answer]) => (
+              <article className="industry-faq" key={question} data-reveal>
+                <h3>{question}</h3>
+                <p>{answer}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="demo-cta industry-cta" data-reveal>
+          <div>
+            <p className="eyebrow">See it for your business</p>
+            <h2>Walk through the real workflow with ARKON.</h2>
+            <p>Review the calls, messages, follow-ups, records, handoffs, and owner visibility that matter most for your operation.</p>
+          </div>
+          <a className="primary-button" href="/#demo">Request demo</a>
+        </section>
+      </main>
+      <UnifiedFooter />
     </>
   );
 }
 
+function AppWithCleanup({ route }) {
+  return (
+    <>
+      <ClientSeoSync route={route} />
+      <App />
+      <LegacyContactBannerRemover />
+      <BrandTextNormalizer />
+      <PublicRoleCopyCleanup />
+    </>
+  );
+}
+
+const route = getCurrentRoute();
+const industryPage = industryPages[route];
 const container = document.getElementById('root');
-createRoot(container).render(<React.StrictMode><AppWithPricing /></React.StrictMode>);
+
+createRoot(container).render(
+  <React.StrictMode>
+    {industryPage
+      ? <UnifiedIndustryPage page={industryPage} route={route} />
+      : <AppWithCleanup route={route} />}
+  </React.StrictMode>
+);
