@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#050914" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FC54T97NVE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-FC54T97NVE');
+    </script>
     <title><!--SEO_TITLE-->AI Workflow Automation for Service Businesses | ARKON Systems<!--/SEO_TITLE--></title>
     <meta
       name="description"
@@ -49,6 +57,26 @@
 
         function normalize(value) {
           return String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+        }
+
+        function trackAnalyticsEvent(eventName, parameters = {}) {
+          if (typeof window.gtag !== 'function') return;
+          window.gtag('event', eventName, {
+            ...parameters,
+            page_path: window.location.pathname,
+            page_title: document.title
+          });
+        }
+
+        function trackDemoFormStart(event) {
+          const form = event.target?.closest?.('.demo-form');
+          if (!form || form.dataset.analyticsStarted === 'true') return;
+
+          form.dataset.analyticsStarted = 'true';
+          const businessType = String(new FormData(form).get('businessType') || '').trim();
+          trackAnalyticsEvent('demo_form_start', {
+            business_type: businessType || 'not_selected'
+          });
         }
 
         function setStatus(form, message) {
@@ -232,6 +260,12 @@
             });
             const result = await response.json().catch(() => ({}));
             if (!response.ok || result.ok === false) throw new Error(result.message || 'Request failed.');
+
+            trackAnalyticsEvent('generate_lead', {
+              business_type: businessType,
+              lead_source: 'demo_request'
+            });
+
             form.reset();
             setStatus(form, result.message || 'Request received. We will follow up shortly.');
           } catch {
@@ -242,6 +276,7 @@
         }
 
         mapDemoFields();
+        document.addEventListener('focusin', trackDemoFormStart, true);
         document.addEventListener('submit', submitDemoRequest, true);
         window.addEventListener('DOMContentLoaded', mapDemoFields);
         window.addEventListener('load', mapDemoFields);
