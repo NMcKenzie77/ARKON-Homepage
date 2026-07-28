@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">ARKON Systems social preview</title>
+  <desc id="desc">ARKON Systems. Repeatable work handled. Your team stays focused.</desc>
+  <defs>
+    <radialGradient id="blueGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(120 80) rotate(38) scale(430 360)">
+      <stop stop-color="#4f8cff" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#4f8cff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="mintGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1080 70) rotate(145) scale(360 300)">
+      <stop stop-color="#82f7ca" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#82f7ca" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="violetGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(950 620) rotate(-118) scale(390 300)">
+      <stop stop-color="#9b7cff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#9b7cff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="panel" x1="70" y1="82" x2="1128" y2="548" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0f1a2f"/>
+      <stop offset="1" stop-color="#08111f"/>
+    </linearGradient>
+    <linearGradient id="nodeRing" x1="944" y1="250" x2="1072" y2="380" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#82f7ca"/>
+      <stop offset="1" stop-color="#67d8ff"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#afc7ff" stroke-opacity="0.16" stroke-width="1"/>
+    </pattern>
+    <filter id="shadow" x="20" y="38" width="1160" height="560" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="22" stdDeviation="28" flood-color="#000000" flood-opacity="0.42"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="#050914"/>
+  <rect width="1200" height="630" fill="url(#blueGlow)"/>
+  <rect width="1200" height="630" fill="url(#mintGlow)"/>
+  <rect width="1200" height="630" fill="url(#violetGlow)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect x="18.5" y="18.5" width="1163" height="593" rx="40" fill="none" stroke="#afc7ff" stroke-opacity="0.22"/>
+
+  <g filter="url(#shadow)">
+    <rect x="58" y="70" width="1084" height="490" rx="34" fill="url(#panel)" stroke="#afc7ff" stroke-opacity="0.28" stroke-width="2"/>
+    <rect x="72.5" y="84.5" width="1055" height="461" rx="28" fill="none" stroke="#67d8ff" stroke-opacity="0.14"/>
+  </g>
+
+  <g>
+    <rect x="96" y="96" width="250" height="46" rx="23" fill="#0f1a2f" stroke="#82f7ca" stroke-opacity="0.72"/>
+    <circle cx="119" cy="119" r="7" fill="#82f7ca"/>
+    <text x="140" y="126" fill="#eef5ff" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="0.3">ARKON SYSTEMS</text>
+  </g>
+
+  <text x="96" y="229" fill="#eef5ff" font-family="DejaVu Sans, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="-1.5">ARKON</text>
+  <text x="312" y="220" fill="#9fb0ca" font-family="DejaVu Sans, Arial, sans-serif" font-size="25" font-weight="500">Systems</text>
+
+  <text x="96" y="333" fill="#eef5ff" font-family="DejaVu Sans, Arial, sans-serif" font-size="59" font-weight="800" letter-spacing="-2">Repeatable work handled.</text>
+  <text x="96" y="406" fill="#82f7ca" font-family="DejaVu Sans, Arial, sans-serif" font-size="59" font-weight="800" letter-spacing="-2">Your team stays focused.</text>
+
+  <text x="100" y="476" fill="#9fb0ca" font-family="DejaVu Sans, Arial, sans-serif" font-size="27" font-weight="400">Calls, messages, follow-up, scheduling, records, and handoffs</text>
+  <text x="100" y="513" fill="#9fb0ca" font-family="DejaVu Sans, Arial, sans-serif" font-size="27" font-weight="400">organized around the way your business actually works.</text>
+
+  <g stroke="#67d8ff" stroke-opacity="0.62" stroke-width="3">
+    <path d="M1010 315L925 230"/>
+    <path d="M1010 315L1088 230"/>
+    <path d="M1010 315L1105 390"/>
+    <path d="M1010 315L925 414"/>
+  </g>
+
+  <g fill="#0f1a2f" stroke="#67d8ff" stroke-width="2">
+    <circle cx="925" cy="230" r="31"/>
+    <circle cx="1088" cy="230" r="31"/>
+    <circle cx="1105" cy="390" r="31"/>
+    <circle cx="925" cy="414" r="31"/>
+  </g>
+  <g fill="#eef5ff" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="500" text-anchor="middle">
+    <text x="925" y="238">01</text>
+    <text x="1088" y="238">02</text>
+    <text x="1105" y="398">03</text>
+    <text x="925" y="422">04</text>
+  </g>
+
+  <circle cx="1010" cy="315" r="70" fill="#82f7ca" fill-opacity="0.10"/>
+  <circle cx="1010" cy="315" r="56" fill="#82f7ca" fill-opacity="0.16"/>
+  <circle cx="1010" cy="315" r="45" fill="url(#nodeRing)"/>
+  <circle cx="1010" cy="315" r="36" fill="#08111f"/>
+  <path d="M1010 294L992 335H1004L1010 321L1016 335H1028" fill="none" stroke="#82f7ca" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M999 322H1021" stroke="#67d8ff" stroke-width="4" stroke-linecap="round"/>
+
+  <text x="96" y="605" fill="#6f7f99" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="500">www.arkonsysai.com</text>
+</svg>
