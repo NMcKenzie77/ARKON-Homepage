@@ -5,8 +5,8 @@ export const workflowSteps = [
     eyebrow: 'Someone reaches out',
     title: 'The channel decides who responds first',
     detail: 'Calls, texts, emails, and website inquiries are handled by the role built for that channel.',
-    meta: 'Phone: Vera • Website: Porter • Text: Naya • Email: Iris',
-    agents: ['VERA', 'PORTER', 'NAYA', 'IRIS']
+    meta: 'Phone: Vera • Website: ARKON intake • Text: Naya • Email: Iris',
+    agents: ['VERA', 'ARKON', 'NAYA', 'IRIS']
   },
   {
     marker: '02',
@@ -24,7 +24,7 @@ export const workflowSteps = [
     title: 'Routine work moves, judgment calls route',
     detail: 'ARKON handles what the business allows and routes anything needing approval, pricing, availability, or a real person.',
     meta: 'No forced automation on judgment calls',
-    agents: ['NAYA', 'VERA', 'PORTER', 'IRIS']
+    agents: ['NAYA', 'VERA', 'ARKON', 'IRIS']
   },
   {
     marker: '04',
@@ -37,7 +37,7 @@ export const workflowSteps = [
   }
 ];
 
-export const agentRoster = ['NAYA', 'VERA', 'PORTER', 'IRIS', 'MARCUS', 'GRANT'];
+export const agentRoster = ['NAYA', 'VERA', 'IRIS', 'MARCUS', 'GRANT'];
 
 export const roleViews = [
   {
@@ -82,12 +82,12 @@ export const coverageLanes = [
   {
     lane: 'First response',
     copy: 'Calls, messages, and website inquiries are received, acknowledged, and handled according to the business’s standards.',
-    chips: ['VERA', 'NAYA', 'PORTER']
+    chips: ['VERA', 'NAYA', 'ARKON']
   },
   {
     lane: 'Website inquiry and lead intake',
-    copy: 'Porter watches website forms, quote requests, service requests, appointment interest, and after-hours inquiries so online interest does not sit unseen.',
-    chips: ['PORTER', 'MARCUS', 'NAYA']
+    copy: 'ARKON watches website forms, quote requests, service requests, appointment interest, and after-hours inquiries so online interest does not sit unseen.',
+    chips: ['ARKON', 'MARCUS', 'NAYA']
   },
   {
     lane: 'Relationship memory',
@@ -175,8 +175,8 @@ export const solutions = [
 ];
 
 export const dashboardRows = [
-  { label: 'Website inquiry captured', owner: 'PORTER', status: 'Lead ready', priority: 'Live' },
-  { label: 'Quote or appointment request routed', owner: 'PORTER', status: 'Next step prepared', priority: 'Live' },
+  { label: 'Website inquiry captured', owner: 'ARKON', status: 'Lead ready', priority: 'Live' },
+  { label: 'Quote or appointment request routed', owner: 'ARKON', status: 'Next step prepared', priority: 'Live' },
   { label: 'Known contact found', owner: 'MARCUS', status: 'Context attached', priority: 'Done' },
   { label: 'Client message followed up', owner: 'NAYA', status: 'Reply prepared', priority: 'Done' },
   { label: 'Owner brief created', owner: 'GRANT', status: 'Ready', priority: 'Next' }
