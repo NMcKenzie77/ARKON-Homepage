@@ -25,9 +25,15 @@ const mimeTypes = {
   '.ico': 'image/x-icon'
 };
 
-function normalizeRoute(rawUrl = '/') {
-  const pathname = rawUrl.split('?')[0].replace(/\/$/, '') || '/';
-  return seoPages[pathname] ? pathname : '/';
+const notFoundSeo = {
+  title: 'Page Not Found | ARKON Systems',
+  description: 'The requested ARKON Systems page could not be found.',
+  schemaType: 'WebPage',
+  schemaName: 'Page Not Found'
+};
+
+function normalizedPath(rawUrl = '/') {
+  return rawUrl.split('?')[0].replace(/\/$/, '') || '/';
 }
 
 function safePath(urlPath) {
@@ -101,30 +107,40 @@ function getClientIp(req) {
 async function sendWithResend({ from, to, replyTo, subject, text }) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return false;
+
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },
     body: JSON.stringify({ from, to: [to], subject, text, reply_to: replyTo })
   });
+
   if (!response.ok) {
     const detail = await response.text().catch(() => '');
     throw new Error(`Resend failed with ${response.status}: ${detail.slice(0, 300)}`);
   }
+
   return true;
 }
 
 async function sendWithPostmark({ from, to, replyTo, subject, text }) {
   const token = process.env.POSTMARK_SERVER_TOKEN || process.env.POSTMARK_API_TOKEN;
   if (!token) return false;
+
   const response = await fetch('https://api.postmarkapp.com/email', {
     method: 'POST',
-    headers: { 'x-postmark-server-token': token, accept: 'application/json', 'content-type': 'application/json' },
+    headers: {
+      'x-postmark-server-token': token,
+      accept: 'application/json',
+      'content-type': 'application/json'
+    },
     body: JSON.stringify({ From: from, To: to, Subject: subject, TextBody: text, ReplyTo: replyTo })
   });
+
   if (!response.ok) {
     const detail = await response.text().catch(() => '');
     throw new Error(`Postmark failed with ${response.status}: ${detail.slice(0, 300)}`);
   }
+
   return true;
 }
 
@@ -132,6 +148,7 @@ async function sendDemoRequestEmail(payload, req) {
   const to = process.env.DEMO_REQUEST_TO_EMAIL;
   const from = process.env.DEMO_REQUEST_FROM_EMAIL;
   const preferredProvider = cleanText(process.env.DEMO_EMAIL_PROVIDER, 30).toLowerCase();
+
   if (!to || !from) throw new Error('Demo request email recipient or sender is not configured.');
 
   const subject = `ARKON demo request: ${payload.businessType || 'General inquiry'}`;
@@ -196,21 +213,36 @@ async function handleDemoRequest(req, res) {
 
 function buildSchema(route, seo) {
   const url = `${siteUrl}${route === '/' ? '/' : route}`;
-  const base = {
-    '@context': 'https://schema.org',
-    '@type': seo.schemaType,
-    name: seo.schemaName || 'ARKON Systems',
-    description: seo.description,
-    url,
-    provider: { '@type': 'Organization', name: 'ARKON Systems', url: `${siteUrl}/` }
+  const organization = {
+    '@type': 'Organization',
+    '@id': `${siteUrl}/#organization`,
+    name: 'ARKON Systems',
+    url: `${siteUrl}/`
   };
 
-  if (seo.schemaType === 'SoftwareApplication') {
-    base.applicationCategory = 'BusinessApplication';
-    base.operatingSystem = 'Web';
+  const pageEntity = {
+    '@type': seo.schemaType,
+    '@id': `${url}#primary`,
+    name: seo.schemaName || 'ARKON Systems',
+    description: seo.description,
+    url
+  };
+
+  if (seo.schemaType === 'Service') {
+    pageEntity.provider = { '@id': organization['@id'] };
+    pageEntity.areaServed = 'United States';
   }
 
-  return JSON.stringify(base);
+  if (seo.schemaType === 'SoftwareApplication') {
+    pageEntity.applicationCategory = 'BusinessApplication';
+    pageEntity.operatingSystem = 'Web';
+    pageEntity.provider = { '@id': organization['@id'] };
+  }
+
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [organization, pageEntity]
+  });
 }
 
 function renderCards(cards = []) {
@@ -231,6 +263,7 @@ function renderSimpleCards(cards = []) {
 
 function renderPricing(plans = []) {
   if (!plans.length) return '';
+
   const cards = plans.map(plan => `
     <article class="crawlable-card">
       <p><strong>${escapeHtml(plan.fit)}</strong></p>
@@ -252,29 +285,32 @@ function renderPricing(plans = []) {
 function crawlableHomeHtml() {
   const channels = [
     { title: 'Phone call — Vera', copy: 'Answers the call, qualifies the caller, captures the details, and routes it when a person is needed.' },
-    { title: 'Website inquiry — Porter', copy: 'Answers questions before someone books or asks for service, captures the lead, and hands it to the business.' },
+    { title: 'Website inquiry — ARKON intake', copy: 'Captures the question or request, organizes the lead details, and prepares the handoff to the business.' },
     { title: 'Text or client message — Naya', copy: 'Responds in the owner’s voice, answers approved questions, and follows up when a lead does not convert.' },
     { title: 'Email — Iris', copy: 'Reads the inbox, scores urgency and importance, and surfaces what needs attention first.' }
   ];
+
   const ideaCards = [
     { title: 'Know who is reaching out', copy: 'ARKON recognizes whether it is a customer, lead, vendor, guest, client, tenant, or prospect and starts with the right context.' },
     { title: 'Move the work forward', copy: 'ARKON can answer, follow up, schedule, route, prepare, or flag the issue based on what the business allows.' },
     { title: 'Keep it sounding like your business', copy: 'Messages follow your tone, standards, and rules so customers still feel like they are dealing with your team.' }
   ];
+
   const team = [
-    { title: 'Naya — Client and guest communication', copy: 'Handles inbound and outbound messages in the owner’s voice and follows up after Porter or Vera captures a lead.' },
+    { title: 'Naya — Client and guest communication', copy: 'Handles inbound and outbound messages in the owner’s voice and follows up after calls or website inquiries create a lead.' },
     { title: 'Vera — Voice reception', copy: 'Answers inbound calls, gathers key details, and routes the call when a person is needed.' },
-    { title: 'Porter — Website leads', copy: 'Answers pre-service questions, captures lead details, and hands the warm lead to the business.' },
     { title: 'Grant — Owner intelligence', copy: 'Surfaces risks, open work, and the owner digest of what needs action.' },
     { title: 'Marcus — CRM and relationship memory', copy: 'Keeps records, interaction history, pipeline stages, notes, tags, and follow-up context attached.' },
     { title: 'Iris — Inbox triage', copy: 'Scores urgency and importance, prioritizes the inbox, and flags new client or lead inquiries.' }
   ];
+
   const solutionCards = solutions.map(solution => `
     <a class="crawlable-card crawlable-link-card" href="${escapeHtml(solution.href)}">
       <p><strong>${escapeHtml(solution.name)}</strong></p>
       <h3>${escapeHtml(solution.title)}</h3>
       <p>${escapeHtml(solution.details)}</p>
     </a>`).join('');
+
   const coverageCards = coverageLanes.map(lane => `
     <article class="crawlable-card">
       <h3>${escapeHtml(lane.lane)}</h3>
@@ -290,8 +326,8 @@ function crawlableHomeHtml() {
     </section>
     <section>
       <p class="crawlable-eyebrow">How ARKON moves work forward</p>
-      <h2>When someone reaches out, the right role responds.</h2>
-      <p>Calls, texts, emails, website inquiries, follow-ups, and owner alerts are routed to the role built for that job. ARKON follows the business rules and brings in a person when judgment is needed.</p>
+      <h2>When someone reaches out, the right workflow responds.</h2>
+      <p>Calls, texts, emails, website inquiries, follow-ups, and owner alerts move through the workflow built for that job. ARKON follows the business rules and brings in a person when judgment is needed.</p>
       <div class="crawlable-grid">${renderSimpleCards(channels)}</div>
       <p><a href="/how-it-works">See how ARKON handles a request</a></p>
     </section>
@@ -344,7 +380,7 @@ function crawlableHomeHtml() {
 function crawlableHowItWorksHtml() {
   const steps = [
     ['The request comes in', 'A call, text, email, website form, guest message, or client message reaches the business.'],
-    ['The right role responds first', 'Vera, Porter, Naya, or Iris responds based on the channel and the job that needs to be done.'],
+    ['The right workflow responds first', 'The first response is based on the channel, the request, and the business rules for that kind of work.'],
     ['Business rules are checked', 'Your rules decide what ARKON can answer, schedule, send, update, or route to a person.'],
     ['Marcus keeps the history attached', 'Marcus connects the contact record, relationship timeline, pipeline stage, notes, tags, and prior touchpoints.'],
     ['ARKON takes the safe next step', 'It can answer, follow up, schedule, update a record, create a task, or route the request for review.'],
@@ -409,37 +445,65 @@ function crawlableIndustryHtml(page) {
   </main>`;
 }
 
-function crawlableHtml(route) {
+function crawlableNotFoundHtml() {
+  return `<main class="crawlable-page" data-crawlable-page="true">
+    <section>
+      <p class="crawlable-eyebrow">404</p>
+      <h1>That page could not be found.</h1>
+      <p>The address may be outdated or mistyped. Return to the ARKON Systems homepage or choose a business type from the main site.</p>
+      <p><a href="/">Return to homepage</a></p>
+    </section>
+  </main>`;
+}
+
+function crawlableHtml(route, isKnownRoute) {
+  if (!isKnownRoute) return crawlableNotFoundHtml();
   if (route === '/') return crawlableHomeHtml();
   if (route === '/how-it-works') return crawlableHowItWorksHtml();
   return crawlableIndustryHtml(industryPages[route]);
 }
 
-function injectSeo(html, route) {
-  const seo = seoPages[route] || seoPages['/'];
-  const canonical = `${siteUrl}${route === '/' ? '/' : route}`;
-  return html
+function injectSeo(html, route, isKnownRoute, requestedPath) {
+  const seo = isKnownRoute ? seoPages[route] : notFoundSeo;
+  const canonical = isKnownRoute
+    ? `${siteUrl}${route === '/' ? '/' : route}`
+    : `${siteUrl}${requestedPath}`;
+
+  let output = html
     .replace(/<!--SEO_TITLE-->[\s\S]*?<!--\/SEO_TITLE-->/g, escapeHtml(seo.title))
     .replace(/<!--SEO_DESCRIPTION-->[\s\S]*?<!--\/SEO_DESCRIPTION-->/g, escapeHtml(seo.description))
     .replace(/<!--SEO_CANONICAL-->[\s\S]*?<!--\/SEO_CANONICAL-->/g, escapeHtml(canonical))
     .replace(/<!--SEO_SCHEMA-->[\s\S]*?<!--\/SEO_SCHEMA-->/, buildSchema(route, seo));
+
+  if (!isKnownRoute) {
+    output = output.replace(
+      /<meta\s+name=["']robots["']\s+content=["'][^"']*["']\s*\/?>/i,
+      '<meta name="robots" content="noindex, nofollow" />'
+    );
+  }
+
+  return output;
 }
 
-function injectCrawlableContent(html, route) {
+function injectCrawlableContent(html, route, isKnownRoute) {
   if (html.includes('data-crawlable-page="true"')) return html;
-  return html.replace('<div id="root"></div>', `<div id="root">${crawlableHtml(route)}</div>`);
+  return html.replace('<div id="root"></div>', `<div id="root">${crawlableHtml(route, isKnownRoute)}</div>`);
 }
 
 function injectCrawlableStyles(html) {
   if (html.includes('data-crawlable-style')) return html;
+
   const style = `<style data-crawlable-style>
     html{background:#050914}.crawlable-page{max-width:1120px;margin:0 auto;padding:96px 24px 64px;color:#eef5ff;background:#050914;font-family:Inter,Arial,sans-serif;line-height:1.6}.crawlable-page section{padding:28px 0;border-bottom:1px solid rgba(184,199,223,.14)}.crawlable-page h1{font-size:clamp(2rem,5vw,4rem);line-height:1.05;margin:.25em 0 .4em}.crawlable-page h2{font-size:clamp(1.55rem,3vw,2.5rem);line-height:1.15;margin:.25em 0 .5em}.crawlable-page h3{margin:.2em 0 .45em}.crawlable-page p{max-width:820px;color:#b8c7df;font-size:1.02rem}.crawlable-page ul{color:#e8f2ff}.crawlable-page a{color:#82f7ca;font-weight:700;margin-right:14px}.crawlable-eyebrow{color:#82f7ca!important;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem!important;font-weight:800}.crawlable-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:22px}.crawlable-card{display:block;padding:20px;border:1px solid rgba(184,199,223,.18);border-radius:16px;background:rgba(12,20,38,.72);text-decoration:none}.crawlable-card p{font-size:.95rem}.crawlable-link-card:hover{border-color:#82f7ca}
   </style>`;
+
   return html.replace('</head>', `${style}\n  </head>`);
 }
 
 function injectDemoRequestScript(html) {
   if (html.includes('data-demo-request-script')) return html;
+  if (html.includes("const endpoint = '/api/demo-request'")) return html;
+
   const script = `<script data-demo-request-script>
 (() => {
   const endpoint = '/api/demo-request';
@@ -503,6 +567,7 @@ function injectDemoRequestScript(html) {
   mapDemoFields(); document.addEventListener('submit', submitDemoRequest, true); window.addEventListener('DOMContentLoaded', mapDemoFields); window.addEventListener('load', mapDemoFields);
 })();
 </script>`;
+
   return html.replace(/<\/body>/i, `${script}\n</body>`);
 }
 
@@ -511,6 +576,7 @@ function sitemapXml() {
     const loc = `${siteUrl}${path === '/' ? '/' : path}`;
     return `  <url>\n    <loc>${loc}</loc>\n  </url>`;
   }).join('\n');
+
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }
 
@@ -522,6 +588,7 @@ function redirectBareDomain(req, res) {
   const forwardedHost = String(req.headers['x-forwarded-host'] || '').split(',')[0].trim().toLowerCase();
   const directHost = String(req.headers.host || '').split(':')[0].trim().toLowerCase();
   const host = forwardedHost || directHost;
+
   if (host !== 'arkonsysai.com') return false;
 
   res.writeHead(308, {
@@ -532,8 +599,25 @@ function redirectBareDomain(req, res) {
   return true;
 }
 
+function redirectTrailingSlash(req, res) {
+  const reqUrl = req.url || '/';
+  const [pathname, query = ''] = reqUrl.split('?');
+
+  if (pathname === '/' || !pathname.endsWith('/')) return false;
+  if (pathname.startsWith('/api/')) return false;
+
+  const targetPath = pathname.replace(/\/+$/, '') || '/';
+  res.writeHead(308, {
+    location: `${targetPath}${query ? `?${query}` : ''}`,
+    'cache-control': 'public, max-age=3600'
+  });
+  res.end();
+  return true;
+}
+
 createServer(async (req, res) => {
   if (redirectBareDomain(req, res)) return;
+  if (redirectTrailingSlash(req, res)) return;
 
   const reqUrl = req.url || '/';
   const pathname = reqUrl.split('?')[0];
@@ -554,17 +638,24 @@ createServer(async (req, res) => {
     return;
   }
 
-  const route = normalizeRoute(reqUrl);
-  const normalizedPathname = pathname.replace(/\/$/, '') || '/';
+  const requestedPath = normalizedPath(reqUrl);
+  const isKnownRoute = Boolean(seoPages[requestedPath]);
+  const route = isKnownRoute ? requestedPath : '/';
 
   if (pathname === '/robots.txt') {
-    res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=3600' });
+    res.writeHead(200, {
+      'content-type': 'text/plain; charset=utf-8',
+      'cache-control': 'public, max-age=3600'
+    });
     res.end(robotsTxt());
     return;
   }
 
   if (pathname === '/sitemap.xml') {
-    res.writeHead(200, { 'content-type': 'application/xml; charset=utf-8', 'cache-control': 'public, max-age=3600' });
+    res.writeHead(200, {
+      'content-type': 'application/xml; charset=utf-8',
+      'cache-control': 'public, max-age=3600'
+    });
     res.end(sitemapXml());
     return;
   }
@@ -586,16 +677,17 @@ createServer(async (req, res) => {
   };
 
   if (ext === '.html') {
-    const isKnownRoute = Boolean(seoPages[normalizedPathname]);
     const rawHtml = readFileSync(filePath, 'utf8');
     const html = injectDemoRequestScript(
       injectCrawlableContent(
         injectCrawlableStyles(
-          injectSeo(rawHtml, route)
+          injectSeo(rawHtml, route, isKnownRoute, requestedPath)
         ),
-        route
+        route,
+        isKnownRoute
       )
     );
+
     res.writeHead(isKnownRoute ? 200 : 404, headers);
     res.end(html);
     return;
