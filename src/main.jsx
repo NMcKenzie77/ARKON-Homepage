@@ -118,6 +118,9 @@ function PublicRoleCopyCleanup() {
       while (walker.nextNode()) nodes.push(walker.currentNode);
 
       nodes.forEach(node => {
+        const parentTag = node.parentElement?.tagName;
+        if (parentTag === 'SCRIPT' || parentTag === 'STYLE' || parentTag === 'TEXTAREA' || parentTag === 'INPUT') return;
+
         let next = node.nodeValue || '';
         replacements.forEach(([from, to]) => {
           next = next.replaceAll(from, to);
