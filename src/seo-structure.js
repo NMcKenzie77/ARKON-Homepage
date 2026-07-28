@@ -65,48 +65,54 @@ function faqSchema(page, pageUrl) {
 }
 
 export function buildStructuredData({ route, seo, industryPages, siteUrl }) {
-  const pageUrl = `${siteUrl}${route === '/' ? '/' : route}`;
   const organizationId = `${siteUrl}/#organization`;
   const websiteId = `${siteUrl}/#website`;
+  const organization = {
+    '@type': 'Organization',
+    '@id': organizationId,
+    name: 'ARKON Systems',
+    url: `${siteUrl}/`,
+    description: 'ARKON Systems organizes repeatable calls, messages, follow-up, scheduling, records, handoffs, and owner visibility for service businesses.'
+  };
+  const website = {
+    '@type': 'WebSite',
+    '@id': websiteId,
+    name: 'ARKON Systems',
+    url: `${siteUrl}/`,
+    publisher: { '@id': organizationId },
+    inLanguage: 'en-US'
+  };
+
+  if (seo.schemaName === 'Page Not Found') {
+    return JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [organization, website]
+    });
+  }
+
+  const pageUrl = `${siteUrl}${route === '/' ? '/' : route}`;
   const webpageId = `${pageUrl}#webpage`;
   const industryPage = industryPages[route];
   const breadcrumbs = getBreadcrumbItems(route, seo, siteUrl);
-
-  const graph = [
-    {
-      '@type': 'Organization',
-      '@id': organizationId,
-      name: 'ARKON Systems',
-      url: `${siteUrl}/`,
-      description: 'ARKON Systems organizes repeatable calls, messages, follow-up, scheduling, records, handoffs, and owner visibility for service businesses.'
-    },
-    {
-      '@type': 'WebSite',
-      '@id': websiteId,
-      name: 'ARKON Systems',
-      url: `${siteUrl}/`,
-      publisher: { '@id': organizationId },
-      inLanguage: 'en-US'
-    },
-    {
-      '@type': 'WebPage',
-      '@id': webpageId,
-      name: seo.schemaName || seo.h1 || seo.title,
-      description: seo.description,
-      url: pageUrl,
-      isPartOf: { '@id': websiteId },
-      about: { '@id': organizationId },
-      inLanguage: 'en-US'
-    }
-  ];
+  const webpage = {
+    '@type': 'WebPage',
+    '@id': webpageId,
+    name: seo.schemaName || seo.h1 || seo.title,
+    description: seo.description,
+    url: pageUrl,
+    isPartOf: { '@id': websiteId },
+    about: { '@id': organizationId },
+    inLanguage: 'en-US'
+  };
+  const graph = [organization, website, webpage];
 
   const breadcrumb = breadcrumbSchema(breadcrumbs, pageUrl);
   if (breadcrumb) {
     graph.push(breadcrumb);
-    graph[2].breadcrumb = { '@id': breadcrumb['@id'] };
+    webpage.breadcrumb = { '@id': breadcrumb['@id'] };
   }
 
-  if (route === '/') {
+  if (route === '/' && seo.schemaType === 'SoftwareApplication') {
     graph.push({
       '@type': 'SoftwareApplication',
       '@id': `${pageUrl}#application`,
@@ -132,16 +138,15 @@ export function buildStructuredData({ route, seo, industryPages, siteUrl }) {
       areaServed: {
         '@type': 'Country',
         name: 'United States'
-      },
-      audience: {
-        '@type': 'BusinessAudience',
-        audienceType: industryPage.name
       }
     });
-    graph[2].mainEntity = { '@id': serviceId };
+    webpage.mainEntity = { '@id': serviceId };
 
     const faq = faqSchema(industryPage, pageUrl);
-    if (faq) graph.push(faq);
+    if (faq) {
+      graph.push(faq);
+      webpage.hasPart = { '@id': faq['@id'] };
+    }
   }
 
   return JSON.stringify({
