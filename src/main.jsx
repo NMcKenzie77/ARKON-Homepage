@@ -80,7 +80,7 @@ function BrandTextNormalizer() {
   useEffect(() => {
     const normalizeBrandMarks = () => {
       document.querySelectorAll('.brand-mark').forEach(mark => {
-        mark.textContent = '';
+        if (mark.textContent) mark.textContent = '';
         mark.setAttribute('aria-hidden', 'true');
       });
     };
