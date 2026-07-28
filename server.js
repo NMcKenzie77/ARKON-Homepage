@@ -3,11 +3,13 @@ import { existsSync, readFileSync, statSync } from 'node:fs';
 import { extname, join, normalize, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { handlePorterChat } from './porter-api.js';
+import { coverageLanes, solutions } from './src/data.js';
+import { crawlablePaths, industryPages, seoPages, SITE_URL } from './src/site-content.js';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const distDir = resolve(__dirname, 'dist');
 const port = process.env.PORT || 3000;
-const siteUrl = (process.env.SITE_URL || 'https://arkonsysai.com').replace(/\/$/, '');
+const siteUrl = SITE_URL;
 const appShellPath = join(distDir, 'index.html');
 
 const mimeTypes = {
@@ -22,155 +24,6 @@ const mimeTypes = {
   '.webp': 'image/webp',
   '.ico': 'image/x-icon'
 };
-
-const seoPages = {
-  '/': {
-    title: 'ARKON Systems | AI Workflow Automation for Service Businesses',
-    description: 'ARKON Systems gives service businesses an AI operating team for calls, messages, follow-up, scheduling, records, handoffs, and owner visibility.',
-    schemaType: 'SoftwareApplication',
-    eyebrow: 'ARKON Systems',
-    h1: 'Let your existing team focus on the work only they can do.',
-    body: [
-      'ARKON handles the repeatable tasks around calls, messages, follow-ups, scheduling, documents, estimates, invoices, and handoffs.',
-      'The business keeps its voice and rules. ARKON supports the front desk, customer follow-up, records, routing, and owner visibility so the team can spend less time chasing details.'
-    ],
-    bullets: ['Calls and messages handled', 'Follow-up covered', 'Scheduling support', 'Records and handoffs prepared', 'Owner visibility']
-  },
-  '/how-it-works': {
-    title: 'How ARKON Works | Request Routing, Business Rules, and Owner Visibility',
-    description: 'See how ARKON handles calls, website inquiries, text messages, email, relationship history, business rules, safe next steps, and owner summaries.',
-    schemaType: 'SoftwareApplication',
-    eyebrow: 'How ARKON works',
-    h1: 'Requests come in, ARKON routes the work, and the owner sees what happened.',
-    body: [
-      'ARKON listens for repeatable work across calls, website inquiries, messages, email, scheduling needs, records, and follow-up.',
-      'It follows the business rules, prepares safe next steps, updates context, routes handoffs, and gives the owner a clear view of what was handled and what still needs attention.'
-    ],
-    bullets: ['Capture the request', 'Apply business rules', 'Prepare the next step', 'Route the handoff', 'Brief the owner']
-  },
-  '/real-estate': {
-    title: 'AI Workflow Automation for Real Estate Teams | ARKON Systems',
-    description: 'ARKON helps real estate teams respond to leads, showing requests, seller calls, buyer questions, follow-up, agent handoffs, and owner visibility.',
-    schemaType: 'Service',
-    eyebrow: 'Real estate workflow automation',
-    h1: 'AI workflow automation for real estate teams.',
-    body: [
-      'Real estate teams lose deals when leads wait, showing requests sit, seller calls are missed, or follow-up depends on someone remembering every detail.',
-      'ARKON supports lead response, call handling, showing requests, relationship history, agent handoffs, and owner visibility.'
-    ],
-    bullets: ['Lead response', 'Showing requests', 'Seller and buyer calls', 'Agent context', 'Owner view']
-  },
-  '/insurance': {
-    title: 'AI Workflow Automation for Insurance Agencies | ARKON Systems',
-    description: 'ARKON helps insurance agencies handle quote requests, policyholder questions, renewals, documents, producer follow-up, CRM updates, and owner visibility.',
-    schemaType: 'Service',
-    eyebrow: 'Insurance agency workflow automation',
-    h1: 'AI workflow automation for insurance agencies.',
-    body: [
-      'Insurance agencies lose time when quote requests, renewal questions, document requests, and producer follow-up scatter across calls, email, texts, and the CRM.',
-      'ARKON supports intake, policyholder questions, producer follow-up, CRM context, and owner visibility while routing licensed or judgment-based questions to the right person.'
-    ],
-    bullets: ['Quote requests', 'Policyholder questions', 'Document follow-up', 'Producer context', 'Agency visibility']
-  },
-  '/short-term-rentals': {
-    title: 'AI Workflow Automation for Short-Term Rentals | ARKON Systems',
-    description: 'ARKON helps short-term rental operators manage guest messages, cleaner coordination, vendor updates, urgent issues, follow-up, and host visibility.',
-    schemaType: 'Service',
-    eyebrow: 'Short-term rental workflow automation',
-    h1: 'AI workflow automation for short-term rental operators.',
-    body: [
-      'Short-term rental operators deal with guest messages, cleaner coordination, vendor updates, urgent issues, check-in questions, and host visibility.',
-      'ARKON keeps stay operations moving without every message landing on the host.'
-    ],
-    bullets: ['Guest messages', 'Cleaner coordination', 'Vendor updates', 'Urgent issue routing', 'Host visibility']
-  },
-  '/home-services': {
-    title: 'AI Workflow Automation for Home Service Businesses | ARKON Systems',
-    description: 'ARKON helps home service businesses handle calls, estimates, repairs, technician updates, scheduling, invoices, customer messages, and owner visibility.',
-    schemaType: 'Service',
-    eyebrow: 'Home services workflow automation',
-    h1: 'AI workflow automation for home service businesses.',
-    body: [
-      'Home service businesses lose money when calls are missed, estimate requests wait, technicians lack context, invoices create confusion, or customers need updates.',
-      'ARKON connects front desk work, field updates, customer messages, scheduling, records, and owner visibility.'
-    ],
-    bullets: ['Inbound calls', 'Estimate requests', 'Technician updates', 'Scheduling support', 'Owner visibility']
-  },
-  '/professional-services': {
-    title: 'AI Workflow Automation for Professional Services | ARKON Systems',
-    description: 'ARKON helps professional service firms manage intake, scheduling, client questions, document requests, follow-up, handoffs, and owner visibility.',
-    schemaType: 'Service',
-    eyebrow: 'Professional services workflow automation',
-    h1: 'AI workflow automation for professional service firms.',
-    body: [
-      'Professional service firms need clean intake, reliable scheduling, client follow-up, document requests, handoffs, and owner visibility.',
-      'ARKON helps keep client context attached so work does not depend on memory or scattered messages.'
-    ],
-    bullets: ['Client intake', 'Scheduling support', 'Document requests', 'Follow-up', 'Owner visibility']
-  },
-  '/salons': {
-    title: 'AI Workflow Automation for Salons | ARKON Systems',
-    description: 'ARKON helps salons manage missed calls, booking requests, client messages, appointment follow-up, staff handoffs, and owner visibility.',
-    schemaType: 'Service',
-    eyebrow: 'Salon workflow automation',
-    h1: 'AI workflow automation for salons.',
-    body: [
-      'Salons miss revenue when calls go unanswered, booking requests sit, client messages pile up, or appointment follow-up depends on the busiest person in the room.',
-      'ARKON supports booking requests, client messages, follow-up, staff handoffs, and owner visibility.'
-    ],
-    bullets: ['Missed call coverage', 'Booking requests', 'Client messages', 'Appointment follow-up', 'Owner view']
-  },
-  '/garages': {
-    title: 'AI Workflow Automation for Auto Repair Shops | ARKON Systems',
-    description: 'ARKON helps auto repair shops manage repair calls, estimate requests, declined work follow-up, vehicle context, status updates, return visits, and owner visibility.',
-    schemaType: 'Service',
-    eyebrow: 'Auto repair shop workflow automation',
-    h1: 'AI workflow automation for auto repair shops.',
-    body: [
-      'Auto repair shops lose time when repair calls interrupt the bay, estimate requests wait, declined work is never followed up, or customers call repeatedly for status updates.',
-      'ARKON supports the front desk, customer intake, vehicle context, scheduling, declined work follow-up, status updates, and owner visibility.'
-    ],
-    bullets: ['Repair calls', 'Estimate requests', 'Vehicle context', 'Status updates', 'Declined work follow-up']
-  },
-  '/medical-dental-offices': {
-    title: 'AI Workflow Automation for Dental Offices | ARKON Systems',
-    description: 'ARKON helps dental offices manage front desk calls, appointment requests, cancellations, no-shows, routine reminders, patient handoffs, and owner visibility.',
-    schemaType: 'Service',
-    eyebrow: 'Dental office workflow automation',
-    h1: 'AI workflow automation for dental offices.',
-    body: [
-      'Dental offices face front desk pressure from calls, appointment requests, cancellations, no-shows, routine reminders, patient questions, and owner visibility.',
-      'ARKON supports the repeatable workflow around scheduling, reminders, handoffs, and front desk communication.'
-    ],
-    bullets: ['Front desk calls', 'Appointment requests', 'Cancellations', 'No-show follow-up', 'Owner visibility']
-  },
-  '/law-firms': {
-    title: 'AI Workflow Automation for Law Firms | ARKON Systems',
-    description: 'ARKON helps law firms support paralegals with attorney schedules, email triage, client follow-up, document requests, daily briefs, handoffs, and owner visibility.',
-    schemaType: 'Service',
-    eyebrow: 'Law firm workflow automation',
-    h1: 'AI workflow automation for law firms.',
-    body: [
-      'Law firms need support around intake, attorney schedules, email triage, client follow-up, document requests, daily briefs, and handoffs.',
-      'ARKON helps keep communication and next steps organized while routing sensitive or judgment-based matters to the right person.'
-    ],
-    bullets: ['Intake support', 'Email triage', 'Document requests', 'Client follow-up', 'Owner visibility']
-  },
-  '/gyms-fitness-studios': {
-    title: 'AI Workflow Automation for Gyms and Fitness Studios | ARKON Systems',
-    description: 'ARKON helps gyms and fitness studios protect trial lead response, tour bookings, personal training revenue, member follow-up, cancellation handoffs, and owner visibility.',
-    schemaType: 'Service',
-    eyebrow: 'Gym and fitness studio workflow automation',
-    h1: 'AI workflow automation for gyms and fitness studios.',
-    body: [
-      'Gyms and fitness studios lose revenue when trial leads are not followed up, tours do not get booked, personal training interest goes cold, or members stop showing up before anyone notices.',
-      'ARKON supports trial lead response, tour booking, member follow-up, staff handoffs, and owner visibility.'
-    ],
-    bullets: ['Trial lead response', 'Tour bookings', 'Personal training follow-up', 'Member retention signals', 'Owner visibility']
-  }
-};
-
-const crawlablePaths = Object.keys(seoPages);
 
 function normalizeRoute(rawUrl = '/') {
   const pathname = rawUrl.split('?')[0].replace(/\/$/, '') || '/';
@@ -280,6 +133,7 @@ async function sendDemoRequestEmail(payload, req) {
   const from = process.env.DEMO_REQUEST_FROM_EMAIL;
   const preferredProvider = cleanText(process.env.DEMO_EMAIL_PROVIDER, 30).toLowerCase();
   if (!to || !from) throw new Error('Demo request email recipient or sender is not configured.');
+
   const subject = `ARKON demo request: ${payload.businessType || 'General inquiry'}`;
   const text = [
     'New ARKON demo request',
@@ -295,6 +149,7 @@ async function sendDemoRequestEmail(payload, req) {
     'Message:',
     payload.message || 'No message provided'
   ].join('\n');
+
   const mail = { from, to, replyTo: payload.email, subject, text };
   if (preferredProvider === 'postmark') return sendWithPostmark(mail);
   if (preferredProvider === 'resend') return sendWithResend(mail);
@@ -309,12 +164,14 @@ async function handleDemoRequest(req, res) {
     res.end(JSON.stringify({ ok: false, message: 'Method not allowed.' }));
     return;
   }
+
   try {
     const body = await readJsonBody(req);
     if (cleanText(body.companyWebsite, 200)) {
       jsonResponse(res, 200, { ok: true, message: 'Request received.' });
       return;
     }
+
     const payload = {
       name: cleanText(body.name, 120),
       email: cleanText(body.email, 180).toLowerCase(),
@@ -323,10 +180,12 @@ async function handleDemoRequest(req, res) {
       sourcePath: cleanText(body.sourcePath, 220),
       message: cleanMessage(body.message, 2500)
     };
+
     if (!payload.name || !isValidEmail(payload.email)) {
       jsonResponse(res, 400, { ok: false, message: 'Please enter your name and a valid email.' });
       return;
     }
+
     await sendDemoRequestEmail(payload, req);
     jsonResponse(res, 200, { ok: true, message: 'Request received. We will follow up shortly.' });
   } catch (error) {
@@ -340,31 +199,220 @@ function buildSchema(route, seo) {
   const base = {
     '@context': 'https://schema.org',
     '@type': seo.schemaType,
-    name: seo.title.replace(' | ARKON Systems', '').replace('ARKON Systems | ', ''),
+    name: seo.schemaName || 'ARKON Systems',
     description: seo.description,
     url,
     provider: { '@type': 'Organization', name: 'ARKON Systems', url: `${siteUrl}/` }
   };
+
   if (seo.schemaType === 'SoftwareApplication') {
     base.applicationCategory = 'BusinessApplication';
     base.operatingSystem = 'Web';
   }
+
   return JSON.stringify(base);
 }
 
-function crawlableHtml(route) {
-  const seo = seoPages[route] || seoPages['/'];
-  const bulletItems = (seo.bullets || []).map(item => `<li>${escapeHtml(item)}</li>`).join('');
-  const paragraphs = (seo.body || [seo.description]).map(text => `<p>${escapeHtml(text)}</p>`).join('\n');
+function renderCards(cards = []) {
+  return cards.map(([title, copy]) => `
+    <article class="crawlable-card">
+      <h3>${escapeHtml(title)}</h3>
+      <p>${escapeHtml(copy)}</p>
+    </article>`).join('');
+}
+
+function renderSimpleCards(cards = []) {
+  return cards.map(card => `
+    <article class="crawlable-card">
+      <h3>${escapeHtml(card.title)}</h3>
+      <p>${escapeHtml(card.copy)}</p>
+    </article>`).join('');
+}
+
+function renderPricing(plans = []) {
+  if (!plans.length) return '';
+  const cards = plans.map(plan => `
+    <article class="crawlable-card">
+      <p><strong>${escapeHtml(plan.fit)}</strong></p>
+      <h3>${escapeHtml(plan.name)}</h3>
+      <p>${escapeHtml(plan.summary)}</p>
+      <p><strong>Founder pilot:</strong> ${escapeHtml(plan.pilot)}<br><strong>Target monthly:</strong> ${escapeHtml(plan.target)}<br><strong>${escapeHtml(plan.setup)}</strong></p>
+      <ul>${plan.includes.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+    </article>`).join('');
+
+  return `
+    <section id="pricing">
+      <p class="crawlable-eyebrow">Auto repair pricing</p>
+      <h2>Start with the right operating layer for the shop.</h2>
+      <p>These are starting points for scoping ARKON for an auto repair operation. Pricing is finalized after discovery based on call volume, locations, team size, software, live-call coverage, and integration depth.</p>
+      <div class="crawlable-grid">${cards}</div>
+    </section>`;
+}
+
+function crawlableHomeHtml() {
+  const channels = [
+    { title: 'Phone call — Vera', copy: 'Answers the call, qualifies the caller, captures the details, and routes it when a person is needed.' },
+    { title: 'Website inquiry — Porter', copy: 'Answers questions before someone books or asks for service, captures the lead, and hands it to the business.' },
+    { title: 'Text or client message — Naya', copy: 'Responds in the owner’s voice, answers approved questions, and follows up when a lead does not convert.' },
+    { title: 'Email — Iris', copy: 'Reads the inbox, scores urgency and importance, and surfaces what needs attention first.' }
+  ];
+  const ideaCards = [
+    { title: 'Know who is reaching out', copy: 'ARKON recognizes whether it is a customer, lead, vendor, guest, client, tenant, or prospect and starts with the right context.' },
+    { title: 'Move the work forward', copy: 'ARKON can answer, follow up, schedule, route, prepare, or flag the issue based on what the business allows.' },
+    { title: 'Keep it sounding like your business', copy: 'Messages follow your tone, standards, and rules so customers still feel like they are dealing with your team.' }
+  ];
+  const team = [
+    { title: 'Naya — Client and guest communication', copy: 'Handles inbound and outbound messages in the owner’s voice and follows up after Porter or Vera captures a lead.' },
+    { title: 'Vera — Voice reception', copy: 'Answers inbound calls, gathers key details, and routes the call when a person is needed.' },
+    { title: 'Porter — Website leads', copy: 'Answers pre-service questions, captures lead details, and hands the warm lead to the business.' },
+    { title: 'Grant — Owner intelligence', copy: 'Surfaces risks, open work, and the owner digest of what needs action.' },
+    { title: 'Marcus — CRM and relationship memory', copy: 'Keeps records, interaction history, pipeline stages, notes, tags, and follow-up context attached.' },
+    { title: 'Iris — Inbox triage', copy: 'Scores urgency and importance, prioritizes the inbox, and flags new client or lead inquiries.' }
+  ];
+  const solutionCards = solutions.map(solution => `
+    <a class="crawlable-card crawlable-link-card" href="${escapeHtml(solution.href)}">
+      <p><strong>${escapeHtml(solution.name)}</strong></p>
+      <h3>${escapeHtml(solution.title)}</h3>
+      <p>${escapeHtml(solution.details)}</p>
+    </a>`).join('');
+  const coverageCards = coverageLanes.map(lane => `
+    <article class="crawlable-card">
+      <h3>${escapeHtml(lane.lane)}</h3>
+      <p>${escapeHtml(lane.copy)}</p>
+    </article>`).join('');
+
   return `<main class="crawlable-page" data-crawlable-page="true">
     <section>
-      <p>${escapeHtml(seo.eyebrow || 'ARKON Systems')}</p>
-      <h1>${escapeHtml(seo.h1 || seo.title)}</h1>
-      ${paragraphs}
-      <ul>${bulletItems}</ul>
-      <p><a href="/#demo">Book a demo</a></p>
+      <p class="crawlable-eyebrow">ARKON Systems</p>
+      <h1>Let your existing team focus on the work only they can do.</h1>
+      <p>ARKON handles the repeatable tasks around calls, messages, follow-ups, scheduling, documents, estimates, invoices, and handoffs. Your staff can spend less time chasing details and more time moving the business forward.</p>
+      <p><a href="/#how">See how it works</a> <a href="/#solutions">Choose your business type</a></p>
+    </section>
+    <section>
+      <p class="crawlable-eyebrow">How ARKON moves work forward</p>
+      <h2>When someone reaches out, the right role responds.</h2>
+      <p>Calls, texts, emails, website inquiries, follow-ups, and owner alerts are routed to the role built for that job. ARKON follows the business rules and brings in a person when judgment is needed.</p>
+      <div class="crawlable-grid">${renderSimpleCards(channels)}</div>
+      <p><a href="/how-it-works">See how ARKON handles a request</a></p>
+    </section>
+    <section>
+      <p class="crawlable-eyebrow">The ARKON idea</p>
+      <h2>Every business has work that gets dropped when people get busy.</h2>
+      <p>Customers call. Messages pile up. Follow-ups get missed. Details live in someone’s head. ARKON handles the repeatable work, keeps the right people updated, and helps the day keep moving without everything falling back on the owner.</p>
+      <div class="crawlable-grid">${renderSimpleCards(ideaCards)}</div>
+    </section>
+    <section>
+      <p class="crawlable-eyebrow">Meet the core team</p>
+      <h2>One team, with the right role for each job.</h2>
+      <div class="crawlable-grid">${renderSimpleCards(team)}</div>
+    </section>
+    <section id="solutions">
+      <p class="crawlable-eyebrow">Choose your business type</p>
+      <h2>Start with the idea. Then choose your kind of business.</h2>
+      <p>Each business page shows the calls, messages, documents, customers, staff, and owner view for that kind of business.</p>
+      <div class="crawlable-grid">${solutionCards}</div>
+    </section>
+    <section>
+      <p class="crawlable-eyebrow">Your voice, not a generic script</p>
+      <h2>Customers should feel like they are still dealing with your business.</h2>
+      <p>ARKON uses the business’s greetings, tone, standards, boundaries, and escalation rules. Sensitive or urgent issues are routed instead of answered blindly.</p>
+    </section>
+    <section>
+      <p class="crawlable-eyebrow">Owner visibility</p>
+      <h2>The owner sees what happened without carrying every detail.</h2>
+      <p>Messages become organized actions, owners see what matters, and employees start with context.</p>
+    </section>
+    <section>
+      <p class="crawlable-eyebrow">The work behind each response</p>
+      <h2>One customer experience. The right role behind each step.</h2>
+      <div class="crawlable-grid">${coverageCards}</div>
+    </section>
+    <section>
+      <p class="crawlable-eyebrow">How it feels different</p>
+      <h2>The business feels present, prepared, and coordinated, even when the owner is not.</h2>
+      <ul><li>Customers feel remembered</li><li>Responses sound like the business</li><li>Employees know what to do</li><li>Owners see what matters</li></ul>
+    </section>
+    <section id="demo">
+      <p class="crawlable-eyebrow">See it for your business</p>
+      <h2>Choose the closest business type and walk through the real workflow.</h2>
+      <p>See how ARKON would handle the calls, messages, follow-ups, documents, staff updates, and owner visibility in a business like yours.</p>
+      <p><a href="/#demo">Request demo</a></p>
     </section>
   </main>`;
+}
+
+function crawlableHowItWorksHtml() {
+  const steps = [
+    ['The request comes in', 'A call, text, email, website form, guest message, or client message reaches the business.'],
+    ['The right role responds first', 'Vera, Porter, Naya, or Iris responds based on the channel and the job that needs to be done.'],
+    ['Business rules are checked', 'Your rules decide what ARKON can answer, schedule, send, update, or route to a person.'],
+    ['Marcus keeps the history attached', 'Marcus connects the contact record, relationship timeline, pipeline stage, notes, tags, and prior touchpoints.'],
+    ['ARKON takes the safe next step', 'It can answer, follow up, schedule, update a record, create a task, or route the request for review.'],
+    ['Grant keeps the owner informed', 'Grant shows what came in, what was handled, who owns the next step, and what needs attention.']
+  ];
+
+  return `<main class="crawlable-page" data-crawlable-page="true">
+    <section>
+      <p class="crawlable-eyebrow">How ARKON handles a request</p>
+      <h1>One business. Different ways people reach out.</h1>
+      <p>The first response depends on how the person contacted the business. Your business rules decide what ARKON is allowed to do. Marcus keeps the relationship history attached, and Grant keeps the owner informed.</p>
+    </section>
+    <section>
+      <p class="crawlable-eyebrow">What happens next?</p>
+      <h2>The request moves forward without hiding the judgment calls.</h2>
+      <div class="crawlable-grid">${steps.map(([title, copy]) => `<article class="crawlable-card"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(copy)}</p></article>`).join('')}</div>
+      <p><a href="/">Back to homepage</a></p>
+    </section>
+  </main>`;
+}
+
+function crawlableIndustryHtml(page) {
+  const reality = page.reality ? `
+    <section>
+      <p class="crawlable-eyebrow">${escapeHtml(page.reality.eyebrow)}</p>
+      <h2>${escapeHtml(page.reality.title)}</h2>
+      ${page.reality.body.map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join('')}
+      <p><strong>${escapeHtml(page.reality.callout)}</strong></p>
+    </section>` : '';
+
+  return `<main class="crawlable-page" data-crawlable-page="true">
+    <section>
+      <p class="crawlable-eyebrow">${escapeHtml(page.eyebrow)}</p>
+      <h1>${escapeHtml(page.title)}</h1>
+      <p>${escapeHtml(page.description)}</p>
+      <p><a href="/#demo">Request demo</a> <a href="/how-it-works">See how ARKON works</a></p>
+    </section>
+    ${reality}
+    <section>
+      <p class="crawlable-eyebrow">Why it matters</p>
+      <h2>Repeatable work should not depend on memory.</h2>
+      <p>${escapeHtml(page.primary)}</p>
+      <div class="crawlable-grid">${renderCards(page.cards)}</div>
+    </section>
+    ${renderPricing(page.pricing)}
+    <section>
+      <p class="crawlable-eyebrow">Example workflows</p>
+      <h2>What ARKON can keep moving.</h2>
+      <div class="crawlable-grid">${page.workflow.map(item => `<article class="crawlable-card"><h3>${escapeHtml(item)}</h3></article>`).join('')}</div>
+    </section>
+    <section>
+      <p class="crawlable-eyebrow">Questions business owners ask</p>
+      <h2>Built for control, not guesswork.</h2>
+      <div class="crawlable-grid">${renderCards(page.faq)}</div>
+    </section>
+    <section>
+      <p class="crawlable-eyebrow">See it for your business</p>
+      <h2>Walk through the real workflow with ARKON.</h2>
+      <p>Review the calls, messages, follow-ups, records, handoffs, and owner visibility that matter most for your operation.</p>
+      <p><a href="/#demo">Request demo</a></p>
+    </section>
+  </main>`;
+}
+
+function crawlableHtml(route) {
+  if (route === '/') return crawlableHomeHtml();
+  if (route === '/how-it-works') return crawlableHowItWorksHtml();
+  return crawlableIndustryHtml(industryPages[route]);
 }
 
 function injectSeo(html, route) {
@@ -385,11 +433,7 @@ function injectCrawlableContent(html, route) {
 function injectCrawlableStyles(html) {
   if (html.includes('data-crawlable-style')) return html;
   const style = `<style data-crawlable-style>
-    .crawlable-page{max-width:1120px;margin:0 auto;padding:120px 24px 64px;color:#eef5ff;background:#050914;font-family:Inter,Arial,sans-serif;line-height:1.6}
-    .crawlable-page h1{font-size:clamp(2rem,5vw,4rem);line-height:1.05;margin:.3em 0 .4em}
-    .crawlable-page p{max-width:760px;color:#b8c7df;font-size:1.05rem}
-    .crawlable-page ul{display:grid;gap:10px;margin:24px 0;padding-left:22px;color:#e8f2ff}
-    .crawlable-page a{color:#82f7ca;font-weight:700}
+    html{background:#050914}.crawlable-page{max-width:1120px;margin:0 auto;padding:96px 24px 64px;color:#eef5ff;background:#050914;font-family:Inter,Arial,sans-serif;line-height:1.6}.crawlable-page section{padding:28px 0;border-bottom:1px solid rgba(184,199,223,.14)}.crawlable-page h1{font-size:clamp(2rem,5vw,4rem);line-height:1.05;margin:.25em 0 .4em}.crawlable-page h2{font-size:clamp(1.55rem,3vw,2.5rem);line-height:1.15;margin:.25em 0 .5em}.crawlable-page h3{margin:.2em 0 .45em}.crawlable-page p{max-width:820px;color:#b8c7df;font-size:1.02rem}.crawlable-page ul{color:#e8f2ff}.crawlable-page a{color:#82f7ca;font-weight:700;margin-right:14px}.crawlable-eyebrow{color:#82f7ca!important;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem!important;font-weight:800}.crawlable-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:22px}.crawlable-card{display:block;padding:20px;border:1px solid rgba(184,199,223,.18);border-radius:16px;background:rgba(12,20,38,.72);text-decoration:none}.crawlable-card p{font-size:.95rem}.crawlable-link-card:hover{border-color:#82f7ca}
   </style>`;
   return html.replace('</head>', `${style}\n  </head>`);
 }
@@ -399,7 +443,7 @@ function injectDemoRequestScript(html) {
   const script = `<script data-demo-request-script>
 (() => {
   const endpoint = '/api/demo-request';
-  function normalize(value) { return String(value || '').replace(/\s+/g, ' ').trim().toLowerCase(); }
+  function normalize(value) { return String(value || '').replace(/\\s+/g, ' ').trim().toLowerCase(); }
   function setStatus(form, message) {
     let status = form.querySelector('[data-demo-status="true"]');
     if (!status) { status = document.createElement('small'); status.dataset.demoStatus = 'true'; status.setAttribute('role', 'status'); status.style.minHeight = '20px'; status.style.display = 'block'; status.style.color = 'var(--subtle)'; form.appendChild(status); }
@@ -465,7 +509,7 @@ function injectDemoRequestScript(html) {
 function sitemapXml() {
   const urls = crawlablePaths.map(path => {
     const loc = `${siteUrl}${path === '/' ? '/' : path}`;
-    return `  <url>\n    <loc>${loc}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${path === '/' ? '1.0' : '0.8'}</priority>\n  </url>`;
+    return `  <url>\n    <loc>${loc}</loc>\n  </url>`;
   }).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }
@@ -474,52 +518,89 @@ function robotsTxt() {
   return `User-agent: *\nAllow: /\nSitemap: ${siteUrl}/sitemap.xml\n`;
 }
 
+function redirectBareDomain(req, res) {
+  const forwardedHost = String(req.headers['x-forwarded-host'] || '').split(',')[0].trim().toLowerCase();
+  const directHost = String(req.headers.host || '').split(':')[0].trim().toLowerCase();
+  const host = forwardedHost || directHost;
+  if (host !== 'arkonsysai.com') return false;
+
+  res.writeHead(308, {
+    location: `${siteUrl}${req.url || '/'}`,
+    'cache-control': 'public, max-age=3600'
+  });
+  res.end();
+  return true;
+}
+
 createServer(async (req, res) => {
+  if (redirectBareDomain(req, res)) return;
+
   const reqUrl = req.url || '/';
   const pathname = reqUrl.split('?')[0];
+
   if (pathname === '/api/demo-request') {
     await handleDemoRequest(req, res);
     return;
   }
+
   if (pathname === '/api/porter/chat') {
     await handlePorterChat(req, res);
     return;
   }
+
   if (!existsSync(distDir)) {
     res.writeHead(500, { 'content-type': 'text/plain; charset=utf-8' });
     res.end('Build folder not found. Run npm run build before npm start.');
     return;
   }
+
   const route = normalizeRoute(reqUrl);
   const normalizedPathname = pathname.replace(/\/$/, '') || '/';
+
   if (pathname === '/robots.txt') {
     res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=3600' });
     res.end(robotsTxt());
     return;
   }
+
   if (pathname === '/sitemap.xml') {
     res.writeHead(200, { 'content-type': 'application/xml; charset=utf-8', 'cache-control': 'public, max-age=3600' });
     res.end(sitemapXml());
     return;
   }
+
   let filePath = safePath(reqUrl);
   if (!filePath.startsWith(distDir)) {
     res.writeHead(403, { 'content-type': 'text/plain; charset=utf-8' });
     res.end('Forbidden');
     return;
   }
+
   if (existsSync(filePath) && statSync(filePath).isDirectory()) filePath = join(filePath, 'index.html');
   if (!existsSync(filePath)) filePath = appShellPath;
+
   const ext = extname(filePath).toLowerCase();
-  const headers = { 'content-type': mimeTypes[ext] || 'application/octet-stream', 'cache-control': ext === '.html' ? 'no-cache' : 'public, max-age=31536000, immutable' };
+  const headers = {
+    'content-type': mimeTypes[ext] || 'application/octet-stream',
+    'cache-control': ext === '.html' ? 'no-cache' : 'public, max-age=31536000, immutable'
+  };
+
   if (ext === '.html') {
     const isKnownRoute = Boolean(seoPages[normalizedPathname]);
     const rawHtml = readFileSync(filePath, 'utf8');
-    const html = injectDemoRequestScript(injectCrawlableContent(injectCrawlableStyles(injectSeo(rawHtml, route)), route));
+    const html = injectDemoRequestScript(
+      injectCrawlableContent(
+        injectCrawlableStyles(
+          injectSeo(rawHtml, route)
+        ),
+        route
+      )
+    );
     res.writeHead(isKnownRoute ? 200 : 404, headers);
     res.end(html);
     return;
   }
+
   res.writeHead(200, headers);
   res.end(readFileSync(filePath));
 }).listen(port, () => {
