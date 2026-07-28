@@ -17,7 +17,8 @@
 - [x] Add social-sharing metadata and image.
 - [x] Add the ARKON favicon.
 - [x] Add GA4 page-view and demo-conversion tracking.
-- [ ] Verify the root-domain property in Google Search Console.
-- [ ] Submit `https://www.arkonsysai.com/sitemap.xml` in Search Console.
-- [ ] Run live URL inspection and request indexing for the homepage and priority verticals.
+- [x] Verify the root-domain property in Google Search Console.
+- [x] Submit `https://www.arkonsysai.com/sitemap.xml` in Search Console. The XML is publicly accessible; Search Console initially reported `Couldn't fetch` and should be rechecked after Google retries.
+- [x] Request indexing for all 12 public routes. The daily limit was reached after submitting `https://www.arkonsysai.com/gyms-fitness-studios`, the final route.
+- [ ] Recheck Search Console sitemap and indexing status after Google has had time to process the requests.
 - [ ] Remove remaining legacy client-side cleanup hooks and duplicate homepage/how-it-works content sources after indexing is stabilized.
