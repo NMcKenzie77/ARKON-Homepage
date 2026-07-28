@@ -3,6 +3,7 @@ dist/
 public/og-arkon.png
 src/App.public.jsx
 src/main.public.jsx
+server.runtime.js
 .DS_Store
 .env
 .env.local
