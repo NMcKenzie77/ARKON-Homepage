@@ -34,6 +34,8 @@ function buildPublicApp() {
   const outputPath = resolve(srcDir, 'App.public.jsx');
   let source = readFileSync(inputPath, 'utf8');
 
+  source = `import DemoRequestForm from './DemoRequestForm.jsx';\n${source}`;
+
   source = removeSection(
     source,
     'const industryPages = {',
@@ -46,6 +48,13 @@ function buildPublicApp() {
     '\nfunction useClientSeo(route) {',
     '\nfunction Header()',
     'duplicate client SEO hook'
+  );
+
+  source = removeSection(
+    source,
+    '\nfunction DemoCta() {',
+    '\nfunction HomePage()',
+    'legacy placeholder demo form'
   );
 
   source = removeSection(
@@ -74,6 +83,13 @@ function buildPublicApp() {
     "{route === '/' ? <HomePage /> : route === '/how-it-works' ? <RequestFlowPage /> : page ? <IndustryPage page={page} /> : <NotFoundPage />}",
     "{route === '/' ? <HomePage /> : route === '/how-it-works' ? <RequestFlowPage /> : <NotFoundPage />}",
     'legacy route renderer'
+  );
+
+  source = replaceRequired(
+    source,
+    '      <DemoCta />',
+    '      <DemoRequestForm />',
+    'source-owned demo request form'
   );
 
   source = replaceAllRequired(
@@ -131,6 +147,14 @@ function buildPublicApp() {
 
   if (/useClientSeo|IndustryPage|industryPages/.test(source)) {
     throw new Error('Generated App.public.jsx still contains a legacy duplicate page or SEO source.');
+  }
+
+  if (/function DemoCta|front-end only for v1|onSubmit=\{event => event\.preventDefault\(\)\}/.test(source)) {
+    throw new Error('Generated App.public.jsx still contains the legacy placeholder demo form.');
+  }
+
+  if (!source.includes('<DemoRequestForm />')) {
+    throw new Error('Generated App.public.jsx is missing the source-owned demo form.');
   }
 
   writeFileSync(outputPath, source);
