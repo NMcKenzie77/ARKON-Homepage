@@ -1,0 +1,151 @@
+export const RELATED_ROUTE_MAP = {
+  '/real-estate': ['/professional-services', '/insurance', '/home-services'],
+  '/insurance': ['/professional-services', '/real-estate', '/law-firms'],
+  '/short-term-rentals': ['/home-services', '/professional-services', '/real-estate'],
+  '/home-services': ['/garages', '/professional-services', '/short-term-rentals'],
+  '/professional-services': ['/law-firms', '/insurance', '/real-estate'],
+  '/salons': ['/gyms-fitness-studios', '/professional-services', '/home-services'],
+  '/garages': ['/home-services', '/professional-services', '/insurance'],
+  '/medical-dental-offices': ['/professional-services', '/salons', '/law-firms'],
+  '/law-firms': ['/professional-services', '/insurance', '/real-estate'],
+  '/gyms-fitness-studios': ['/salons', '/professional-services', '/home-services']
+};
+
+export function getRelatedPages(route, industryPages) {
+  return (RELATED_ROUTE_MAP[route] || [])
+    .map(path => ({ path, page: industryPages[path] }))
+    .filter(item => Boolean(item.page));
+}
+
+export function getBreadcrumbItems(route, seo, siteUrl) {
+  const items = [
+    { name: 'ARKON Systems', url: `${siteUrl}/` }
+  ];
+
+  if (route !== '/') {
+    items.push({
+      name: seo.schemaName || seo.h1 || seo.title,
+      url: `${siteUrl}${route}`
+    });
+  }
+
+  return items;
+}
+
+function breadcrumbSchema(items, pageUrl) {
+  if (items.length < 2) return null;
+
+  return {
+    '@type': 'BreadcrumbList',
+    '@id': `${pageUrl}#breadcrumbs`,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url
+    }))
+  };
+}
+
+function faqSchema(page, pageUrl) {
+  if (!page?.faq?.length) return null;
+
+  return {
+    '@type': 'FAQPage',
+    '@id': `${pageUrl}#faq`,
+    mainEntity: page.faq.map(([question, answer]) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: answer
+      }
+    }))
+  };
+}
+
+export function buildStructuredData({ route, seo, industryPages, siteUrl }) {
+  const pageUrl = `${siteUrl}${route === '/' ? '/' : route}`;
+  const organizationId = `${siteUrl}/#organization`;
+  const websiteId = `${siteUrl}/#website`;
+  const webpageId = `${pageUrl}#webpage`;
+  const industryPage = industryPages[route];
+  const breadcrumbs = getBreadcrumbItems(route, seo, siteUrl);
+
+  const graph = [
+    {
+      '@type': 'Organization',
+      '@id': organizationId,
+      name: 'ARKON Systems',
+      url: `${siteUrl}/`,
+      description: 'ARKON Systems organizes repeatable calls, messages, follow-up, scheduling, records, handoffs, and owner visibility for service businesses.'
+    },
+    {
+      '@type': 'WebSite',
+      '@id': websiteId,
+      name: 'ARKON Systems',
+      url: `${siteUrl}/`,
+      publisher: { '@id': organizationId },
+      inLanguage: 'en-US'
+    },
+    {
+      '@type': 'WebPage',
+      '@id': webpageId,
+      name: seo.schemaName || seo.h1 || seo.title,
+      description: seo.description,
+      url: pageUrl,
+      isPartOf: { '@id': websiteId },
+      about: { '@id': organizationId },
+      inLanguage: 'en-US'
+    }
+  ];
+
+  const breadcrumb = breadcrumbSchema(breadcrumbs, pageUrl);
+  if (breadcrumb) {
+    graph.push(breadcrumb);
+    graph[2].breadcrumb = { '@id': breadcrumb['@id'] };
+  }
+
+  if (route === '/') {
+    graph.push({
+      '@type': 'SoftwareApplication',
+      '@id': `${pageUrl}#application`,
+      name: 'ARKON Systems',
+      description: seo.description,
+      url: pageUrl,
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web',
+      provider: { '@id': organizationId }
+    });
+  }
+
+  if (industryPage) {
+    const serviceId = `${pageUrl}#service`;
+    graph.push({
+      '@type': 'Service',
+      '@id': serviceId,
+      name: industryPage.name,
+      description: industryPage.description,
+      url: pageUrl,
+      serviceType: industryPage.name,
+      provider: { '@id': organizationId },
+      areaServed: {
+        '@type': 'Country',
+        name: 'United States'
+      },
+      audience: {
+        '@type': 'BusinessAudience',
+        audienceType: industryPage.name
+      }
+    });
+    graph[2].mainEntity = { '@id': serviceId };
+
+    const faq = faqSchema(industryPage, pageUrl);
+    if (faq) graph.push(faq);
+  }
+
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': graph
+  });
+}
