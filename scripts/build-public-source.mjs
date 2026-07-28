@@ -34,7 +34,7 @@ function buildPublicApp() {
   const outputPath = resolve(srcDir, 'App.public.jsx');
   let source = readFileSync(inputPath, 'utf8');
 
-  source = `import DemoRequestForm from './DemoRequestForm.jsx';\n${source}`;
+  source = `import DemoRequestForm from './DemoRequestForm.jsx';\nimport SiteFooter from './SiteFooter.jsx';\n${source}`;
 
   source = removeSection(
     source,
@@ -64,6 +64,13 @@ function buildPublicApp() {
     'legacy duplicate industry-page renderer'
   );
 
+  source = removeSection(
+    source,
+    '\nfunction Footer() {',
+    '\nfunction getRoute()',
+    'legacy minimal homepage footer'
+  );
+
   source = replaceRequired(
     source,
     "  useClientSeo(route);\n",
@@ -90,6 +97,13 @@ function buildPublicApp() {
     '      <DemoCta />',
     '      <DemoRequestForm />',
     'source-owned demo request form'
+  );
+
+  source = replaceRequired(
+    source,
+    '      <Footer />',
+    '      <SiteFooter />',
+    'shared homepage footer'
   );
 
   source = replaceAllRequired(
@@ -153,8 +167,16 @@ function buildPublicApp() {
     throw new Error('Generated App.public.jsx still contains the legacy placeholder demo form.');
   }
 
+  if (/function Footer\(\)|<Footer \/>/.test(source)) {
+    throw new Error('Generated App.public.jsx still contains the legacy minimal footer.');
+  }
+
   if (!source.includes('<DemoRequestForm />')) {
     throw new Error('Generated App.public.jsx is missing the source-owned demo form.');
+  }
+
+  if (!source.includes('<SiteFooter />')) {
+    throw new Error('Generated App.public.jsx is missing the shared site footer.');
   }
 
   writeFileSync(outputPath, source);
@@ -168,8 +190,8 @@ function buildPublicEntry() {
   source = replaceRequired(
     source,
     "import App from './App.jsx';",
-    "import App from './App.public.jsx';",
-    'public App import'
+    "import App from './App.public.jsx';\nimport SiteFooter from './SiteFooter.jsx';",
+    'public App and footer imports'
   );
 
   source = removeSection(
@@ -181,9 +203,23 @@ function buildPublicEntry() {
 
   source = removeSection(
     source,
+    '\nfunction UnifiedFooter()',
+    '\nfunction Breadcrumbs',
+    'legacy minimal industry footer'
+  );
+
+  source = removeSection(
+    source,
     '\nfunction AppWithCleanup({ route }) {',
     '\nconst route = getCurrentRoute();',
     'runtime cleanup wrapper'
+  );
+
+  source = replaceRequired(
+    source,
+    '      <UnifiedFooter />',
+    '      <SiteFooter />',
+    'shared industry footer'
   );
 
   source = replaceRequired(
@@ -195,6 +231,14 @@ function buildPublicEntry() {
 
   if (/LegacyContactBannerRemover|BrandTextNormalizer|PublicRoleCopyCleanup|AppWithCleanup/.test(source)) {
     throw new Error('Generated main.public.jsx still contains runtime cleanup code.');
+  }
+
+  if (/function UnifiedFooter\(\)|<UnifiedFooter \/>/.test(source)) {
+    throw new Error('Generated main.public.jsx still contains the legacy minimal industry footer.');
+  }
+
+  if (!source.includes('<SiteFooter />')) {
+    throw new Error('Generated main.public.jsx is missing the shared site footer.');
   }
 
   writeFileSync(outputPath, source);
