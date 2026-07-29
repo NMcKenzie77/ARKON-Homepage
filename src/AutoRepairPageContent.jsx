@@ -4,39 +4,39 @@ import './auto-repair-page.css';
 const teamCards = [
   {
     number: '01',
-    title: 'Vera answers repair calls live.',
-    copy: 'Vera captures the customer, vehicle, symptoms, drivability, urgency, and preferred timing so the advisor receives a useful intake instead of a vague callback note.'
+    title: 'Naya brings deferred work back into the shop.',
+    copy: 'Naya follows up using the customer’s name, vehicle, actual recommendation, prior estimate, timing, and contact preference so the message feels connected to the service conversation that already happened.'
   },
   {
     number: '02',
-    title: 'Naya keeps customers updated and follows up on declined work.',
-    copy: 'Naya sends approved status updates, handles routine questions, and brings recommended work back at the right time without pretending to make repair decisions.'
+    title: 'Naya keeps upcoming maintenance from being missed.',
+    copy: 'When service is coming due, Naya reaches out with the right vehicle and maintenance context, offers approved openings, and keeps the visit moving toward the schedule.'
   },
   {
     number: '03',
-    title: 'Marcus remembers the customer and vehicle.',
-    copy: 'Vehicle history, prior repairs, estimates, declined recommendations, communication preferences, and follow-up context stay attached.'
+    title: 'Vera answers new repair calls live.',
+    copy: 'Vera captures the customer, vehicle, concern, drivability, timing, and contact preference so the advisor receives a useful intake instead of a vague callback note.'
   },
   {
     number: '04',
-    title: 'Grant briefs the owner before the day gets away.',
-    copy: 'Grant surfaces vehicles waiting on authorization, customers waiting on updates, missed opportunities, declined work due for follow-up, and issues that need management.'
+    title: 'Marcus and Grant keep the history and priorities visible.',
+    copy: 'Marcus keeps the customer, vehicle, recommendations, estimates, and conversations attached. Grant shows the owner which opportunities and customer issues need attention.'
   }
 ];
 
 const ownerRows = [
-  ['2018 Honda Accord', 'Diagnostic intake needs appointment confirmation', 'Call today'],
-  ['RO 10482 · Honda Accord', 'Customer requested estimate review before authorization', 'Advisor needed'],
-  ['2020 Toyota RAV4', 'Front-brake work recovered for Friday at 2:30', 'Ready to book'],
-  ['2017 Ford F-150', 'No customer update sent since yesterday afternoon', 'At risk']
+  ['Michael Torres · 2018 Honda Accord', 'Deferred front-brake work recovered at the prior $680 estimate', 'Ready to book'],
+  ['Angela Brooks · 2021 Toyota RAV4', 'Oil service and tire rotation scheduled for Friday at 2:30', 'Scheduled'],
+  ['Michael Torres · 2018 Honda Accord', 'New diagnostic concern needs appointment confirmation', 'Call today'],
+  ['2017 Ford F-150', 'Customer has not received an update since yesterday afternoon', 'At risk']
 ];
 
 const attentionItems = [
-  'Waiting on authorization',
+  'Deferred work ready to schedule',
+  'Upcoming maintenance due',
+  'New repair calls',
   'Customers waiting on updates',
-  'Declined work due',
-  'Appointments to confirm',
-  'Review risk'
+  'Appointments to confirm'
 ];
 
 export default function AutoRepairPageContent() {
@@ -46,10 +46,10 @@ export default function AutoRepairPageContent() {
         <div className="auto-repair-section-heading">
           <div>
             <p className="eyebrow">Meet your auto repair digital AI team</p>
-            <h2 id="auto-repair-team-title">Your digital team protects repair opportunities while the shop stays focused on the vehicles already in the bays.</h2>
+            <h2 id="auto-repair-team-title">The shop reaches the right customer with the right vehicle context before the opportunity disappears.</h2>
           </div>
           <p>
-            Vera handles the first call. Naya keeps communication and follow-up moving. Marcus keeps the customer and vehicle history attached. Grant shows the owner what needs attention.
+            Naya brings deferred and upcoming maintenance back into the schedule. Vera handles new repair calls. Marcus keeps the customer and vehicle history attached. Grant shows the owner what needs attention.
           </p>
         </div>
 
@@ -67,9 +67,9 @@ export default function AutoRepairPageContent() {
       <section className="section auto-repair-control-section" aria-labelledby="auto-repair-control-title">
         <div className="auto-repair-control-copy">
           <p className="eyebrow">Your shop-owner brief</p>
-          <h2 id="auto-repair-control-title">See where repair revenue and customer trust may be slipping.</h2>
+          <h2 id="auto-repair-control-title">See which customers are ready to return and what still needs a person.</h2>
           <p>
-            Grant shows what changed, what has already been handled, and which vehicles, customers, or decisions need a person. Routine activity stays out of the way.
+            Grant shows what changed, what has already been handled, and where repair revenue or customer trust may be slipping. Routine activity stays out of the way.
           </p>
           <div className="auto-repair-attention-list" aria-label="Shop owner attention areas">
             {attentionItems.map(item => <span key={item}>{item}</span>)}
@@ -80,15 +80,15 @@ export default function AutoRepairPageContent() {
           <div className="auto-repair-owner-header">
             <div>
               <span>Grant · Morning shop brief</span>
-              <h3>What needs attention before the bays fill up</h3>
+              <h3>Customers ready to return, appointments moving, and issues at risk</h3>
             </div>
             <strong>2 items now</strong>
           </div>
 
           <div className="auto-repair-owner-metrics">
-            <div><span>Repair opportunities</span><strong>6</strong></div>
-            <div><span>Waiting on approval</span><strong>3</strong></div>
-            <div><span>Declined work ready</span><strong>$1,840</strong></div>
+            <div><span>Deferred work recovered</span><strong>$1,840</strong></div>
+            <div><span>Maintenance visits scheduled</span><strong>4</strong></div>
+            <div><span>New repair opportunities</span><strong>6</strong></div>
           </div>
 
           <div className="auto-repair-owner-rows">
@@ -105,8 +105,8 @@ export default function AutoRepairPageContent() {
 
       <VerticalClosingCta
         eyebrow="See ARKON for auto repair"
-        title="See how your digital AI team protects repair opportunities without interrupting the shop."
-        body="We’ll walk through how Vera handles repair calls, Naya keeps customers updated and follows up on declined work, Marcus keeps vehicle context attached, and Grant shows the owner what needs attention."
+        title="See how personalized customer follow-up brings the right work back into the shop."
+        body="We’ll walk through how Naya uses customer and vehicle history to recover deferred work and schedule upcoming maintenance, how Vera handles new repair calls, how Marcus keeps the context attached, and how Grant shows the owner what needs attention."
         buttonLabel="Book an auto repair walkthrough"
       />
     </>
