@@ -23,13 +23,6 @@ const salonCards = [
   }
 ];
 
-const workflowSteps = [
-  ['A client reaches the salon', 'The request can arrive by phone, text, or the website while the staff is with clients.'],
-  ['Vera or Naya responds now', 'Vera handles the live call. Naya handles the message or follow-up. The client does not have to wait for the floor to slow down.'],
-  ['Marcus attaches the history', 'The digital team can use the client’s service history, preferences, prior conversations, and approved salon rules before taking the next step.'],
-  ['Grant keeps the owner informed', 'The owner sees what was booked, where the schedule has gaps, what is at risk, and what needs a decision.']
-];
-
 const ownerAttentionItems = [
   'Unfilled openings',
   'Unconfirmed appointments',
@@ -118,30 +111,6 @@ export default function SalonPageContent() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="section industry-workflow-section salon-workflow-section" aria-labelledby="salon-workflow-title">
-        <div className="salon-section-heading salon-workflow-heading">
-          <div>
-            <p className="eyebrow">How the team works together</p>
-            <h2 id="salon-workflow-title">The client gets an answer now. The salon keeps control.</h2>
-          </div>
-          <p>
-            The value is not a callback after the opportunity has cooled. The digital team responds in the moment, carries the right context forward, and brings staff in only when needed.
-          </p>
-        </div>
-
-        <div className="industry-workflow-list salon-workflow-list">
-          {workflowSteps.map(([title, copy], index) => (
-            <article className="industry-step salon-workflow-step is-visible" data-reveal key={title}>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <div>
-                <h3>{title}</h3>
-                <p>{copy}</p>
-              </div>
-            </article>
-          ))}
         </div>
       </section>
 
