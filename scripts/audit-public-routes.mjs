@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer } from 'vite';
 import { dirname, resolve } from 'node:path';
@@ -40,6 +41,14 @@ function installAuditWindow(route) {
     dispatchEvent() {},
     arkonConsent: { analytics: false, advertising: false }
   };
+}
+
+for (const route of businessRoutes) {
+  const legacyRouteFile = resolve(rootDir, 'public', route.slice(1), 'index.html');
+  assert(
+    !existsSync(legacyRouteFile),
+    `${route} has a legacy public index.html that will override the React application shell.`
+  );
 }
 
 const vite = await createServer({
