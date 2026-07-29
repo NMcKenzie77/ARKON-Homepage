@@ -7,8 +7,8 @@
     "node": ">=22"
   },
   "scripts": {
-    "dev": "node scripts/build-public-source.mjs && vite --host 0.0.0.0",
-    "build": "node scripts/build-public-source.mjs && node scripts/build-og-image.mjs && vite build",
+    "dev": "node scripts/build-public-source.mjs && node scripts/globalize-master-shell.mjs && vite --host 0.0.0.0",
+    "build": "node scripts/build-public-source.mjs && node scripts/globalize-master-shell.mjs && node scripts/build-og-image.mjs && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "start": "node --import ./src/legal-register.js server.js"
   },
