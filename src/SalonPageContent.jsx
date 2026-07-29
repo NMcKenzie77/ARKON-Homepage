@@ -1,5 +1,5 @@
+import VerticalClosingCta from './VerticalClosingCta.jsx';
 import './salon-page.css';
-import './salon-cta-compact.css';
 
 const salonCards = [
   {
@@ -104,16 +104,12 @@ export default function SalonPageContent() {
         </div>
       </section>
 
-      <section className="demo-cta industry-cta salon-closing-cta is-visible" data-reveal>
-        <div>
-          <p className="eyebrow">See ARKON for salons</p>
-          <h2>See how a digital AI team can protect bookings without pulling staff away from clients.</h2>
-          <p>
-            We’ll show how Vera answers calls, Naya handles messages and follow-up, Marcus keeps client context attached, and Grant surfaces bookings, schedule gaps, and decisions. From there, we can determine what makes sense for your salon.
-          </p>
-        </div>
-        <a className="primary-button" href="/#demo">Book a salon walkthrough</a>
-      </section>
+      <VerticalClosingCta
+        eyebrow="See ARKON for salons"
+        title="See how a digital AI team can protect bookings without pulling staff away from clients."
+        body="We’ll show how Vera answers calls, Naya handles messages and follow-up, Marcus keeps client context attached, and Grant surfaces bookings, schedule gaps, and decisions. From there, we can determine what makes sense for your salon."
+        buttonLabel="Book a salon walkthrough"
+      />
     </>
   );
 }
