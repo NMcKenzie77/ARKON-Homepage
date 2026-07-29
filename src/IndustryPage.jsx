@@ -84,9 +84,9 @@ export default function IndustryPage({ page, route }) {
     const realEstateBannerPage = {
       ...page,
       eyebrow: 'Real estate digital AI team',
-      title: 'Every inquiry answered while the lead is still interested.',
+      title: 'Answer new leads now. Re-engage the opportunities already in your database.',
       description:
-        'Vera answers calls live, Paige provides approved listing and property intelligence, Marcus keeps relationship context attached, and Grant shows the agent or team leader what needs attention.'
+        'Vera answers in the office’s name, Paige provides approved listing and property intelligence, Naya follows up with past buyers and sellers, Marcus keeps relationship context attached, and Grant shows which opportunities need an agent.'
     };
 
     return (
