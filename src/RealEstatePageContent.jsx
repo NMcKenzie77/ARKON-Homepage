@@ -1,41 +1,47 @@
 import './real-estate-page.css';
+import './real-estate-followup.css';
 
 const teamCards = [
   {
     number: '01',
-    title: 'Vera answers the call live.',
-    copy: 'Buyer questions, seller inquiries, showing requests, and new-lead calls are answered while the opportunity is still active.'
+    title: 'Vera answers in your office’s name.',
+    copy: 'Buyer questions, seller inquiries, showing requests, and new-lead calls begin with the brokerage, team, or agent greeting you approve.'
   },
   {
     number: '02',
+    title: 'Naya follows up with opportunities already in your database.',
+    copy: 'Past buyers, delayed sellers, open-house visitors, and leads that went quiet receive natural follow-up based on their history and timing.'
+  },
+  {
+    number: '03',
     title: 'Paige knows the property.',
     copy: 'Approved listing details, property facts, status, and showing context are available during the conversation instead of after a callback.'
   },
   {
-    number: '03',
+    number: '04',
     title: 'Marcus remembers the relationship.',
     copy: 'Prior conversations, representation status, property interests, seller timing, notes, and follow-up context stay attached.'
   },
   {
-    number: '04',
+    number: '05',
     title: 'Grant shows what can move a deal.',
-    copy: 'Qualified opportunities, showing requests, seller leads, stalled follow-up, and decisions appear in one useful view.'
+    copy: 'New inquiries, reactivated leads, showing requests, seller opportunities, stalled follow-up, and decisions appear in one useful view.'
   }
 ];
 
 const opportunityRows = [
+  ['Past buyer reactivated after five months', 'Areas and budget refreshed · lender reconnection needed', 'Reactivated'],
   ['Buyer requested Saturday at 10:30', '214 Oak Avenue · unrepresented buyer', 'Confirm showing'],
   ['Homeowner plans to sell in 60–90 days', 'Relocating · agent call requested today', 'Seller lead'],
-  ['Past client asked about a larger home', 'Prior buyer · financing question attached', 'Needs agent'],
   ['Open-house visitor requested disclosures', 'Documents sent · follow-up scheduled', 'Moving']
 ];
 
 const attentionItems = [
+  'Past leads ready to revisit',
   'Showing confirmations',
   'New seller opportunities',
   'Unrepresented buyers',
-  'Leads waiting on an agent',
-  'Follow-up at risk'
+  'Leads waiting on an agent'
 ];
 
 export default function RealEstatePageContent() {
@@ -45,10 +51,10 @@ export default function RealEstatePageContent() {
         <div className="real-estate-section-heading">
           <div>
             <p className="eyebrow">Meet your real estate digital AI team</p>
-            <h2 id="real-estate-team-title">Your digital team keeps opportunities moving while agents stay in showings, conversations, and negotiations.</h2>
+            <h2 id="real-estate-team-title">Your digital team answers new inquiries and keeps past opportunities from going silent.</h2>
           </div>
           <p>
-            Vera handles the live conversation. Paige supplies approved property intelligence. Marcus keeps the relationship history attached. Grant shows the agent or team leader what deserves attention next.
+            Vera handles live calls in the office’s name. Naya re-engages buyers and sellers already in the database. Paige supplies approved property intelligence. Marcus keeps the relationship history attached. Grant shows what deserves attention next.
           </p>
         </div>
 
@@ -66,7 +72,7 @@ export default function RealEstatePageContent() {
       <section className="section real-estate-opportunity-section" aria-labelledby="real-estate-opportunity-title">
         <div className="real-estate-opportunity-copy">
           <p className="eyebrow">Your opportunity brief</p>
-          <h2 id="real-estate-opportunity-title">See the leads, showings, and decisions that could move a deal forward.</h2>
+          <h2 id="real-estate-opportunity-title">See the new inquiries, reactivated leads, showings, and decisions that can move a deal.</h2>
           <p>
             Grant keeps the agent focused on revenue-producing opportunities and necessary decisions. Routine activity stays out of the way.
           </p>
@@ -80,15 +86,15 @@ export default function RealEstatePageContent() {
           <div className="real-estate-opportunity-header">
             <div>
               <span>Grant · Opportunity brief</span>
-              <h3>Today’s leads, showings, and decisions</h3>
+              <h3>Today’s inquiries, follow-up, and decisions</h3>
             </div>
-            <strong>1 needs you now</strong>
+            <strong>2 need an agent</strong>
           </div>
 
           <div className="real-estate-opportunity-metrics">
-            <div><span>Showing requests</span><strong>5</strong></div>
-            <div><span>Seller opportunities</span><strong>2</strong></div>
-            <div><span>Needs an agent</span><strong>1</strong></div>
+            <div><span>New inquiries</span><strong>8</strong></div>
+            <div><span>Past leads reactivated</span><strong>3</strong></div>
+            <div><span>Needs an agent</span><strong>2</strong></div>
           </div>
 
           <div className="real-estate-opportunity-rows">
@@ -106,9 +112,9 @@ export default function RealEstatePageContent() {
       <section className="demo-cta industry-cta real-estate-closing-cta is-visible" data-reveal>
         <div>
           <p className="eyebrow">See ARKON for real estate</p>
-          <h2>See how your digital team can answer, qualify, and organize the next opportunity.</h2>
+          <h2>See how your digital team answers new inquiries and reactivates past opportunities.</h2>
           <p>
-            We’ll show how Vera, Paige, Marcus, and Grant work together around buyer calls, seller inquiries, property questions, showing requests, and agent handoffs. From there, we can determine what makes sense for your business.
+            We’ll show how Vera, Naya, Paige, Marcus, and Grant work around personalized call answering, buyer and seller follow-up, property questions, showing requests, and agent handoffs. From there, we can determine what makes sense for your business.
           </p>
         </div>
         <a className="primary-button" href="/#demo">Book a real estate walkthrough</a>
