@@ -123,9 +123,9 @@ export default function IndustryPage({ page, route }) {
     const autoRepairBannerPage = {
       ...page,
       eyebrow: 'Auto repair digital AI team',
-      title: 'Stop losing repair work while everyone is busy working on cars.',
+      title: 'Bring customers back for the work their vehicles still need.',
       description:
-        'Vera answers repair calls live, Naya keeps customers updated and follows up on declined work, Marcus keeps customer and vehicle history attached, and Grant shows the owner what needs attention.'
+        'Naya uses each customer’s vehicle history, prior recommendations, estimates, timing, and communication preferences to recover deferred work and schedule upcoming maintenance. Vera answers new repair calls, Marcus keeps the history attached, and Grant shows the owner what needs attention.'
     };
 
     return (
