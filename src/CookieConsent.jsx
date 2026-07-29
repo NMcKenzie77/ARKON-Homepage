@@ -52,7 +52,6 @@ function saveChoice(choice) {
 }
 
 export default function CookieConsent() {
-  const [savedChoice, setSavedChoice] = useState(null);
   const [draftChoice, setDraftChoice] = useState(DEFAULT_CHOICE);
   const [showBanner, setShowBanner] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -60,7 +59,6 @@ export default function CookieConsent() {
   useEffect(() => {
     const existing = readSavedChoice();
     if (existing) {
-      setSavedChoice(existing);
       setDraftChoice(existing);
       applyChoice(existing);
     } else {
@@ -68,7 +66,7 @@ export default function CookieConsent() {
     }
 
     const openSettings = () => {
-      const latest = readSavedChoice() || savedChoice || DEFAULT_CHOICE;
+      const latest = readSavedChoice() || normalizeChoice(window.arkonConsent) || DEFAULT_CHOICE;
       setDraftChoice(latest);
       setShowSettings(true);
       setShowBanner(false);
@@ -80,7 +78,6 @@ export default function CookieConsent() {
 
   function commit(choice) {
     const saved = saveChoice(choice);
-    setSavedChoice(saved);
     setDraftChoice(saved);
     setShowBanner(false);
     setShowSettings(false);
@@ -102,7 +99,11 @@ export default function CookieConsent() {
             <button type="button" className="cookie-secondary" onClick={() => commit(DEFAULT_CHOICE)}>
               Reject nonessential
             </button>
-            <button type="button" className="cookie-secondary" onClick={() => setShowSettings(true)}>
+            <button type="button" className="cookie-secondary" onClick={() => {
+              setDraftChoice(readSavedChoice() || normalizeChoice(window.arkonConsent));
+              setShowSettings(true);
+              setShowBanner(false);
+            }}>
               Manage settings
             </button>
             <button type="button" className="cookie-primary" onClick={() => commit({ analytics: true, advertising: true })}>
