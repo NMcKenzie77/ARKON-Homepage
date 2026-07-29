@@ -27,7 +27,7 @@ const workflowSteps = [
   ['A client reaches the salon', 'The request can arrive by phone, text, or the website while the staff is with clients.'],
   ['Vera or Naya responds now', 'Vera handles the live call. Naya handles the message or follow-up. The client does not have to wait for the floor to slow down.'],
   ['Marcus attaches the history', 'The digital team can use the client’s service history, preferences, prior conversations, and approved salon rules before taking the next step.'],
-  ['Grant keeps the owner informed', 'The owner sees what was booked, what is waiting, and what requires a stylist, manager, or human decision.']
+  ['Grant keeps the owner informed', 'The owner sees what was booked, what was handled, and what requires a stylist, manager, or human decision.']
 ];
 
 const handoffItems = [
@@ -40,8 +40,8 @@ const handoffItems = [
 
 const ownerRows = [
   ['Jasmine R.', 'Rebooking conversation', 'Booked'],
-  ['Alicia M.', 'Asked about color correction', 'Needs staff'],
-  ['Brianna K.', 'Live call about extensions', 'Waiting'],
+  ['Alicia M.', 'Color correction question', 'Needs staff'],
+  ['Brianna K.', 'Live call about extensions', 'Handled'],
   ['Dana S.', 'Saturday appointment request', 'Booked']
 ];
 
@@ -83,10 +83,10 @@ export default function SalonPageContent() {
 
       <section className="section salon-control-section" aria-labelledby="salon-control-title">
         <div className="salon-control-copy">
-          <p className="eyebrow">The handoff matters</p>
-          <h2 id="salon-control-title">The digital team handles the repeatable work. Your staff keeps the judgment calls.</h2>
+          <p className="eyebrow">Control without interruption</p>
+          <h2 id="salon-control-title">Your digital team handles the routine. Your staff sees only what needs a decision.</h2>
           <p>
-            The salon defines what Vera and Naya may handle, what Marcus should remember, and what Grant should surface. Anything sensitive, unusual, or judgment-based moves to the appropriate person.
+            Vera and Naya keep approved calls and messages moving, Marcus keeps the client context attached, and Grant surfaces the few conversations that need a stylist or manager.
           </p>
 
           <div className="salon-handoff-list" aria-label="Examples of staff handoffs">
@@ -97,15 +97,15 @@ export default function SalonPageContent() {
         <div className="salon-owner-panel" aria-label="Example salon owner view">
           <div className="salon-owner-header">
             <div>
-              <span>Grant · Owner view</span>
-              <h3>What needs attention</h3>
+              <span>Grant · Owner brief</span>
+              <h3>What happened while you were with clients</h3>
             </div>
-            <strong>2 staff handoffs</strong>
+            <strong>2 need attention</strong>
           </div>
 
           <div className="salon-owner-metrics">
+            <div><span>Handled</span><strong>18</strong></div>
             <div><span>Booked</span><strong>7</strong></div>
-            <div><span>Waiting</span><strong>3</strong></div>
             <div><span>Needs staff</span><strong>2</strong></div>
           </div>
 
