@@ -21,6 +21,28 @@
   letter-spacing: -0.045em;
 }
 
+.salon-page .industry-hero {
+  min-height: auto;
+  padding-top: 132px;
+  padding-bottom: 72px;
+}
+
+.salon-page .industry-hero-inner {
+  padding-top: 28px;
+}
+
+.salon-page .industry-hero-inner h1 {
+  max-width: 860px;
+  font-size: clamp(1.9rem, 3.2vw, 3rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.salon-page .industry-hero-inner p:not(.eyebrow) {
+  max-width: 760px;
+  margin-top: 18px;
+}
+
 .salon-section-heading > p,
 .salon-control-copy > p {
   margin: 0;
@@ -226,6 +248,7 @@
   font-size: 0.7rem;
   font-style: normal;
   font-weight: 900;
+  white-space: nowrap;
 }
 
 .salon-owner-status-booked {
@@ -233,12 +256,13 @@
   background: rgba(130, 247, 202, 0.1);
 }
 
-.salon-owner-status-waiting {
+.salon-owner-status-needs-follow-up {
   color: var(--amber);
   background: rgba(255, 217, 138, 0.1);
 }
 
-.salon-owner-status-needs-staff {
+.salon-owner-status-manager-review,
+.salon-owner-status-at-risk {
   color: #ffd1dd;
   background: rgba(255, 128, 165, 0.11);
 }
@@ -303,12 +327,22 @@
 }
 
 @media (max-width: 780px) {
-  .salon-section-heading {
-    gap: 18px;
+  .salon-page .industry-hero {
+    padding-top: 108px;
+    padding-bottom: 52px;
   }
 
+  .salon-page .industry-hero-inner {
+    padding-top: 20px;
+  }
+
+  .salon-page .industry-hero-inner h1,
   #salon-capabilities-title {
     font-size: clamp(1.8rem, 8.5vw, 2.55rem);
+  }
+
+  .salon-section-heading {
+    gap: 18px;
   }
 
   .salon-control-section {
@@ -328,6 +362,15 @@
   .salon-owner-metrics,
   .salon-workflow-list {
     grid-template-columns: 1fr;
+  }
+
+  .salon-owner-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .salon-owner-status {
+    margin-left: 50px;
   }
 
   .salon-workflow-step {
