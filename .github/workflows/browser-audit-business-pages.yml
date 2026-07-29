@@ -1,0 +1,58 @@
+name: Browser audit business pages
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install application dependencies
+        run: npm install
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+
+      - name: Build application
+        run: npm run build
+
+      - name: Start application
+        run: |
+          PORT=3000 npm start > /tmp/arkon-server.log 2>&1 &
+          echo $! > /tmp/arkon-server.pid
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:3000/salons > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/arkon-server.log
+          exit 1
+
+      - name: Audit business pages in Chromium
+        run: node scripts/browser-audit-business-pages.mjs
+
+      - name: Show server log
+        if: always()
+        run: cat /tmp/arkon-server.log || true
+
+      - name: Upload audit screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: business-page-browser-audit
+          path: audit-output
+          if-no-files-found: warn
