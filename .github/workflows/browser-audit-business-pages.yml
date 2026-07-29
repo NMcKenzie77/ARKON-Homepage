@@ -42,7 +42,9 @@ jobs:
           cat /tmp/arkon-server.log
           exit 1
 
-      - name: Audit business pages in Chromium
+      - name: Audit deployed business pages in Chromium
+        env:
+          AUDIT_BASE_URL: https://www.arkonsysai.com
         run: node scripts/browser-audit-business-pages.mjs
 
       - name: Show server log
