@@ -3,6 +3,8 @@ import RealEstateCallDemo from './RealEstateCallDemo.jsx';
 import RealEstatePageContent from './RealEstatePageContent.jsx';
 import SalonConversationDemo from './SalonConversationDemo.jsx';
 import SalonPageContent from './SalonPageContent.jsx';
+import AutoRepairConversationDemo from './AutoRepairConversationDemo.jsx';
+import AutoRepairPageContent from './AutoRepairPageContent.jsx';
 import VerticalClosingCta from './VerticalClosingCta.jsx';
 import { industryPages } from './site-content.js';
 import { getRelatedPages } from './seo-structure.js';
@@ -113,6 +115,24 @@ export default function IndustryPage({ page, route }) {
         <PageBanner page={salonBannerPage} route={route} animate={false} />
         <SalonConversationDemo />
         <SalonPageContent />
+      </main>
+    );
+  }
+
+  if (route === '/garages') {
+    const autoRepairBannerPage = {
+      ...page,
+      eyebrow: 'Auto repair digital AI team',
+      title: 'Stop losing repair work while everyone is busy working on cars.',
+      description:
+        'Vera answers repair calls live, Naya keeps customers updated and follows up on declined work, Marcus keeps customer and vehicle history attached, and Grant shows the owner what needs attention.'
+    };
+
+    return (
+      <main className="industry-page auto-repair-page" data-business-route={route}>
+        <PageBanner page={autoRepairBannerPage} route={route} animate={false} />
+        <AutoRepairConversationDemo />
+        <AutoRepairPageContent />
       </main>
     );
   }
