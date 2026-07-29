@@ -28,6 +28,12 @@ function count(source, needle) {
   return source.split(needle).length - 1;
 }
 
+function countClass(source, className) {
+  const escaped = className.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(`class="[^"]*\\b${escaped}\\b[^"]*"`, 'g');
+  return (source.match(pattern) || []).length;
+}
+
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
@@ -109,9 +115,9 @@ try {
         const page = industryPages[route];
         assert(markup.includes(`data-business-route="${route}"`), `${pass}: ${route} did not select the business-page renderer.`);
         assert(markup.includes(page.title), `${pass}: ${route} did not render its own title.`);
-        assert(count(markup, 'class="industry-card is-visible"') === page.cards.length, `${pass}: ${route} business cards did not render completely.`);
-        assert(count(markup, 'class="industry-step is-visible"') === page.workflow.length, `${pass}: ${route} workflow did not render completely.`);
-        assert(count(markup, 'class="industry-faq is-visible"') === page.faq.length, `${pass}: ${route} FAQs did not render completely.`);
+        assert(countClass(markup, 'industry-card') === page.cards.length, `${pass}: ${route} business cards did not render completely.`);
+        assert(countClass(markup, 'industry-step') === page.workflow.length, `${pass}: ${route} workflow did not render completely.`);
+        assert(countClass(markup, 'industry-faq') === page.faq.length, `${pass}: ${route} FAQs did not render completely.`);
 
         const revealTags = markup.match(/<[^>]+data-reveal[^>]*>/g) || [];
         for (const tag of revealTags) {
