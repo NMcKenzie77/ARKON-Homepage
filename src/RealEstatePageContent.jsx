@@ -4,28 +4,28 @@ import './real-estate-followup.css';
 const teamCards = [
   {
     number: '01',
-    title: 'Vera answers in your office’s name.',
-    copy: 'Buyer questions, seller inquiries, showing requests, and new-lead calls begin with the greeting you approve. Vera can also capture the caller’s name, phone, email, timing, and reason for reaching out.'
+    title: 'Vera',
+    copy: 'Answers new calls and captures what the agent needs.'
   },
   {
     number: '02',
-    title: 'Naya follows up with opportunities already in your database.',
-    copy: 'Past buyers, delayed sellers, open-house visitors, and leads that went quiet receive natural follow-up based on their history. Naya can confirm whether their contact details, timing, and criteria are still current.'
+    title: 'Naya',
+    copy: 'Re-engages buyers and sellers, confirms what changed, and gives every conversation a proper close.'
   },
   {
     number: '03',
-    title: 'Paige knows the property.',
-    copy: 'Approved listing details, property facts, status, and showing context are available during the conversation instead of after a callback.'
+    title: 'Paige',
+    copy: 'Provides approved listing details and property information during the conversation.'
   },
   {
     number: '04',
-    title: 'Marcus remembers the relationship.',
-    copy: 'Contact details, prior conversations, representation status, property interests, seller timing, notes, and follow-up context stay attached.'
+    title: 'Marcus',
+    copy: 'Keeps every contact, conversation, property interest, and next step attached.'
   },
   {
     number: '05',
-    title: 'Grant shows what can move a deal.',
-    copy: 'New inquiries, reactivated leads, showing requests, seller opportunities, stalled follow-up, and decisions appear in one useful view.'
+    title: 'Grant',
+    copy: 'Shows the opportunities and decisions that need the agent’s attention.'
   }
 ];
 
@@ -51,10 +51,10 @@ export default function RealEstatePageContent() {
         <div className="real-estate-section-heading">
           <div>
             <p className="eyebrow">Meet your real estate digital AI team</p>
-            <h2 id="real-estate-team-title">Your digital team answers new inquiries and keeps past opportunities from going silent.</h2>
+            <h2 id="real-estate-team-title">Five specialized roles. One connected real estate operation.</h2>
           </div>
           <p>
-            Vera handles live calls and new contact intake in the office’s name. Naya re-engages buyers and sellers already in the database and confirms what has changed. Paige supplies approved property intelligence. Marcus keeps the complete relationship record attached. Grant shows what deserves attention next.
+            Each role has one clear job, while the contact history, property context, follow-up, and agent handoff stay connected.
           </p>
         </div>
 
