@@ -1,3 +1,5 @@
+import { businessIdentity } from './legal-content.js';
+
 export const RELATED_ROUTE_MAP = {
   '/real-estate': ['/professional-services', '/insurance', '/home-services'],
   '/insurance': ['/professional-services', '/real-estate', '/law-firms'],
@@ -70,9 +72,32 @@ export function buildStructuredData({ route, seo, industryPages, siteUrl }) {
   const organization = {
     '@type': 'Organization',
     '@id': organizationId,
-    name: 'ARKON Systems',
+    name: businessIdentity.brandName,
     url: `${siteUrl}/`,
-    description: 'ARKON Systems organizes repeatable calls, messages, follow-up, scheduling, records, handoffs, and owner visibility for service businesses.'
+    email: businessIdentity.businessEmail,
+    telephone: businessIdentity.phoneHref,
+    description: 'ARKON Systems organizes repeatable calls, messages, follow-up, scheduling, records, handoffs, and owner visibility for service businesses.',
+    areaServed: {
+      '@type': 'Country',
+      name: businessIdentity.country
+    },
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        contactType: 'sales',
+        email: businessIdentity.businessEmail,
+        telephone: businessIdentity.phoneHref,
+        areaServed: 'US',
+        availableLanguage: ['English']
+      },
+      {
+        '@type': 'ContactPoint',
+        contactType: 'privacy',
+        email: businessIdentity.privacyEmail,
+        areaServed: 'US',
+        availableLanguage: ['English']
+      }
+    ]
   };
   const website = {
     '@type': 'WebSite',
@@ -125,7 +150,7 @@ export function buildStructuredData({ route, seo, industryPages, siteUrl }) {
     });
   }
 
-  if (industryPage) {
+  if (industryPage && industryPage.pageType !== 'legal') {
     const serviceId = `${pageUrl}#service`;
     graph.push({
       '@type': 'Service',
@@ -141,12 +166,12 @@ export function buildStructuredData({ route, seo, industryPages, siteUrl }) {
       }
     });
     webpage.mainEntity = { '@id': serviceId };
+  }
 
-    const faq = faqSchema(industryPage, pageUrl);
-    if (faq) {
-      graph.push(faq);
-      webpage.hasPart = { '@id': faq['@id'] };
-    }
+  const faq = faqSchema(industryPage, pageUrl);
+  if (faq) {
+    graph.push(faq);
+    webpage.hasPart = { '@id': faq['@id'] };
   }
 
   return JSON.stringify({

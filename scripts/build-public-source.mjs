@@ -190,8 +190,8 @@ function buildPublicEntry() {
   source = replaceRequired(
     source,
     "import App from './App.jsx';",
-    "import App from './App.public.jsx';\nimport SiteFooter from './SiteFooter.jsx';",
-    'public App and footer imports'
+    "import App from './App.public.jsx';\nimport SiteFooter from './SiteFooter.jsx';\nimport LegalPage from './LegalPage.jsx';\nimport CookieConsent from './CookieConsent.jsx';\nimport './legal-register.js';",
+    'public App, legal page, footer, consent, and route imports'
   );
 
   source = removeSection(
@@ -224,9 +224,16 @@ function buildPublicEntry() {
 
   source = replaceRequired(
     source,
+    'const industryPage = industryPages[route];',
+    "const routePage = industryPages[route];\nconst legalPage = routePage?.pageType === 'legal' ? routePage : null;\nconst industryPage = routePage?.pageType === 'legal' ? null : routePage;",
+    'legal and industry route split'
+  );
+
+  source = replaceRequired(
+    source,
     "    {industryPage\n      ? <UnifiedIndustryPage page={industryPage} route={route} />\n      : <AppWithCleanup route={route} />}",
-    "    {industryPage\n      ? <UnifiedIndustryPage page={industryPage} route={route} />\n      : (\n        <>\n          <ClientSeoSync route={route} />\n          <App />\n        </>\n      )}",
-    'public route render block'
+    "    <>\n      {legalPage\n        ? (\n          <>\n            <ClientSeoSync route={route} />\n            <UnifiedHeader />\n            <LegalPage page={legalPage} />\n            <SiteFooter />\n          </>\n        )\n        : industryPage\n          ? <UnifiedIndustryPage page={industryPage} route={route} />\n          : (\n            <>\n              <ClientSeoSync route={route} />\n              <App />\n            </>\n          )}\n      <CookieConsent />\n    </>",
+    'public legal, industry, homepage, and consent render block'
   );
 
   if (/LegacyContactBannerRemover|BrandTextNormalizer|PublicRoleCopyCleanup|AppWithCleanup/.test(source)) {
@@ -239,6 +246,14 @@ function buildPublicEntry() {
 
   if (!source.includes('<SiteFooter />')) {
     throw new Error('Generated main.public.jsx is missing the shared site footer.');
+  }
+
+  if (!source.includes('<LegalPage page={legalPage} />') || !source.includes("import './legal-register.js';")) {
+    throw new Error('Generated main.public.jsx is missing registered legal routes.');
+  }
+
+  if (!source.includes('<CookieConsent />')) {
+    throw new Error('Generated main.public.jsx is missing cookie consent controls.');
   }
 
   writeFileSync(outputPath, source);

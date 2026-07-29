@@ -10,7 +10,7 @@
     "dev": "node scripts/build-public-source.mjs && vite --host 0.0.0.0",
     "build": "node scripts/build-public-source.mjs && node scripts/build-og-image.mjs && vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "start": "node server.js"
+    "start": "node --import ./src/legal-register.js server.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

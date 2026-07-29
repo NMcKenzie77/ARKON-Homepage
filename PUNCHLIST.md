@@ -1,13 +1,16 @@
 # ARKON Website Punchlist
 
-## Deferred privacy and consent work
+## Privacy, legal, and advertising readiness
 
-- [ ] Confirm the exact legal entity operating ARKON Systems.
-- [ ] Use `privacy@arkonsysai.com` as the public privacy and data-request contact.
-- [ ] Add a Privacy & Cookies page.
-- [ ] Add a cookie-consent banner with Accept, Reject nonessential, and Manage settings.
-- [ ] Add Google Consent Mode v2 and keep analytics storage denied until consent where required.
-- [ ] Add permanent Privacy & Cookies and Cookie settings links in the footer.
+- [ ] Confirm the exact legal entity operating ARKON Systems and the public mailing address to use for advertiser verification and legal notices.
+- [x] Use `privacy@arkonsysai.com` as the public privacy and data-request contact.
+- [x] Add dedicated Privacy & Cookies, Terms of Use, Data Security, and Contact pages.
+- [x] Add a cookie-consent banner with Accept all, Reject nonessential, and Manage settings.
+- [x] Add Google Consent Mode v2 with analytics and advertising storage denied by default.
+- [x] Add permanent legal, privacy, Cookie settings, and Your privacy choices links in the footer.
+- [x] Add explicit request-specific contact consent to the demo form and record the consent timestamp and policy version in the lead email.
+- [ ] Complete Google Ads advertiser verification using the exact legal or registered business name supported by business documents.
+- [ ] Configure any future Meta Pixel or Google Ads conversion tag to load only when the visitor grants advertising consent.
 
 ## SEO and launch cleanup
 
