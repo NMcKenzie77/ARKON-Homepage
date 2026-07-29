@@ -3,31 +3,31 @@ import './salon-page.css';
 const salonCards = [
   {
     number: '01',
-    title: 'Missed calls become conversations.',
-    copy: 'When the team cannot answer, Naya can text back, find out what the client needs, and keep the booking from disappearing.'
+    title: 'Vera answers the phone live.',
+    copy: 'When the salon is busy, Vera can answer the call, understand what the client needs, handle approved booking questions, and keep the opportunity moving while the client is still on the phone.'
   },
   {
     number: '02',
-    title: 'Booking questions get answered.',
-    copy: 'Services, timing, approved policies, stylist preferences, and open appointment windows stay available without interrupting the floor.'
+    title: 'Naya keeps messages and follow-up moving.',
+    copy: 'Naya handles texts, reminders, rebooking outreach, appointment follow-up, and routine client questions in the salon’s voice.'
   },
   {
     number: '03',
-    title: 'Past clients get a natural nudge.',
-    copy: 'Naya can reach out based on service history and the salon’s rebooking rhythm instead of sending a generic blast.'
+    title: 'Marcus remembers the client.',
+    copy: 'Service history, stylist preferences, notes, prior conversations, and follow-up context stay attached instead of living in someone’s memory.'
   },
   {
     number: '04',
-    title: 'Staff only see what needs judgment.',
-    copy: 'Color corrections, complaints, pricing exceptions, and sensitive requests arrive as clean handoffs with the conversation attached.'
+    title: 'Grant shows the owner what matters.',
+    copy: 'Booked appointments, waiting clients, open conversations, and staff handoffs appear in one clear owner view.'
   }
 ];
 
 const workflowSteps = [
-  ['Client reaches out', 'A call, text, or online request comes in while the team is with clients.'],
-  ['Naya checks the rules', 'She uses the salon’s services, timing, staff preferences, approved language, and available appointment windows.'],
-  ['The next step happens', 'Naya books, reschedules, follows up, or asks one clear question to keep the conversation moving.'],
-  ['The team stays in control', 'Anything unusual is handed to the right person with the client history and current request already organized.']
+  ['A client reaches the salon', 'The request can arrive by phone, text, or the website while the staff is with clients.'],
+  ['Vera or Naya responds now', 'Vera handles the live call. Naya handles the message or follow-up. The client does not have to wait for the floor to slow down.'],
+  ['Marcus attaches the history', 'The digital team can use the client’s service history, preferences, prior conversations, and approved salon rules before taking the next step.'],
+  ['Grant keeps the owner informed', 'The owner sees what was booked, what is waiting, and what requires a stylist, manager, or human decision.']
 ];
 
 const handoffItems = [
@@ -41,18 +41,18 @@ const handoffItems = [
 const ownerRows = [
   ['Jasmine R.', 'Rebooking conversation', 'Booked'],
   ['Alicia M.', 'Asked about color correction', 'Needs staff'],
-  ['Brianna K.', 'Missed-call follow-up', 'Waiting'],
+  ['Brianna K.', 'Live call about extensions', 'Waiting'],
   ['Dana S.', 'Saturday appointment request', 'Booked']
 ];
 
 const salonFaq = [
   [
-    'Will clients know Naya is the virtual front desk?',
-    'Yes. The salon decides how Naya is introduced, but she should never pretend to be a human employee. She can still sound natural, use the salon’s voice, and feel like part of the team.'
+    'Is this one salon bot or a digital AI team?',
+    'It is a coordinated digital AI team. Vera handles live calls, Naya handles messaging and follow-up, Marcus keeps client context attached, and Grant gives the owner visibility. Each role stays in its lane and works from the salon’s rules.'
   ],
   [
-    'What happens when a client asks something Naya should not answer?',
-    'Naya stops, captures what the client needs, and sends the conversation to the right person. She does not guess about pricing, corrections, complaints, or anything the salon marks for human review.'
+    'What happens when the digital team should not answer?',
+    'The request is handed to the right person with the conversation and client context already organized. The team does not guess about color corrections, unusual pricing, complaints, refunds, or anything the salon marks for human judgment.'
   ]
 ];
 
@@ -62,11 +62,11 @@ export default function SalonPageContent() {
       <section className="section salon-capabilities-section" aria-labelledby="salon-capabilities-title">
         <div className="salon-section-heading">
           <div>
-            <p className="eyebrow">What Naya handles</p>
-            <h2 id="salon-capabilities-title">Front-desk work should keep moving even when every chair is full.</h2>
+            <p className="eyebrow">Meet the digital AI team</p>
+            <h2 id="salon-capabilities-title">Four named roles keep the front desk moving while your staff stays with clients.</h2>
           </div>
           <p>
-            Naya is not there to replace the salon team. She keeps the repeatable conversations moving so clients get an answer and staff can stay focused on the person in the chair.
+            Naya is the member clients see in the message demo above. Behind her, Vera, Marcus, and Grant keep calls, client context, handoffs, and owner visibility connected.
           </p>
         </div>
 
@@ -84,9 +84,9 @@ export default function SalonPageContent() {
       <section className="section salon-control-section" aria-labelledby="salon-control-title">
         <div className="salon-control-copy">
           <p className="eyebrow">The handoff matters</p>
-          <h2 id="salon-control-title">Naya knows when the conversation belongs to your team.</h2>
+          <h2 id="salon-control-title">The digital team handles the repeatable work. Your staff keeps the judgment calls.</h2>
           <p>
-            The salon defines the boundaries. Naya handles the approved, repeatable work and moves anything sensitive, unusual, or judgment-based to the right person.
+            The salon defines what Vera and Naya may handle, what Marcus should remember, and what Grant should surface. Anything sensitive, unusual, or judgment-based moves to the appropriate person.
           </p>
 
           <div className="salon-handoff-list" aria-label="Examples of staff handoffs">
@@ -97,7 +97,7 @@ export default function SalonPageContent() {
         <div className="salon-owner-panel" aria-label="Example salon owner view">
           <div className="salon-owner-header">
             <div>
-              <span>Today</span>
+              <span>Grant · Owner view</span>
               <h3>What needs attention</h3>
             </div>
             <strong>2 staff handoffs</strong>
@@ -124,11 +124,11 @@ export default function SalonPageContent() {
       <section className="section industry-workflow-section salon-workflow-section" aria-labelledby="salon-workflow-title">
         <div className="salon-section-heading salon-workflow-heading">
           <div>
-            <p className="eyebrow">How a request moves</p>
-            <h2 id="salon-workflow-title">A client gets an answer. The team keeps control.</h2>
+            <p className="eyebrow">How the team works together</p>
+            <h2 id="salon-workflow-title">The client gets an answer now. The salon keeps control.</h2>
           </div>
           <p>
-            The useful part is not just replying quickly. It is knowing what to say, what to check, what to record, and when to bring a person in.
+            The value is not a callback after the opportunity has cooled. The digital team responds in the moment, carries the right context forward, and brings staff in only when needed.
           </p>
         </div>
 
@@ -149,10 +149,10 @@ export default function SalonPageContent() {
         <div className="salon-section-heading">
           <div>
             <p className="eyebrow">Questions salon owners ask</p>
-            <h2 id="salon-faq-title">Natural with clients. Controlled by the salon.</h2>
+            <h2 id="salon-faq-title">A digital AI team with clear roles and clear boundaries.</h2>
           </div>
           <p>
-            Naya can feel like part of the front desk without hiding what she is or crossing the boundaries the salon sets.
+            The names make each responsibility easy to understand. The salon still decides the voice, rules, availability, permissions, and human handoffs.
           </p>
         </div>
 
@@ -168,10 +168,10 @@ export default function SalonPageContent() {
 
       <section className="demo-cta industry-cta salon-closing-cta is-visible" data-reveal>
         <div>
-          <p className="eyebrow">See Naya in your salon</p>
-          <h2>Walk through the booking and follow-up rules your team already uses.</h2>
+          <p className="eyebrow">See the digital AI team in your salon</p>
+          <h2>Walk through how Vera, Naya, Marcus, and Grant would work around your front desk.</h2>
           <p>
-            We will map missed calls, booking requests, rebooking, reminders, staff handoffs, and the owner view around the way your salon actually works.
+            We will map live calls, booking requests, client messages, rebooking, reminders, staff handoffs, and the owner view around the way your salon already operates.
           </p>
         </div>
         <a className="primary-button" href="/#demo">Request demo</a>
