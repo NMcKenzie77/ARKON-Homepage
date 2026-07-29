@@ -1,5 +1,6 @@
 import { solutions } from './data.js';
 import './site-footer.css';
+import './legal-footer.css';
 
 const platformLinks = [
   { label: 'Home', href: '/' },
@@ -9,6 +10,17 @@ const platformLinks = [
   { label: 'Your voice', href: '/#voice' },
   { label: 'Book a demo', href: '/#demo' }
 ];
+
+const legalLinks = [
+  { label: 'Privacy & Cookies', href: '/privacy' },
+  { label: 'Terms of Use', href: '/terms' },
+  { label: 'Data Security', href: '/data-security' },
+  { label: 'Contact', href: '/contact' }
+];
+
+function openCookieSettings() {
+  window.dispatchEvent(new CustomEvent('arkon:open-cookie-settings'));
+}
 
 export default function SiteFooter() {
   const year = new Date().getFullYear();
@@ -45,7 +57,7 @@ export default function SiteFooter() {
           </div>
         </section>
 
-        <div className="footer-navigation-grid">
+        <div className="footer-navigation-grid footer-navigation-grid-legal">
           <nav className="footer-link-group" aria-label="Footer platform navigation">
             <h2>Platform</h2>
             {platformLinks.map(link => (
@@ -66,6 +78,13 @@ export default function SiteFooter() {
             </div>
           </section>
 
+          <nav className="footer-link-group footer-legal-links" aria-label="Legal and privacy navigation">
+            <h2>Legal & privacy</h2>
+            {legalLinks.map(link => <a href={link.href} key={link.href}>{link.label}</a>)}
+            <button type="button" className="footer-text-button" onClick={openCookieSettings}>Cookie settings</button>
+            <button type="button" className="footer-text-button" onClick={openCookieSettings}>Your privacy choices</button>
+          </nav>
+
           <section className="footer-control">
             <h2>Built around control</h2>
             <p>
@@ -79,8 +98,8 @@ export default function SiteFooter() {
         <div className="footer-bottom">
           <p>© {year} ARKON Systems. All rights reserved.</p>
           <p>
-            Implementation is based on each business’s systems, permissions, communication standards,
-            and escalation rules.
+            ARKON Systems is the public business name used on this website. The legal contracting entity is identified in proposals,
+            order forms, agreements, and invoices. Implementation depends on each business’s systems, permissions, and escalation rules.
           </p>
         </div>
       </div>
