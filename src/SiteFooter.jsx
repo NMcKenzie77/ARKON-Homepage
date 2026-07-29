@@ -28,7 +28,7 @@ export default function SiteFooter() {
   const solutionColumns = [solutions.slice(0, midpoint), solutions.slice(midpoint)];
 
   return (
-    <footer className="site-footer site-footer-complete">
+    <footer className="site-footer-complete" data-master-footer="true">
       <div className="site-footer-inner">
         <section className="footer-cta-band" aria-label="ARKON Systems overview">
           <div className="footer-brand-copy">
