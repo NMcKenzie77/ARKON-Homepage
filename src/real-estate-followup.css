@@ -46,6 +46,71 @@
   justify-self: center;
 }
 
+.real-estate-supporting-roles {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.76fr) minmax(0, 1.24fr);
+  gap: 28px;
+  align-items: start;
+  margin-top: 28px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 92% 8%, rgba(103, 216, 255, 0.09), transparent 20rem),
+    linear-gradient(180deg, rgba(15, 26, 47, 0.72), rgba(8, 15, 29, 0.62));
+}
+
+.real-estate-supporting-roles-copy h3 {
+  max-width: 420px;
+  margin: 0;
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.real-estate-supporting-roles-copy > p:not(.eyebrow) {
+  max-width: 480px;
+  margin: 14px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.real-estate-supporting-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.real-estate-supporting-card {
+  min-height: 185px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.real-estate-supporting-card > span {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--mint);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.real-estate-supporting-card h3 {
+  margin: 0 0 9px;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  letter-spacing: -0.03em;
+}
+
+.real-estate-supporting-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
 .real-estate-status-reactivated {
   color: var(--blue);
   background: rgba(103, 216, 255, 0.11);
@@ -96,8 +161,15 @@
   font-weight: 750;
 }
 
+@media (max-width: 900px) {
+  .real-estate-supporting-roles {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 780px) {
-  .real-estate-team-grid {
+  .real-estate-team-grid,
+  .real-estate-supporting-grid {
     grid-template-columns: 1fr;
   }
 
@@ -105,6 +177,10 @@
     grid-column: auto;
     width: 100%;
     justify-self: stretch;
+  }
+
+  .real-estate-supporting-roles {
+    padding: 20px;
   }
 }
 
