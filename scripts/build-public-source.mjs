@@ -24,11 +24,6 @@ function replaceRequired(source, from, to, label) {
   return source.replace(from, to);
 }
 
-function replaceAllRequired(source, from, to, label) {
-  if (!source.includes(from)) throw new Error(`Could not find ${label}.`);
-  return source.replaceAll(from, to);
-}
-
 function buildPublicApp() {
   const inputPath = resolve(srcDir, 'App.jsx');
   const outputPath = resolve(srcDir, 'App.public.jsx');
@@ -92,11 +87,9 @@ function buildPublicApp() {
   source = replaceRequired(source, '      <Header />\n', '', 'homepage header render');
   source = replaceRequired(source, '      <Footer />\n', '', 'homepage footer render');
 
-  source = replaceAllRequired(
-    source,
+  source = source.replaceAll(
     '<span className="brand-mark">A</span>',
-    '<span className="brand-mark" aria-hidden="true" />',
-    'legacy brand-mark text'
+    '<span className="brand-mark" aria-hidden="true" />'
   );
 
   source = replaceRequired(
