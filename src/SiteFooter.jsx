@@ -22,45 +22,40 @@ function openCookieSettings() {
   window.dispatchEvent(new CustomEvent('arkon:open-cookie-settings'));
 }
 
-export default function SiteFooter({ showCta = true }) {
+export default function SiteFooter() {
   const year = new Date().getFullYear();
   const midpoint = Math.ceil(solutions.length / 2);
   const solutionColumns = [solutions.slice(0, midpoint), solutions.slice(midpoint)];
-  const footerClassName = showCta
-    ? 'site-footer-complete'
-    : 'site-footer-complete site-footer-no-cta';
 
   return (
-    <footer className={footerClassName} data-master-footer="true">
+    <footer className="site-footer-complete" data-master-footer="true">
       <div className="site-footer-inner">
-        {showCta ? (
-          <section className="footer-cta-band" aria-label="ARKON Systems overview">
-            <div className="footer-brand-copy">
-              <a className="brand footer-brand" href="/" aria-label="ARKON Systems home">
-                <span className="brand-mark" aria-hidden="true" />
-                <span>
-                  <strong>ARKON</strong>
-                  <small>Systems</small>
-                </span>
-              </a>
-              <p>
-                Calls, messages, follow-up, scheduling, records, and handoffs kept moving around your existing team.
-              </p>
-            </div>
+        <section className="footer-cta-band" aria-label="ARKON Systems overview">
+          <div className="footer-brand-copy">
+            <a className="brand footer-brand" href="/" aria-label="ARKON Systems home">
+              <span className="brand-mark" aria-hidden="true" />
+              <span>
+                <strong>ARKON</strong>
+                <small>Systems</small>
+              </span>
+            </a>
+            <p>
+              Calls, messages, follow-up, scheduling, records, and handoffs kept moving around your existing team.
+            </p>
+          </div>
 
-            <div className="footer-proof" aria-label="ARKON operating principles">
-              <span>Business rules first</span>
-              <span>Human handoffs preserved</span>
-              <span>Owner visibility built in</span>
-            </div>
+          <div className="footer-proof" aria-label="ARKON operating principles">
+            <span>Business rules first</span>
+            <span>Human handoffs preserved</span>
+            <span>Owner visibility built in</span>
+          </div>
 
-            <div className="footer-cta-copy">
-              <p className="footer-kicker">See it in your business</p>
-              <strong>Walk through a real workflow.</strong>
-              <a className="primary-button footer-button" href="/#demo">Book a demo</a>
-            </div>
-          </section>
-        ) : null}
+          <div className="footer-cta-copy">
+            <p className="footer-kicker">See it in your business</p>
+            <strong>Walk through a real workflow.</strong>
+            <a className="primary-button footer-button" href="/#demo">Book a demo</a>
+          </div>
+        </section>
 
         <div className="footer-navigation-grid footer-navigation-grid-legal">
           <nav className="footer-link-group" aria-label="Footer platform navigation">
