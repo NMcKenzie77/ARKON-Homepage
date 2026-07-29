@@ -105,13 +105,13 @@ export default function SalonPageContent() {
 
       <section className="demo-cta industry-cta salon-closing-cta is-visible" data-reveal>
         <div>
-          <p className="eyebrow">Build the version for your salon</p>
-          <h2>Show us how your salon runs. We’ll map exactly where your digital team steps in.</h2>
+          <p className="eyebrow">See ARKON for salons</p>
+          <h2>See how a digital AI team can protect bookings without pulling staff away from clients.</h2>
           <p>
-            We review your calls, booking rules, rebooking rhythm, schedule gaps, and owner decisions. You leave knowing how calls get answered, bookings stay moving, and only the right decisions reach your staff.
+            We’ll show how Vera answers calls, Naya handles messages and follow-up, Marcus keeps client context attached, and Grant surfaces bookings, schedule gaps, and decisions. From there, we can determine what makes sense for your salon.
           </p>
         </div>
-        <a className="primary-button" href="/#demo">Map my salon workflow</a>
+        <a className="primary-button" href="/#demo">See the salon demo</a>
       </section>
     </>
   );
