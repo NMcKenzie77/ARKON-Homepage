@@ -1,30 +1,36 @@
 import './real-estate-page.css';
 import './real-estate-followup.css';
+import './real-estate-home-team-cards.css';
 
 const teamCards = [
   {
-    number: '01',
-    title: 'Vera',
-    copy: 'Answers new calls and captures what the agent needs.'
+    name: 'Vera',
+    descriptor: 'Voice Enabled Reception Assistant',
+    role: 'Live call intake',
+    copy: 'Answers new calls in the office’s name and captures what the agent needs.'
   },
   {
-    number: '02',
-    title: 'Naya',
-    copy: 'Re-engages buyers and sellers, confirms what changed, and gives every conversation a proper close.'
+    name: 'Naya',
+    descriptor: 'Natural Automated Your-voice Assistant',
+    role: 'Buyer and seller follow-up',
+    copy: 'Re-engages opportunities, confirms what changed, and gives every conversation a proper close.'
   },
   {
-    number: '03',
-    title: 'Paige',
+    name: 'Paige',
+    descriptor: 'Approved property and listing intelligence',
+    role: 'Property context',
     copy: 'Provides approved listing details and property information during the conversation.'
   },
   {
-    number: '04',
-    title: 'Marcus',
+    name: 'Marcus',
+    descriptor: 'Managed Accounts, Relationship & Contact Update System',
+    role: 'CRM and relationship memory',
     copy: 'Keeps every contact, conversation, property interest, and next step attached.'
   },
   {
-    number: '05',
-    title: 'Grant',
+    name: 'Grant',
+    descriptor: 'Guidance, Reports & Analytical Network for Trends',
+    role: 'Opportunity intelligence',
     copy: 'Shows the opportunities and decisions that need the agent’s attention.'
   }
 ];
@@ -58,11 +64,12 @@ export default function RealEstatePageContent() {
           </p>
         </div>
 
-        <div className="industry-card-grid real-estate-team-grid">
+        <div className="coverage-grid real-estate-home-team-grid">
           {teamCards.map(card => (
-            <article className="industry-card real-estate-team-card is-visible" data-reveal key={card.number}>
-              <span>{card.number}</span>
-              <h3>{card.title}</h3>
+            <article className="coverage-card real-estate-home-team-card is-visible" data-reveal key={card.name}>
+              <h3>{card.name}</h3>
+              <small className="real-estate-team-descriptor">{card.descriptor}</small>
+              <span className="role-badge">{card.role}</span>
               <p>{card.copy}</p>
             </article>
           ))}
