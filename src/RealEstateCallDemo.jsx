@@ -9,13 +9,13 @@ const scenarios = {
     eyebrow: 'Naya follows up · Marcus supplies the history',
     title: 'Past opportunities should not disappear because nobody followed up.',
     description:
-      'Naya reaches out in the office’s name, uses the prior conversation and property interests, and finds out whether the buyer or seller is ready to move again.',
+      'Naya reaches out to Danielle in the office’s name, uses the prior conversation and property interests, confirms the contact record, and finds out whether she is ready to move again.',
     consoleLabel: 'Proactive database follow-up',
     consoleAgent: `Naya · ${EXAMPLE_OFFICE}`,
     replayLabel: 'Replay follow-up',
     proof: [
-      'Uses the office name and voice',
-      'Uses prior lead context',
+      'Uses Danielle’s prior history',
+      'Confirms contact information',
       'Refreshes timing and criteria',
       'Prepares the agent handoff'
     ],
@@ -26,34 +26,41 @@ const scenarios = {
       facts: ['Maplewood + South Orange', 'Up to $650,000', 'Financing paused'],
       context: 'Last meaningful conversation: five months ago'
     },
+    contact: {
+      label: 'Contact record confirmed',
+      name: 'Danielle Brooks',
+      phone: '(973) 555-0148',
+      email: 'danielle.brooks@example.com',
+      preference: 'Text preferred'
+    },
     messages: [
       {
         speaker: 'Naya',
         text: 'Hi Danielle, it’s Naya with Oak & Main Realty. You were looking in Maplewood and South Orange earlier this year. Are you still hoping to move, or has your timing changed?',
         wait: 900
       },
-      { speaker: 'Lead', text: 'We paused for a while, but we’re looking again.', wait: 850 },
+      { speaker: 'Danielle', text: 'We paused for a while, but we’re looking again.', wait: 850 },
       {
         speaker: 'Naya',
         text: 'Good to know. Are those still the right areas, and is your budget still around $650,000?',
         wait: 950
       },
-      { speaker: 'Lead', text: 'Yes. We just need to reconnect with a lender.', wait: 850 },
+      { speaker: 'Danielle', text: 'Yes. We just need to reconnect with a lender.', wait: 850 },
       {
         speaker: 'Marcus',
-        text: 'Previous neighborhoods, budget, financing stage, property preferences, and last conversation attached.',
+        text: 'Danielle’s previous neighborhoods, budget, financing stage, property preferences, and last conversation are attached.',
         wait: 850,
         intelligence: true
       },
       {
         speaker: 'Naya',
-        text: 'I’ll have the agent send a few current options and help reconnect you with the lender. Is text still the best way to reach you?',
+        text: 'I still have your mobile ending in 0148 and danielle.brooks@example.com. Are those both correct, and is text still best?',
         wait: 1000
       },
-      { speaker: 'Lead', text: 'Yes, text is perfect.', wait: 700 },
+      { speaker: 'Danielle', text: 'Yes, both are right. Text is best.', wait: 700 },
       {
         speaker: 'ARKON',
-        text: 'Past buyer reactivated · Search criteria refreshed · Agent follow-up ready',
+        text: 'Danielle Brooks reactivated · Contact record confirmed · Search criteria refreshed · Agent follow-up ready',
         wait: 900,
         outcome: true
       }
@@ -64,13 +71,13 @@ const scenarios = {
     eyebrow: 'Vera answers in the office’s name · Paige checks the property',
     title: 'The buyer gets a personal answer before they call the next agent.',
     description:
-      'The greeting, office name, tone, and approved questions are configured for the brokerage, team, or agent. Paige supplies approved listing details while Vera keeps the call moving.',
+      'The greeting, office name, tone, and approved questions are configured for the brokerage, team, or agent. Vera captures the buyer’s contact details while Paige supplies approved listing information.',
     consoleLabel: 'Live inbound call',
     consoleAgent: `Vera · ${EXAMPLE_OFFICE}`,
     replayLabel: 'Replay call',
     proof: [
       'Uses the office name and voice',
-      'Answers live',
+      'Captures contact information',
       'Checks approved property data',
       'Qualifies the opportunity'
     ],
@@ -80,6 +87,13 @@ const scenarios = {
       status: 'Active',
       facts: ['3 beds', '2 baths', '$485,000'],
       context: 'Saturday showing requested'
+    },
+    contact: {
+      label: 'Contact captured during call',
+      name: 'Daniel Reyes',
+      phone: '(973) 555-0162',
+      email: 'daniel.reyes@example.com',
+      preference: 'Call or text'
     },
     messages: [
       {
@@ -91,9 +105,11 @@ const scenarios = {
       { speaker: 'Paige', text: 'Listing matched · Active · 3 beds · 2 baths · $485,000', wait: 850, intelligence: true },
       { speaker: 'Vera', text: 'Yes, it is currently active. Are you already working with an agent?', wait: 950 },
       { speaker: 'Caller', text: 'No. Could I see it Saturday morning?', wait: 850 },
-      { speaker: 'Vera', text: 'Absolutely. I can take your preferred time and have the agent confirm the showing. Would 10:30 work?', wait: 1050 },
-      { speaker: 'Caller', text: 'Yes, that works.', wait: 700 },
-      { speaker: 'ARKON', text: 'Qualified buyer opportunity · Saturday 10:30 requested · Agent confirmation needed', wait: 900, outcome: true }
+      { speaker: 'Vera', text: 'Absolutely. May I get your name and email while I prepare the showing request?', wait: 950 },
+      { speaker: 'Caller', text: 'Daniel Reyes. daniel.reyes@example.com. This number is best.', wait: 850 },
+      { speaker: 'Vera', text: 'Thank you, Daniel. Would 10:30 Saturday work?', wait: 900 },
+      { speaker: 'Daniel', text: 'Yes, that works.', wait: 700 },
+      { speaker: 'ARKON', text: 'Qualified buyer opportunity · Contact captured · Saturday 10:30 requested · Agent confirmation needed', wait: 900, outcome: true }
     ]
   },
   seller: {
@@ -101,13 +117,13 @@ const scenarios = {
     eyebrow: 'Vera answers personally · Marcus keeps the context',
     title: 'A potential listing becomes an organized seller opportunity.',
     description:
-      'The homeowner hears the office’s greeting immediately, the timing and property basics are captured, and the agent receives a useful handoff instead of a voicemail.',
+      'The homeowner hears the office’s greeting immediately. Vera captures the contact details, timing, and property basics so the agent receives a useful handoff instead of a voicemail.',
     consoleLabel: 'Live inbound call',
     consoleAgent: `Vera · ${EXAMPLE_OFFICE}`,
     replayLabel: 'Replay call',
     proof: [
       'Uses the office name and voice',
-      'Answers live',
+      'Captures contact information',
       'Captures seller timing',
       'Prepares the agent handoff'
     ],
@@ -118,6 +134,13 @@ const scenarios = {
       facts: ['4 bedrooms', 'Relocating', '60–90 days'],
       context: 'Agent call requested today'
     },
+    contact: {
+      label: 'Contact captured during call',
+      name: 'Laura Kim',
+      phone: '(908) 555-0127',
+      email: 'laura.kim@example.com',
+      preference: 'Call preferred'
+    },
     messages: [
       {
         speaker: 'Vera',
@@ -127,16 +150,16 @@ const scenarios = {
       { speaker: 'Caller', text: 'I may need to sell my home in the next couple of months. I’m relocating for work.', wait: 700 },
       { speaker: 'Vera', text: 'I can help get the right information to the agent. Is the property already listed with anyone?', wait: 950 },
       { speaker: 'Caller', text: 'No. I have not spoken with an agent yet.', wait: 800 },
-      { speaker: 'Vera', text: 'Understood. About when are you hoping to move, and what is the best number for the agent to reach you?', wait: 1000 },
-      { speaker: 'Caller', text: 'Probably within 60 to 90 days. This number is best.', wait: 850 },
-      { speaker: 'Marcus', text: 'Seller timing, relocation reason, property basics, and preferred contact attached.', wait: 850, intelligence: true },
-      { speaker: 'ARKON', text: 'New seller opportunity · Agent call requested today · Full context ready', wait: 900, outcome: true }
+      { speaker: 'Vera', text: 'Understood. About when are you hoping to move, and may I get your name and email for the agent?', wait: 1000 },
+      { speaker: 'Caller', text: 'Laura Kim, laura.kim@example.com. Probably within 60 to 90 days. This number is best.', wait: 900 },
+      { speaker: 'Marcus', text: 'Laura’s contact details, seller timing, relocation reason, property basics, and preferred contact are attached.', wait: 850, intelligence: true },
+      { speaker: 'ARKON', text: 'New seller opportunity · Contact captured · Agent call requested today · Full context ready', wait: 900, outcome: true }
     ]
   }
 };
 
 function TranscriptItem({ item }) {
-  const isClient = item.speaker === 'Caller' || item.speaker === 'Lead';
+  const isClient = ['Caller', 'Lead', 'Danielle', 'Daniel'].includes(item.speaker);
   const classNames = [
     'real-estate-call-line',
     item.intelligence ? 'is-intelligence' : '',
@@ -254,6 +277,18 @@ export default function RealEstateCallDemo() {
             {scenario.property.facts.map(fact => <span key={fact}>{fact}</span>)}
           </div>
           <p>{scenario.property.context}</p>
+
+          <div className="real-estate-contact-record" aria-label={`${scenario.contact.label}: ${scenario.contact.name}, ${scenario.contact.phone}, ${scenario.contact.email}, ${scenario.contact.preference}`}>
+            <div>
+              <span>{scenario.contact.label}</span>
+              <strong>{scenario.contact.name}</strong>
+            </div>
+            <div className="real-estate-contact-details">
+              <span>{scenario.contact.phone}</span>
+              <span>{scenario.contact.email}</span>
+              <span>{scenario.contact.preference}</span>
+            </div>
+          </div>
         </div>
 
         <div className="real-estate-call-transcript" ref={transcriptRef} aria-live="polite">
