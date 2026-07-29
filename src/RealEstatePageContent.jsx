@@ -101,16 +101,16 @@ export default function RealEstatePageContent() {
           <p className="eyebrow real-estate-grant-eyebrow">Your chief of staff</p>
           <h2 id="real-estate-grant-title">Grant is your chief of staff, available 24/7.</h2>
           <p>
-            Grant brings the work from Marcus, Caleb, Naya, Vera, and Paige into one organized view. You can see the pipeline, showings, opportunities, and anything that needs your attention without carrying every detail yourself.
+            Grant does more than organize a dashboard. Before the day starts, he actively briefs you on where the business stands, what needs attention, who is moving, who has gone quiet, and where the team may need help. The dashboard stays underneath when you want to inspect the details.
           </p>
-          <div className="real-estate-grant-points" aria-label="Grant visibility areas">
-            <span>Pipeline visibility</span>
-            <span>Showing activity</span>
-            <span>Opportunity awareness</span>
+          <div className="real-estate-grant-points" aria-label="Grant briefing and visibility areas">
+            <span>Morning command briefing</span>
+            <span>Spoken readout</span>
+            <span>Live business visibility</span>
           </div>
         </div>
 
-        <div className="real-estate-dashboard-preview" aria-label="Preview of the ARKON Real Estate dashboard">
+        <div className="real-estate-dashboard-preview" aria-label="Preview of Grant’s briefing and the ARKON Real Estate dashboard">
           <aside className="grant-preview-sidebar">
             <div className="grant-preview-logo">ARK<span>O</span>N</div>
             <nav aria-label="Example ARKON dashboard navigation">
@@ -137,6 +137,23 @@ export default function RealEstatePageContent() {
                 <p>Your pipeline, money, deals, and people who need you now.</p>
               </div>
               <div className="grant-preview-actions"><span>Agency view →</span><strong>Contacts</strong></div>
+            </div>
+
+            <div className="grant-preview-briefing">
+              <div className="grant-preview-briefing-head">
+                <div>
+                  <span>Grant morning verdict</span>
+                  <h4>The business is moving. Three items need you before 10 AM.</h4>
+                </div>
+                <strong>Ready to brief</strong>
+              </div>
+              <p>
+                Good morning, Jordan. Your active pipeline is $3.15 million with $78,750 in expected commission. Daniel’s Saturday showing needs confirmation, Laura’s seller opportunity needs a call, and one under-contract deal needs review. Everything else is moving normally.
+              </p>
+              <div className="grant-preview-briefing-footer">
+                <span>Generated 7:00 AM</span>
+                <strong>▶ Hear Grant’s briefing</strong>
+              </div>
             </div>
 
             <div className="grant-preview-stats">
