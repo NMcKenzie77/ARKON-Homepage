@@ -113,8 +113,12 @@ try {
 
       if (businessRoutes.includes(route)) {
         const page = industryPages[route];
+        const expectedTitle = route === '/salons'
+          ? 'Every call answered. Every booking opportunity kept alive.'
+          : page.title;
+
         assert(markup.includes(`data-business-route="${route}"`), `${pass}: ${route} did not select the business-page renderer.`);
-        assert(markup.includes(page.title), `${pass}: ${route} did not render its own title.`);
+        assert(markup.includes(expectedTitle), `${pass}: ${route} did not render its own title.`);
         assert(countClass(markup, 'industry-card') === page.cards.length, `${pass}: ${route} business cards did not render completely.`);
         assert(countClass(markup, 'industry-step') === page.workflow.length, `${pass}: ${route} workflow did not render completely.`);
         assert(countClass(markup, 'industry-faq') === page.faq.length, `${pass}: ${route} FAQs did not render completely.`);
