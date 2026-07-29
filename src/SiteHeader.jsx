@@ -1,4 +1,4 @@
-export default function SiteHeader() {
+export default function SiteHeader({ showPricing = false }) {
   return (
     <header className="site-header" data-master-header="true">
       <a className="brand" href="/" aria-label="ARKON Systems home">
@@ -14,6 +14,7 @@ export default function SiteHeader() {
         <a href="/#team">Core team</a>
         <a href="/#solutions">Business types</a>
         <a href="/#voice">Your voice</a>
+        {showPricing ? <a href="#pricing">Pricing</a> : null}
       </nav>
 
       <a className="nav-cta" href="/#demo">Book a demo</a>
