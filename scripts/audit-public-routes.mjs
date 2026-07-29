@@ -20,6 +20,19 @@ const businessRoutes = [
   '/gyms-fitness-studios'
 ];
 
+const customRouteExpectations = {
+  '/real-estate': {
+    title: 'Every inquiry answered while the lead is still interested.',
+    workflowCount: 0,
+    faqCount: 0
+  },
+  '/salons': {
+    title: 'Every call answered. Every booking opportunity kept alive.',
+    workflowCount: 0,
+    faqCount: 0
+  }
+};
+
 const legalRoutes = ['/privacy', '/terms', '/data-security', '/contact'];
 const publicRoutes = ['/', '/how-it-works', ...businessRoutes, ...legalRoutes];
 const renderedRoutes = [...businessRoutes, ...legalRoutes];
@@ -113,11 +126,10 @@ try {
 
       if (businessRoutes.includes(route)) {
         const page = industryPages[route];
-        const expectedTitle = route === '/salons'
-          ? 'Every call answered. Every booking opportunity kept alive.'
-          : page.title;
-        const expectedWorkflowCount = route === '/salons' ? 0 : page.workflow.length;
-        const expectedFaqCount = route === '/salons' ? 0 : page.faq.length;
+        const customExpectation = customRouteExpectations[route];
+        const expectedTitle = customExpectation?.title || page.title;
+        const expectedWorkflowCount = customExpectation?.workflowCount ?? page.workflow.length;
+        const expectedFaqCount = customExpectation?.faqCount ?? page.faq.length;
 
         assert(markup.includes(`data-business-route="${route}"`), `${pass}: ${route} did not select the business-page renderer.`);
         assert(markup.includes(expectedTitle), `${pass}: ${route} did not render its own title.`);
