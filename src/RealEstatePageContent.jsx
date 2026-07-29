@@ -5,12 +5,12 @@ const teamCards = [
   {
     number: '01',
     title: 'Vera answers in your office’s name.',
-    copy: 'Buyer questions, seller inquiries, showing requests, and new-lead calls begin with the brokerage, team, or agent greeting you approve.'
+    copy: 'Buyer questions, seller inquiries, showing requests, and new-lead calls begin with the greeting you approve. Vera can also capture the caller’s name, phone, email, timing, and reason for reaching out.'
   },
   {
     number: '02',
     title: 'Naya follows up with opportunities already in your database.',
-    copy: 'Past buyers, delayed sellers, open-house visitors, and leads that went quiet receive natural follow-up based on their history and timing.'
+    copy: 'Past buyers, delayed sellers, open-house visitors, and leads that went quiet receive natural follow-up based on their history. Naya can confirm whether their contact details, timing, and criteria are still current.'
   },
   {
     number: '03',
@@ -20,7 +20,7 @@ const teamCards = [
   {
     number: '04',
     title: 'Marcus remembers the relationship.',
-    copy: 'Prior conversations, representation status, property interests, seller timing, notes, and follow-up context stay attached.'
+    copy: 'Contact details, prior conversations, representation status, property interests, seller timing, notes, and follow-up context stay attached.'
   },
   {
     number: '05',
@@ -54,7 +54,7 @@ export default function RealEstatePageContent() {
             <h2 id="real-estate-team-title">Your digital team answers new inquiries and keeps past opportunities from going silent.</h2>
           </div>
           <p>
-            Vera handles live calls in the office’s name. Naya re-engages buyers and sellers already in the database. Paige supplies approved property intelligence. Marcus keeps the relationship history attached. Grant shows what deserves attention next.
+            Vera handles live calls and new contact intake in the office’s name. Naya re-engages buyers and sellers already in the database and confirms what has changed. Paige supplies approved property intelligence. Marcus keeps the complete relationship record attached. Grant shows what deserves attention next.
           </p>
         </div>
 
@@ -114,7 +114,7 @@ export default function RealEstatePageContent() {
           <p className="eyebrow">See ARKON for real estate</p>
           <h2>See how your digital team answers new inquiries and reactivates past opportunities.</h2>
           <p>
-            We’ll show how Vera, Naya, Paige, Marcus, and Grant work around personalized call answering, buyer and seller follow-up, property questions, showing requests, and agent handoffs. From there, we can determine what makes sense for your business.
+            We’ll show how Vera, Naya, Paige, Marcus, and Grant work around personalized call answering, contact intake, buyer and seller follow-up, property questions, showing requests, and agent handoffs. From there, we can determine what makes sense for your business.
           </p>
         </div>
         <a className="primary-button" href="/#demo">Book a real estate walkthrough</a>
