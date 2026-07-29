@@ -69,32 +69,33 @@ const scenarios = {
   },
   buyer: {
     tab: 'Buyer calls about a listing',
-    eyebrow: 'Vera answers in the office’s name · Paige checks the property',
-    title: 'The buyer gets a personal answer before they call the next agent.',
+    eyebrow: 'Vera answers in the office’s name',
+    title: 'The buyer feels helped, not processed.',
     description:
-      'The greeting, office name, tone, and approved questions are configured for the brokerage, team, or agent. Vera captures the buyer’s contact details while Paige supplies approved listing information.',
+      'Vera gives the office’s greeting, responds warmly, captures the buyer’s details naturally, and sends Jordan a useful showing request instead of a generic call summary.',
     consoleLabel: 'Live inbound call',
     consoleAgent: `Vera · ${EXAMPLE_OFFICE}`,
     replayLabel: 'Replay call',
     proof: [
       'Uses the office name and voice',
-      'Captures contact information',
-      'Checks approved property data',
-      'Qualifies the opportunity'
+      'Captures contact information naturally',
+      'Confirms representation and timing',
+      'Alerts Jordan with next steps'
     ],
     property: {
-      label: 'Example listing matched',
+      label: 'Listing inquiry',
       address: '214 Oak Avenue',
       status: 'Active',
       facts: ['3 beds', '2 baths', '$485,000'],
-      context: 'Saturday showing requested'
+      context: 'Saturday morning showing requested'
     },
     contact: {
-      label: 'Contact captured during call',
+      label: 'New buyer contact created',
       name: 'Daniel Reyes',
       phone: '(973) 555-0162',
       email: 'daniel.reyes@example.com',
-      preference: 'Call or text'
+      preference: 'Text preferred',
+      assignedAgent: 'Assigned agent · Jordan Lee'
     },
     messages: [
       {
@@ -103,44 +104,66 @@ const scenarios = {
         wait: 850
       },
       { speaker: 'Caller', text: 'Hi, I’m calling about 214 Oak Avenue. Is it still available?', wait: 700 },
-      { speaker: 'Paige', text: 'Listing matched · Active · 3 beds · 2 baths · $485,000', wait: 850, intelligence: true },
-      { speaker: 'Vera', text: 'Yes, it is currently active. Are you already working with an agent?', wait: 950 },
-      { speaker: 'Caller', text: 'No. Could I see it Saturday morning?', wait: 850 },
-      { speaker: 'Vera', text: 'Absolutely. May I get your name and email while I prepare the showing request?', wait: 950 },
-      { speaker: 'Caller', text: 'Daniel Reyes. daniel.reyes@example.com. This number is best.', wait: 850 },
-      { speaker: 'Vera', text: 'Thank you, Daniel. Would 10:30 Saturday work?', wait: 900 },
-      { speaker: 'Daniel', text: 'Yes, that works.', wait: 700 },
-      { speaker: 'ARKON', text: 'Qualified buyer opportunity · Contact captured · Saturday 10:30 requested · Agent confirmation needed', wait: 900, outcome: true }
+      {
+        speaker: 'Vera',
+        text: 'Yes, it is. We’d be happy to help you see it. Are you already working with an agent?',
+        wait: 950
+      },
+      { speaker: 'Caller', text: 'No, I’m not.', wait: 750 },
+      {
+        speaker: 'Vera',
+        text: 'Great. What day works best for you?',
+        wait: 800
+      },
+      { speaker: 'Caller', text: 'Saturday morning would be best.', wait: 750 },
+      {
+        speaker: 'Vera',
+        text: 'We can help with that. May I get your name and email so Jordan can confirm the showing with you?',
+        wait: 950
+      },
+      { speaker: 'Caller', text: 'Daniel Reyes. daniel.reyes@example.com. This number is best for text.', wait: 850 },
+      {
+        speaker: 'Vera',
+        text: 'Thank you, Daniel. Jordan will text you shortly to confirm a time for Saturday morning.',
+        wait: 900
+      },
+      {
+        speaker: 'Message to Jordan',
+        text: 'Jordan, Daniel Reyes would like to see 214 Oak Avenue Saturday morning. He is not working with another agent, this number is best for text, and his email is daniel.reyes@example.com. Confirm the showing with him today.',
+        wait: 900,
+        outcome: true
+      }
     ]
   },
   seller: {
     tab: 'Homeowner calls about selling',
-    eyebrow: 'Vera answers personally · Marcus keeps the context',
-    title: 'A potential listing becomes an organized seller opportunity.',
+    eyebrow: 'Vera responds with warmth and routes the opportunity',
+    title: 'A potential seller hears that the office wants to help.',
     description:
-      'The homeowner hears the office’s greeting immediately. Vera captures the contact details, timing, and property basics so the agent receives a useful handoff instead of a voicemail.',
+      'Vera acknowledges the homeowner’s situation, asks only what is needed for a useful introduction, and sends Alicia a clear seller opportunity with the next step.',
     consoleLabel: 'Live inbound call',
     consoleAgent: `Vera · ${EXAMPLE_OFFICE}`,
     replayLabel: 'Replay call',
     proof: [
       'Uses the office name and voice',
-      'Captures contact information',
-      'Captures seller timing',
-      'Prepares the agent handoff'
+      'Responds with empathy',
+      'Captures contact details and timing',
+      'Alerts Alicia with next steps'
     ],
     property: {
-      label: 'Seller opportunity',
+      label: 'Seller inquiry',
       address: 'Westfield homeowner',
       status: 'Planning to sell',
       facts: ['4 bedrooms', 'Relocating', '60–90 days'],
-      context: 'Agent call requested today'
+      context: 'Listing consultation requested'
     },
     contact: {
-      label: 'Contact captured during call',
+      label: 'New seller contact created',
       name: 'Laura Kim',
       phone: '(908) 555-0127',
       email: 'laura.kim@example.com',
-      preference: 'Call preferred'
+      preference: 'Call preferred',
+      assignedAgent: 'Assigned agent · Alicia Morgan'
     },
     messages: [
       {
@@ -149,18 +172,41 @@ const scenarios = {
         wait: 850
       },
       { speaker: 'Caller', text: 'I may need to sell my home in the next couple of months. I’m relocating for work.', wait: 700 },
-      { speaker: 'Vera', text: 'I can help get the right information to the agent. Is the property already listed with anyone?', wait: 950 },
-      { speaker: 'Caller', text: 'No. I have not spoken with an agent yet.', wait: 800 },
-      { speaker: 'Vera', text: 'Understood. About when are you hoping to move, and may I get your name and email for the agent?', wait: 1000 },
-      { speaker: 'Caller', text: 'Laura Kim, laura.kim@example.com. Probably within 60 to 90 days. This number is best.', wait: 900 },
-      { speaker: 'Marcus', text: 'Laura’s contact details, seller timing, relocation reason, property basics, and preferred contact are attached.', wait: 850, intelligence: true },
-      { speaker: 'ARKON', text: 'New seller opportunity · Contact captured · Agent call requested today · Full context ready', wait: 900, outcome: true }
+      {
+        speaker: 'Vera',
+        text: 'Absolutely. We’d love to help you with that. Is the home already listed with anyone?',
+        wait: 950
+      },
+      { speaker: 'Caller', text: 'No, I haven’t spoken with an agent yet.', wait: 800 },
+      {
+        speaker: 'Vera',
+        text: 'Okay, great. About when are you hoping to move?',
+        wait: 850
+      },
+      { speaker: 'Caller', text: 'Probably within 60 to 90 days.', wait: 750 },
+      {
+        speaker: 'Vera',
+        text: 'Thank you. May I get your name and email so Alicia can reach out and talk through the next steps with you?',
+        wait: 950
+      },
+      { speaker: 'Caller', text: 'Laura Kim, laura.kim@example.com. Calling this number is best.', wait: 850 },
+      {
+        speaker: 'Vera',
+        text: 'Perfect, Laura. Alicia will call you today. We look forward to helping you.',
+        wait: 900
+      },
+      {
+        speaker: 'Message to Alicia',
+        text: 'Alicia, Laura Kim is considering selling her Westfield home within 60 to 90 days because she is relocating for work. The home is not listed, she has not spoken with another agent, and she prefers a call. Reach out today.',
+        wait: 900,
+        outcome: true
+      }
     ]
   }
 };
 
 function TranscriptItem({ item }) {
-  const isClient = ['Caller', 'Lead', 'Danielle', 'Daniel'].includes(item.speaker);
+  const isClient = ['Caller', 'Lead', 'Danielle', 'Daniel', 'Laura'].includes(item.speaker);
   const classNames = [
     'real-estate-call-line',
     item.intelligence ? 'is-intelligence' : '',
