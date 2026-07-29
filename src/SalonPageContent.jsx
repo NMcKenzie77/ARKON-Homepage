@@ -38,17 +38,6 @@ const ownerRows = [
   ['Tomorrow’s 2:30 appointment is not confirmed', 'Revenue may slip if no one responds', 'At risk']
 ];
 
-const salonFaq = [
-  [
-    'Is this one salon bot or a digital AI team?',
-    'It is a coordinated digital AI team. Vera handles live calls, Naya handles messaging and follow-up, Marcus keeps client context attached, and Grant gives the owner visibility. Each role stays in its lane and works from the salon’s rules.'
-  ],
-  [
-    'What happens when the digital team should not answer?',
-    'The request is handed to the right person with the conversation and client context already organized. The team does not guess about color corrections, unusual pricing, complaints, refunds, or anything the salon marks for human judgment.'
-  ]
-];
-
 export default function SalonPageContent() {
   return (
     <>
@@ -114,36 +103,15 @@ export default function SalonPageContent() {
         </div>
       </section>
 
-      <section className="section industry-faq-section salon-faq-section" aria-labelledby="salon-faq-title">
-        <div className="salon-section-heading">
-          <div>
-            <p className="eyebrow">Questions salon owners ask</p>
-            <h2 id="salon-faq-title">A digital AI team with clear roles and clear boundaries.</h2>
-          </div>
-          <p>
-            The names make each responsibility easy to understand. The salon still decides the voice, rules, availability, permissions, and human handoffs.
-          </p>
-        </div>
-
-        <div className="industry-faq-grid salon-faq-grid">
-          {salonFaq.map(([question, answer]) => (
-            <article className="industry-faq salon-faq-card is-visible" data-reveal key={question}>
-              <h3>{question}</h3>
-              <p>{answer}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
       <section className="demo-cta industry-cta salon-closing-cta is-visible" data-reveal>
         <div>
-          <p className="eyebrow">See the digital AI team in your salon</p>
-          <h2>Walk through how Vera, Naya, Marcus, and Grant would work around your front desk.</h2>
+          <p className="eyebrow">Build the version for your salon</p>
+          <h2>Show us how your salon runs. We’ll map exactly where your digital team steps in.</h2>
           <p>
-            We will map live calls, booking requests, client messages, rebooking, reminders, staff handoffs, and the owner view around the way your salon already operates.
+            We review your calls, booking rules, rebooking rhythm, schedule gaps, and owner decisions. You leave knowing how calls get answered, bookings stay moving, and only the right decisions reach your staff.
           </p>
         </div>
-        <a className="primary-button" href="/#demo">Request demo</a>
+        <a className="primary-button" href="/#demo">Map my salon workflow</a>
       </section>
     </>
   );
