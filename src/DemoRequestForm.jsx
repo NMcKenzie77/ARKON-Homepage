@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
 import './demo-request-form.css';
 
+const PRIVACY_VERSION = '2026-07-28';
+
 const businessTypes = [
   'Real estate',
   'Insurance',
@@ -53,9 +55,16 @@ export default function DemoRequestForm() {
     const businessType = String(data.get('businessType') || '').trim();
     const message = String(data.get('message') || '').trim();
     const companyWebsite = String(data.get('companyWebsite') || '').trim();
+    const contactConsent = data.get('contactConsent') === 'yes';
+    const consentRecordedAt = new Date().toISOString();
 
     if (!name || !email || !phone || !companyName || !businessType) {
       setStatus('Please enter your name, email, telephone number, company name, and business type.');
+      return;
+    }
+
+    if (!contactConsent) {
+      setStatus('Please confirm that ARKON Systems may contact you about this request.');
       return;
     }
 
@@ -63,6 +72,9 @@ export default function DemoRequestForm() {
       `Company name: ${companyName}`,
       `Telephone number: ${phone}`,
       `Website link: ${website || 'Not provided'}`,
+      `Contact consent: Yes, for this request`,
+      `Consent recorded: ${consentRecordedAt}`,
+      `Privacy version: ${PRIVACY_VERSION}`,
       '',
       'Lead message:',
       message || 'No message provided'
@@ -82,7 +94,10 @@ export default function DemoRequestForm() {
           businessType,
           sourcePath: window.location.pathname,
           message: emailMessage,
-          companyWebsite
+          companyWebsite,
+          contactConsent,
+          consentRecordedAt,
+          privacyVersion: PRIVACY_VERSION
         })
       });
 
@@ -162,6 +177,14 @@ export default function DemoRequestForm() {
             placeholder="Tell us what kind of workflow you want ARKON to handle."
             rows="5"
           />
+        </label>
+
+        <label className="demo-consent">
+          <input name="contactConsent" type="checkbox" value="yes" required />
+          <span>
+            I agree that ARKON Systems may contact me by email or telephone about this request.
+            This is not consent to unrelated marketing. See the <a href="/privacy">Privacy & Cookies Policy</a> and <a href="/terms">Terms of Use</a>.
+          </span>
         </label>
 
         <label className="demo-honeypot" aria-hidden="true">
