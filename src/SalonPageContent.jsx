@@ -62,8 +62,8 @@ export default function SalonPageContent() {
       <section className="section salon-capabilities-section" aria-labelledby="salon-capabilities-title">
         <div className="salon-section-heading">
           <div>
-            <p className="eyebrow">Meet the digital AI team</p>
-            <h2 id="salon-capabilities-title">Four named roles keep the front desk moving while your staff stays with clients.</h2>
+            <p className="eyebrow">Meet your digital AI team</p>
+            <h2 id="salon-capabilities-title">Your digital team keeps every call, booking, and follow-up moving while your staff stays with clients.</h2>
           </div>
           <p>
             Naya is the member clients see in the message demo above. Behind her, Vera, Marcus, and Grant keep calls, client context, handoffs, and owner visibility connected.
