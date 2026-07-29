@@ -4,90 +4,137 @@ import './auto-repair-conversation-demo.css';
 const SHOP_NAME = 'Northside Auto Care';
 
 const scenarios = {
-  repairCall: {
-    tab: 'Repair call',
-    eyebrow: 'Vera answers in the shop’s name',
-    title: 'The service advisor gets a useful intake, not another vague callback note.',
+  deferredMaintenance: {
+    tab: 'Bring back deferred work',
+    eyebrow: 'Naya follows up with the customer’s actual vehicle history',
+    title: 'The customer hears about the work they already discussed, not a generic reminder.',
     description:
-      'Vera captures the customer, vehicle, symptoms, drivability, urgency, timing, and preferred contact method while the repair opportunity is still live.',
+      'Naya uses the customer’s name, vehicle, prior recommendation, timing, estimate, and communication preference to bring the right customer back for the right work.',
+    proof: [
+      'Uses the customer’s name and vehicle',
+      'References the exact deferred work',
+      'Remembers the prior estimate',
+      'Hands the shop a ready-to-book customer'
+    ],
     messages: [
-      { speaker: 'Vera', text: `Thank you for calling ${SHOP_NAME}. This is Vera. How can I help you?`, wait: 700 },
-      { speaker: 'Customer', text: 'My check-engine light came on and the car is shaking when I stop.', wait: 900 },
-      { speaker: 'Vera', text: 'I’m sorry you’re dealing with that. Is the light steady or flashing, and does the vehicle still feel safe to drive?', wait: 1100 },
-      { speaker: 'Customer', text: 'It is steady. I can drive it, but I do not want to go far.', wait: 900 },
-      { speaker: 'Vera', text: 'Understood. What year, make, and model is the vehicle?', wait: 850 },
-      { speaker: 'Customer', text: 'A 2018 Honda Accord.', wait: 750 },
-      { speaker: 'Vera', text: 'Thank you. May I get your name and the best number for updates?', wait: 900 },
-      { speaker: 'Customer', text: 'Michael Torres. This number is best for text.', wait: 800 },
+      {
+        speaker: 'Naya',
+        text: `Hi Michael, it’s Naya with ${SHOP_NAME}. When your 2018 Honda Accord was in last month, the shop recommended replacing the front brake pads and rotors. You decided to hold off at the time. Would you like me to find an appointment for you?`,
+        wait: 950
+      },
+      { speaker: 'Michael', text: 'Yes, I should probably get that taken care of.', wait: 850 },
+      {
+        speaker: 'Naya',
+        text: 'Absolutely. The estimate on file was $680. We have Tuesday morning or Thursday afternoon available. Which works better?',
+        wait: 1050
+      },
+      { speaker: 'Michael', text: 'Thursday afternoon.', wait: 750 },
+      {
+        speaker: 'Naya',
+        text: 'Perfect. I’ll have the shop confirm the exact time with you by text.',
+        wait: 850
+      },
       {
         speaker: 'Message to service advisor',
-        text: 'Michael Torres has a 2018 Honda Accord with a steady check-engine light and shaking at stops. He says it is drivable but wants to limit distance. Text is best. Call today to confirm the earliest diagnostic opening.',
+        text: 'Michael Torres is ready to schedule the front brake pads and rotors previously estimated at $680 for his 2018 Honda Accord. Thursday afternoon works best. Text is preferred. Confirm the appointment today.',
+        wait: 900,
+        outcome: true
+      }
+    ],
+    record: {
+      label: 'Deferred work recovered',
+      title: 'Michael Torres · 2018 Honda Accord',
+      facts: ['Front brakes', 'Estimated at $680', 'Deferred last month'],
+      next: 'Thursday afternoon requested · Text preferred'
+    }
+  },
+  upcomingMaintenance: {
+    tab: 'Schedule upcoming maintenance',
+    eyebrow: 'Naya reaches out before routine work gets missed',
+    title: 'The reminder is tied to the customer, the vehicle, and the service coming due.',
+    description:
+      'Naya uses the actual vehicle and maintenance timing, offers approved openings, and turns a routine reminder into a scheduled visit.',
+    proof: [
+      'Uses the customer’s vehicle',
+      'Names the service coming due',
+      'Offers approved shop openings',
+      'Confirms the next step clearly'
+    ],
+    messages: [
+      {
+        speaker: 'Naya',
+        text: `Hi Angela, it’s Naya with ${SHOP_NAME}. Your 2021 Toyota RAV4 is approaching the mileage for its next oil service and tire rotation. Would you like me to reserve a time?`,
+        wait: 900
+      },
+      { speaker: 'Angela', text: 'Yes. What do you have next week?', wait: 800 },
+      {
+        speaker: 'Naya',
+        text: 'We have Wednesday at 10:00 or Friday at 2:30 available.',
+        wait: 850
+      },
+      { speaker: 'Angela', text: 'Friday at 2:30 works.', wait: 700 },
+      {
+        speaker: 'Naya',
+        text: 'You’re all set. The shop will send your confirmation and reminder by text.',
+        wait: 850
+      },
+      {
+        speaker: 'Appointment confirmed',
+        text: 'Angela Brooks · 2021 Toyota RAV4 · Oil service and tire rotation · Friday at 2:30 PM',
+        wait: 850,
+        outcome: true
+      }
+    ],
+    record: {
+      label: 'Upcoming maintenance scheduled',
+      title: 'Angela Brooks · 2021 Toyota RAV4',
+      facts: ['Oil service', 'Tire rotation', 'Mileage due'],
+      next: 'Friday at 2:30 PM · Reminder scheduled'
+    }
+  },
+  repairCall: {
+    tab: 'Customer calls the shop',
+    eyebrow: 'Vera answers in the shop’s name',
+    title: 'The advisor receives the customer, vehicle, concern, and next step together.',
+    description:
+      'Vera responds naturally, captures the customer and vehicle details, understands the concern, and sends the shop a useful intake instead of a vague callback note.',
+    proof: [
+      'Uses the shop’s name and voice',
+      'Captures the customer and vehicle',
+      'Understands the concern naturally',
+      'Sends the advisor a useful next step'
+    ],
+    messages: [
+      { speaker: 'Vera', text: `Thank you for calling ${SHOP_NAME}. This is Vera. How can I help you?`, wait: 750 },
+      { speaker: 'Caller', text: 'My check-engine light came on and the car is shaking when I stop.', wait: 850 },
+      {
+        speaker: 'Vera',
+        text: 'I’m sorry you’re dealing with that. Is the light steady or flashing, and does the vehicle still feel safe to drive?',
+        wait: 1000
+      },
+      { speaker: 'Caller', text: 'It is steady. I can drive it, but I do not want to go far.', wait: 850 },
+      { speaker: 'Vera', text: 'Understood. What year, make, and model is the vehicle?', wait: 800 },
+      { speaker: 'Caller', text: 'A 2018 Honda Accord.', wait: 700 },
+      { speaker: 'Vera', text: 'Thank you. May I get your name and the best way for the shop to reach you?', wait: 850 },
+      { speaker: 'Caller', text: 'Michael Torres. Text is best.', wait: 750 },
+      {
+        speaker: 'Message to service advisor',
+        text: 'Michael Torres has a 2018 Honda Accord with a steady check-engine light and shaking at stops. He says it is drivable but wants to limit distance. Text is best. Contact him today with the earliest diagnostic opening.',
         wait: 900,
         outcome: true
       }
     ],
     record: {
       label: 'Repair opportunity created',
-      title: '2018 Honda Accord',
+      title: 'Michael Torres · 2018 Honda Accord',
       facts: ['Check-engine light', 'Shakes at stops', 'Drivable with caution'],
       next: 'Diagnostic appointment needs confirmation'
-    }
-  },
-  statusUpdate: {
-    tab: 'Vehicle status',
-    eyebrow: 'Naya handles approved updates',
-    title: 'Customers get a clear update without interrupting the advisor for every status call.',
-    description:
-      'Naya uses the approved repair-order status, explains the current step, and routes authorization or judgment calls to the service advisor.',
-    messages: [
-      { speaker: 'Customer', text: 'Hi, is my Accord ready yet?', wait: 700 },
-      { speaker: 'Naya', text: 'Hi Michael. Your Accord has been diagnosed, and the shop is waiting for your approval on the ignition-coil repair before work begins.', wait: 1100 },
-      { speaker: 'Customer', text: 'How much was it again?', wait: 750 },
-      { speaker: 'Naya', text: 'The approved estimate in your file is $486. I can have Sam call you now to review the repair and answer any questions before you authorize it.', wait: 1100 },
-      { speaker: 'Customer', text: 'Yes, have him call me.', wait: 750 },
-      {
-        speaker: 'Message to service advisor',
-        text: 'Michael Torres asked for a call to review the $486 ignition-coil estimate before authorizing the repair. Call him now. Text remains his preferred update method.',
-        wait: 900,
-        outcome: true
-      }
-    ],
-    record: {
-      label: 'Repair order context',
-      title: 'RO 10482 · 2018 Honda Accord',
-      facts: ['Diagnosis complete', '$486 estimate', 'Awaiting authorization'],
-      next: 'Advisor callback requested'
-    }
-  },
-  declinedWork: {
-    tab: 'Declined work',
-    eyebrow: 'Naya follows up at the right time',
-    title: 'Recommended work does not disappear after the customer leaves.',
-    description:
-      'Naya follows the shop’s approved timing, uses the actual vehicle and recommendation, and alerts the advisor when the customer is ready to schedule.',
-    messages: [
-      { speaker: 'Naya', text: `Hi Elena, it’s Naya with ${SHOP_NAME}. When your 2020 RAV4 was here last month, the front brakes were getting close to replacement. Would you like us to reserve a time to take care of them?`, wait: 900 },
-      { speaker: 'Customer', text: 'Yes. I was waiting until payday. Do you have anything Friday afternoon?', wait: 900 },
-      { speaker: 'Naya', text: 'We have a 2:30 opening Friday. I can ask Chris to confirm the estimate and hold that time for you.', wait: 1000 },
-      { speaker: 'Customer', text: 'That works.', wait: 700 },
-      {
-        speaker: 'Message to service advisor',
-        text: 'Elena Price is ready to schedule the front-brake work previously recommended for her 2020 Toyota RAV4. Friday at 2:30 works. Confirm the current estimate and appointment today.',
-        wait: 900,
-        outcome: true
-      }
-    ],
-    record: {
-      label: 'Declined work recovered',
-      title: '2020 Toyota RAV4',
-      facts: ['Front brakes recommended', 'Deferred one month', 'Friday 2:30 requested'],
-      next: 'Confirm estimate and appointment'
     }
   }
 };
 
 function TranscriptLine({ item }) {
-  const customer = item.speaker === 'Customer';
+  const customer = ['Michael', 'Angela', 'Caller'].includes(item.speaker);
   return (
     <div className={`auto-repair-line ${customer ? 'is-customer' : ''} ${item.outcome ? 'is-outcome' : ''}`}>
       <span>{item.speaker}</span>
@@ -97,7 +144,7 @@ function TranscriptLine({ item }) {
 }
 
 export default function AutoRepairConversationDemo() {
-  const [activeKey, setActiveKey] = useState('repairCall');
+  const [activeKey, setActiveKey] = useState('deferredMaintenance');
   const [visibleCount, setVisibleCount] = useState(0);
   const [replayToken, setReplayToken] = useState(0);
   const transcriptRef = useRef(null);
@@ -149,7 +196,7 @@ export default function AutoRepairConversationDemo() {
         <h2 id="auto-repair-demo-title">{scenario.title}</h2>
         <p>{scenario.description}</p>
 
-        <div className="auto-repair-tabs" role="tablist" aria-label="Auto repair workflow examples">
+        <div className="auto-repair-tabs" role="tablist" aria-label="Auto repair customer interaction examples">
           {Object.entries(scenarios).map(([key, item]) => (
             <button
               className={activeKey === key ? 'active' : ''}
@@ -164,24 +211,22 @@ export default function AutoRepairConversationDemo() {
           ))}
         </div>
 
-        <div className="auto-repair-proof-row">
-          <span>Uses shop-approved information</span>
-          <span>Keeps vehicle context attached</span>
-          <span>Routes judgment to staff</span>
+        <div className="auto-repair-proof-row" aria-label="Personalized auto repair interaction capabilities">
+          {scenario.proof.map(item => <span key={item}>{item}</span>)}
         </div>
 
         <button className="auto-repair-replay" onClick={() => setReplayToken(token => token + 1)} type="button">
-          <span aria-hidden="true">↻</span> Replay workflow
+          <span aria-hidden="true">↻</span> Replay interaction
         </button>
       </div>
 
       <div className="auto-repair-console">
         <div className="auto-repair-console-head">
           <div>
-            <span>Northside Auto Care</span>
+            <span>{SHOP_NAME}</span>
             <strong>{scenario.tab}</strong>
           </div>
-          <em>Live workflow</em>
+          <em>Customer interaction</em>
         </div>
 
         <div className="auto-repair-transcript" ref={transcriptRef}>
