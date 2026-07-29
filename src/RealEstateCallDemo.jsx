@@ -6,18 +6,18 @@ const EXAMPLE_OFFICE = 'Oak & Main Realty';
 const scenarios = {
   followUp: {
     tab: 'Past lead follow-up',
-    eyebrow: 'Naya follows up · Marcus supplies the history',
+    eyebrow: 'Naya follows up in the office’s name',
     title: 'Past opportunities should not disappear because nobody followed up.',
     description:
-      'Naya reaches out to Danielle in the office’s name, uses the prior conversation and property interests, confirms the contact record, and finds out whether she is ready to move again.',
+      'Naya reaches out to Danielle naturally, refreshes what has changed, updates the contact record quietly, and sends the agent a clear message when she is ready to move again.',
     consoleLabel: 'Proactive database follow-up',
     consoleAgent: `Naya · ${EXAMPLE_OFFICE}`,
     replayLabel: 'Replay follow-up',
     proof: [
       'Uses Danielle’s prior history',
-      'Confirms contact information',
-      'Refreshes timing and criteria',
-      'Prepares the agent handoff'
+      'Keeps the conversation human',
+      'Updates the contact record quietly',
+      'Alerts the agent with next steps'
     ],
     property: {
       label: 'Past opportunity matched',
@@ -27,7 +27,7 @@ const scenarios = {
       context: 'Last meaningful conversation: five months ago'
     },
     contact: {
-      label: 'Contact record confirmed',
+      label: 'Contact record updated',
       name: 'Danielle Brooks',
       phone: '(973) 555-0148',
       email: 'danielle.brooks@example.com',
@@ -42,25 +42,25 @@ const scenarios = {
       { speaker: 'Danielle', text: 'We paused for a while, but we’re looking again.', wait: 850 },
       {
         speaker: 'Naya',
-        text: 'Good to know. Are those still the right areas, and is your budget still around $650,000?',
-        wait: 950
+        text: 'That’s great, Danielle. We’d love to help you with that. Are Maplewood and South Orange still the main areas you’re considering?',
+        wait: 1000
+      },
+      { speaker: 'Danielle', text: 'Yes, those are still our first choices.', wait: 800 },
+      {
+        speaker: 'Naya',
+        text: 'Perfect. Are you still hoping to stay around $650,000?',
+        wait: 900
       },
       { speaker: 'Danielle', text: 'Yes. We just need to reconnect with a lender.', wait: 850 },
       {
-        speaker: 'Marcus',
-        text: 'Danielle’s previous neighborhoods, budget, financing stage, property preferences, and last conversation are attached.',
-        wait: 850,
-        intelligence: true
-      },
-      {
         speaker: 'Naya',
-        text: 'I still have your mobile ending in 0148 and danielle.brooks@example.com. Are those both correct, and is text still best?',
+        text: 'Absolutely. I can have the agent reach out and help you get moving again. Is text still the easiest way to reach you?',
         wait: 1000
       },
-      { speaker: 'Danielle', text: 'Yes, both are right. Text is best.', wait: 700 },
+      { speaker: 'Danielle', text: 'Yes, text is best.', wait: 700 },
       {
-        speaker: 'ARKON',
-        text: 'Danielle Brooks reactivated · Contact record confirmed · Search criteria refreshed · Agent follow-up ready',
+        speaker: 'Message to agent',
+        text: 'Danielle Brooks is looking again. Maplewood and South Orange are still her preferred areas, her budget is around $650,000, and she needs help reconnecting with a lender. Text is best. Reach out today.',
         wait: 900,
         outcome: true
       }
