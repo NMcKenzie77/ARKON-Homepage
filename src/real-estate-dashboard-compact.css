@@ -1,0 +1,233 @@
+.real-estate-grant-section {
+  grid-template-columns: minmax(250px, 0.56fr) minmax(0, 1.44fr);
+  gap: 36px;
+}
+
+.real-estate-dashboard-preview {
+  position: relative;
+  grid-template-columns: 122px minmax(0, 1fr);
+  max-height: 650px;
+  align-self: start;
+  border-radius: 24px;
+  box-shadow: 0 22px 68px rgba(0, 0, 0, 0.3);
+}
+
+.grant-preview-sidebar {
+  min-height: 650px;
+  padding: 14px 0;
+}
+
+.grant-preview-logo {
+  padding: 0 12px 12px;
+  font-size: 15px;
+}
+
+.grant-preview-sidebar nav {
+  gap: 2px;
+  padding: 0 6px;
+}
+
+.grant-preview-sidebar nav span {
+  padding: 6px 7px;
+  border-left-width: 3px;
+  border-radius: 8px;
+  font-size: 7.2px;
+}
+
+.grant-preview-user {
+  padding: 11px 12px 0;
+  font-size: 7.4px;
+}
+
+.grant-preview-main {
+  padding: 15px;
+}
+
+.grant-preview-topline {
+  margin-bottom: 10px;
+}
+
+.grant-preview-topline h3 {
+  font-size: 19px;
+}
+
+.grant-preview-topline p {
+  font-size: 8.7px;
+}
+
+.grant-preview-actions span,
+.grant-preview-actions strong {
+  min-height: 27px;
+  padding: 0 8px;
+  font-size: 6.6px;
+}
+
+.grant-preview-briefing {
+  margin-bottom: 9px;
+  padding: 11px 12px;
+  border-left-width: 3px;
+  border-radius: 11px;
+}
+
+.grant-preview-briefing-head {
+  gap: 9px;
+}
+
+.grant-preview-briefing-head span {
+  margin-bottom: 3px;
+  font-size: 5.9px;
+}
+
+.grant-preview-briefing-head h4 {
+  font-size: 11.3px;
+}
+
+.grant-preview-briefing-head > strong {
+  padding: 3px 7px;
+  font-size: 5.3px;
+}
+
+.grant-preview-briefing > p {
+  margin-top: 7px;
+  font-size: 7.6px;
+  line-height: 1.45;
+}
+
+.grant-preview-briefing-footer {
+  margin-top: 8px;
+  padding-top: 7px;
+}
+
+.grant-preview-briefing-footer span {
+  font-size: 5.7px;
+}
+
+.grant-preview-briefing-footer strong {
+  min-height: 23px;
+  padding: 0 8px;
+  font-size: 6.1px;
+}
+
+.grant-preview-stats {
+  gap: 6px;
+  margin-bottom: 9px;
+}
+
+.grant-preview-stat {
+  padding: 8px;
+  border-radius: 9px;
+}
+
+.grant-preview-stat strong {
+  font-size: clamp(11px, 1.2vw, 16px);
+}
+
+.grant-preview-stat span {
+  margin-top: 4px;
+  font-size: 5.5px;
+}
+
+.grant-preview-two-column {
+  gap: 8px;
+}
+
+.grant-preview-card {
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.grant-preview-card h4 {
+  margin-bottom: 7px;
+  font-size: 8.2px;
+}
+
+.grant-preview-card > p {
+  font-size: 7.4px;
+  line-height: 1.45;
+}
+
+.grant-preview-record {
+  padding: 6px 7px;
+  border-radius: 7px;
+  font-size: 6.2px;
+}
+
+.grant-preview-needs > div {
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 6px;
+  min-height: 23px;
+}
+
+.grant-preview-needs p {
+  font-size: 7px;
+}
+
+.grant-preview-tag {
+  padding: 2px 5px;
+  font-size: 5.1px;
+}
+
+.grant-preview-stages {
+  gap: 6px;
+}
+
+.grant-preview-stage {
+  padding: 7px;
+  border-radius: 8px;
+}
+
+.grant-preview-stage > span {
+  font-size: 5px;
+}
+
+.grant-preview-stage > strong {
+  margin-top: 3px;
+  font-size: 14px;
+}
+
+.grant-preview-stage > div {
+  height: 4px;
+  margin-top: 5px;
+}
+
+.grant-preview-table {
+  min-width: 560px;
+  font-size: 6.4px;
+}
+
+.grant-preview-table th {
+  padding: 5px 6px;
+  font-size: 5px;
+}
+
+.grant-preview-table td {
+  padding: 5px 6px;
+}
+
+.grant-preview-simple-table > div {
+  min-height: 24px;
+  font-size: 6.4px;
+}
+
+@media (max-width: 1080px) {
+  .real-estate-grant-section {
+    grid-template-columns: 1fr;
+  }
+
+  .real-estate-dashboard-preview {
+    width: min(100%, 900px);
+    max-height: 650px;
+  }
+}
+
+@media (max-width: 780px) {
+  .real-estate-dashboard-preview {
+    grid-template-columns: 1fr;
+    max-height: 720px;
+  }
+
+  .grant-preview-sidebar {
+    min-height: 0;
+  }
+}
