@@ -27,23 +27,12 @@ function Section({ section }) {
 
 export default function LegalPage({ page }) {
   return (
-    <main className="legal-page">
-      <section className="legal-hero">
-        <div className="legal-hero-inner">
-          <p className="eyebrow">{page.eyebrow}</p>
-          <h1>{page.title}</h1>
-          <p>{page.description}</p>
-          <div className="legal-meta">
-            <span>Effective {page.updated}</span>
-            <a href="/contact">Contact ARKON Systems</a>
-          </div>
-        </div>
-      </section>
-
+    <section className="legal-content" aria-label={`${page.name} document`}>
       <div className="legal-layout">
         <aside className="legal-summary" aria-label={`${page.name} summary`}>
           <p className="eyebrow">At a glance</p>
           <p>{page.primary}</p>
+          <p className="legal-effective">Effective {page.updated}</p>
           <nav aria-label="Legal page navigation">
             {page.sections.map(section => {
               const id = section.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -56,6 +45,6 @@ export default function LegalPage({ page }) {
           {page.sections.map(section => <Section section={section} key={section.title} />)}
         </article>
       </div>
-    </main>
+    </section>
   );
 }
