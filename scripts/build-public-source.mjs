@@ -1,6 +1,8 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import '../src/legal-register.js';
+import { crawlablePaths } from '../src/site-content.js';
 
 const scriptsDir = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(scriptsDir, '..');
@@ -29,12 +31,16 @@ function replaceAllRequired(source, from, to, label) {
   return source.replaceAll(from, to);
 }
 
+function occurrenceCount(source, pattern) {
+  return (source.match(pattern) || []).length;
+}
+
 function buildPublicApp() {
   const inputPath = resolve(srcDir, 'App.jsx');
   const outputPath = resolve(srcDir, 'App.public.jsx');
   let source = readFileSync(inputPath, 'utf8');
 
-  source = `import DemoRequestForm from './DemoRequestForm.jsx';\nimport SiteFooter from './SiteFooter.jsx';\n${source}`;
+  source = `import DemoRequestForm from './DemoRequestForm.jsx';\n${source}`;
 
   source = removeSection(
     source,
@@ -102,8 +108,8 @@ function buildPublicApp() {
   source = replaceRequired(
     source,
     '      <Footer />',
-    '      <SiteFooter />',
-    'shared homepage footer'
+    '',
+    'remove nested homepage footer'
   );
 
   source = replaceAllRequired(
@@ -175,8 +181,8 @@ function buildPublicApp() {
     throw new Error('Generated App.public.jsx is missing the source-owned demo form.');
   }
 
-  if (!source.includes('<SiteFooter />')) {
-    throw new Error('Generated App.public.jsx is missing the shared site footer.');
+  if (/SiteFooter|<SiteFooter \/>/.test(source)) {
+    throw new Error('Generated App.public.jsx contains a route-specific footer instead of the master footer shell.');
   }
 
   writeFileSync(outputPath, source);
@@ -225,8 +231,8 @@ function buildPublicEntry() {
   source = replaceRequired(
     source,
     '      <UnifiedFooter />',
-    '      <SiteFooter />',
-    'shared industry footer'
+    '',
+    'remove nested industry footer'
   );
 
   source = replaceRequired(
@@ -262,9 +268,11 @@ function buildPublicEntry() {
   source = replaceRequired(
     source,
     "    {industryPage\n      ? <UnifiedIndustryPage page={industryPage} route={route} />\n      : <AppWithCleanup route={route} />}",
-    "    <>\n      {legalPage\n        ? (\n          <>\n            <ClientSeoSync route={route} />\n            <UnifiedHeader />\n            <main className=\"industry-page\">\n              <PageBanner page={legalPage} route={route} animate={false} />\n              <LegalPage page={legalPage} />\n            </main>\n            <SiteFooter />\n          </>\n        )\n        : industryPage\n          ? <UnifiedIndustryPage page={industryPage} route={route} />\n          : (\n            <>\n              <ClientSeoSync route={route} />\n              <App />\n            </>\n          )}\n      <CookieConsent />\n    </>",
-    'public legal, industry, homepage, and consent render block'
+    "    {legalPage\n      ? (\n        <>\n          <ClientSeoSync route={route} />\n          <UnifiedHeader />\n          <main className=\"industry-page\">\n            <PageBanner page={legalPage} route={route} animate={false} />\n            <LegalPage page={legalPage} />\n          </main>\n        </>\n      )\n      : industryPage\n        ? <UnifiedIndustryPage page={industryPage} route={route} />\n        : (\n          <>\n            <ClientSeoSync route={route} />\n            <App />\n          </>\n        )}",
+    'public legal, industry, and homepage render block'
   );
+
+  source += `\n\nconst footerContainer = document.getElementById('global-site-footer');\nif (!footerContainer) {\n  throw new Error('Global site footer container is missing.');\n}\ncreateRoot(footerContainer).render(\n  <React.StrictMode>\n    <SiteFooter />\n  </React.StrictMode>\n);\n\nconst consentContainer = document.getElementById('global-consent-root');\nif (!consentContainer) {\n  throw new Error('Global consent container is missing.');\n}\ncreateRoot(consentContainer).render(\n  <React.StrictMode>\n    <CookieConsent />\n  </React.StrictMode>\n);\n`;
 
   if (/LegacyContactBannerRemover|BrandTextNormalizer|PublicRoleCopyCleanup|AppWithCleanup/.test(source)) {
     throw new Error('Generated main.public.jsx still contains runtime cleanup code.');
@@ -282,21 +290,79 @@ function buildPublicEntry() {
     throw new Error('Generated main.public.jsx is missing the shared page banner.');
   }
 
-  if (!source.includes('<SiteFooter />')) {
-    throw new Error('Generated main.public.jsx is missing the shared site footer.');
+  if (occurrenceCount(source, /<SiteFooter \/>/g) !== 1 || !source.includes("document.getElementById('global-site-footer')")) {
+    throw new Error('Generated main.public.jsx must render exactly one master SiteFooter in the global footer container.');
   }
 
   if (!source.includes('<LegalPage page={legalPage} />') || !source.includes("import './legal-register.js';")) {
     throw new Error('Generated main.public.jsx is missing registered legal routes.');
   }
 
-  if (!source.includes('<CookieConsent />')) {
-    throw new Error('Generated main.public.jsx is missing cookie consent controls.');
+  if (occurrenceCount(source, /<CookieConsent \/>/g) !== 1 || !source.includes("document.getElementById('global-consent-root')")) {
+    throw new Error('Generated main.public.jsx must render exactly one CookieConsent layer in the global consent container.');
   }
 
   writeFileSync(outputPath, source);
 }
 
+function verifyMasterShell() {
+  const indexHtml = readFileSync(resolve(rootDir, 'index.html'), 'utf8');
+  const appPublic = readFileSync(resolve(srcDir, 'App.public.jsx'), 'utf8');
+  const mainPublic = readFileSync(resolve(srcDir, 'main.public.jsx'), 'utf8');
+  const requiredRoutes = [
+    '/',
+    '/how-it-works',
+    '/real-estate',
+    '/insurance',
+    '/short-term-rentals',
+    '/home-services',
+    '/professional-services',
+    '/salons',
+    '/garages',
+    '/medical-dental-offices',
+    '/law-firms',
+    '/gyms-fitness-studios',
+    '/privacy',
+    '/terms',
+    '/data-security',
+    '/contact'
+  ];
+  const uniqueRoutes = [...new Set(crawlablePaths)];
+
+  if (!indexHtml.includes('id="global-site-footer"') || !indexHtml.includes('data-footer-fallback="true"')) {
+    throw new Error('index.html is missing the global footer container and crawler fallback.');
+  }
+
+  if (!indexHtml.includes('id="global-consent-root"')) {
+    throw new Error('index.html is missing the global consent container.');
+  }
+
+  for (const legalHref of ['/privacy', '/terms', '/data-security', '/contact']) {
+    if (!indexHtml.includes(`href="${legalHref}"`)) {
+      throw new Error(`Global footer fallback is missing ${legalHref}.`);
+    }
+  }
+
+  if (/SiteFooter|<SiteFooter \/>/.test(appPublic)) {
+    throw new Error('App.public.jsx must not own a route-specific footer.');
+  }
+
+  if (occurrenceCount(mainPublic, /<SiteFooter \/>/g) !== 1 || occurrenceCount(mainPublic, /<CookieConsent \/>/g) !== 1) {
+    throw new Error('Master shell must contain exactly one footer and one consent layer.');
+  }
+
+  for (const route of requiredRoutes) {
+    if (!uniqueRoutes.includes(route)) throw new Error(`Master shell route audit is missing ${route}.`);
+  }
+
+  if (uniqueRoutes.length !== requiredRoutes.length) {
+    throw new Error(`Expected ${requiredRoutes.length} public routes, found ${uniqueRoutes.length}. Update the route audit before adding or removing routes.`);
+  }
+
+  console.log(`Verified one master footer and consent shell across ${uniqueRoutes.length} public routes.`);
+}
+
 buildPublicApp();
 buildPublicEntry();
+verifyMasterShell();
 console.log('Generated src/App.public.jsx and src/main.public.jsx.');
