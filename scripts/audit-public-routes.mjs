@@ -21,6 +21,7 @@ const businessRoutes = [
 
 const legalRoutes = ['/privacy', '/terms', '/data-security', '/contact'];
 const publicRoutes = ['/', '/how-it-works', ...businessRoutes, ...legalRoutes];
+const renderedRoutes = [...businessRoutes, ...legalRoutes];
 
 function count(source, needle) {
   return source.split(needle).length - 1;
@@ -79,8 +80,8 @@ try {
     assert(Array.isArray(page.sections) && page.sections.length > 0, `${route} has no legal sections.`);
   }
 
-  for (const pass of ['Route render audit pass 1', 'Route render audit pass 2']) {
-    for (const route of publicRoutes) {
+  for (const pass of ['Affected-route render audit pass 1', 'Affected-route render audit pass 2']) {
+    for (const route of renderedRoutes) {
       installAuditWindow(route);
       const markup = renderToStaticMarkup(renderRouteForAudit(route));
 
@@ -114,7 +115,7 @@ try {
       }
     }
 
-    console.log(`${pass}: rendered and verified all ${publicRoutes.length} public routes.`);
+    console.log(`${pass}: rendered and verified all ${renderedRoutes.length} affected routes.`);
   }
 } finally {
   await vite.close();
