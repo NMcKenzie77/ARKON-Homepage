@@ -29,9 +29,9 @@ function count(source, needle) {
 }
 
 function countClass(source, className) {
-  const escaped = className.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const pattern = new RegExp(`class="[^"]*\\b${escaped}\\b[^"]*"`, 'g');
-  return (source.match(pattern) || []).length;
+  return [...source.matchAll(/class="([^"]*)"/g)]
+    .filter(([, classes]) => classes.split(/\s+/).includes(className))
+    .length;
 }
 
 function assert(condition, message) {
