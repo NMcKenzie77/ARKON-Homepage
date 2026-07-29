@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '/src/main.jsx': fileURLToPath(new URL('./src/main.public.jsx', import.meta.url))
+      '/src/main.jsx': fileURLToPath(new URL('./src/production-main.jsx', import.meta.url))
     }
   },
   build: {
