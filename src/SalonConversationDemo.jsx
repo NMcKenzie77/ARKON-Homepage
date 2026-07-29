@@ -1,18 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import './salon-conversation-demo.css';
 
+const ASSISTANT_NAME = 'Maya';
+
 const scenarios = {
   followUp: {
-    tab: 'ARKON follows up',
-    eyebrow: 'Proactive client follow-up',
+    tab: 'Maya follows up',
     title: 'Reach out before the client forgets.',
     description:
-      'ARKON starts the conversation using the salon’s approved timing, tone, services, staff availability, and booking rules.',
+      'Luxe & Co. named its virtual front desk Maya. She follows the salon’s timing, tone, service history, and booking rules so follow-up feels like it came from the team.',
     messages: [
       {
         type: 'message',
         from: 'salon',
-        text: 'Hi Jasmine, it’s been about six weeks since your last color appointment. Maria has openings Thursday at 4:30 PM or Saturday at 11:00 AM. Would either work for you?',
+        text: 'Hey Jasmine, it’s Maya from Luxe & Co. It’s been about six weeks since your last color appointment, and Maria has a couple openings this week. Thursday at 4:30 or Saturday at 11. Want me to hold one for you?',
         time: '10:20 AM',
         wait: 700
       },
@@ -26,7 +27,7 @@ const scenarios = {
       {
         type: 'message',
         from: 'salon',
-        text: 'Perfect. Would you like me to reserve Saturday at 11:00 AM with Maria?',
+        text: 'Perfect. Still doing your usual highlights with Maria?',
         time: '10:21 AM',
         wait: 1350
       },
@@ -40,7 +41,7 @@ const scenarios = {
       {
         type: 'message',
         from: 'salon',
-        text: 'You’re booked with Maria this Saturday at 11:00 AM. We’ll send a reminder the day before.',
+        text: 'Got you down for Saturday at 11 with Maria ✨ I’ll send you a reminder Friday.',
         time: '10:23 AM',
         wait: 1400
       },
@@ -48,44 +49,43 @@ const scenarios = {
         type: 'confirmation',
         title: 'Appointment confirmed',
         detail: 'Saturday · 11:00 AM · Maria',
-        note: 'Reminder scheduled',
+        note: 'Reminder coming Friday',
         time: '10:23 AM',
         wait: 900
       }
     ]
   },
   inbound: {
-    tab: 'Client reaches out',
-    eyebrow: 'Inbound booking request',
+    tab: 'Client texts the salon',
     title: 'Answer while the client is still ready to book.',
     description:
-      'ARKON handles the first response, checks approved availability, keeps the conversation moving, and prepares the staff handoff when needed.',
+      'When a client texts the salon, Maya replies in the same voice, checks approved availability, and keeps the booking moving without sounding scripted.',
     messages: [
       {
         type: 'message',
         from: 'client',
-        text: 'Hi, do you have anything open Saturday for highlights?',
+        text: 'Hey, do you have anything open Saturday for highlights?',
         time: '4:16 PM',
         wait: 700
       },
       {
         type: 'message',
         from: 'salon',
-        text: 'Hi Jasmine! Maria has 10:30 AM and 1:00 PM available. Which works better?',
+        text: 'Hey Jasmine! Maria has 10:30 and 1:00 open Saturday. Which one works better?',
         time: '4:16 PM',
         wait: 1450
       },
       {
         type: 'message',
         from: 'client',
-        text: '10:30 works.',
+        text: '10:30.',
         time: '4:17 PM',
         wait: 1250
       },
       {
         type: 'message',
         from: 'salon',
-        text: 'Would you like me to reserve 10:30 AM with Maria?',
+        text: 'Perfect. Want me to grab that for you?',
         time: '4:17 PM',
         wait: 1250
       },
@@ -99,7 +99,7 @@ const scenarios = {
       {
         type: 'message',
         from: 'salon',
-        text: 'You’re booked with Maria for highlights this Saturday at 10:30 AM. We’ll send a reminder the day before.',
+        text: 'You’re all set for Saturday at 10:30 with Maria. See you then ✨',
         time: '4:18 PM',
         wait: 1400
       },
@@ -226,7 +226,7 @@ export default function SalonConversationDemo() {
   return (
     <section className="salon-conversation-section" aria-labelledby="salon-conversation-title">
       <div className="salon-conversation-copy">
-        <p className="eyebrow">Example conversation</p>
+        <p className="eyebrow">Meet {ASSISTANT_NAME}, Luxe &amp; Co.’s virtual front desk</p>
         <h2 id="salon-conversation-title">{scenario.title}</h2>
         <p>{scenario.description}</p>
 
@@ -246,9 +246,9 @@ export default function SalonConversationDemo() {
         </div>
 
         <div className="conversation-proof-row" aria-label="Conversation demonstration features">
-          <span>Salon voice</span>
-          <span>Natural pauses</span>
-          <span>Booking confirmation</span>
+          <span>Uses the salon’s voice</span>
+          <span>Knows client history</span>
+          <span>Books approved times</span>
         </div>
 
         <button className="conversation-replay" onClick={replay} type="button">
@@ -273,24 +273,21 @@ export default function SalonConversationDemo() {
 
             <header className="phone-chat-header">
               <span className="phone-back" aria-hidden="true">‹</span>
-              <span className="phone-avatar" aria-hidden="true">L&amp;C</span>
+              <span className="phone-avatar" aria-hidden="true">M</span>
               <div>
                 <strong>Luxe &amp; Co. Salon</strong>
-                <small>{scenario.eyebrow}</small>
+                <small>{ASSISTANT_NAME} · Virtual front desk</small>
               </div>
               <span className="phone-menu" aria-hidden="true">•••</span>
             </header>
 
             <div className="phone-day-label">Today</div>
 
-            <div className="phone-transcript" ref={transcriptRef} aria-label="Animated example conversation">
+            <div className="phone-transcript" ref={transcriptRef} aria-label={`Animated example conversation with ${ASSISTANT_NAME}`}>
               {visibleMessages.map((message, index) => (
                 <MessageBubble key={`${activeKey}-${index}`} message={message} />
               ))}
               {isTyping ? <TypingIndicator side={isTyping} /> : null}
-              {!nextMessage && visibleCount === scenario.messages.length ? (
-                <div className="phone-complete-label">Conversation complete</div>
-              ) : null}
             </div>
 
             <div className="phone-composer" aria-hidden="true">
