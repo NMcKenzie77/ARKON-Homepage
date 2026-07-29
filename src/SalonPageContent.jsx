@@ -72,7 +72,7 @@ export default function SalonPageContent() {
 
         <div className="industry-card-grid salon-capability-grid">
           {salonCards.map(card => (
-            <article className="industry-card is-visible" data-reveal key={card.number}>
+            <article className="industry-card salon-capability-card is-visible" data-reveal key={card.number}>
               <span>{card.number}</span>
               <h3>{card.title}</h3>
               <p>{card.copy}</p>
@@ -134,7 +134,7 @@ export default function SalonPageContent() {
 
         <div className="industry-workflow-list salon-workflow-list">
           {workflowSteps.map(([title, copy], index) => (
-            <article className="industry-step is-visible" data-reveal key={title}>
+            <article className="industry-step salon-workflow-step is-visible" data-reveal key={title}>
               <span>{String(index + 1).padStart(2, '0')}</span>
               <div>
                 <h3>{title}</h3>
@@ -158,7 +158,7 @@ export default function SalonPageContent() {
 
         <div className="industry-faq-grid salon-faq-grid">
           {salonFaq.map(([question, answer]) => (
-            <article className="industry-faq is-visible" data-reveal key={question}>
+            <article className="industry-faq salon-faq-card is-visible" data-reveal key={question}>
               <h3>{question}</h3>
               <p>{answer}</p>
             </article>
