@@ -22,7 +22,8 @@ const businessRoutes = [
 
 const customRouteExpectations = {
   '/real-estate': {
-    title: 'Every inquiry answered while the lead is still interested.',
+    title: 'Answer new leads now. Re-engage the opportunities already in your database.',
+    cardCount: 5,
     workflowCount: 0,
     faqCount: 0
   },
@@ -128,12 +129,13 @@ try {
         const page = industryPages[route];
         const customExpectation = customRouteExpectations[route];
         const expectedTitle = customExpectation?.title || page.title;
+        const expectedCardCount = customExpectation?.cardCount ?? page.cards.length;
         const expectedWorkflowCount = customExpectation?.workflowCount ?? page.workflow.length;
         const expectedFaqCount = customExpectation?.faqCount ?? page.faq.length;
 
         assert(markup.includes(`data-business-route="${route}"`), `${pass}: ${route} did not select the business-page renderer.`);
         assert(markup.includes(expectedTitle), `${pass}: ${route} did not render its own title.`);
-        assert(countClass(markup, 'industry-card') === page.cards.length, `${pass}: ${route} business cards did not render completely.`);
+        assert(countClass(markup, 'industry-card') === expectedCardCount, `${pass}: ${route} business cards did not render completely.`);
         assert(countClass(markup, 'industry-step') === expectedWorkflowCount, `${pass}: ${route} rendered an unexpected number of workflow cards.`);
         assert(countClass(markup, 'industry-faq') === expectedFaqCount, `${pass}: ${route} rendered an unexpected number of FAQ cards.`);
 
