@@ -65,9 +65,17 @@ function ClosingCta() {
 
 export default function IndustryPage({ page, route }) {
   if (route === '/salons') {
+    const salonBannerPage = {
+      ...page,
+      eyebrow: 'Salon digital AI team',
+      title: 'Every call answered. Every booking opportunity kept alive.',
+      description:
+        'ARKON gives your salon a named digital AI team. Vera answers calls live, Naya handles messages and follow-up, Marcus keeps client history attached, and Grant shows the owner what needs attention.'
+    };
+
     return (
       <main className="industry-page salon-page" data-business-route={route}>
-        <PageBanner page={page} route={route} animate={false} />
+        <PageBanner page={salonBannerPage} route={route} animate={false} />
         <SalonConversationDemo />
         <SalonPageContent />
       </main>
