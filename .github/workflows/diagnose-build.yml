@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - agent/diagnose-business-build
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
