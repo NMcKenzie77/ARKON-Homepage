@@ -1,14 +1,8 @@
-import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      '/src/main.jsx': fileURLToPath(new URL('./src/main.public.jsx', import.meta.url))
-    }
-  },
   build: {
     outDir: 'dist',
     sourcemap: false
