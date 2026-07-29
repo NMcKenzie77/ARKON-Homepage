@@ -1,6 +1,8 @@
 import PageBanner from './PageBanner.jsx';
 import SalonConversationDemo from './SalonConversationDemo.jsx';
 import SalonPageContent from './SalonPageContent.jsx';
+import { industryPages } from './site-content.js';
+import { getRelatedPages } from './seo-structure.js';
 
 function PricingSection({ plans }) {
   if (!plans?.length) return null;
@@ -47,18 +49,30 @@ function PricingSection({ plans }) {
   );
 }
 
-function ClosingCta() {
+function RelatedBusinessPages({ route }) {
+  const relatedPages = getRelatedPages(route, industryPages);
+  if (!relatedPages.length) return null;
+
   return (
-    <section className="demo-cta industry-cta is-visible" data-reveal>
-      <div>
-        <p className="eyebrow">See it for your business</p>
-        <h2>Walk through the real workflow with ARKON.</h2>
+    <section className="section industry-related-section">
+      <div className="section-heading is-visible" data-reveal>
+        <p className="eyebrow">Related business workflows</p>
+        <h2>See how the same operating approach applies elsewhere.</h2>
         <p>
-          Review the calls, messages, follow-ups, records, handoffs,
-          and owner visibility that matter most for your operation.
+          Each page focuses on the calls, messages, records, handoffs, and owner visibility
+          that matter in that kind of business.
         </p>
       </div>
-      <a className="primary-button" href="/#demo">Request demo</a>
+      <div className="industry-related-grid">
+        {relatedPages.map(({ path, page }) => (
+          <a className="industry-related-card is-visible" href={path} key={path} data-reveal>
+            <span>{page.eyebrow}</span>
+            <h3>{page.title}</h3>
+            <p>{page.description}</p>
+            <strong>View workflow</strong>
+          </a>
+        ))}
+      </div>
     </section>
   );
 }
@@ -147,7 +161,19 @@ export default function IndustryPage({ page, route }) {
         </div>
       </section>
 
-      <ClosingCta />
+      <RelatedBusinessPages route={route} />
+
+      <section className="demo-cta industry-cta is-visible" data-reveal>
+        <div>
+          <p className="eyebrow">See it for your business</p>
+          <h2>Walk through the real workflow with ARKON.</h2>
+          <p>
+            Review the calls, messages, follow-ups, records, handoffs,
+            and owner visibility that matter most for your operation.
+          </p>
+        </div>
+        <a className="primary-button" href="/#demo">Request demo</a>
+      </section>
     </main>
   );
 }
