@@ -1,0 +1,14 @@
+.site-footer-no-cta .site-footer-inner {
+  padding-top: 28px;
+}
+
+.site-footer-no-cta .footer-navigation-grid {
+  padding-top: 28px;
+}
+
+@media (max-width: 680px) {
+  .site-footer-no-cta .site-footer-inner,
+  .site-footer-no-cta .footer-navigation-grid {
+    padding-top: 24px;
+  }
+}
