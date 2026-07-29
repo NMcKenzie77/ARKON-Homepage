@@ -273,17 +273,6 @@ export default function RealEstatePageContent() {
           </div>
         </div>
       </section>
-
-      <section className="demo-cta industry-cta real-estate-closing-cta is-visible" data-reveal>
-        <div>
-          <p className="eyebrow">See ARKON for real estate</p>
-          <h2>See how your digital team answers new inquiries and reactivates past opportunities.</h2>
-          <p>
-            We’ll show how Vera, Naya, Paige, Marcus, and Grant work around personalized call answering, contact intake, buyer and seller follow-up, property questions, showing requests, and agent handoffs. From there, we can determine what makes sense for your business.
-          </p>
-        </div>
-        <a className="primary-button" href="/#demo">Book a real estate walkthrough</a>
-      </section>
     </>
   );
 }
