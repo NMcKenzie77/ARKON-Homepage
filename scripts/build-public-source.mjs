@@ -268,11 +268,11 @@ function buildPublicEntry() {
   source = replaceRequired(
     source,
     "    {industryPage\n      ? <UnifiedIndustryPage page={industryPage} route={route} />\n      : <AppWithCleanup route={route} />}",
-    "    <>\n      {legalPage\n        ? (\n          <>\n            <ClientSeoSync route={route} />\n            <UnifiedHeader />\n            <main className=\"industry-page\">\n              <PageBanner page={legalPage} route={route} animate={false} />\n              <LegalPage page={legalPage} />\n            </main>\n          </>\n        )\n        : industryPage\n          ? <UnifiedIndustryPage page={industryPage} route={route} />\n          : (\n            <>\n              <ClientSeoSync route={route} />\n              <App />\n            </>\n          )}\n      <CookieConsent />\n    </>",
-    'public legal, industry, homepage, and consent render block'
+    "    {legalPage\n      ? (\n        <>\n          <ClientSeoSync route={route} />\n          <UnifiedHeader />\n          <main className=\"industry-page\">\n            <PageBanner page={legalPage} route={route} animate={false} />\n            <LegalPage page={legalPage} />\n          </main>\n        </>\n      )\n      : industryPage\n        ? <UnifiedIndustryPage page={industryPage} route={route} />\n        : (\n          <>\n            <ClientSeoSync route={route} />\n            <App />\n          </>\n        )}",
+    'public legal, industry, and homepage render block'
   );
 
-  source += `\n\nconst footerContainer = document.getElementById('global-site-footer');\nif (!footerContainer) {\n  throw new Error('Global site footer container is missing.');\n}\ncreateRoot(footerContainer).render(\n  <React.StrictMode>\n    <SiteFooter />\n  </React.StrictMode>\n);\n`;
+  source += `\n\nconst footerContainer = document.getElementById('global-site-footer');\nif (!footerContainer) {\n  throw new Error('Global site footer container is missing.');\n}\ncreateRoot(footerContainer).render(\n  <React.StrictMode>\n    <SiteFooter />\n  </React.StrictMode>\n);\n\nconst consentContainer = document.getElementById('global-consent-root');\nif (!consentContainer) {\n  throw new Error('Global consent container is missing.');\n}\ncreateRoot(consentContainer).render(\n  <React.StrictMode>\n    <CookieConsent />\n  </React.StrictMode>\n);\n`;
 
   if (/LegacyContactBannerRemover|BrandTextNormalizer|PublicRoleCopyCleanup|AppWithCleanup/.test(source)) {
     throw new Error('Generated main.public.jsx still contains runtime cleanup code.');
@@ -298,8 +298,8 @@ function buildPublicEntry() {
     throw new Error('Generated main.public.jsx is missing registered legal routes.');
   }
 
-  if (occurrenceCount(source, /<CookieConsent \/>/g) !== 1) {
-    throw new Error('Generated main.public.jsx must render exactly one global CookieConsent layer.');
+  if (occurrenceCount(source, /<CookieConsent \/>/g) !== 1 || !source.includes("document.getElementById('global-consent-root')")) {
+    throw new Error('Generated main.public.jsx must render exactly one CookieConsent layer in the global consent container.');
   }
 
   writeFileSync(outputPath, source);
@@ -331,6 +331,10 @@ function verifyMasterShell() {
 
   if (!indexHtml.includes('id="global-site-footer"') || !indexHtml.includes('data-footer-fallback="true"')) {
     throw new Error('index.html is missing the global footer container and crawler fallback.');
+  }
+
+  if (!indexHtml.includes('id="global-consent-root"')) {
+    throw new Error('index.html is missing the global consent container.');
   }
 
   for (const legalHref of ['/privacy', '/terms', '/data-security', '/contact']) {
