@@ -3,6 +3,7 @@ import RealEstateCallDemo from './RealEstateCallDemo.jsx';
 import RealEstatePageContent from './RealEstatePageContent.jsx';
 import SalonConversationDemo from './SalonConversationDemo.jsx';
 import SalonPageContent from './SalonPageContent.jsx';
+import VerticalClosingCta from './VerticalClosingCta.jsx';
 import { industryPages } from './site-content.js';
 import { getRelatedPages } from './seo-structure.js';
 
@@ -183,17 +184,12 @@ export default function IndustryPage({ page, route }) {
 
       <RelatedBusinessPages route={route} />
 
-      <section className="demo-cta industry-cta is-visible" data-reveal>
-        <div>
-          <p className="eyebrow">See it for your business</p>
-          <h2>Walk through the real workflow with ARKON.</h2>
-          <p>
-            Review the calls, messages, follow-ups, records, handoffs,
-            and owner visibility that matter most for your operation.
-          </p>
-        </div>
-        <a className="primary-button" href="/#demo">Request demo</a>
-      </section>
+      <VerticalClosingCta
+        eyebrow={`See ARKON for ${page.eyebrow.toLowerCase()}`}
+        title="Walk through the real workflow with ARKON."
+        body="Review the calls, messages, follow-ups, records, handoffs, and owner visibility that matter most for your operation."
+        buttonLabel="Request demo"
+      />
     </main>
   );
 }
