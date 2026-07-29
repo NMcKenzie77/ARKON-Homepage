@@ -1,6 +1,5 @@
 import PageBanner from './PageBanner.jsx';
-import { industryPages } from './site-content.js';
-import { getRelatedPages } from './seo-structure.js';
+import SalonConversationDemo from './SalonConversationDemo.jsx';
 
 function PricingSection({ plans }) {
   if (!plans?.length) return null;
@@ -47,30 +46,25 @@ function PricingSection({ plans }) {
   );
 }
 
-function RelatedBusinessPages({ route }) {
-  const relatedPages = getRelatedPages(route, industryPages);
-  if (!relatedPages.length) return null;
+function ClosingCta({ route }) {
+  const salonCopy = route === '/salons';
 
   return (
-    <section className="section industry-related-section">
-      <div className="section-heading is-visible" data-reveal>
-        <p className="eyebrow">Related business workflows</p>
-        <h2>See how the same operating approach applies elsewhere.</h2>
+    <section className="demo-cta industry-cta is-visible" data-reveal>
+      <div>
+        <p className="eyebrow">{salonCopy ? 'See it in your salon' : 'See it for your business'}</p>
+        <h2>
+          {salonCopy
+            ? 'Walk through the booking and follow-up workflow with ARKON.'
+            : 'Walk through the real workflow with ARKON.'}
+        </h2>
         <p>
-          Each page focuses on the calls, messages, records, handoffs, and owner visibility
-          that matter in that kind of business.
+          {salonCopy
+            ? 'Review how missed calls, booking requests, client follow-up, staff handoffs, reminders, and owner visibility would work inside your salon.'
+            : 'Review the calls, messages, follow-ups, records, handoffs, and owner visibility that matter most for your operation.'}
         </p>
       </div>
-      <div className="industry-related-grid">
-        {relatedPages.map(({ path, page }) => (
-          <a className="industry-related-card is-visible" href={path} key={path} data-reveal>
-            <span>{page.eyebrow}</span>
-            <h3>{page.title}</h3>
-            <p>{page.description}</p>
-            <strong>View workflow</strong>
-          </a>
-        ))}
-      </div>
+      <a className="primary-button" href="/#demo">Request demo</a>
     </section>
   );
 }
@@ -79,6 +73,8 @@ export default function IndustryPage({ page, route }) {
   return (
     <main className="industry-page" data-business-route={route}>
       <PageBanner page={page} route={route} animate={false} />
+
+      {route === '/salons' ? <SalonConversationDemo /> : null}
 
       {page.reality ? (
         <section className="industry-reality-panel is-visible" data-reveal>
@@ -141,19 +137,7 @@ export default function IndustryPage({ page, route }) {
         </div>
       </section>
 
-      <RelatedBusinessPages route={route} />
-
-      <section className="demo-cta industry-cta is-visible" data-reveal>
-        <div>
-          <p className="eyebrow">See it for your business</p>
-          <h2>Walk through the real workflow with ARKON.</h2>
-          <p>
-            Review the calls, messages, follow-ups, records, handoffs,
-            and owner visibility that matter most for your operation.
-          </p>
-        </div>
-        <a className="primary-button" href="/#demo">Request demo</a>
-      </section>
+      <ClosingCta route={route} />
     </main>
   );
 }
