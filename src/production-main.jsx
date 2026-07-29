@@ -21,6 +21,7 @@ import './core-team-polish.css';
 import './copy-polish.css';
 import './homepage-logo.css';
 import './pricing.css';
+import './business-footer.css';
 
 export function normalizeRoute(pathname = '/') {
   const path = String(pathname || '/').split('?')[0].split('#')[0];
@@ -95,12 +96,13 @@ function RouteContent({ route }) {
 export function PublicSite({ route }) {
   const page = industryPages[route];
   const showPricing = Boolean(page?.pricing);
+  const isBusinessPage = Boolean(page && page.pageType !== 'legal');
 
   return (
     <>
       <SiteHeader showPricing={showPricing} />
       <RouteContent route={route} />
-      <SiteFooter />
+      <SiteFooter showCta={!isBusinessPage} />
       <CookieConsent />
     </>
   );
