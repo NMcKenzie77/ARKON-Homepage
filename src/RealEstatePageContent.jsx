@@ -2,7 +2,6 @@ import VerticalClosingCta from './VerticalClosingCta.jsx';
 import './real-estate-page.css';
 import './real-estate-followup.css';
 import './real-estate-dashboard-preview.css';
-import './real-estate-dashboard-compact.css';
 
 const teamCards = [
   {
@@ -27,8 +26,8 @@ const teamCards = [
   },
   {
     number: '05',
-    title: 'Grant shows what can move a deal.',
-    copy: 'New inquiries, reactivated leads, showing requests, seller opportunities, stalled follow-up, and decisions appear in one useful view.'
+    title: 'Grant briefs you before the day starts.',
+    copy: 'Grant turns activity across the business into a morning command briefing, a short owner action list, and a longer weekly digest that connects the dots.'
   }
 ];
 
@@ -45,45 +44,30 @@ const supportingRoles = [
   }
 ];
 
-const dashboardStats = [
-  ['$3,150,000', 'My Pipeline Value'],
-  ['$78,750', 'Expected Commission'],
-  ['8', 'Active Deals'],
-  ['2', 'Closing This Month'],
-  ['3', 'Need My Attention', 'alert'],
-  ['6', 'Follow-ups Queued']
+const grantMoneyStats = [
+  ['$3,150,000', 'Active pipeline'],
+  ['$78,750', 'Projected GCI'],
+  ['2', 'Closings this week'],
+  ['3', 'Owner actions', 'alert']
 ];
 
-const pipelineStages = [
-  ['New Leads', 4, 100, 'blue'],
-  ['Qualified', 3, 75, 'blue'],
-  ['Showing', 2, 50, 'blue'],
-  ['Under Contract', 2, 50, 'violet'],
-  ['Closed', 1, 25, 'green']
+const grantPriorityActions = [
+  ['01', 'Confirm Daniel Reyes’s Saturday showing.', 'Before 9:00 AM', 'amber'],
+  ['02', 'Call Laura Kim about her 60–90 day seller timeline.', 'Owner decision', 'red'],
+  ['03', 'Review the inspection deadline at 88 Birch Lane.', 'Due today', 'red']
 ];
 
-const activeDeals = [
-  ['Danielle Brooks', 'Qualified', 'Buyer', '$650,000', '$16,250', '—', 'On Track', 'green'],
-  ['Daniel Reyes', 'Showing Scheduled', 'Buyer', '$485,000', '$12,125', '—', 'On Track', 'green'],
-  ['Laura Kim', 'Contacted', 'Seller', '$825,000', '$20,625', 'Oct 28', 'Watch', 'amber'],
-  ['Marcus Hill', 'Under Contract', 'Seller', '$715,000', '$17,875', 'Aug 19', 'Needs Review', 'red']
+const grantCalendarStats = [
+  ['2', 'Showings today'],
+  ['5', 'Showings this week'],
+  ['$4,280,000', 'Active listing value'],
+  ['$1,365,000', 'Under contract']
 ];
 
-const needRows = [
-  ['3', 'Deals or leads needing judgment', 'red'],
-  ['2', 'Hot leads not contacted today', 'amber'],
-  ['2', 'Showings on today’s schedule', 'neutral'],
-  ['7', 'Conversations this week', 'neutral']
-];
-
-const scheduleRows = [
-  ['10:30 AM', 'Showing', '214 Oak Avenue', 'Daniel Reyes'],
-  ['2:00 PM', 'Listing', '88 Birch Lane', 'Laura Kim']
-];
-
-const conversationRows = [
-  ['Jul 29, 11:42 AM', 'Danielle Brooks', 'Naya'],
-  ['Jul 29, 10:15 AM', 'Daniel Reyes', 'Vera']
+const grantTeamRows = [
+  ['Jordan Lee', '$1,420,000', '4 opportunities', 'Healthy', 'green'],
+  ['Maya Torres', '$980,000', '3 opportunities', '1 escalation', 'red'],
+  ['Andre Cole', '$750,000', '2 opportunities', '1 quiet contact', 'amber']
 ];
 
 export default function RealEstatePageContent() {
@@ -134,20 +118,20 @@ export default function RealEstatePageContent() {
           <p className="eyebrow real-estate-grant-eyebrow">Your chief of staff</p>
           <h2 id="real-estate-grant-title">Grant is your chief of staff, available 24/7.</h2>
           <p>
-            Grant does more than organize a dashboard. Before the day starts, he actively briefs you on where the business stands, what needs attention, who is moving, who has gone quiet, and where the team may need help. The dashboard stays underneath when you want to inspect the details.
+            At 7:00 every morning, Grant briefs you on the money in motion, today’s calendar, urgent deadlines, quiet opportunities, team momentum, inbox risk, reputation, and anything that needs your judgment. On Monday, he delivers a longer executive digest that connects the week across the entire digital team.
           </p>
           <div className="real-estate-grant-points" aria-label="Grant briefing and visibility areas">
-            <span>Morning command briefing</span>
-            <span>Spoken readout</span>
-            <span>Live business visibility</span>
+            <span>Daily 7:00 AM command briefing</span>
+            <span>Spoken readout and owner action list</span>
+            <span>Monday executive digest</span>
           </div>
         </div>
 
-        <div className="real-estate-dashboard-preview" aria-label="Preview of Grant’s briefing and the ARKON Real Estate dashboard">
+        <div className="real-estate-dashboard-preview" aria-label="Preview of the Grant command center">
           <aside className="grant-preview-sidebar">
             <div className="grant-preview-logo">ARK<span>O</span>N</div>
             <nav aria-label="Example ARKON dashboard navigation">
-              <span className="active">Today</span>
+              <span>Today</span>
               <span>Calendar · Caleb</span>
               <span>Pipeline · Marcus</span>
               <span>Contacts · Marcus</span>
@@ -157,7 +141,7 @@ export default function RealEstatePageContent() {
               <span>Showings · Caleb</span>
               <span>Reviews · Grace</span>
               <span>Compliance · Clara</span>
-              <span>Digest · Grant</span>
+              <span className="active">Digest · Grant</span>
               <span>Settings</span>
             </nav>
             <div className="grant-preview-user">Jordan Lee<small>Sign out</small></div>
@@ -166,31 +150,31 @@ export default function RealEstatePageContent() {
           <div className="grant-preview-main">
             <div className="grant-preview-topline">
               <div>
-                <h3>Today</h3>
-                <p>Your pipeline, money, deals, and people who need you now.</p>
+                <h3>Oak &amp; Main Realty Command Center · Grant</h3>
+                <p>Where the business stands, what needs attention, who is moving, and who needs help.</p>
               </div>
-              <div className="grant-preview-actions"><span>Agency view →</span><strong>Contacts</strong></div>
+              <div className="grant-preview-actions"><span>Monday digest</span><strong>Run briefing</strong></div>
             </div>
 
             <div className="grant-preview-briefing">
               <div className="grant-preview-briefing-head">
                 <div>
                   <span>Grant morning verdict</span>
-                  <h4>The business is moving. Three items need you before 10 AM.</h4>
+                  <h4>Three items need attention before 10 AM.</h4>
                 </div>
-                <strong>Ready to brief</strong>
+                <strong>Needs attention</strong>
               </div>
               <p>
-                Good morning, Jordan. Your active pipeline is $3.15 million with $78,750 in expected commission. Daniel’s Saturday showing needs confirmation, Laura’s seller opportunity needs a call, and one under-contract deal needs review. Everything else is moving normally.
+                Good morning, Jordan. You have $3.15 million in active pipeline and about $78,750 in projected GCI. Two showings are on today’s calendar. Daniel’s showing needs confirmation, Laura’s seller opportunity needs a decision, and one inspection deadline needs review. Everything else is moving normally.
               </p>
               <div className="grant-preview-briefing-footer">
-                <span>Generated 7:00 AM</span>
-                <strong>▶ Hear Grant’s briefing</strong>
+                <span>Generated today at 7:00 AM</span>
+                <div><strong>▶ Read morning briefing</strong><em>Copy script</em></div>
               </div>
             </div>
 
-            <div className="grant-preview-stats">
-              {dashboardStats.map(([value, label, tone]) => (
+            <div className="grant-preview-stats grant-preview-money-stats">
+              {grantMoneyStats.map(([value, label, tone]) => (
                 <div className={`grant-preview-stat${tone ? ` ${tone}` : ''}`} key={label}>
                   <strong>{value}</strong>
                   <span>{label}</span>
@@ -198,77 +182,58 @@ export default function RealEstatePageContent() {
               ))}
             </div>
 
-            <div className="grant-preview-two-column">
-              <div className="grant-preview-card grant-preview-voice">
-                <h4>Voice Memo · Naya</h4>
-                <p>Record a quick update and let Naya attach it to the right contact or deal.</p>
-                <div className="grant-preview-record">● Hold to record</div>
+            <div className="grant-preview-card grant-preview-priority-card">
+              <div className="grant-preview-card-heading">
+                <h4>What needs attention before 10 AM</h4>
+                <span>Owner action list</span>
               </div>
-
-              <div className="grant-preview-card">
-                <h4>What needs me</h4>
-                <div className="grant-preview-needs">
-                  {needRows.map(([count, label, tone]) => (
-                    <div key={label}><span className={`grant-preview-tag ${tone}`}>{count}</span><p>{label}</p></div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="grant-preview-card">
-              <h4>My Pipeline by Stage</h4>
-              <div className="grant-preview-stages">
-                {pipelineStages.map(([label, count, width, tone]) => (
-                  <div className="grant-preview-stage" key={label}>
-                    <span>{label}</span>
-                    <strong>{count}</strong>
-                    <div><i className={tone} style={{ width: `${width}%` }} /></div>
+              <div className="grant-preview-priority-list">
+                {grantPriorityActions.map(([number, action, timing, tone]) => (
+                  <div key={number}>
+                    <span>{number}</span>
+                    <strong>{action}</strong>
+                    <em className={`grant-preview-tag ${tone}`}>{timing}</em>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="grant-preview-card grant-preview-deals-card">
-              <h4>My Active Deals</h4>
-              <div className="grant-preview-table-wrap">
-                <table className="grant-preview-table">
-                  <thead>
-                    <tr><th>Contact</th><th>Stage</th><th>Type</th><th>Deal Value</th><th>Est. Commission</th><th>Close Date</th><th>Risk</th></tr>
-                  </thead>
-                  <tbody>
-                    {activeDeals.map(([contact, stage, type, value, commission, closeDate, risk, tone]) => (
-                      <tr key={contact}>
-                        <td><strong>{contact}</strong></td>
-                        <td><span className="grant-preview-tag neutral">{stage}</span></td>
-                        <td>{type}</td>
-                        <td>{value}</td>
-                        <td>{commission}</td>
-                        <td>{closeDate}</td>
-                        <td><span className={`grant-preview-tag ${tone}`}>{risk}</span></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+            <div className="grant-preview-stats grant-preview-calendar-stats">
+              {grantCalendarStats.map(([value, label]) => (
+                <div className="grant-preview-stat" key={label}>
+                  <strong>{value}</strong>
+                  <span>{label}</span>
+                </div>
+              ))}
             </div>
 
-            <div className="grant-preview-two-column grant-preview-bottom-grid">
-              <div className="grant-preview-card">
-                <h4>Today’s Schedule</h4>
-                <div className="grant-preview-simple-table">
-                  {scheduleRows.map(([time, kind, address, contact]) => (
-                    <div key={`${time}-${contact}`}><span>{time}</span><span>{kind}</span><span>{address}</span><strong>{contact}</strong></div>
+            <div className="grant-preview-two-column grant-preview-command-bottom">
+              <div className="grant-preview-card grant-preview-momentum-card">
+                <div className="grant-preview-card-heading">
+                  <h4>Team momentum</h4>
+                  <span>Who is carrying the work</span>
+                </div>
+                <div className="grant-preview-momentum-list">
+                  {grantTeamRows.map(([name, pipeline, opportunities, signal, tone]) => (
+                    <div key={name}>
+                      <strong>{name}</strong>
+                      <span>{pipeline}</span>
+                      <span>{opportunities}</span>
+                      <em className={`grant-preview-tag ${tone}`}>{signal}</em>
+                    </div>
                   ))}
                 </div>
               </div>
 
-              <div className="grant-preview-card">
-                <h4>Recent Conversations</h4>
-                <div className="grant-preview-simple-table conversations">
-                  {conversationRows.map(([time, contact, owner]) => (
-                    <div key={`${time}-${contact}`}><span>{time}</span><strong>{contact}</strong><span className="grant-preview-tag neutral">{owner}</span></div>
-                  ))}
+              <div className="grant-preview-card grant-preview-digest-card">
+                <div className="grant-preview-card-heading">
+                  <h4>Monday executive digest</h4>
+                  <span>Delivered by email</span>
                 </div>
+                <p>
+                  Grant connects the week across leads, follow-up, showings, listings, reviews, compliance, and the inbox, then ends with the five things that need you next.
+                </p>
+                <div className="grant-preview-digest-footer"><span>Weekly archive ready</span><strong>Read latest digest</strong></div>
               </div>
             </div>
           </div>
