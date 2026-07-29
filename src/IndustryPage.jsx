@@ -1,4 +1,6 @@
 import PageBanner from './PageBanner.jsx';
+import RealEstateCallDemo from './RealEstateCallDemo.jsx';
+import RealEstatePageContent from './RealEstatePageContent.jsx';
 import SalonConversationDemo from './SalonConversationDemo.jsx';
 import SalonPageContent from './SalonPageContent.jsx';
 import { industryPages } from './site-content.js';
@@ -78,6 +80,24 @@ function RelatedBusinessPages({ route }) {
 }
 
 export default function IndustryPage({ page, route }) {
+  if (route === '/real-estate') {
+    const realEstateBannerPage = {
+      ...page,
+      eyebrow: 'Real estate digital AI team',
+      title: 'Every inquiry answered while the lead is still interested.',
+      description:
+        'Vera answers calls live, Paige provides approved listing and property intelligence, Marcus keeps relationship context attached, and Grant shows the agent or team leader what needs attention.'
+    };
+
+    return (
+      <main className="industry-page real-estate-page" data-business-route={route}>
+        <PageBanner page={realEstateBannerPage} route={route} animate={false} />
+        <RealEstateCallDemo />
+        <RealEstatePageContent />
+      </main>
+    );
+  }
+
   if (route === '/salons') {
     const salonBannerPage = {
       ...page,
