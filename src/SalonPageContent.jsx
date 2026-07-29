@@ -4,7 +4,7 @@ const salonCards = [
   {
     number: '01',
     title: 'Missed calls become conversations.',
-    copy: 'When the team cannot answer, Maya can text back, find out what the client needs, and keep the booking from disappearing.'
+    copy: 'When the team cannot answer, Naya can text back, find out what the client needs, and keep the booking from disappearing.'
   },
   {
     number: '02',
@@ -14,7 +14,7 @@ const salonCards = [
   {
     number: '03',
     title: 'Past clients get a natural nudge.',
-    copy: 'Maya can reach out based on service history and the salon’s rebooking rhythm instead of sending a generic blast.'
+    copy: 'Naya can reach out based on service history and the salon’s rebooking rhythm instead of sending a generic blast.'
   },
   {
     number: '04',
@@ -25,8 +25,8 @@ const salonCards = [
 
 const workflowSteps = [
   ['Client reaches out', 'A call, text, or online request comes in while the team is with clients.'],
-  ['Maya checks the rules', 'She uses the salon’s services, timing, staff preferences, approved language, and available appointment windows.'],
-  ['The next step happens', 'Maya books, reschedules, follows up, or asks one clear question to keep the conversation moving.'],
+  ['Naya checks the rules', 'She uses the salon’s services, timing, staff preferences, approved language, and available appointment windows.'],
+  ['The next step happens', 'Naya books, reschedules, follows up, or asks one clear question to keep the conversation moving.'],
   ['The team stays in control', 'Anything unusual is handed to the right person with the client history and current request already organized.']
 ];
 
@@ -47,12 +47,12 @@ const ownerRows = [
 
 const salonFaq = [
   [
-    'Will clients know Maya is the virtual front desk?',
-    'Yes. The salon decides how Maya is introduced, but she should never pretend to be a human employee. She can still sound natural, use the salon’s voice, and feel like part of the team.'
+    'Will clients know Naya is the virtual front desk?',
+    'Yes. The salon decides how Naya is introduced, but she should never pretend to be a human employee. She can still sound natural, use the salon’s voice, and feel like part of the team.'
   ],
   [
-    'What happens when a client asks something Maya should not answer?',
-    'Maya stops, captures what the client needs, and sends the conversation to the right person. She does not guess about pricing, corrections, complaints, or anything the salon marks for human review.'
+    'What happens when a client asks something Naya should not answer?',
+    'Naya stops, captures what the client needs, and sends the conversation to the right person. She does not guess about pricing, corrections, complaints, or anything the salon marks for human review.'
   ]
 ];
 
@@ -62,11 +62,11 @@ export default function SalonPageContent() {
       <section className="section salon-capabilities-section" aria-labelledby="salon-capabilities-title">
         <div className="salon-section-heading">
           <div>
-            <p className="eyebrow">What Maya handles</p>
+            <p className="eyebrow">What Naya handles</p>
             <h2 id="salon-capabilities-title">Front-desk work should keep moving even when every chair is full.</h2>
           </div>
           <p>
-            Maya is not there to replace the salon team. She keeps the repeatable conversations moving so clients get an answer and staff can stay focused on the person in the chair.
+            Naya is not there to replace the salon team. She keeps the repeatable conversations moving so clients get an answer and staff can stay focused on the person in the chair.
           </p>
         </div>
 
@@ -84,9 +84,9 @@ export default function SalonPageContent() {
       <section className="section salon-control-section" aria-labelledby="salon-control-title">
         <div className="salon-control-copy">
           <p className="eyebrow">The handoff matters</p>
-          <h2 id="salon-control-title">Maya knows when the conversation belongs to your team.</h2>
+          <h2 id="salon-control-title">Naya knows when the conversation belongs to your team.</h2>
           <p>
-            The salon defines the boundaries. Maya handles the approved, repeatable work and moves anything sensitive, unusual, or judgment-based to the right person.
+            The salon defines the boundaries. Naya handles the approved, repeatable work and moves anything sensitive, unusual, or judgment-based to the right person.
           </p>
 
           <div className="salon-handoff-list" aria-label="Examples of staff handoffs">
@@ -152,7 +152,7 @@ export default function SalonPageContent() {
             <h2 id="salon-faq-title">Natural with clients. Controlled by the salon.</h2>
           </div>
           <p>
-            Maya can feel like part of the front desk without hiding what she is or crossing the boundaries the salon sets.
+            Naya can feel like part of the front desk without hiding what she is or crossing the boundaries the salon sets.
           </p>
         </div>
 
@@ -168,7 +168,7 @@ export default function SalonPageContent() {
 
       <section className="demo-cta industry-cta salon-closing-cta is-visible" data-reveal>
         <div>
-          <p className="eyebrow">See Maya in your salon</p>
+          <p className="eyebrow">See Naya in your salon</p>
           <h2>Walk through the booking and follow-up rules your team already uses.</h2>
           <p>
             We will map missed calls, booking requests, rebooking, reminders, staff handoffs, and the owner view around the way your salon actually works.
