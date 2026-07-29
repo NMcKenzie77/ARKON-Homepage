@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import './real-estate-call-demo.css';
 
 const EXAMPLE_OFFICE = 'Oak & Main Realty';
+const READ_HOLD_MS = 1500;
 
 const scenarios = {
   followUp: {
@@ -250,7 +251,7 @@ export default function RealEstateCallDemo() {
         if (cancelled) return;
         setVisibleCount(index + 1);
         revealNext(index + 1);
-      }, index === 0 ? 550 : scenario.messages[index - 1].wait);
+      }, index === 0 ? 550 : scenario.messages[index - 1].wait + READ_HOLD_MS);
       timers.push(timer);
     };
 
