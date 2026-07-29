@@ -1,5 +1,6 @@
 import './real-estate-page.css';
 import './real-estate-followup.css';
+import './real-estate-dashboard-preview.css';
 
 const teamCards = [
   {
@@ -29,19 +30,45 @@ const teamCards = [
   }
 ];
 
-const opportunityRows = [
-  ['Past buyer reactivated after five months', 'Areas and budget refreshed · lender reconnection needed', 'Reactivated'],
-  ['Buyer requested Saturday at 10:30', '214 Oak Avenue · unrepresented buyer', 'Confirm showing'],
-  ['Homeowner plans to sell in 60–90 days', 'Relocating · agent call requested today', 'Seller lead'],
-  ['Open-house visitor requested disclosures', 'Documents sent · follow-up scheduled', 'Moving']
+const dashboardStats = [
+  ['$3,150,000', 'My Pipeline Value'],
+  ['$78,750', 'Expected Commission'],
+  ['8', 'Active Deals'],
+  ['2', 'Closing This Month'],
+  ['3', 'Need My Attention', 'alert'],
+  ['6', 'Follow-ups Queued']
 ];
 
-const attentionItems = [
-  'Past leads ready to revisit',
-  'Showing confirmations',
-  'New seller opportunities',
-  'Unrepresented buyers',
-  'Leads waiting on an agent'
+const pipelineStages = [
+  ['New Leads', 4, 100, 'blue'],
+  ['Qualified', 3, 75, 'blue'],
+  ['Showing', 2, 50, 'blue'],
+  ['Under Contract', 2, 50, 'violet'],
+  ['Closed', 1, 25, 'green']
+];
+
+const activeDeals = [
+  ['Danielle Brooks', 'Qualified', 'Buyer', '$650,000', '$16,250', '—', 'On Track', 'green'],
+  ['Daniel Reyes', 'Showing Scheduled', 'Buyer', '$485,000', '$12,125', '—', 'On Track', 'green'],
+  ['Laura Kim', 'Contacted', 'Seller', '$825,000', '$20,625', 'Oct 28', 'Watch', 'amber'],
+  ['Marcus Hill', 'Under Contract', 'Seller', '$715,000', '$17,875', 'Aug 19', 'Needs Review', 'red']
+];
+
+const needRows = [
+  ['3', 'Deals or leads needing judgment', 'red'],
+  ['2', 'Hot leads not contacted today', 'amber'],
+  ['2', 'Showings on today’s schedule', 'neutral'],
+  ['7', 'Conversations this week', 'neutral']
+];
+
+const scheduleRows = [
+  ['10:30 AM', 'Showing', '214 Oak Avenue', 'Daniel Reyes'],
+  ['2:00 PM', 'Listing', '88 Birch Lane', 'Laura Kim']
+];
+
+const conversationRows = [
+  ['Jul 29, 11:42 AM', 'Danielle Brooks', 'Naya'],
+  ['Jul 29, 10:15 AM', 'Daniel Reyes', 'Vera']
 ];
 
 export default function RealEstatePageContent() {
@@ -69,42 +96,131 @@ export default function RealEstatePageContent() {
         </div>
       </section>
 
-      <section className="section real-estate-opportunity-section" aria-labelledby="real-estate-opportunity-title">
-        <div className="real-estate-opportunity-copy">
-          <p className="eyebrow">Your opportunity brief</p>
-          <h2 id="real-estate-opportunity-title">See the new inquiries, reactivated leads, showings, and decisions that can move a deal.</h2>
+      <section className="section real-estate-grant-section" aria-labelledby="real-estate-grant-title">
+        <div className="real-estate-grant-copy">
+          <p className="eyebrow real-estate-grant-eyebrow">Your chief of staff</p>
+          <h2 id="real-estate-grant-title">Grant is your chief of staff, available 24/7.</h2>
           <p>
-            Grant keeps the agent focused on revenue-producing opportunities and necessary decisions. Routine activity stays out of the way.
+            Grant brings the work from Marcus, Caleb, Naya, Vera, and Paige into one organized view. You can see the pipeline, showings, opportunities, and anything that needs your attention without carrying every detail yourself.
           </p>
-
-          <div className="real-estate-attention-list" aria-label="Real estate opportunities and decisions">
-            {attentionItems.map(item => <span key={item}>{item}</span>)}
+          <div className="real-estate-grant-points" aria-label="Grant visibility areas">
+            <span>Pipeline visibility</span>
+            <span>Showing activity</span>
+            <span>Opportunity awareness</span>
           </div>
         </div>
 
-        <div className="real-estate-opportunity-panel" aria-label="Example real estate opportunity brief">
-          <div className="real-estate-opportunity-header">
-            <div>
-              <span>Grant · Opportunity brief</span>
-              <h3>Today’s inquiries, follow-up, and decisions</h3>
-            </div>
-            <strong>2 need an agent</strong>
-          </div>
+        <div className="real-estate-dashboard-preview" aria-label="Preview of the ARKON Real Estate dashboard">
+          <aside className="grant-preview-sidebar">
+            <div className="grant-preview-logo">ARK<span>O</span>N</div>
+            <nav aria-label="Example ARKON dashboard navigation">
+              <span className="active">Today</span>
+              <span>Calendar · Caleb</span>
+              <span>Pipeline · Marcus</span>
+              <span>Contacts · Marcus</span>
+              <span>Listings · Paige</span>
+              <span>CMA · Paige</span>
+              <span>Inbox · Iris</span>
+              <span>Showings · Caleb</span>
+              <span>Reviews · Grace</span>
+              <span>Compliance · Clara</span>
+              <span>Digest · Grant</span>
+              <span>Settings</span>
+            </nav>
+            <div className="grant-preview-user">Jordan Lee<small>Sign out</small></div>
+          </aside>
 
-          <div className="real-estate-opportunity-metrics">
-            <div><span>New inquiries</span><strong>8</strong></div>
-            <div><span>Past leads reactivated</span><strong>3</strong></div>
-            <div><span>Needs an agent</span><strong>2</strong></div>
-          </div>
-
-          <div className="real-estate-opportunity-rows">
-            {opportunityRows.map(([title, detail, status]) => (
-              <div className="real-estate-opportunity-row" key={`${title}-${status}`}>
-                <span className="real-estate-opportunity-avatar" aria-hidden="true">{title.charAt(0)}</span>
-                <div><strong>{title}</strong><small>{detail}</small></div>
-                <em className={`real-estate-opportunity-status real-estate-status-${status.toLowerCase().replace(/\s+/g, '-')}`}>{status}</em>
+          <div className="grant-preview-main">
+            <div className="grant-preview-topline">
+              <div>
+                <h3>Today</h3>
+                <p>Your pipeline, money, deals, and people who need you now.</p>
               </div>
-            ))}
+              <div className="grant-preview-actions"><span>Agency view →</span><strong>Contacts</strong></div>
+            </div>
+
+            <div className="grant-preview-stats">
+              {dashboardStats.map(([value, label, tone]) => (
+                <div className={`grant-preview-stat${tone ? ` ${tone}` : ''}`} key={label}>
+                  <strong>{value}</strong>
+                  <span>{label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="grant-preview-two-column">
+              <div className="grant-preview-card grant-preview-voice">
+                <h4>Voice Memo · Naya</h4>
+                <p>Record a quick update and let Naya attach it to the right contact or deal.</p>
+                <div className="grant-preview-record">● Hold to record</div>
+              </div>
+
+              <div className="grant-preview-card">
+                <h4>What needs me</h4>
+                <div className="grant-preview-needs">
+                  {needRows.map(([count, label, tone]) => (
+                    <div key={label}><span className={`grant-preview-tag ${tone}`}>{count}</span><p>{label}</p></div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="grant-preview-card">
+              <h4>My Pipeline by Stage</h4>
+              <div className="grant-preview-stages">
+                {pipelineStages.map(([label, count, width, tone]) => (
+                  <div className="grant-preview-stage" key={label}>
+                    <span>{label}</span>
+                    <strong>{count}</strong>
+                    <div><i className={tone} style={{ width: `${width}%` }} /></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grant-preview-card grant-preview-deals-card">
+              <h4>My Active Deals</h4>
+              <div className="grant-preview-table-wrap">
+                <table className="grant-preview-table">
+                  <thead>
+                    <tr><th>Contact</th><th>Stage</th><th>Type</th><th>Deal Value</th><th>Est. Commission</th><th>Close Date</th><th>Risk</th></tr>
+                  </thead>
+                  <tbody>
+                    {activeDeals.map(([contact, stage, type, value, commission, closeDate, risk, tone]) => (
+                      <tr key={contact}>
+                        <td><strong>{contact}</strong></td>
+                        <td><span className="grant-preview-tag neutral">{stage}</span></td>
+                        <td>{type}</td>
+                        <td>{value}</td>
+                        <td>{commission}</td>
+                        <td>{closeDate}</td>
+                        <td><span className={`grant-preview-tag ${tone}`}>{risk}</span></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="grant-preview-two-column grant-preview-bottom-grid">
+              <div className="grant-preview-card">
+                <h4>Today’s Schedule</h4>
+                <div className="grant-preview-simple-table">
+                  {scheduleRows.map(([time, kind, address, contact]) => (
+                    <div key={`${time}-${contact}`}><span>{time}</span><span>{kind}</span><span>{address}</span><strong>{contact}</strong></div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grant-preview-card">
+                <h4>Recent Conversations</h4>
+                <div className="grant-preview-simple-table conversations">
+                  {conversationRows.map(([time, contact, owner]) => (
+                    <div key={`${time}-${contact}`}><span>{time}</span><strong>{contact}</strong><span className="grant-preview-tag neutral">{owner}</span></div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
