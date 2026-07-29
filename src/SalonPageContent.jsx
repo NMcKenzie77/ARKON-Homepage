@@ -1,4 +1,5 @@
 import './salon-page.css';
+import './salon-cta-compact.css';
 
 const salonCards = [
   {
@@ -111,7 +112,7 @@ export default function SalonPageContent() {
             We’ll show how Vera answers calls, Naya handles messages and follow-up, Marcus keeps client context attached, and Grant surfaces bookings, schedule gaps, and decisions. From there, we can determine what makes sense for your salon.
           </p>
         </div>
-        <a className="primary-button" href="/#demo">See the salon demo</a>
+        <a className="primary-button" href="/#demo">Book a salon walkthrough</a>
       </section>
     </>
   );
