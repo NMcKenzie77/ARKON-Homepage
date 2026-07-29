@@ -31,6 +31,19 @@ const teamCards = [
   }
 ];
 
+const supportingRoles = [
+  {
+    name: 'Iris',
+    role: 'Email inbox intelligence',
+    copy: 'Monitors the inbox, prioritizes urgent client, lead, transaction, and document emails, and surfaces what needs a person before it gets buried.'
+  },
+  {
+    name: 'Grace',
+    role: 'Review management',
+    copy: 'Monitors new reviews, prepares responses in the business voice, and routes sensitive or negative feedback for approval before anything is published.'
+  }
+];
+
 const dashboardStats = [
   ['$3,150,000', 'My Pipeline Value'],
   ['$78,750', 'Expected Commission'],
@@ -82,7 +95,7 @@ export default function RealEstatePageContent() {
             <h2 id="real-estate-team-title">Your digital team answers new inquiries and keeps past opportunities from going silent.</h2>
           </div>
           <p>
-            Naya is the member buyers and sellers see in the follow-up demo above. Behind her, Vera, Paige, Marcus, and Grant keep calls, property context, relationship history, handoffs, and agent visibility connected.
+            Naya is the member buyers and sellers see in the follow-up demo above. Behind her, Vera, Paige, Marcus, and Grant keep calls, property context, relationship history, handoffs, and agent visibility connected. Iris and Grace are available when the business also wants inbox and review coverage.
           </p>
         </div>
 
@@ -94,6 +107,24 @@ export default function RealEstatePageContent() {
               <p>{card.copy}</p>
             </article>
           ))}
+        </div>
+
+        <div className="real-estate-supporting-roles">
+          <div className="real-estate-supporting-roles-copy">
+            <p className="eyebrow">Additional roles available</p>
+            <h3>Inbox and reputation coverage are there when you need them.</h3>
+            <p>Iris and Grace do not sit in the middle of every transaction, but they cover two places where important signals are easy to miss.</p>
+          </div>
+
+          <div className="real-estate-supporting-grid">
+            {supportingRoles.map(role => (
+              <article className="real-estate-supporting-card is-visible" data-reveal key={role.name}>
+                <span>{role.role}</span>
+                <h3>{role.name}</h3>
+                <p>{role.copy}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
