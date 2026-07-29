@@ -19,7 +19,7 @@ const salonCards = [
   {
     number: '04',
     title: 'Grant shows the owner what matters.',
-    copy: 'Booked appointments, waiting clients, open conversations, and staff handoffs appear in one clear owner view.'
+    copy: 'Booked appointments, schedule gaps, at-risk clients, and decisions appear in one clear owner view.'
   }
 ];
 
@@ -27,22 +27,22 @@ const workflowSteps = [
   ['A client reaches the salon', 'The request can arrive by phone, text, or the website while the staff is with clients.'],
   ['Vera or Naya responds now', 'Vera handles the live call. Naya handles the message or follow-up. The client does not have to wait for the floor to slow down.'],
   ['Marcus attaches the history', 'The digital team can use the client’s service history, preferences, prior conversations, and approved salon rules before taking the next step.'],
-  ['Grant keeps the owner informed', 'The owner sees what was booked, what was handled, and what requires a stylist, manager, or human decision.']
+  ['Grant keeps the owner informed', 'The owner sees what was booked, where the schedule has gaps, what is at risk, and what needs a decision.']
 ];
 
-const handoffItems = [
-  'Color corrections',
-  'Pricing exceptions',
-  'Complaints or refunds',
-  'Sensitive client requests',
-  'Stylist-specific judgment'
+const ownerAttentionItems = [
+  'Unfilled openings',
+  'Unconfirmed appointments',
+  'Color correction review',
+  'Pricing approval',
+  'Client complaints'
 ];
 
 const ownerRows = [
-  ['Jasmine R.', 'Rebooking conversation', 'Booked'],
-  ['Alicia M.', 'Color correction question', 'Needs staff'],
-  ['Brianna K.', 'Live call about extensions', 'Handled'],
-  ['Dana S.', 'Saturday appointment request', 'Booked']
+  ['Saturday at 11:00 opened after cancellation', 'Open appointment worth refilling', 'Needs follow-up'],
+  ['Alicia asked about a color correction', 'Service decision before booking', 'Manager review'],
+  ['Jasmine rebooked with Maria', 'Saturday at 11:00 confirmed', 'Booked'],
+  ['Tomorrow’s 2:30 appointment is not confirmed', 'Revenue may slip if no one responds', 'At risk']
 ];
 
 const salonFaq = [
@@ -83,38 +83,38 @@ export default function SalonPageContent() {
 
       <section className="section salon-control-section" aria-labelledby="salon-control-title">
         <div className="salon-control-copy">
-          <p className="eyebrow">Control without interruption</p>
-          <h2 id="salon-control-title">Your digital team handles the routine. Your staff sees only what needs a decision.</h2>
+          <p className="eyebrow">Your owner brief</p>
+          <h2 id="salon-control-title">See the bookings, schedule gaps, and decisions that affect your day.</h2>
           <p>
-            Vera and Naya keep approved calls and messages moving, Marcus keeps the client context attached, and Grant surfaces the few conversations that need a stylist or manager.
+            Grant shows what changed, where revenue may be slipping, and what needs a decision. Everything else stays out of the way.
           </p>
 
-          <div className="salon-handoff-list" aria-label="Examples of staff handoffs">
-            {handoffItems.map(item => <span key={item}>{item}</span>)}
+          <div className="salon-handoff-list" aria-label="Items that may need owner or manager attention">
+            {ownerAttentionItems.map(item => <span key={item}>{item}</span>)}
           </div>
         </div>
 
-        <div className="salon-owner-panel" aria-label="Example salon owner view">
+        <div className="salon-owner-panel" aria-label="Example salon owner brief">
           <div className="salon-owner-header">
             <div>
               <span>Grant · Owner brief</span>
-              <h3>What happened while you were with clients</h3>
+              <h3>Today’s bookings, gaps, and decisions</h3>
             </div>
-            <strong>2 need attention</strong>
+            <strong>1 decision now</strong>
           </div>
 
           <div className="salon-owner-metrics">
-            <div><span>Handled</span><strong>18</strong></div>
-            <div><span>Booked</span><strong>7</strong></div>
-            <div><span>Needs staff</span><strong>2</strong></div>
+            <div><span>Appointments booked</span><strong>7</strong></div>
+            <div><span>Openings to fill</span><strong>2</strong></div>
+            <div><span>Needs a decision</span><strong>1</strong></div>
           </div>
 
           <div className="salon-owner-rows">
-            {ownerRows.map(([name, request, status]) => (
-              <div className="salon-owner-row" key={`${name}-${request}`}>
-                <span className="salon-owner-avatar" aria-hidden="true">{name.charAt(0)}</span>
-                <div><strong>{name}</strong><small>{request}</small></div>
-                <em className={`salon-owner-status salon-owner-status-${status.toLowerCase().replace(' ', '-')}`}>{status}</em>
+            {ownerRows.map(([title, detail, status]) => (
+              <div className="salon-owner-row" key={`${title}-${status}`}>
+                <span className="salon-owner-avatar" aria-hidden="true">{title.charAt(0)}</span>
+                <div><strong>{title}</strong><small>{detail}</small></div>
+                <em className={`salon-owner-status salon-owner-status-${status.toLowerCase().replace(/\s+/g, '-')}`}>{status}</em>
               </div>
             ))}
           </div>
