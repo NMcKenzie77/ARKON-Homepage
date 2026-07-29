@@ -190,8 +190,8 @@ function buildPublicEntry() {
   source = replaceRequired(
     source,
     "import App from './App.jsx';",
-    "import App from './App.public.jsx';\nimport SiteFooter from './SiteFooter.jsx';\nimport LegalPage from './LegalPage.jsx';\nimport CookieConsent from './CookieConsent.jsx';\nimport './legal-register.js';",
-    'public App, legal page, footer, consent, and route imports'
+    "import App from './App.public.jsx';\nimport SiteFooter from './SiteFooter.jsx';\nimport LegalPage from './LegalPage.jsx';\nimport PageBanner from './PageBanner.jsx';\nimport CookieConsent from './CookieConsent.jsx';\nimport './legal-register.js';",
+    'public App, page banner, legal page, footer, consent, and route imports'
   );
 
   source = removeSection(
@@ -210,6 +210,13 @@ function buildPublicEntry() {
 
   source = removeSection(
     source,
+    '\nfunction Breadcrumbs({ route, page })',
+    '\nfunction PricingSection',
+    'legacy inline breadcrumb renderer'
+  );
+
+  source = removeSection(
+    source,
     '\nfunction AppWithCleanup({ route }) {',
     '\nconst route = getCurrentRoute();',
     'runtime cleanup wrapper'
@@ -224,6 +231,29 @@ function buildPublicEntry() {
 
   source = replaceRequired(
     source,
+    `        <Breadcrumbs route={route} page={page} />
+        <section className="hero industry-hero">
+          <div className="hero-background" aria-hidden="true">
+            <span className="orb orb-one" />
+            <span className="orb orb-two" />
+            <span className="grid-glow" />
+          </div>
+          <div className="industry-hero-inner" data-reveal>
+            <p className="eyebrow">{page.eyebrow}</p>
+            <h1>{page.title}</h1>
+            <p>{page.description}</p>
+            <div className="hero-actions">
+              <a className="primary-button" href="/#demo">Request demo</a>
+              <a className="secondary-button" href="/how-it-works">See how ARKON works</a>
+            </div>
+          </div>
+        </section>`,
+    '        <PageBanner page={page} route={route} />',
+    'shared industry page banner'
+  );
+
+  source = replaceRequired(
+    source,
     'const industryPage = industryPages[route];',
     "const routePage = industryPages[route];\nconst legalPage = routePage?.pageType === 'legal' ? routePage : null;\nconst industryPage = routePage?.pageType === 'legal' ? null : routePage;",
     'legal and industry route split'
@@ -232,7 +262,7 @@ function buildPublicEntry() {
   source = replaceRequired(
     source,
     "    {industryPage\n      ? <UnifiedIndustryPage page={industryPage} route={route} />\n      : <AppWithCleanup route={route} />}",
-    "    <>\n      {legalPage\n        ? (\n          <>\n            <ClientSeoSync route={route} />\n            <UnifiedHeader />\n            <LegalPage page={legalPage} />\n            <SiteFooter />\n          </>\n        )\n        : industryPage\n          ? <UnifiedIndustryPage page={industryPage} route={route} />\n          : (\n            <>\n              <ClientSeoSync route={route} />\n              <App />\n            </>\n          )}\n      <CookieConsent />\n    </>",
+    "    <>\n      {legalPage\n        ? (\n          <>\n            <ClientSeoSync route={route} />\n            <UnifiedHeader />\n            <main className=\"industry-page\">\n              <PageBanner page={legalPage} route={route} animate={false} />\n              <LegalPage page={legalPage} />\n            </main>\n            <SiteFooter />\n          </>\n        )\n        : industryPage\n          ? <UnifiedIndustryPage page={industryPage} route={route} />\n          : (\n            <>\n              <ClientSeoSync route={route} />\n              <App />\n            </>\n          )}\n      <CookieConsent />\n    </>",
     'public legal, industry, homepage, and consent render block'
   );
 
@@ -242,6 +272,14 @@ function buildPublicEntry() {
 
   if (/function UnifiedFooter\(\)|<UnifiedFooter \/>/.test(source)) {
     throw new Error('Generated main.public.jsx still contains the legacy minimal industry footer.');
+  }
+
+  if (/function Breadcrumbs\(|<Breadcrumbs route=/.test(source)) {
+    throw new Error('Generated main.public.jsx still contains the legacy inline page banner or breadcrumbs.');
+  }
+
+  if (!source.includes('<PageBanner page={page} route={route} />') || !source.includes('<PageBanner page={legalPage} route={route} animate={false} />')) {
+    throw new Error('Generated main.public.jsx is missing the shared page banner.');
   }
 
   if (!source.includes('<SiteFooter />')) {
