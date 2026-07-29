@@ -1,6 +1,7 @@
 import './real-estate-page.css';
 import './real-estate-followup.css';
 import './real-estate-dashboard-preview.css';
+import './real-estate-dashboard-compact.css';
 
 const teamCards = [
   {
