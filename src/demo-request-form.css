@@ -15,6 +15,35 @@
   border-color: var(--blue);
 }
 
+.demo-consent {
+  display: grid !important;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 10px !important;
+  align-items: start;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.028);
+  color: var(--muted) !important;
+  font-size: 0.76rem;
+  font-weight: 500 !important;
+  line-height: 1.55;
+}
+
+.demo-consent input {
+  width: 17px !important;
+  min-height: 17px !important;
+  height: 17px;
+  margin: 2px 0 0;
+  padding: 0 !important;
+  accent-color: var(--mint);
+}
+
+.demo-consent a {
+  color: var(--blue);
+  font-weight: 800;
+}
+
 .demo-form .primary-button:disabled {
   cursor: wait;
   opacity: 0.72;
