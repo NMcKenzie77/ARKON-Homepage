@@ -70,7 +70,7 @@
 
 .grant-preview-sidebar {
   display: flex;
-  min-height: 760px;
+  min-height: 900px;
   flex-direction: column;
   padding: 18px 0;
   color: #fff;
@@ -182,6 +182,92 @@
 .grant-preview-actions strong {
   color: #fff;
   background: var(--grant-ink);
+}
+
+.grant-preview-briefing {
+  margin-bottom: 12px;
+  padding: 15px;
+  border: 1px solid rgba(200, 16, 46, 0.24);
+  border-left: 4px solid var(--grant-red);
+  border-radius: 13px;
+  background: linear-gradient(135deg, #fff 0%, #faf7f4 100%);
+  box-shadow: 0 12px 28px rgba(18, 32, 57, 0.06);
+}
+
+.grant-preview-briefing-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.grant-preview-briefing-head span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--grant-red);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 6.8px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.grant-preview-briefing-head h4 {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.grant-preview-briefing-head > strong {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border: 1px solid var(--grant-green);
+  border-radius: 999px;
+  color: var(--grant-green);
+  background: #e9f4ee;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 6px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.grant-preview-briefing > p {
+  margin: 10px 0 0;
+  color: var(--grant-ink);
+  font-size: 8.8px;
+  line-height: 1.55;
+}
+
+.grant-preview-briefing-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 11px;
+  padding-top: 9px;
+  border-top: 1px solid var(--grant-line);
+}
+
+.grant-preview-briefing-footer span {
+  color: var(--grant-slate);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 6.5px;
+}
+
+.grant-preview-briefing-footer strong {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  padding: 0 9px;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--grant-ink);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 7px;
+  font-weight: 850;
 }
 
 .grant-preview-stats {
@@ -534,7 +620,9 @@
 }
 
 @media (max-width: 520px) {
-  .grant-preview-topline {
+  .grant-preview-topline,
+  .grant-preview-briefing-head,
+  .grant-preview-briefing-footer {
     flex-direction: column;
   }
 
@@ -546,6 +634,10 @@
   .grant-preview-actions strong {
     flex: 1;
     justify-content: center;
+  }
+
+  .grant-preview-briefing-head > strong {
+    align-self: flex-start;
   }
 
   .grant-preview-simple-table > div,
