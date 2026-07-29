@@ -1,37 +1,31 @@
 import './real-estate-page.css';
 import './real-estate-followup.css';
-import './real-estate-home-team-cards.css';
 
 const teamCards = [
   {
-    name: 'Vera',
-    descriptor: 'Voice Enabled Reception Assistant',
-    role: 'Live call intake',
-    copy: 'Answers new calls in the office’s name and captures what the agent needs.'
+    number: '01',
+    title: 'Vera answers new inquiries live.',
+    copy: 'Buyer questions, seller inquiries, showing requests, and new-lead calls begin with the office greeting you approve. Vera captures the details the agent needs while the opportunity is still live.'
   },
   {
-    name: 'Naya',
-    descriptor: 'Natural Automated Your-voice Assistant',
-    role: 'Buyer and seller follow-up',
-    copy: 'Re-engages opportunities, confirms what changed, and gives every conversation a proper close.'
+    number: '02',
+    title: 'Naya keeps buyer and seller follow-up moving.',
+    copy: 'Past buyers, delayed sellers, open-house visitors, and leads that went quiet receive natural follow-up based on their history, with a clear customer-facing close before the agent handoff.'
   },
   {
-    name: 'Paige',
-    descriptor: 'Approved property and listing intelligence',
-    role: 'Property context',
-    copy: 'Provides approved listing details and property information during the conversation.'
+    number: '03',
+    title: 'Paige knows the property.',
+    copy: 'Approved listing details, property facts, status, and showing context are available during the conversation instead of after a callback.'
   },
   {
-    name: 'Marcus',
-    descriptor: 'Managed Accounts, Relationship & Contact Update System',
-    role: 'CRM and relationship memory',
-    copy: 'Keeps every contact, conversation, property interest, and next step attached.'
+    number: '04',
+    title: 'Marcus remembers the relationship.',
+    copy: 'Contact details, prior conversations, representation status, property interests, seller timing, notes, and follow-up context stay attached.'
   },
   {
-    name: 'Grant',
-    descriptor: 'Guidance, Reports & Analytical Network for Trends',
-    role: 'Opportunity intelligence',
-    copy: 'Shows the opportunities and decisions that need the agent’s attention.'
+    number: '05',
+    title: 'Grant shows what can move a deal.',
+    copy: 'New inquiries, reactivated leads, showing requests, seller opportunities, stalled follow-up, and decisions appear in one useful view.'
   }
 ];
 
@@ -57,19 +51,18 @@ export default function RealEstatePageContent() {
         <div className="real-estate-section-heading">
           <div>
             <p className="eyebrow">Meet your real estate digital AI team</p>
-            <h2 id="real-estate-team-title">Five specialized roles. One connected real estate operation.</h2>
+            <h2 id="real-estate-team-title">Your digital team answers new inquiries and keeps past opportunities from going silent.</h2>
           </div>
           <p>
-            Each role has one clear job, while the contact history, property context, follow-up, and agent handoff stay connected.
+            Naya is the member buyers and sellers see in the follow-up demo above. Behind her, Vera, Paige, Marcus, and Grant keep calls, property context, relationship history, handoffs, and agent visibility connected.
           </p>
         </div>
 
-        <div className="coverage-grid real-estate-home-team-grid">
+        <div className="industry-card-grid real-estate-team-grid">
           {teamCards.map(card => (
-            <article className="coverage-card real-estate-home-team-card is-visible" data-reveal key={card.name}>
-              <h3>{card.name}</h3>
-              <small className="real-estate-team-descriptor">{card.descriptor}</small>
-              <span className="role-badge">{card.role}</span>
+            <article className="industry-card real-estate-team-card is-visible" data-reveal key={card.number}>
+              <span>{card.number}</span>
+              <h3>{card.title}</h3>
               <p>{card.copy}</p>
             </article>
           ))}
