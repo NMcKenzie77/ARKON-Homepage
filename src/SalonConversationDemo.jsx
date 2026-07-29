@@ -1,19 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import './salon-conversation-demo.css';
 
-const ASSISTANT_NAME = 'Maya';
+const ASSISTANT_NAME = 'Naya';
 
 const scenarios = {
   followUp: {
-    tab: 'Maya follows up',
+    tab: 'Naya follows up',
     title: 'Reach out before the client forgets.',
     description:
-      'Luxe & Co. named its virtual front desk Maya. She follows the salon’s timing, tone, service history, and booking rules so follow-up feels like it came from the team.',
+      'Luxe & Co. named its virtual front desk Naya. She follows the salon’s timing, tone, service history, and booking rules so follow-up feels like it came from the team.',
     messages: [
       {
         type: 'message',
         from: 'salon',
-        text: 'Hey Jasmine, it’s Maya from Luxe & Co. It’s been about six weeks since your last color appointment, and Maria has a couple openings this week. Thursday at 4:30 or Saturday at 11. Want me to hold one for you?',
+        text: 'Hey Jasmine, it’s Naya from Luxe & Co. It’s been about six weeks since your last color appointment, and Maria has a couple openings this week. Thursday at 4:30 or Saturday at 11. Want me to hold one for you?',
         time: '10:20 AM',
         wait: 700
       },
@@ -59,7 +59,7 @@ const scenarios = {
     tab: 'Client texts the salon',
     title: 'Answer while the client is still ready to book.',
     description:
-      'When a client texts the salon, Maya replies in the same voice, checks approved availability, and keeps the booking moving without sounding scripted.',
+      'When a client texts the salon, Naya replies in the same voice, checks approved availability, and keeps the booking moving without sounding scripted.',
     messages: [
       {
         type: 'message',
@@ -273,7 +273,7 @@ export default function SalonConversationDemo() {
 
             <header className="phone-chat-header">
               <span className="phone-back" aria-hidden="true">‹</span>
-              <span className="phone-avatar" aria-hidden="true">M</span>
+              <span className="phone-avatar" aria-hidden="true">N</span>
               <div>
                 <strong>Luxe &amp; Co. Salon</strong>
                 <small>{ASSISTANT_NAME} · Virtual front desk</small>
