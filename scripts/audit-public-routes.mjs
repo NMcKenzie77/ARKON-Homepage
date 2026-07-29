@@ -116,11 +116,12 @@ try {
         const expectedTitle = route === '/salons'
           ? 'Every call answered. Every booking opportunity kept alive.'
           : page.title;
+        const expectedWorkflowCount = route === '/salons' ? 0 : page.workflow.length;
 
         assert(markup.includes(`data-business-route="${route}"`), `${pass}: ${route} did not select the business-page renderer.`);
         assert(markup.includes(expectedTitle), `${pass}: ${route} did not render its own title.`);
         assert(countClass(markup, 'industry-card') === page.cards.length, `${pass}: ${route} business cards did not render completely.`);
-        assert(countClass(markup, 'industry-step') === page.workflow.length, `${pass}: ${route} workflow did not render completely.`);
+        assert(countClass(markup, 'industry-step') === expectedWorkflowCount, `${pass}: ${route} rendered an unexpected number of workflow cards.`);
         assert(countClass(markup, 'industry-faq') === page.faq.length, `${pass}: ${route} FAQs did not render completely.`);
 
         const revealTags = markup.match(/<[^>]+data-reveal[^>]*>/g) || [];
