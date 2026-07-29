@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer } from 'vite';
 import { dirname, resolve } from 'node:path';
@@ -83,7 +82,7 @@ try {
   for (const pass of ['Route render audit pass 1', 'Route render audit pass 2']) {
     for (const route of publicRoutes) {
       installAuditWindow(route);
-      const markup = renderToStaticMarkup(React.createElement(renderRouteForAudit, route));
+      const markup = renderToStaticMarkup(renderRouteForAudit(route));
 
       assert(count(markup, 'data-master-header="true"') === 1, `${pass}: ${route} does not have exactly one master header.`);
       assert(count(markup, 'data-master-footer="true"') === 1, `${pass}: ${route} does not have exactly one master footer.`);
