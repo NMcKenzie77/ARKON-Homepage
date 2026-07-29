@@ -1,0 +1,25 @@
+name: Diagnose ARKON build
+
+on:
+  push:
+    branches:
+      - agent/diagnose-business-build
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run production build
+        run: npm run build
