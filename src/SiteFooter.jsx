@@ -30,33 +30,6 @@ export default function SiteFooter() {
   return (
     <footer className="site-footer-complete" data-master-footer="true">
       <div className="site-footer-inner">
-        <section className="footer-cta-band" aria-label="ARKON Systems overview">
-          <div className="footer-brand-copy">
-            <a className="brand footer-brand" href="/" aria-label="ARKON Systems home">
-              <span className="brand-mark" aria-hidden="true" />
-              <span>
-                <strong>ARKON</strong>
-                <small>Systems</small>
-              </span>
-            </a>
-            <p>
-              Calls, messages, follow-up, scheduling, records, and handoffs kept moving around your existing team.
-            </p>
-          </div>
-
-          <div className="footer-proof" aria-label="ARKON operating principles">
-            <span>Business rules first</span>
-            <span>Human handoffs preserved</span>
-            <span>Owner visibility built in</span>
-          </div>
-
-          <div className="footer-cta-copy">
-            <p className="footer-kicker">See it in your business</p>
-            <strong>Walk through a real workflow.</strong>
-            <a className="primary-button footer-button" href="/#demo">Book a demo</a>
-          </div>
-        </section>
-
         <div className="footer-navigation-grid footer-navigation-grid-legal">
           <nav className="footer-link-group" aria-label="Footer platform navigation">
             <h2>Platform</h2>
