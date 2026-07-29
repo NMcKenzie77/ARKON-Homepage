@@ -1,5 +1,6 @@
 import PageBanner from './PageBanner.jsx';
 import SalonConversationDemo from './SalonConversationDemo.jsx';
+import SalonPageContent from './SalonPageContent.jsx';
 
 function PricingSection({ plans }) {
   if (!plans?.length) return null;
@@ -46,22 +47,15 @@ function PricingSection({ plans }) {
   );
 }
 
-function ClosingCta({ route }) {
-  const salonCopy = route === '/salons';
-
+function ClosingCta() {
   return (
     <section className="demo-cta industry-cta is-visible" data-reveal>
       <div>
-        <p className="eyebrow">{salonCopy ? 'See it in your salon' : 'See it for your business'}</p>
-        <h2>
-          {salonCopy
-            ? 'Walk through the booking and follow-up workflow with ARKON.'
-            : 'Walk through the real workflow with ARKON.'}
-        </h2>
+        <p className="eyebrow">See it for your business</p>
+        <h2>Walk through the real workflow with ARKON.</h2>
         <p>
-          {salonCopy
-            ? 'Review how missed calls, booking requests, client follow-up, staff handoffs, reminders, and owner visibility would work inside your salon.'
-            : 'Review the calls, messages, follow-ups, records, handoffs, and owner visibility that matter most for your operation.'}
+          Review the calls, messages, follow-ups, records, handoffs,
+          and owner visibility that matter most for your operation.
         </p>
       </div>
       <a className="primary-button" href="/#demo">Request demo</a>
@@ -70,11 +64,19 @@ function ClosingCta({ route }) {
 }
 
 export default function IndustryPage({ page, route }) {
+  if (route === '/salons') {
+    return (
+      <main className="industry-page salon-page" data-business-route={route}>
+        <PageBanner page={page} route={route} animate={false} />
+        <SalonConversationDemo />
+        <SalonPageContent />
+      </main>
+    );
+  }
+
   return (
     <main className="industry-page" data-business-route={route}>
       <PageBanner page={page} route={route} animate={false} />
-
-      {route === '/salons' ? <SalonConversationDemo /> : null}
 
       {page.reality ? (
         <section className="industry-reality-panel is-visible" data-reveal>
@@ -137,7 +139,7 @@ export default function IndustryPage({ page, route }) {
         </div>
       </section>
 
-      <ClosingCta route={route} />
+      <ClosingCta />
     </main>
   );
 }
