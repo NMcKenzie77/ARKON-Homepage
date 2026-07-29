@@ -1,3 +1,4 @@
+import VerticalClosingCta from './VerticalClosingCta.jsx';
 import './real-estate-page.css';
 import './real-estate-followup.css';
 import './real-estate-dashboard-preview.css';
@@ -273,6 +274,13 @@ export default function RealEstatePageContent() {
           </div>
         </div>
       </section>
+
+      <VerticalClosingCta
+        eyebrow="See ARKON for real estate"
+        title="See how your digital AI team keeps opportunities moving from first inquiry to owner briefing."
+        body="We’ll walk through how Vera answers new calls, Naya follows up, Paige supplies property context, Marcus maintains relationship and pipeline history, Caleb coordinates showings, Iris watches the inbox, Grace manages reviews, and Grant actively briefs you on what matters."
+        buttonLabel="Book a real estate walkthrough"
+      />
     </>
   );
 }
