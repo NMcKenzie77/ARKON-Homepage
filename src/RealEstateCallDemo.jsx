@@ -64,6 +64,12 @@ const scenarios = {
         speaker: 'Message to Jordan',
         text: 'Jordan, Danielle Brooks is looking again. Maplewood and South Orange are still her preferred areas, her budget is around $650,000, and she needs help reconnecting with a lender. Text is best. Reach out today.',
         wait: 900,
+        intelligence: true
+      },
+      {
+        speaker: 'Naya',
+        text: 'Thank you, Danielle. I’ve shared everything with Jordan. He’ll text you today to help you reconnect with a lender and get your home search moving again.',
+        wait: 1000,
         outcome: true
       }
     ]
