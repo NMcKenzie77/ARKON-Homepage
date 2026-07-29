@@ -9,7 +9,7 @@ const scenarios = {
     eyebrow: 'Naya follows up in the office’s name',
     title: 'Past opportunities should not disappear because nobody followed up.',
     description:
-      'Naya reaches out to Danielle naturally, refreshes what has changed, updates the contact record quietly, and sends the agent a clear message when she is ready to move again.',
+      'Naya reaches out to Danielle naturally, refreshes what has changed, updates the contact record quietly, and sends Jordan a clear message when Danielle is ready to move again.',
     consoleLabel: 'Proactive database follow-up',
     consoleAgent: `Naya · ${EXAMPLE_OFFICE}`,
     replayLabel: 'Replay follow-up',
@@ -17,7 +17,7 @@ const scenarios = {
       'Uses Danielle’s prior history',
       'Keeps the conversation human',
       'Updates the contact record quietly',
-      'Alerts the agent with next steps'
+      'Alerts Jordan with next steps'
     ],
     property: {
       label: 'Past opportunity matched',
@@ -31,7 +31,8 @@ const scenarios = {
       name: 'Danielle Brooks',
       phone: '(973) 555-0148',
       email: 'danielle.brooks@example.com',
-      preference: 'Text preferred'
+      preference: 'Text preferred',
+      assignedAgent: 'Assigned agent · Jordan Lee'
     },
     messages: [
       {
@@ -54,13 +55,13 @@ const scenarios = {
       { speaker: 'Danielle', text: 'Yes. We just need to reconnect with a lender.', wait: 850 },
       {
         speaker: 'Naya',
-        text: 'Absolutely. I can have the agent reach out and help you get moving again. Is text still the easiest way to reach you?',
+        text: 'Absolutely. I can have Jordan reach out and help you get moving again. Is text still the easiest way to reach you?',
         wait: 1000
       },
       { speaker: 'Danielle', text: 'Yes, text is best.', wait: 700 },
       {
-        speaker: 'Message to agent',
-        text: 'Danielle Brooks is looking again. Maplewood and South Orange are still her preferred areas, her budget is around $650,000, and she needs help reconnecting with a lender. Text is best. Reach out today.',
+        speaker: 'Message to Jordan',
+        text: 'Jordan, Danielle Brooks is looking again. Maplewood and South Orange are still her preferred areas, her budget is around $650,000, and she needs help reconnecting with a lender. Text is best. Reach out today.',
         wait: 900,
         outcome: true
       }
@@ -278,7 +279,7 @@ export default function RealEstateCallDemo() {
           </div>
           <p>{scenario.property.context}</p>
 
-          <div className="real-estate-contact-record" aria-label={`${scenario.contact.label}: ${scenario.contact.name}, ${scenario.contact.phone}, ${scenario.contact.email}, ${scenario.contact.preference}`}>
+          <div className="real-estate-contact-record" aria-label={`${scenario.contact.label}: ${scenario.contact.name}, ${scenario.contact.phone}, ${scenario.contact.email}, ${scenario.contact.preference}${scenario.contact.assignedAgent ? `, ${scenario.contact.assignedAgent}` : ''}`}>
             <div>
               <span>{scenario.contact.label}</span>
               <strong>{scenario.contact.name}</strong>
@@ -287,6 +288,7 @@ export default function RealEstateCallDemo() {
               <span>{scenario.contact.phone}</span>
               <span>{scenario.contact.email}</span>
               <span>{scenario.contact.preference}</span>
+              {scenario.contact.assignedAgent ? <span>{scenario.contact.assignedAgent}</span> : null}
             </div>
           </div>
         </div>
