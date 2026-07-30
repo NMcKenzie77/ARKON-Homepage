@@ -141,6 +141,29 @@ const scenarios = {
   }
 };
 
+const teamCards = [
+  {
+    number: '01',
+    title: 'Naya keeps guest and cleaner communication moving.',
+    copy: 'Naya answers guest questions using the correct reservation and property instructions, coordinates cleaners around turnovers and arrival timing, and keeps both sides updated without forcing the host to manage every message.'
+  },
+  {
+    number: '02',
+    title: 'Charlie keeps maintenance activity and property costs visible.',
+    copy: 'Charlie connects repair requests, vendor findings, estimates, approvals, completed work, recurring issues, and maintenance spending to the correct property.'
+  },
+  {
+    number: '03',
+    title: 'Marcus keeps every stay and relationship connected.',
+    copy: 'Marcus connects properties, reservations, guests, cleaners, vendors, messages, prior issues, preferences, and the next required action so the operation does not lose context between conversations.'
+  },
+  {
+    number: '04',
+    title: 'Iris and Grant keep portfolio priorities visible.',
+    copy: 'Iris separates urgent guest, cleaner, vendor, and property messages from routine activity. Grant gives the host, property manager, or portfolio owner a clear briefing of what needs attention.'
+  }
+];
+
 function TranscriptItem({ item }) {
   const isExternal = ['Guest', 'Cleaner', 'Vendor'].includes(item.speaker);
   const classNames = [
@@ -206,57 +229,81 @@ export default function ShortTermRentalCallDemo() {
   }
 
   return (
-    <section className="real-estate-call-demo short-term-rental-call-demo" data-short-term-rental-call-demo="true" aria-labelledby="short-term-rental-call-title">
-      <div className="real-estate-call-copy">
-        <p className="eyebrow">{scenario.eyebrow}</p>
-        <h2 id="short-term-rental-call-title">{scenario.title}</h2>
-        <p>{scenario.description}</p>
+    <>
+      <section className="real-estate-call-demo short-term-rental-call-demo" data-short-term-rental-call-demo="true" aria-labelledby="short-term-rental-call-title">
+        <div className="real-estate-call-copy">
+          <p className="eyebrow">{scenario.eyebrow}</p>
+          <h2 id="short-term-rental-call-title">{scenario.title}</h2>
+          <p>{scenario.description}</p>
 
-        <div className="real-estate-call-tabs" role="tablist" aria-label="Short-term rental conversation examples">
-          {Object.entries(scenarios).map(([key, item]) => (
-            <button aria-selected={activeKey === key} className={activeKey === key ? 'active' : ''} key={key} onClick={() => selectScenario(key)} role="tab" type="button">
-              {item.tab}
-            </button>
-          ))}
+          <div className="real-estate-call-tabs" role="tablist" aria-label="Short-term rental conversation examples">
+            {Object.entries(scenarios).map(([key, item]) => (
+              <button aria-selected={activeKey === key} className={activeKey === key ? 'active' : ''} key={key} onClick={() => selectScenario(key)} role="tab" type="button">
+                {item.tab}
+              </button>
+            ))}
+          </div>
+
+          <div className="real-estate-call-proof" aria-label="Short-term rental conversation capabilities">
+            {scenario.proof.map(item => <span key={item}>{item}</span>)}
+          </div>
+
+          <button className="real-estate-call-replay" onClick={() => setReplayToken(token => token + 1)} type="button">
+            <span aria-hidden="true">↻</span>
+            {scenario.replayLabel}
+          </button>
         </div>
 
-        <div className="real-estate-call-proof" aria-label="Short-term rental conversation capabilities">
-          {scenario.proof.map(item => <span key={item}>{item}</span>)}
-        </div>
+        <div className="real-estate-call-console" aria-label={`Example: ${scenario.consoleLabel}`}>
+          <div className="real-estate-call-console-header">
+            <div><span className="real-estate-live-dot" aria-hidden="true" /><strong>{scenario.consoleLabel}</strong></div>
+            <small>{scenario.consoleAgent}</small>
+          </div>
 
-        <button className="real-estate-call-replay" onClick={() => setReplayToken(token => token + 1)} type="button">
-          <span aria-hidden="true">↻</span>
-          {scenario.replayLabel}
-        </button>
-      </div>
+          <div className="real-estate-property-card">
+            <div><span>{scenario.property.label}</span><h3>{scenario.property.address}</h3></div>
+            <strong>{scenario.property.status}</strong>
+            <div className="real-estate-property-facts">{scenario.property.facts.map(fact => <span key={fact}>{fact}</span>)}</div>
+            <p>{scenario.property.context}</p>
 
-      <div className="real-estate-call-console" aria-label={`Example: ${scenario.consoleLabel}`}>
-        <div className="real-estate-call-console-header">
-          <div><span className="real-estate-live-dot" aria-hidden="true" /><strong>{scenario.consoleLabel}</strong></div>
-          <small>{scenario.consoleAgent}</small>
-        </div>
-
-        <div className="real-estate-property-card">
-          <div><span>{scenario.property.label}</span><h3>{scenario.property.address}</h3></div>
-          <strong>{scenario.property.status}</strong>
-          <div className="real-estate-property-facts">{scenario.property.facts.map(fact => <span key={fact}>{fact}</span>)}</div>
-          <p>{scenario.property.context}</p>
-
-          <div className="real-estate-contact-record" aria-label={`${scenario.contact.label}: ${scenario.contact.name}, ${scenario.contact.phone}, ${scenario.contact.email}, ${scenario.contact.preference}, ${scenario.contact.assignedAgent}`}>
-            <div><span>{scenario.contact.label}</span><strong>{scenario.contact.name}</strong></div>
-            <div className="real-estate-contact-details">
-              <span>{scenario.contact.phone}</span><span>{scenario.contact.email}</span><span>{scenario.contact.preference}</span><span>{scenario.contact.assignedAgent}</span>
+            <div className="real-estate-contact-record" aria-label={`${scenario.contact.label}: ${scenario.contact.name}, ${scenario.contact.phone}, ${scenario.contact.email}, ${scenario.contact.preference}, ${scenario.contact.assignedAgent}`}>
+              <div><span>{scenario.contact.label}</span><strong>{scenario.contact.name}</strong></div>
+              <div className="real-estate-contact-details">
+                <span>{scenario.contact.phone}</span><span>{scenario.contact.email}</span><span>{scenario.contact.preference}</span><span>{scenario.contact.assignedAgent}</span>
+              </div>
             </div>
           </div>
+
+          <div className="real-estate-call-transcript" ref={transcriptRef} aria-live="polite">
+            {visibleMessages.map((item, index) => <TranscriptItem item={item} key={`${activeKey}-${index}-${item.speaker}`} />)}
+            {visibleCount < scenario.messages.length ? (
+              <div className="real-estate-call-thinking" aria-label="Conversation continuing"><span /><span /><span /></div>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
+      <section className="section insurance-team-section short-term-rental-team-section" aria-labelledby="short-term-rental-team-title">
+        <div className="insurance-section-heading">
+          <div>
+            <p className="eyebrow">Meet your short-term rental digital AI team</p>
+            <h2 id="short-term-rental-team-title">Every guest, cleaner, vendor, and property issue reaches the right person with the stay context already attached.</h2>
+          </div>
+          <p>
+            Naya handles guest communication and cleaner coordination. Charlie tracks maintenance activity and recurring property costs. Marcus keeps properties, stays, guests, vendors, and conversation history connected. Iris separates urgent operational messages from routine activity. Grant briefs the host, property manager, or portfolio owner on what needs attention.
+          </p>
         </div>
 
-        <div className="real-estate-call-transcript" ref={transcriptRef} aria-live="polite">
-          {visibleMessages.map((item, index) => <TranscriptItem item={item} key={`${activeKey}-${index}-${item.speaker}`} />)}
-          {visibleCount < scenario.messages.length ? (
-            <div className="real-estate-call-thinking" aria-label="Conversation continuing"><span /><span /><span /></div>
-          ) : null}
+        <div className="industry-card-grid insurance-team-grid short-term-rental-team-grid">
+          {teamCards.map(card => (
+            <article className="industry-card insurance-team-card short-term-rental-team-card is-visible" data-reveal key={card.number}>
+              <span>{card.number}</span>
+              <h3>{card.title}</h3>
+              <p>{card.copy}</p>
+            </article>
+          ))}
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
