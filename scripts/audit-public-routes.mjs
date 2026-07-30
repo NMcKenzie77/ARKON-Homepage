@@ -31,6 +31,12 @@ const customRouteExpectations = {
     title: 'Every call answered. Every booking opportunity kept alive.',
     workflowCount: 0,
     faqCount: 0
+  },
+  '/garages': {
+    title: 'Bring customers back for the work their vehicles still need.',
+    cardCount: 4,
+    workflowCount: 0,
+    faqCount: 0
   }
 };
 
