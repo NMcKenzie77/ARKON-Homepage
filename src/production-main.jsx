@@ -22,8 +22,8 @@ import './copy-polish.css';
 import './homepage-logo.css';
 import './pricing.css';
 
-const AUTO_REPAIR_ROUTE = '/auto-repair-shops';
-const LEGACY_AUTO_REPAIR_ROUTE = '/garages';
+const AUTO_REPAIR_ROUTE = '/garages';
+const AUTO_REPAIR_ALIAS = '/auto-repair-shops';
 
 export function normalizeRoute(pathname = '/') {
   const path = String(pathname || '/').split('?')[0].split('#')[0];
@@ -33,7 +33,7 @@ export function normalizeRoute(pathname = '/') {
 function getBrowserRoute() {
   const route = normalizeRoute(window.location.pathname);
 
-  if (route === LEGACY_AUTO_REPAIR_ROUTE) {
+  if (route === AUTO_REPAIR_ALIAS) {
     window.history.replaceState({}, '', AUTO_REPAIR_ROUTE);
     return AUTO_REPAIR_ROUTE;
   }
@@ -42,13 +42,17 @@ function getBrowserRoute() {
 }
 
 function getRoutePage(route) {
-  if (route === AUTO_REPAIR_ROUTE) return industryPages[LEGACY_AUTO_REPAIR_ROUTE];
+  if (route === AUTO_REPAIR_ALIAS) return industryPages[AUTO_REPAIR_ROUTE];
   return industryPages[route];
 }
 
 function getSeoPage(route) {
-  if (route === AUTO_REPAIR_ROUTE) return seoPages[LEGACY_AUTO_REPAIR_ROUTE];
+  if (route === AUTO_REPAIR_ALIAS) return seoPages[AUTO_REPAIR_ROUTE];
   return seoPages[route];
+}
+
+function getCanonicalRoute(route) {
+  return route === AUTO_REPAIR_ALIAS ? AUTO_REPAIR_ROUTE : route;
 }
 
 function setMetaContent(selector, value) {
@@ -58,7 +62,8 @@ function setMetaContent(selector, value) {
 
 function syncDocumentSeo(route) {
   const seo = getSeoPage(route) || seoPages['/'];
-  const canonical = `${SITE_URL}${route === '/' ? '/' : route}`;
+  const canonicalRoute = getCanonicalRoute(route);
+  const canonical = `${SITE_URL}${canonicalRoute === '/' ? '/' : canonicalRoute}`;
 
   document.title = seo.title;
   setMetaContent('meta[name="description"]', seo.description);
@@ -82,13 +87,14 @@ function ClientSeoSync({ route }) {
 
 function RouteContent({ route }) {
   const routePage = getRoutePage(route);
+  const canonicalRoute = getCanonicalRoute(route);
 
   if (routePage?.pageType === 'legal') {
     return (
       <>
-        <ClientSeoSync route={route} />
-        <main className="industry-page" data-public-route={route}>
-          <PageBanner page={routePage} route={route} animate={false} />
+        <ClientSeoSync route={canonicalRoute} />
+        <main className="industry-page" data-public-route={canonicalRoute}>
+          <PageBanner page={routePage} route={canonicalRoute} animate={false} />
           <LegalPage page={routePage} />
         </main>
       </>
@@ -98,8 +104,8 @@ function RouteContent({ route }) {
   if (routePage) {
     return (
       <>
-        <ClientSeoSync route={route} />
-        <IndustryPage page={routePage} route={route} />
+        <ClientSeoSync route={canonicalRoute} />
+        <IndustryPage page={routePage} route={canonicalRoute} />
       </>
     );
   }
