@@ -10,6 +10,7 @@ import VerticalClosingCta from './VerticalClosingCta.jsx';
 import { industryPages } from './site-content.js';
 import { getRelatedPages } from './seo-structure.js';
 import './insurance-page.css';
+import './real-estate-dashboard-preview.css';
 
 const insuranceTeamCards = [
   {
@@ -32,6 +33,35 @@ const insuranceTeamCards = [
     title: 'Iris and Grant keep agency priorities visible.',
     copy: 'Iris separates urgent policyholder, carrier, underwriting, and prospect messages from routine email. Grant gives the agency owner, sales manager, service manager, or producer an on-demand briefing of what needs attention.'
   }
+];
+
+const insuranceGrantStats = [
+  ['$86,400', 'Premium opportunity in motion'],
+  ['14', 'Open quote opportunities'],
+  ['9', 'Renewals due within 30 days'],
+  ['4', 'Priority actions', 'alert']
+];
+
+const insuranceGrantActions = [
+  ['01', 'Contact Torres Heating & Cooling before its September 1 renewal.', 'Commercial renewal', 'red'],
+  ['02', 'Review Angela Brooks’s homeowners application before closing.', 'Closing deadline', 'amber'],
+  ['03', 'Resolve the missing loss runs for Lakeside Transport.', 'Underwriting blocked', 'red'],
+  ['04', 'Respond to the urgent carrier notice for Daniel Reyes.', 'Client service', 'amber']
+];
+
+const insuranceGrantPipelineStats = [
+  ['14', 'Open quote opportunities'],
+  ['9', 'Renewals due within 30 days'],
+  ['6', 'Service requests open'],
+  ['3', 'Items waiting on documents']
+];
+
+const insuranceGrantMomentum = [
+  ['Commercial pipeline', '$58,200', '7 open opportunities', 'Active', 'green'],
+  ['Personal-lines pipeline', '$28,200', '7 open opportunities', 'Healthy', 'green'],
+  ['Renewals and retention', '9 due soon', '2 need producer contact', 'Needs attention', 'amber'],
+  ['Policy-service queue', '6 open requests', '1 carrier notice urgent', 'Needs attention', 'red'],
+  ['Underwriting and documents', '3 incomplete files', '1 quote blocked', 'At risk', 'red']
 ];
 
 function PricingSection({ plans }) {
@@ -133,6 +163,137 @@ function InsuranceTeamSection() {
   );
 }
 
+function InsuranceGrantSection() {
+  return (
+    <section className="section real-estate-grant-section insurance-grant-section" aria-labelledby="insurance-grant-title">
+      <div className="real-estate-grant-copy">
+        <p className="eyebrow real-estate-grant-eyebrow">Your agency chief of staff</p>
+        <h2 id="insurance-grant-title">Grant shows agency leadership what needs attention before revenue, service, or client trust slips.</h2>
+        <p>
+          Grant gives the agency owner, sales manager, service manager, or producer a clear briefing whenever they need it. He connects new quote opportunities, renewals, policy-service requests, missing documents, underwriting issues, producer follow-up, carrier messages, and anything waiting on a decision.
+        </p>
+        <div className="real-estate-grant-points" aria-label="Grant agency briefing and visibility areas">
+          <span>Briefings available on demand</span>
+          <span>Prioritized agency action list</span>
+          <span>Daily, weekly, or custom summaries</span>
+        </div>
+      </div>
+
+      <div className="real-estate-dashboard-preview" aria-label="Preview of the Grant insurance agency command center">
+        <aside className="grant-preview-sidebar">
+          <div className="grant-preview-logo">ARK<span>O</span>N</div>
+          <nav aria-label="Example ARKON insurance dashboard navigation">
+            <span>Today</span>
+            <span>Prospects · Marcus</span>
+            <span>Policies · Marcus</span>
+            <span>Calls · Vera</span>
+            <span>Follow-up · Naya</span>
+            <span>Quotes</span>
+            <span>Applications</span>
+            <span>Renewals</span>
+            <span>Service requests</span>
+            <span>Inbox · Iris</span>
+            <span className="active">Briefings · Grant</span>
+            <span>Settings</span>
+          </nav>
+          <div className="grant-preview-user">Invicta Protection Group<small>Sign out</small></div>
+        </aside>
+
+        <div className="grant-preview-main">
+          <div className="grant-preview-topline">
+            <div>
+              <h3>Invicta Protection Group Command Center · Grant</h3>
+              <p>Where the agency stands, what needs attention, what opportunities are moving, and where revenue, service, or client trust may be slipping.</p>
+            </div>
+            <div className="grant-preview-actions"><span>Custom summary</span><strong>Run briefing</strong></div>
+          </div>
+
+          <div className="grant-preview-briefing">
+            <div className="grant-preview-briefing-head">
+              <div>
+                <span>Grant briefing</span>
+                <h4>Four items need attention today.</h4>
+              </div>
+              <strong>Needs attention</strong>
+            </div>
+            <p>
+              You have $86,400 in premium opportunity in motion, 14 open quote opportunities, and nine renewals due within 30 days. Torres Heating & Cooling needs producer contact before its September 1 renewal, Angela Brooks’s homeowners application needs review before closing, Lakeside Transport is blocked by missing loss runs, and Daniel Reyes has an urgent carrier notice waiting for a response.
+            </p>
+            <div className="grant-preview-briefing-footer">
+              <span>Generated on demand</span>
+              <div><strong>▶ Read briefing</strong><em>Copy script</em></div>
+            </div>
+          </div>
+
+          <div className="grant-preview-stats grant-preview-money-stats">
+            {insuranceGrantStats.map(([value, label, tone]) => (
+              <div className={`grant-preview-stat${tone ? ` ${tone}` : ''}`} key={label}>
+                <strong>{value}</strong>
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="grant-preview-card grant-preview-priority-card">
+            <div className="grant-preview-card-heading">
+              <h4>What needs attention today</h4>
+              <span>Prioritized agency action list</span>
+            </div>
+            <div className="grant-preview-priority-list">
+              {insuranceGrantActions.map(([number, action, timing, tone]) => (
+                <div key={number}>
+                  <span>{number}</span>
+                  <strong>{action}</strong>
+                  <em className={`grant-preview-tag ${tone}`}>{timing}</em>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="grant-preview-stats grant-preview-calendar-stats">
+            {insuranceGrantPipelineStats.map(([value, label]) => (
+              <div className="grant-preview-stat" key={label}>
+                <strong>{value}</strong>
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="grant-preview-two-column grant-preview-command-bottom">
+            <div className="grant-preview-card grant-preview-momentum-card">
+              <div className="grant-preview-card-heading">
+                <h4>Agency momentum</h4>
+                <span>Where opportunities and service work stand</span>
+              </div>
+              <div className="grant-preview-momentum-list">
+                {insuranceGrantMomentum.map(([name, pipeline, opportunities, signal, tone]) => (
+                  <div key={name}>
+                    <strong>{name}</strong>
+                    <span>{pipeline}</span>
+                    <span>{opportunities}</span>
+                    <em className={`grant-preview-tag ${tone}`}>{signal}</em>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grant-preview-card grant-preview-digest-card">
+              <div className="grant-preview-card-heading">
+                <h4>Executive agency summary</h4>
+                <span>On demand or scheduled</span>
+              </div>
+              <p>
+                Grant connects activity across calls, quote requests, applications, renewals, policy service, producer follow-up, carrier email, and staff handoffs, then identifies what needs attention next.
+              </p>
+              <div className="grant-preview-digest-footer"><span>Summary archive ready</span><strong>Read latest summary</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function IndustryPage({ page, route }) {
   if (route === '/real-estate') {
     const realEstateBannerPage = {
@@ -214,7 +375,10 @@ export default function IndustryPage({ page, route }) {
       ) : null}
 
       {isInsurance ? (
-        <InsuranceTeamSection />
+        <>
+          <InsuranceTeamSection />
+          <InsuranceGrantSection />
+        </>
       ) : (
         <section className="section industry-intro-section">
           <div className="section-heading is-visible" data-reveal>
@@ -233,41 +397,45 @@ export default function IndustryPage({ page, route }) {
         </section>
       )}
 
-      <PricingSection plans={page.pricing} />
+      {!isInsurance ? (
+        <>
+          <PricingSection plans={page.pricing} />
 
-      <section className="section industry-workflow-section">
-        <div className="section-heading is-visible" data-reveal>
-          <p className="eyebrow">Example workflows</p>
-          <h2>What ARKON can keep moving.</h2>
-          <p>
-            Each business gets workflow rules based on its calls, messages, documents,
-            staff roles, and owner view.
-          </p>
-        </div>
-        <div className="industry-workflow-list">
-          {page.workflow.map((item, index) => (
-            <article className="industry-step is-visible" key={item} data-reveal>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <h3>{item}</h3>
-            </article>
-          ))}
-        </div>
-      </section>
+          <section className="section industry-workflow-section">
+            <div className="section-heading is-visible" data-reveal>
+              <p className="eyebrow">Example workflows</p>
+              <h2>What ARKON can keep moving.</h2>
+              <p>
+                Each business gets workflow rules based on its calls, messages, documents,
+                staff roles, and owner view.
+              </p>
+            </div>
+            <div className="industry-workflow-list">
+              {page.workflow.map((item, index) => (
+                <article className="industry-step is-visible" key={item} data-reveal>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <h3>{item}</h3>
+                </article>
+              ))}
+            </div>
+          </section>
 
-      <section className="section industry-faq-section">
-        <div className="section-heading is-visible" data-reveal>
-          <p className="eyebrow">Questions business owners ask</p>
-          <h2>Built for control, not guesswork.</h2>
-        </div>
-        <div className="industry-faq-grid">
-          {page.faq.map(([question, answer]) => (
-            <article className="industry-faq is-visible" key={question} data-reveal>
-              <h3>{question}</h3>
-              <p>{answer}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+          <section className="section industry-faq-section">
+            <div className="section-heading is-visible" data-reveal>
+              <p className="eyebrow">Questions business owners ask</p>
+              <h2>Built for control, not guesswork.</h2>
+            </div>
+            <div className="industry-faq-grid">
+              {page.faq.map(([question, answer]) => (
+                <article className="industry-faq is-visible" key={question} data-reveal>
+                  <h3>{question}</h3>
+                  <p>{answer}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+        </>
+      ) : null}
 
       <RelatedBusinessPages route={route} />
 
