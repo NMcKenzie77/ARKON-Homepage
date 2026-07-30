@@ -2,7 +2,7 @@
   width: min(1180px, calc(100% - 40px));
   margin: 28px auto 84px;
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(390px, 0.8fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(364px, 0.8fr);
   gap: 70px;
   align-items: center;
 }
@@ -73,14 +73,14 @@
   position: relative;
   display: grid;
   place-items: center;
-  min-height: 720px;
+  min-height: 680px;
 }
 
 .auto-phone-glow {
   position: absolute;
-  width: 390px;
-  height: 560px;
-  border-radius: 50%;
+  width: 440px;
+  height: 440px;
+  border-radius: 999px;
   background: radial-gradient(circle, rgba(34, 197, 94, 0.22), rgba(34, 197, 94, 0.04) 48%, transparent 72%);
   filter: blur(24px);
   pointer-events: none;
@@ -88,11 +88,11 @@
 
 .auto-phone-shell {
   position: relative;
-  width: min(390px, 100%);
-  height: 690px;
-  padding: 12px;
+  width: min(364px, 100%);
+  height: 704px;
+  padding: 11px;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 46px;
+  border-radius: 52px;
   background: linear-gradient(145deg, #111827, #020617 70%);
   box-shadow:
     0 34px 90px rgba(0, 0, 0, 0.48),
@@ -134,12 +134,12 @@
 .auto-phone-screen {
   height: 100%;
   overflow: hidden;
-  border-radius: 36px;
+  border-radius: 42px;
   background:
     radial-gradient(circle at 100% 0%, rgba(34, 197, 94, 0.11), transparent 32%),
     linear-gradient(180deg, #f8fafc, #eef2f7);
   display: grid;
-  grid-template-rows: 34px 66px 28px 1fr 58px;
+  grid-template-rows: 35px 68px 28px minmax(0, 1fr) 58px;
 }
 
 .auto-phone-statusbar {
@@ -214,6 +214,7 @@
 }
 
 .auto-phone-transcript {
+  min-height: 0;
   overflow-y: auto;
   padding: 8px 12px 18px;
   scrollbar-width: none;
@@ -370,7 +371,7 @@
   }
 
   .auto-phone-stage {
-    min-height: 700px;
+    min-height: 680px;
   }
 }
 
