@@ -93,6 +93,16 @@
   position: relative;
 }
 
+.insurance-grant-section {
+  padding-top: 34px;
+  padding-bottom: 88px;
+}
+
+.insurance-grant-section .real-estate-grant-copy h2 {
+  max-width: 500px;
+  font-size: clamp(1.9rem, 3.35vw, 3.35rem);
+}
+
 @media (max-width: 980px) {
   .insurance-section-heading {
     grid-template-columns: 1fr;
@@ -114,7 +124,8 @@
   }
 
   .insurance-page .industry-hero-inner h1,
-  .insurance-section-heading h2 {
+  .insurance-section-heading h2,
+  .insurance-grant-section .real-estate-grant-copy h2 {
     font-size: clamp(1.8rem, 8.5vw, 2.55rem);
   }
 
@@ -129,5 +140,10 @@
 
   .insurance-team-card {
     min-height: auto;
+  }
+
+  .insurance-grant-section {
+    padding-top: 24px;
+    padding-bottom: 68px;
   }
 }
