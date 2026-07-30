@@ -20,6 +20,10 @@
   margin-top: 18px;
 }
 
+.insurance-page .industry-related-section {
+  display: none;
+}
+
 .insurance-team-section {
   padding-top: 24px;
   padding-bottom: 88px;
