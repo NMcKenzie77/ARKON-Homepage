@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import './real-estate-call-demo.css';
 
-const EXAMPLE_AGENCY = 'Invicta Protection Group';
+const EXAMPLE_AGENCY = 'Harbor Ridge Insurance Group';
 const READ_HOLD_MS = 1500;
 
 const scenarios = {
