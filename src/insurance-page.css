@@ -1,0 +1,36 @@
+.insurance-page .industry-hero {
+  min-height: auto;
+  padding-top: 132px;
+  padding-bottom: 72px;
+}
+
+.insurance-page .industry-hero-inner {
+  padding-top: 28px;
+}
+
+.insurance-page .industry-hero-inner h1 {
+  max-width: 860px;
+  font-size: clamp(1.9rem, 3.2vw, 3rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.insurance-page .industry-hero-inner p:not(.eyebrow) {
+  max-width: 760px;
+  margin-top: 18px;
+}
+
+@media (max-width: 780px) {
+  .insurance-page .industry-hero {
+    padding-top: 108px;
+    padding-bottom: 52px;
+  }
+
+  .insurance-page .industry-hero-inner {
+    padding-top: 20px;
+  }
+
+  .insurance-page .industry-hero-inner h1 {
+    font-size: clamp(1.8rem, 8.5vw, 2.55rem);
+  }
+}
