@@ -6,6 +6,7 @@ import SalonPageContent from './SalonPageContent.jsx';
 import AutoRepairConversationDemo from './AutoRepairConversationDemo.jsx';
 import AutoRepairPageContent from './AutoRepairPageContent.jsx';
 import InsuranceCallDemo from './InsuranceCallDemo.jsx';
+import ShortTermRentalCallDemo from './ShortTermRentalCallDemo.jsx';
 import VerticalClosingCta from './VerticalClosingCta.jsx';
 import { industryPages } from './site-content.js';
 import { getRelatedPages } from './seo-structure.js';
@@ -350,6 +351,7 @@ export default function IndustryPage({ page, route }) {
   }
 
   const isInsurance = route === '/insurance';
+  const isShortTermRental = route === '/short-term-rentals';
   const bannerPage = isInsurance
     ? {
         ...page,
@@ -361,9 +363,10 @@ export default function IndustryPage({ page, route }) {
     : page;
 
   return (
-    <main className={`industry-page${isInsurance ? ' insurance-page' : ''}`} data-business-route={route}>
+    <main className={`industry-page${isInsurance ? ' insurance-page' : ''}${isShortTermRental ? ' short-term-rental-page' : ''}`} data-business-route={route}>
       <PageBanner page={bannerPage} route={route} animate={false} />
       {isInsurance ? <InsuranceCallDemo /> : null}
+      {isShortTermRental ? <ShortTermRentalCallDemo /> : null}
 
       {page.reality ? (
         <section className="industry-reality-panel is-visible" data-reveal>
