@@ -22,13 +22,33 @@ import './copy-polish.css';
 import './homepage-logo.css';
 import './pricing.css';
 
+const AUTO_REPAIR_ROUTE = '/auto-repair-shops';
+const LEGACY_AUTO_REPAIR_ROUTE = '/garages';
+
 export function normalizeRoute(pathname = '/') {
   const path = String(pathname || '/').split('?')[0].split('#')[0];
   return path.replace(/\/+$/, '') || '/';
 }
 
 function getBrowserRoute() {
-  return normalizeRoute(window.location.pathname);
+  const route = normalizeRoute(window.location.pathname);
+
+  if (route === LEGACY_AUTO_REPAIR_ROUTE) {
+    window.history.replaceState({}, '', AUTO_REPAIR_ROUTE);
+    return AUTO_REPAIR_ROUTE;
+  }
+
+  return route;
+}
+
+function getRoutePage(route) {
+  if (route === AUTO_REPAIR_ROUTE) return industryPages[LEGACY_AUTO_REPAIR_ROUTE];
+  return industryPages[route];
+}
+
+function getSeoPage(route) {
+  if (route === AUTO_REPAIR_ROUTE) return seoPages[LEGACY_AUTO_REPAIR_ROUTE];
+  return seoPages[route];
 }
 
 function setMetaContent(selector, value) {
@@ -37,7 +57,7 @@ function setMetaContent(selector, value) {
 }
 
 function syncDocumentSeo(route) {
-  const seo = seoPages[route] || seoPages['/'];
+  const seo = getSeoPage(route) || seoPages['/'];
   const canonical = `${SITE_URL}${route === '/' ? '/' : route}`;
 
   document.title = seo.title;
@@ -61,7 +81,7 @@ function ClientSeoSync({ route }) {
 }
 
 function RouteContent({ route }) {
-  const routePage = industryPages[route];
+  const routePage = getRoutePage(route);
 
   if (routePage?.pageType === 'legal') {
     return (
@@ -93,7 +113,7 @@ function RouteContent({ route }) {
 }
 
 export function PublicSite({ route }) {
-  const page = industryPages[route];
+  const page = getRoutePage(route);
   const showPricing = Boolean(page?.pricing);
 
   return (
