@@ -1,0 +1,36 @@
+[data-business-route="/short-term-rentals"] .industry-hero {
+  min-height: auto;
+  padding-top: 132px;
+  padding-bottom: 72px;
+}
+
+[data-business-route="/short-term-rentals"] .industry-hero-inner {
+  padding-top: 28px;
+}
+
+[data-business-route="/short-term-rentals"] .industry-hero-inner h1 {
+  max-width: 900px;
+  font-size: clamp(1.9rem, 3.2vw, 3rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+[data-business-route="/short-term-rentals"] .industry-hero-inner p:not(.eyebrow) {
+  max-width: 790px;
+  margin-top: 18px;
+}
+
+@media (max-width: 780px) {
+  [data-business-route="/short-term-rentals"] .industry-hero {
+    padding-top: 108px;
+    padding-bottom: 52px;
+  }
+
+  [data-business-route="/short-term-rentals"] .industry-hero-inner {
+    padding-top: 20px;
+  }
+
+  [data-business-route="/short-term-rentals"] .industry-hero-inner h1 {
+    font-size: clamp(1.8rem, 8.5vw, 2.55rem);
+  }
+}
