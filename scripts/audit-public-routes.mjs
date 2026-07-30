@@ -41,9 +41,9 @@ const customRouteExpectations = {
   },
   '/short-term-rentals': {
     title: 'Keep every guest, cleaner, and property issue moving without living inside your phone.',
-    cardCount: 4,
-    workflowCount: 0,
-    faqCount: 0,
+    cardCount: 8,
+    workflowCount: 4,
+    faqCount: 2,
     requiredMarkers: [
       'Short-term rental digital AI team',
       'Your digital team handles guest questions, cleaner coordination, maintenance follow-up, emergency routing, reservation context, and owner briefings so the operation keeps moving even when you are unavailable.',
