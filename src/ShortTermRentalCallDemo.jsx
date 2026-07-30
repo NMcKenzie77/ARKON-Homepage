@@ -30,12 +30,12 @@ const scenarios = {
       assignedAgent: 'Property manager · Elena Ruiz'
     },
     messages: [
-      { speaker: 'Guest', text: 'Hi, where should we park, and are there beach towels at the house?', wait: 800 },
-      { speaker: 'Naya', text: 'Hi Marcus. You can park in the two spaces directly behind Palm House. Please keep the front curb clear for the neighboring home.', wait: 900 },
-      { speaker: 'Guest', text: 'Perfect. What about towels for the beach?', wait: 700 },
-      { speaker: 'Naya', text: 'There are four blue beach towels in the hall closet beside the washer. Please leave them in the laundry basket before checkout.', wait: 900 },
-      { speaker: 'Guest', text: 'Got it. Thank you.', wait: 650 },
-      { speaker: 'Naya', text: 'You’re welcome. I’ve added the parking and towel questions to your stay record, so the team has the context if you need anything else.', wait: 850, outcome: true }
+      { speaker: 'Guest', text: 'Hi, where should we park? Also, are there beach towels at the house?', wait: 800 },
+      { speaker: 'Naya', text: 'Hi Marcus. There are two parking spaces behind the house. Just leave the front curb open for the neighbor.', wait: 900 },
+      { speaker: 'Guest', text: 'Perfect. And the towels?', wait: 700 },
+      { speaker: 'Naya', text: 'There are four blue beach towels in the hall closet next to the washer.', wait: 850 },
+      { speaker: 'Guest', text: 'Found them. Thank you.', wait: 650 },
+      { speaker: 'Naya', text: 'You’re welcome. Enjoy the beach.', wait: 750, outcome: true }
     ]
   },
   localGuide: {
@@ -64,11 +64,11 @@ const scenarios = {
     },
     messages: [
       { speaker: 'Guest', text: 'Daniel and I want to do something special tonight for our anniversary. Where should we go?', wait: 800 },
-      { speaker: 'Naya', text: 'Happy anniversary, Olivia. Since you wanted a quiet waterfront evening, I’m building this around dinner, sunset, and an easy walk afterward rather than a crowded nightlife area.', wait: 950 },
-      { speaker: 'Guest', text: 'That sounds right. We do not want anything too formal.', wait: 700 },
-      { speaker: 'Naya', text: 'I have three good fits. Caretta on the Gulf is the most polished, Island Way Grill is relaxed with water views, and Columbia Sand Key is quieter with a broader menu. Island Way looks closest to what you described.', wait: 1000 },
-      { speaker: 'Guest', text: 'What would you pair with Island Way?', wait: 700 },
-      { speaker: 'Naya', text: 'Dinner around 6:00, sunset at Sand Key Park afterward, then a short walk near the marina. I’ll send the three options with travel times and the anniversary plan in one message so you can compare them.', wait: 900, outcome: true }
+      { speaker: 'Naya', text: 'Happy anniversary. Do you want something quiet by the water, or more lively?', wait: 850 },
+      { speaker: 'Guest', text: 'Quiet by the water. Nothing too formal.', wait: 700 },
+      { speaker: 'Naya', text: 'Island Way Grill sounds like your best fit. It has water views, but it still feels relaxed. I also found two backups in case you want choices.', wait: 950 },
+      { speaker: 'Guest', text: 'What could we do after dinner?', wait: 700 },
+      { speaker: 'Naya', text: 'Sand Key Park is close and should be nice around sunset. You could have dinner around six, catch the sunset, then walk by the marina. I’ll send the full plan with travel times.', wait: 900, outcome: true }
     ]
   },
   cleaner: {
@@ -96,12 +96,12 @@ const scenarios = {
       assignedAgent: 'Operations manager · Jordan Blake'
     },
     messages: [
-      { speaker: 'Cleaner', text: 'The dryer stopped working and the bedding is still damp. I do not think the loft will be ready by 4.', wait: 800 },
-      { speaker: 'Naya', text: 'Thanks, Tasha. What is already complete, and how much time would you need if dry linens were delivered?', wait: 900 },
-      { speaker: 'Cleaner', text: 'Everything else is done. With dry linens I need about 30 minutes.', wait: 700 },
-      { speaker: 'Message to linen runner', text: 'Gulfview Loft needs one complete king bedding set and four bath towel sets delivered immediately. Please confirm pickup and estimated arrival.', wait: 850, intelligence: true },
-      { speaker: 'Message to host', text: 'Jordan, Gulfview Loft is otherwise complete, but the dryer failed and the bedding is damp. A backup linen delivery has been requested. Tasha needs 30 minutes after delivery. I am holding the guest update until the delivery time is confirmed.', wait: 900, intelligence: true },
-      { speaker: 'Naya', text: 'Tasha, backup linens are being coordinated now. I’ll send the delivery time as soon as it is confirmed and update the arrival plan from there.', wait: 850, outcome: true }
+      { speaker: 'Cleaner', text: 'The dryer stopped and the bedding is still damp. I don’t think I’ll be ready by four.', wait: 800 },
+      { speaker: 'Naya', text: 'Okay. Is everything else finished?', wait: 800 },
+      { speaker: 'Cleaner', text: 'Yes. I just need dry sheets and about 30 minutes.', wait: 700 },
+      { speaker: 'Message to linen runner', text: 'Can you get a king sheet set and four bath towel sets to Gulfview Loft? Please send me your arrival time.', wait: 850, intelligence: true },
+      { speaker: 'Message to host', text: 'The dryer failed at Gulfview Loft. Everything else is done. I’m getting backup linens now, and Tasha needs 30 minutes once they arrive. I’ll update you as soon as I have the delivery time.', wait: 900, intelligence: true },
+      { speaker: 'Naya', text: 'Tasha, I’m getting linens over to you now. I’ll send the arrival time as soon as they confirm.', wait: 800, outcome: true }
     ]
   },
   urgent: {
@@ -129,14 +129,14 @@ const scenarios = {
       assignedAgent: 'Stay owner · Jordan Blake'
     },
     messages: [
-      { speaker: 'Guest', text: 'Hi, there is water coming from under the kitchen sink and it is spreading across the floor.', wait: 750 },
-      { speaker: 'Naya', text: 'I’m sorry you’re dealing with that, Olivia. Are you safely away from the water, and do you see any electrical cords or outlets getting wet?', wait: 950 },
-      { speaker: 'Guest', text: 'We are safe. Nothing electrical is wet, but the water is still coming out.', wait: 750 },
-      { speaker: 'Naya', text: 'Thank you. Please turn the small valve beneath the sink clockwise if you can reach it safely. I’m contacting the on-call plumber now and will stay with you here.', wait: 1000 },
-      { speaker: 'Guest', text: 'The valve is off. The water has slowed down.', wait: 700 },
-      { speaker: 'Message to plumber', text: 'Seabreeze Cottage Unit 4 has an active kitchen-sink leak. The guest shut off the under-sink valve, the water has slowed, and no electrical contact was reported. Please confirm your arrival time now.', wait: 900, intelligence: true },
-      { speaker: 'Message to host', text: 'Jordan, Olivia Chen at Seabreeze Cottage Unit 4 reported an active kitchen-sink leak. She is safe, the shutoff valve is closed, and the on-call plumber has been contacted. I will continue updating the guest and notify you if the issue escalates.', wait: 900, intelligence: true },
-      { speaker: 'Naya', text: 'Olivia, the plumber has been contacted and the host has the full update. I’ll message you with the arrival time as soon as it is confirmed.', wait: 900, outcome: true }
+      { speaker: 'Guest', text: 'There’s water coming from under the kitchen sink and it’s spreading across the floor.', wait: 750 },
+      { speaker: 'Naya', text: 'I’m sorry, Olivia. First, is everyone safe? Is the water near any outlets or cords?', wait: 900 },
+      { speaker: 'Guest', text: 'We’re safe. Nothing electrical is wet, but the water is still coming out.', wait: 750 },
+      { speaker: 'Naya', text: 'Okay. If you can reach the small valve under the sink safely, turn it clockwise. I’m calling the plumber now.', wait: 950 },
+      { speaker: 'Guest', text: 'I turned it. The water is slowing down.', wait: 700 },
+      { speaker: 'Message to plumber', text: 'Kitchen sink leak at Seabreeze Cottage, Unit 4. The guest shut off the valve and the water is slowing. No electrical contact. What’s your ETA?', wait: 850, intelligence: true },
+      { speaker: 'Message to host', text: 'Olivia reported a kitchen sink leak at Seabreeze Cottage. She’s safe, the valve is off, and the plumber has been contacted. I’ll keep her updated and let you know when he’s on the way.', wait: 900, intelligence: true },
+      { speaker: 'Naya', text: 'The plumber has the details, and the host knows what’s happening. I’ll stay on this and send you the arrival time as soon as I have it.', wait: 850, outcome: true }
     ]
   },
   review: {
@@ -164,13 +164,13 @@ const scenarios = {
       assignedAgent: 'Stay owner · Jordan Blake'
     },
     messages: [
-      { speaker: 'Naya', text: 'Hi Olivia. I hope you and Daniel made it home safely. How did the anniversary evening and the rest of your stay turn out?', wait: 800 },
-      { speaker: 'Guest', text: 'It was amazing. Island Way and the sunset walk were perfect. We were already talking about coming back next year.', wait: 900 },
-      { speaker: 'Naya', text: 'I’m glad it felt special. I’ve saved the quiet waterfront preference and your anniversary timing, so the team remembers what worked when you return.', wait: 900 },
-      { speaker: 'Guest', text: 'Thank you. That would be great.', wait: 650 },
-      { speaker: 'Naya', text: 'Would you mind sharing that experience in a review? It helps future guests understand what makes the stay different. I’ll send the review link here, and I’ll also note that you may want the same anniversary week next year.', wait: 950 },
+      { speaker: 'Naya', text: 'Hi Olivia. Did you and Daniel make it home okay? How was the rest of the anniversary trip?', wait: 800 },
+      { speaker: 'Guest', text: 'We did. It was amazing. Island Way and the sunset walk were perfect. We’re already talking about coming back next year.', wait: 900 },
+      { speaker: 'Naya', text: 'I love hearing that. I’ll make sure we remember the waterfront dinner and your anniversary week for next time.', wait: 850 },
+      { speaker: 'Guest', text: 'That would be great.', wait: 650 },
+      { speaker: 'Naya', text: 'Would you mind leaving a review about your stay? I can send the link right here.', wait: 850 },
       { speaker: 'Guest', text: 'Absolutely. Send it over.', wait: 650 },
-      { speaker: 'Naya', text: 'Sent. Thank you, Olivia. Your return interest and anniversary preferences are attached to your guest profile so the host can follow up at the right time.', wait: 850, outcome: true }
+      { speaker: 'Naya', text: 'Sent. Thank you, Olivia. We’d love to have you both back next year.', wait: 800, outcome: true }
     ]
   }
 };
