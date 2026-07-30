@@ -147,15 +147,15 @@ const scenarios = {
   },
   afterHours: {
     tab: 'The shop is closed',
-    eyebrow: 'Vera keeps the opportunity from disappearing after hours',
-    title: 'The shop can be closed without sending the customer to voicemail.',
+    eyebrow: 'Vera answers even when the team has gone home',
+    title: 'A customer can still reach the shop after hours.',
     description:
-      'Vera answers in the shop’s name, explains that the team is closed, captures the customer and vehicle, checks for urgent warning signs, and prepares the first follow-up for opening time.',
+      'Vera sounds like a helpful front-desk person, gets the basic details, and makes sure the team knows who to call when the shop opens.',
     proof: [
       'Answers after business hours',
-      'Sets an honest expectation',
-      'Captures the full repair concern',
-      'Prepares the opening-time follow-up'
+      'Sounds natural and helpful',
+      'Captures the customer and vehicle',
+      'Prepares the morning callback'
     ],
     contactName: 'David Chen',
     contactInitial: 'D',
@@ -165,57 +165,71 @@ const scenarios = {
       {
         type: 'message',
         from: 'shop',
-        text: `Thank you for calling ${SHOP_NAME}. This is Vera. The shop is closed for the evening, but I can take the details now so the team can follow up when they open. What is happening with the vehicle?`,
+        text: `Thanks for calling ${SHOP_NAME}. This is Vera. We’re closed for the evening, but I can get everything over to the team for the morning. What’s going on with the car?`,
         time: '8:42 PM',
         wait: 900
       },
       {
         type: 'message',
         from: 'customer',
-        text: 'My 2020 Subaru Outback will not start. The lights come on, but I only hear clicking.',
+        text: 'My 2020 Subaru Outback won’t start. The lights come on, but all I hear is clicking.',
         time: '8:43 PM',
         wait: 900
       },
       {
         type: 'message',
         from: 'shop',
-        text: 'Understood. Is the vehicle in a safe location, and are there any warning signs such as smoke, a burning smell, or leaking fluid?',
+        text: 'Okay. Is it somewhere safe right now?',
         time: '8:43 PM',
-        wait: 1000
+        wait: 800
       },
       {
         type: 'message',
         from: 'customer',
-        text: 'It is parked safely at home. No smoke, smell, or leaking.',
+        text: 'Yes, it’s parked at home.',
         time: '8:44 PM',
-        wait: 850
+        wait: 700
       },
       {
         type: 'message',
         from: 'shop',
-        text: 'Thank you. I’ll mark this for the shop to review when they open at 8:00 AM. May I get your full name and the best number for the team to use?',
+        text: 'Good. What’s your name?',
         time: '8:44 PM',
-        wait: 950
+        wait: 700
       },
       {
         type: 'message',
         from: 'customer',
-        text: 'David Chen. This number is best.',
+        text: 'David Chen.',
+        time: '8:44 PM',
+        wait: 650
+      },
+      {
+        type: 'message',
+        from: 'shop',
+        text: 'Thanks, David. Is this the best number for the shop to call you on?',
         time: '8:45 PM',
-        wait: 750
+        wait: 800
+      },
+      {
+        type: 'message',
+        from: 'customer',
+        text: 'Yes, it is.',
+        time: '8:45 PM',
+        wait: 650
       },
       {
         type: 'message',
         from: 'shop',
-        text: 'Got it, David. The shop will contact you after opening to discuss the next step. If the vehicle becomes unsafe or you notice smoke, fire, or leaking fuel, move away from it and contact emergency services.',
+        text: 'Perfect. I’ll have the team call you after they open at 8:00 tomorrow morning and help you figure out the next step.',
         time: '8:45 PM',
         wait: 900
       },
       {
         type: 'confirmation',
-        title: 'After-hours opportunity captured',
-        detail: '2020 Subaru Outback · No-start · Clicking sound',
-        note: 'Safe at home · Call after 8:00 AM · This number preferred',
+        title: 'Morning callback ready',
+        detail: 'David Chen · 2020 Subaru Outback · Will not start',
+        note: 'Vehicle is safe at home · Call after 8:00 AM',
         time: '8:46 PM',
         wait: 900
       }
