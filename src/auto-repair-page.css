@@ -1,3 +1,26 @@
+.auto-repair-page .industry-hero {
+  min-height: 52svh;
+}
+
+.auto-repair-page .industry-hero-inner {
+  padding-top: 48px;
+}
+
+.auto-repair-page .industry-hero-inner h1 {
+  max-width: 920px;
+  font-size: clamp(2.45rem, 4.7vw, 4.35rem);
+  line-height: 0.98;
+}
+
+.auto-repair-page .industry-hero-inner p:not(.eyebrow) {
+  max-width: 730px;
+  margin-top: 18px;
+}
+
+.auto-repair-page .industry-hero .hero-actions {
+  margin-top: 24px;
+}
+
 .auto-repair-team-section,
 .auto-repair-control-section {
   width: min(1180px, calc(100% - 40px));
@@ -221,6 +244,21 @@
 
   .auto-repair-control-section {
     gap: 34px;
+  }
+}
+
+@media (max-width: 780px) {
+  .auto-repair-page .industry-hero {
+    min-height: auto;
+    padding-top: 104px;
+  }
+
+  .auto-repair-page .industry-hero-inner {
+    padding-top: 34px;
+  }
+
+  .auto-repair-page .industry-hero-inner h1 {
+    font-size: clamp(2.2rem, 11vw, 3.35rem);
   }
 }
 
