@@ -5,6 +5,7 @@ import SalonConversationDemo from './SalonConversationDemo.jsx';
 import SalonPageContent from './SalonPageContent.jsx';
 import AutoRepairConversationDemo from './AutoRepairConversationDemo.jsx';
 import AutoRepairPageContent from './AutoRepairPageContent.jsx';
+import InsuranceCallDemo from './InsuranceCallDemo.jsx';
 import VerticalClosingCta from './VerticalClosingCta.jsx';
 import { industryPages } from './site-content.js';
 import { getRelatedPages } from './seo-structure.js';
@@ -152,6 +153,7 @@ export default function IndustryPage({ page, route }) {
   return (
     <main className={`industry-page${isInsurance ? ' insurance-page' : ''}`} data-business-route={route}>
       <PageBanner page={bannerPage} route={route} animate={false} />
+      {isInsurance ? <InsuranceCallDemo /> : null}
 
       {page.reality ? (
         <section className="industry-reality-panel is-visible" data-reveal>
