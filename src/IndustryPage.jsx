@@ -11,6 +11,29 @@ import { industryPages } from './site-content.js';
 import { getRelatedPages } from './seo-structure.js';
 import './insurance-page.css';
 
+const insuranceTeamCards = [
+  {
+    number: '01',
+    title: 'Vera turns inbound calls into organized opportunities.',
+    copy: 'Vera answers in the agency’s name, captures the prospect, business or household, requested coverage, timing, and preferred contact method, then routes anything requiring licensed advice to a producer.'
+  },
+  {
+    number: '02',
+    title: 'Naya keeps quote and renewal follow-up from disappearing.',
+    copy: 'Naya follows up using the prospect’s name, requested coverage, prior producer conversation, renewal timing, missing information, and preferred communication method.'
+  },
+  {
+    number: '03',
+    title: 'Marcus keeps the relationship and policy context attached.',
+    copy: 'Marcus connects contacts, businesses, household members, policies, quote history, documents, conversations, assigned producers, and the next required action.'
+  },
+  {
+    number: '04',
+    title: 'Iris and Grant keep agency priorities visible.',
+    copy: 'Iris separates urgent policyholder, carrier, underwriting, and prospect messages from routine email. Grant gives the agency owner, sales manager, service manager, or producer an on-demand briefing of what needs attention.'
+  }
+];
+
 function PricingSection({ plans }) {
   if (!plans?.length) return null;
 
@@ -78,6 +101,32 @@ function RelatedBusinessPages({ route }) {
             <p>{page.description}</p>
             <strong>View workflow</strong>
           </a>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function InsuranceTeamSection() {
+  return (
+    <section className="section insurance-team-section" aria-labelledby="insurance-team-title">
+      <div className="insurance-section-heading">
+        <div>
+          <p className="eyebrow">Meet your insurance agency digital AI team</p>
+          <h2 id="insurance-team-title">Every quote request, service need, and follow-up reaches the right person with the context already attached.</h2>
+        </div>
+        <p>
+          Vera answers new quote and policy-service calls. Naya follows up with prospects and policyholders using the actual coverage request and prior conversation. Marcus keeps relationship and policy context connected. Iris separates urgent agency email from routine activity. Grant briefs agency leadership whenever they need it.
+        </p>
+      </div>
+
+      <div className="industry-card-grid insurance-team-grid">
+        {insuranceTeamCards.map(card => (
+          <article className="industry-card insurance-team-card is-visible" data-reveal key={card.number}>
+            <span>{card.number}</span>
+            <h3>{card.title}</h3>
+            <p>{card.copy}</p>
+          </article>
         ))}
       </div>
     </section>
@@ -164,21 +213,25 @@ export default function IndustryPage({ page, route }) {
         </section>
       ) : null}
 
-      <section className="section industry-intro-section">
-        <div className="section-heading is-visible" data-reveal>
-          <p className="eyebrow">Why it matters</p>
-          <h2>Repeatable work should not depend on memory.</h2>
-          <p>{page.primary}</p>
-        </div>
-        <div className="industry-card-grid">
-          {page.cards.map(([title, copy]) => (
-            <article className="industry-card is-visible" key={title} data-reveal>
-              <h3>{title}</h3>
-              <p>{copy}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      {isInsurance ? (
+        <InsuranceTeamSection />
+      ) : (
+        <section className="section industry-intro-section">
+          <div className="section-heading is-visible" data-reveal>
+            <p className="eyebrow">Why it matters</p>
+            <h2>Repeatable work should not depend on memory.</h2>
+            <p>{page.primary}</p>
+          </div>
+          <div className="industry-card-grid">
+            {page.cards.map(([title, copy]) => (
+              <article className="industry-card is-visible" key={title} data-reveal>
+                <h3>{title}</h3>
+                <p>{copy}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       <PricingSection plans={page.pricing} />
 
