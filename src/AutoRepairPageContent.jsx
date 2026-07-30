@@ -96,7 +96,7 @@ export default function AutoRepairPageContent() {
               <div className="auto-repair-owner-row" key={`${title}-${status}`}>
                 <span className="auto-repair-owner-avatar" aria-hidden="true">{title.charAt(0)}</span>
                 <div><strong>{title}</strong><small>{detail}</small></div>
-                <em>{status}</em>
+                <em className={`auto-repair-owner-status auto-repair-owner-status-${status.toLowerCase().replace(/\s+/g, '-')}`}>{status}</em>
               </div>
             ))}
           </div>
