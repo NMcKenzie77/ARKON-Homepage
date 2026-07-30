@@ -73,19 +73,19 @@ const scenarios = {
   },
   cleaner: {
     tab: 'Cleaner coordination',
-    eyebrow: 'Cleaner updates become an operating decision',
-    title: 'A delayed turnover reaches the right people before it becomes a guest surprise.',
-    description: 'Naya captures what remains unfinished, checks the arrival time, coordinates the next action, and prepares the guest update that the host can approve when needed.',
-    consoleLabel: 'Cleaner coordination message',
+    eyebrow: 'Every turnover is confirmed and documented',
+    title: 'The host knows the property is ready before the next guest arrives.',
+    description: 'Naya confirms the cleaner, records arrival and checkout, collects before-and-after photos, captures supply and maintenance issues, and sends the host a final ready-for-arrival update.',
+    consoleLabel: 'Turnover coordination',
     consoleAgent: `Naya · ${EXAMPLE_OPERATOR}`,
-    replayLabel: 'Replay cleaner coordination',
-    proof: ['Captures the exact delay', 'Checks guest arrival timing', 'Coordinates backup help', 'Prepares the guest update'],
+    replayLabel: 'Replay turnover coordination',
+    proof: ['Confirms cleaner availability', 'Collects arrival and final photos', 'Captures property issues', 'Confirms readiness to the host'],
     property: {
-      label: 'Turnover record matched',
+      label: 'Turnover schedule matched',
       address: 'Gulfview Loft · Clearwater',
-      status: 'Turnover at risk',
-      facts: ['Check-in today', 'Guest arrival: 4 PM', 'Laundry equipment issue'],
-      context: 'Backup linen runner contacted · Host review required'
+      status: 'Turnover scheduled',
+      facts: ['Guest checkout: Tomorrow at noon', 'Cleaner arrival: 12:30 PM', 'Next guest check-in: 4 PM'],
+      context: 'Arrival photos required · Final photos required · Host receives readiness report'
     },
     contact: {
       label: 'Cleaner record matched',
@@ -96,12 +96,14 @@ const scenarios = {
       assignedAgent: 'Operations manager · Jordan Blake'
     },
     messages: [
-      { speaker: 'Cleaner', text: 'The dryer stopped and the bedding is still damp. I don’t think I’ll be ready by four.', wait: 800 },
-      { speaker: 'Naya', text: 'Okay. Is everything else finished?', wait: 800 },
-      { speaker: 'Cleaner', text: 'Yes. I just need dry sheets and about 30 minutes.', wait: 700 },
-      { speaker: 'Message to linen runner', text: 'Can you get a king sheet set and four bath towel sets to Gulfview Loft? Please send me your arrival time.', wait: 850, intelligence: true },
-      { speaker: 'Message to host', text: 'The dryer failed at Gulfview Loft. Everything else is done. I’m getting backup linens now, and Tasha needs 30 minutes once they arrive. I’ll update you as soon as I have the delivery time.', wait: 900, intelligence: true },
-      { speaker: 'Naya', text: 'Tasha, I’m getting linens over to you now. I’ll send the arrival time as soon as they confirm.', wait: 800, outcome: true }
+      { speaker: 'Naya', text: 'Hi Tasha. The guest at Gulfview Loft checks out tomorrow at noon. Can you confirm you’ll be there for the turnover?', wait: 800 },
+      { speaker: 'Cleaner', text: 'Yes. I’ll be there at 12:30.', wait: 700 },
+      { speaker: 'Naya', text: 'Perfect. The next guest checks in at four. Please check in when you arrive and upload the arrival photos before you start.', wait: 900 },
+      { speaker: 'Cleaner', text: 'I’m at the property now. Arrival photos are uploaded.', wait: 800 },
+      { speaker: 'Naya', text: 'Got them. Let me know when the turnover is finished and upload the final photos before you check out.', wait: 850 },
+      { speaker: 'Cleaner', text: 'The property is ready and the final photos are uploaded. We’re low on paper towels, and the bathroom faucet is dripping.', wait: 900 },
+      { speaker: 'Naya', text: 'Got it. You’re checked out. I’ve added the paper towels and faucet to the property report.', wait: 800 },
+      { speaker: 'Message to host', text: 'Gulfview Loft is ready for the 4:00 guest arrival. Final photos are uploaded. Tasha reported low paper towels and a dripping bathroom faucet. Both items have been added for follow-up.', wait: 900, intelligence: true, outcome: true }
     ]
   },
   urgent: {
