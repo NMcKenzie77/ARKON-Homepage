@@ -8,6 +8,7 @@ import AutoRepairPageContent from './AutoRepairPageContent.jsx';
 import VerticalClosingCta from './VerticalClosingCta.jsx';
 import { industryPages } from './site-content.js';
 import { getRelatedPages } from './seo-structure.js';
+import './insurance-page.css';
 
 function PricingSection({ plans }) {
   if (!plans?.length) return null;
@@ -137,9 +138,20 @@ export default function IndustryPage({ page, route }) {
     );
   }
 
+  const isInsurance = route === '/insurance';
+  const bannerPage = isInsurance
+    ? {
+        ...page,
+        eyebrow: 'Insurance agency digital AI team',
+        title: 'Turn more quote requests into conversations before the prospect moves on.',
+        description:
+          'Vera answers new quote and policy-service calls in the agency’s name. Naya follows up with prospects using the coverage request, prior conversation, producer, and preferred contact method. Marcus keeps the relationship and policy context attached. Grant briefs the agency owner, sales manager, or producer whenever they need it.'
+      }
+    : page;
+
   return (
-    <main className="industry-page" data-business-route={route}>
-      <PageBanner page={page} route={route} animate={false} />
+    <main className={`industry-page${isInsurance ? ' insurance-page' : ''}`} data-business-route={route}>
+      <PageBanner page={bannerPage} route={route} animate={false} />
 
       {page.reality ? (
         <section className="industry-reality-panel is-visible" data-reveal>
