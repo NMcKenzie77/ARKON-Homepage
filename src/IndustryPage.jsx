@@ -119,7 +119,7 @@ export default function IndustryPage({ page, route }) {
     );
   }
 
-  if (route === '/auto-repair-shops') {
+  if (route === '/garages') {
     const autoRepairBannerPage = {
       ...page,
       eyebrow: 'Auto repair digital AI team',
