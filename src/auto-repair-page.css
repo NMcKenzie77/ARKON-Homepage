@@ -1,3 +1,25 @@
+.auto-repair-page .industry-hero {
+  min-height: auto;
+  padding-top: 132px;
+  padding-bottom: 72px;
+}
+
+.auto-repair-page .industry-hero-inner {
+  padding-top: 28px;
+}
+
+.auto-repair-page .industry-hero-inner h1 {
+  max-width: 860px;
+  font-size: clamp(1.9rem, 3.2vw, 3rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.auto-repair-page .industry-hero-inner p:not(.eyebrow) {
+  max-width: 760px;
+  margin-top: 18px;
+}
+
 .auto-repair-team-section,
 .auto-repair-control-section {
   width: min(1180px, calc(100% - 40px));
