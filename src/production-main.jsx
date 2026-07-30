@@ -22,6 +22,7 @@ import './copy-polish.css';
 import './homepage-logo.css';
 import './pricing.css';
 
+// Keep the already-indexed URL canonical. The descriptive route is an alias only.
 const AUTO_REPAIR_ROUTE = '/garages';
 const AUTO_REPAIR_ALIAS = '/auto-repair-shops';
 
