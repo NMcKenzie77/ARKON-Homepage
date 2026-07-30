@@ -144,6 +144,82 @@ const scenarios = {
         wait: 900
       }
     ]
+  },
+  afterHours: {
+    tab: 'The shop is closed',
+    eyebrow: 'Vera keeps the opportunity from disappearing after hours',
+    title: 'The shop can be closed without sending the customer to voicemail.',
+    description:
+      'Vera answers in the shop’s name, explains that the team is closed, captures the customer and vehicle, checks for urgent warning signs, and prepares the first follow-up for opening time.',
+    proof: [
+      'Answers after business hours',
+      'Sets an honest expectation',
+      'Captures the full repair concern',
+      'Prepares the opening-time follow-up'
+    ],
+    contactName: 'David Chen',
+    contactInitial: 'D',
+    assistantName: 'Vera',
+    channelLabel: 'After-hours call',
+    messages: [
+      {
+        type: 'message',
+        from: 'shop',
+        text: `Thank you for calling ${SHOP_NAME}. This is Vera. The shop is closed for the evening, but I can take the details now so the team can follow up when they open. What is happening with the vehicle?`,
+        time: '8:42 PM',
+        wait: 900
+      },
+      {
+        type: 'message',
+        from: 'customer',
+        text: 'My 2020 Subaru Outback will not start. The lights come on, but I only hear clicking.',
+        time: '8:43 PM',
+        wait: 900
+      },
+      {
+        type: 'message',
+        from: 'shop',
+        text: 'Understood. Is the vehicle in a safe location, and are there any warning signs such as smoke, a burning smell, or leaking fluid?',
+        time: '8:43 PM',
+        wait: 1000
+      },
+      {
+        type: 'message',
+        from: 'customer',
+        text: 'It is parked safely at home. No smoke, smell, or leaking.',
+        time: '8:44 PM',
+        wait: 850
+      },
+      {
+        type: 'message',
+        from: 'shop',
+        text: 'Thank you. I’ll mark this for the shop to review when they open at 8:00 AM. May I get your full name and the best number for the team to use?',
+        time: '8:44 PM',
+        wait: 950
+      },
+      {
+        type: 'message',
+        from: 'customer',
+        text: 'David Chen. This number is best.',
+        time: '8:45 PM',
+        wait: 750
+      },
+      {
+        type: 'message',
+        from: 'shop',
+        text: 'Got it, David. The shop will contact you after opening to discuss the next step. If the vehicle becomes unsafe or you notice smoke, fire, or leaking fuel, move away from it and contact emergency services.',
+        time: '8:45 PM',
+        wait: 900
+      },
+      {
+        type: 'confirmation',
+        title: 'After-hours opportunity captured',
+        detail: '2020 Subaru Outback · No-start · Clicking sound',
+        note: 'Safe at home · Call after 8:00 AM · This number preferred',
+        time: '8:46 PM',
+        wait: 900
+      }
+    ]
   }
 };
 
@@ -240,6 +316,8 @@ export default function AutoRepairConversationDemo() {
     setReplayToken(token => token + 1);
   }
 
+  const isCallScenario = activeKey === 'repairCall' || activeKey === 'afterHours';
+
   return (
     <section className="auto-repair-demo-section" aria-labelledby="auto-repair-demo-title">
       <div className="auto-repair-demo-copy">
@@ -281,7 +359,7 @@ export default function AutoRepairConversationDemo() {
 
           <div className="auto-phone-screen">
             <div className="auto-phone-statusbar" aria-hidden="true">
-              <span>10:18</span>
+              <span>{activeKey === 'afterHours' ? '8:46' : '10:18'}</span>
               <span>●●● ᯤ ▰</span>
             </div>
 
@@ -295,7 +373,7 @@ export default function AutoRepairConversationDemo() {
               <span className="auto-phone-menu" aria-hidden="true">•••</span>
             </header>
 
-            <div className="auto-phone-shop-label">{SHOP_NAME} · Today</div>
+            <div className="auto-phone-shop-label">{SHOP_NAME} · {activeKey === 'afterHours' ? 'After hours' : 'Today'}</div>
 
             <div className="auto-phone-transcript" ref={transcriptRef} aria-label={`Animated auto repair interaction with ${scenario.contactName}`}>
               {visibleMessages.map((message, index) => (
@@ -306,7 +384,7 @@ export default function AutoRepairConversationDemo() {
 
             <div className="auto-phone-composer" aria-hidden="true">
               <span>＋</span>
-              <div>{activeKey === 'repairCall' ? 'Call notes' : `Message ${scenario.contactName}`}</div>
+              <div>{isCallScenario ? 'Call notes' : `Message ${scenario.contactName}`}</div>
               <span>◉</span>
             </div>
           </div>
