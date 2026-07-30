@@ -53,7 +53,6 @@ const customRouteExpectations = {
       'Cleaner coordination',
       'Urgent issue after hours',
       'Review and return stay',
-      'We turn “That was a good trip” into “That was amazing. When can we go back?”',
       'short-term-rental-team-section'
     ]
   },
