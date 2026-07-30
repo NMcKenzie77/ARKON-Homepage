@@ -27,6 +27,9 @@ const customRouteExpectations = {
     workflowCount: 0,
     faqCount: 0
   },
+  '/insurance': {
+    title: 'Turn more quote requests into conversations before the prospect moves on.'
+  },
   '/salons': {
     title: 'Every call answered. Every booking opportunity kept alive.',
     workflowCount: 0,
