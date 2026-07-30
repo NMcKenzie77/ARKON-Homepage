@@ -31,7 +31,13 @@ const customRouteExpectations = {
     title: 'Turn more quote requests into conversations before the prospect moves on.',
     workflowCount: 0,
     faqCount: 0,
-    requiredMarkers: ['insurance-call-demo', 'insurance-team-section', 'insurance-grant-section']
+    requiredMarkers: [
+      'insurance-call-demo',
+      'insurance-team-section',
+      'insurance-grant-section',
+      'See how your agency can respond faster without putting licensed decisions in the wrong hands.',
+      'Book an insurance agency walkthrough'
+    ]
   },
   '/salons': {
     title: 'Every call answered. Every booking opportunity kept alive.',
