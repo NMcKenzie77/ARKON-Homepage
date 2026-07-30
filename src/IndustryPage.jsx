@@ -196,13 +196,13 @@ function InsuranceGrantSection() {
             <span className="active">Briefings · Grant</span>
             <span>Settings</span>
           </nav>
-          <div className="grant-preview-user">Invicta Protection Group<small>Sign out</small></div>
+          <div className="grant-preview-user">Harbor Ridge Insurance Group<small>Sign out</small></div>
         </aside>
 
         <div className="grant-preview-main">
           <div className="grant-preview-topline">
             <div>
-              <h3>Invicta Protection Group Command Center · Grant</h3>
+              <h3>Harbor Ridge Insurance Group Command Center · Grant</h3>
               <p>Where the agency stands, what needs attention, what opportunities are moving, and where revenue, service, or client trust may be slipping.</p>
             </div>
             <div className="grant-preview-actions"><span>Custom summary</span><strong>Run briefing</strong></div>
