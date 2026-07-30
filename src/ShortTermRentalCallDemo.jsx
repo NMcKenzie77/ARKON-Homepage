@@ -40,22 +40,22 @@ const scenarios = {
   },
   localGuide: {
     tab: 'Where should we go?',
-    eyebrow: 'Local questions become personalized guest guidance',
-    title: 'The guest receives relevant recommendations based on the property, timing, and the kind of outing they asked for.',
-    description: 'Naya uses the approved local guide for the property, narrows the options around the guest’s request, and keeps the host from answering the same neighborhood questions repeatedly.',
-    consoleLabel: 'Local recommendation request',
+    eyebrow: 'Local recommendations start with who the guest is',
+    title: 'The guest receives a list built around who is traveling, why they are there, and what kind of experience they want.',
+    description: 'Naya uses the reservation, guest profile, trip purpose, ages, timing, and stated preferences to build recommendations that fit this guest instead of returning a generic list.',
+    consoleLabel: 'Personalized recommendation request',
     consoleAgent: `Naya · ${EXAMPLE_OPERATOR}`,
-    replayLabel: 'Replay local guidance',
-    proof: ['Uses the property guide', 'Narrows by guest preference', 'Provides practical details', 'Keeps recommendations approved'],
+    replayLabel: 'Replay personalized guidance',
+    proof: ['Uses the guest profile', 'Understands the trip purpose', 'Narrows by preferences', 'Builds a relevant list'],
     property: {
-      label: 'Active reservation matched',
+      label: 'Guest profile and reservation matched',
       address: 'Gulfview Loft · Clearwater',
-      status: 'Guest planning an evening out',
-      facts: ['Guest: Olivia Chen', 'Night 2 of 4', 'Traveling with two children'],
-      context: 'Approved guide includes family dining, sunset areas, and rainy-day options'
+      status: 'Anniversary evening being planned',
+      facts: ['Guests: Olivia and Daniel Chen', '10th anniversary trip', 'No children traveling'],
+      context: 'Prefer waterfront dining · Quiet evening · Comfortable walking distance after dinner'
     },
     contact: {
-      label: 'Guest record matched',
+      label: 'Guest profile matched',
       name: 'Olivia Chen',
       phone: '(727) 555-0138',
       email: 'olivia.chen@example.com',
@@ -63,12 +63,12 @@ const scenarios = {
       assignedAgent: 'Stay owner · Jordan Blake'
     },
     messages: [
-      { speaker: 'Guest', text: 'We want to go somewhere near the water tonight that is good with kids. Where should we go?', wait: 800 },
-      { speaker: 'Naya', text: 'For an easy family evening, the approved guide recommends Pier 60. It is about 12 minutes from Gulfview Loft and has room for the kids to walk around before sunset.', wait: 950 },
-      { speaker: 'Guest', text: 'Is there somewhere nearby to eat that is not too formal?', wait: 700 },
-      { speaker: 'Naya', text: 'Yes. Frenchy’s Rockaway is close to the pier and casual. The guide notes that waits can build around sunset, so arriving before 5:30 is usually easier with children.', wait: 950 },
-      { speaker: 'Guest', text: 'That sounds perfect.', wait: 650 },
-      { speaker: 'Naya', text: 'I’ll send both places in one message with the parking note from the property guide so you have everything together.', wait: 850, outcome: true }
+      { speaker: 'Guest', text: 'Daniel and I want to do something special tonight for our anniversary. Where should we go?', wait: 800 },
+      { speaker: 'Naya', text: 'Happy anniversary, Olivia. Since you wanted a quiet waterfront evening, I’m building this around dinner, sunset, and an easy walk afterward rather than a crowded nightlife area.', wait: 950 },
+      { speaker: 'Guest', text: 'That sounds right. We do not want anything too formal.', wait: 700 },
+      { speaker: 'Naya', text: 'I have three good fits. Caretta on the Gulf is the most polished, Island Way Grill is relaxed with water views, and Columbia Sand Key is quieter with a broader menu. Island Way looks closest to what you described.', wait: 1000 },
+      { speaker: 'Guest', text: 'What would you pair with Island Way?', wait: 700 },
+      { speaker: 'Naya', text: 'Dinner around 6:00, sunset at Sand Key Park afterward, then a short walk near the marina. I’ll send the three options with travel times and the anniversary plan in one message so you can compare them.', wait: 900, outcome: true }
     ]
   },
   cleaner: {
