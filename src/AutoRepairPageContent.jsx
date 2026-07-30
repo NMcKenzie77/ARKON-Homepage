@@ -21,7 +21,7 @@ const teamCards = [
   {
     number: '04',
     title: 'Marcus and Grant keep the history and priorities visible.',
-    copy: 'Marcus keeps the customer, vehicle, recommendations, estimates, and conversations attached. Grant turns activity across the shop into a morning command briefing, owner action list, and weekly executive digest.'
+    copy: 'Marcus keeps the customer, vehicle, recommendations, estimates, and conversations attached. Grant turns activity across the shop into on-demand briefings, prioritized action lists, and custom business summaries.'
   }
 ];
 
@@ -29,7 +29,7 @@ const grantMoneyStats = [
   ['$18,460', 'Repair work in motion'],
   ['$4,280', 'Deferred work ready'],
   ['11', 'Vehicles scheduled today'],
-  ['3', 'Owner actions', 'alert']
+  ['3', 'Priority actions', 'alert']
 ];
 
 const grantPriorityActions = [
@@ -61,7 +61,7 @@ export default function AutoRepairPageContent() {
             <h2 id="auto-repair-team-title">The shop reaches the right customer with the right vehicle context before the opportunity disappears.</h2>
           </div>
           <p>
-            Naya brings deferred and upcoming maintenance back into the schedule. Vera handles new repair calls. Marcus keeps the customer and vehicle history attached. Grant briefs the owner on what needs attention.
+            Naya brings deferred and upcoming maintenance back into the schedule. Vera handles new repair calls. Marcus keeps the customer and vehicle history attached. Grant briefs the owner, service manager, or service advisor whenever they need it.
           </p>
         </div>
 
@@ -81,12 +81,12 @@ export default function AutoRepairPageContent() {
           <p className="eyebrow real-estate-grant-eyebrow">Your chief of staff</p>
           <h2 id="auto-repair-grant-title">Grant is your shop’s chief of staff, available 24/7.</h2>
           <p>
-            Every morning, Grant briefs you on repair revenue in motion, deferred work ready to return, today’s appointments, customers waiting on updates, stalled estimates, technician workload, parts delays, and anything that needs your judgment. On Monday, he delivers a longer executive digest that connects the week across the entire digital team.
+            Grant gives the owner, service manager, or service advisor a clear briefing whenever they need it, covering repair revenue in motion, deferred work, today’s schedule, customer issues, technician workload, parts delays, and anything that needs a decision.
           </p>
           <div className="real-estate-grant-points" aria-label="Grant briefing and visibility areas">
-            <span>Daily morning shop briefing</span>
-            <span>Spoken readout and owner action list</span>
-            <span>Monday executive digest</span>
+            <span>Briefings available on demand</span>
+            <span>Spoken readout and prioritized action list</span>
+            <span>Daily, weekly, or custom shop summaries</span>
           </div>
         </div>
 
@@ -104,7 +104,7 @@ export default function AutoRepairPageContent() {
               <span>Repair orders</span>
               <span>Reviews · Grace</span>
               <span>Inbox · Iris</span>
-              <span className="active">Digest · Grant</span>
+              <span className="active">Briefings · Grant</span>
               <span>Settings</span>
             </nav>
             <div className="grant-preview-user">Northside Auto Care<small>Sign out</small></div>
@@ -116,13 +116,13 @@ export default function AutoRepairPageContent() {
                 <h3>Northside Auto Care Command Center · Grant</h3>
                 <p>Where the shop stands, what needs attention, what work is moving, and where revenue or customer trust may be slipping.</p>
               </div>
-              <div className="grant-preview-actions"><span>Monday digest</span><strong>Run briefing</strong></div>
+              <div className="grant-preview-actions"><span>Custom summary</span><strong>Run briefing</strong></div>
             </div>
 
             <div className="grant-preview-briefing">
               <div className="grant-preview-briefing-head">
                 <div>
-                  <span>Grant morning verdict</span>
+                  <span>Grant briefing</span>
                   <h4>Three items need attention before 9 AM.</h4>
                 </div>
                 <strong>Needs attention</strong>
@@ -131,8 +131,8 @@ export default function AutoRepairPageContent() {
                 Good morning. You have $18,460 in repair work in motion, $4,280 in deferred work ready for follow-up, and 11 vehicles on today’s schedule. Michael Torres is ready to book the brake work quoted last month, the F-150 customer is waiting on a revised estimate, and one parts delay may affect this afternoon’s promise time. Everything else is moving normally.
               </p>
               <div className="grant-preview-briefing-footer">
-                <span>Generated today at 7:00 AM</span>
-                <div><strong>▶ Read morning briefing</strong><em>Copy script</em></div>
+                <span>Generated on demand</span>
+                <div><strong>▶ Read briefing</strong><em>Copy script</em></div>
               </div>
             </div>
 
@@ -148,7 +148,7 @@ export default function AutoRepairPageContent() {
             <div className="grant-preview-card grant-preview-priority-card">
               <div className="grant-preview-card-heading">
                 <h4>What needs attention before 9 AM</h4>
-                <span>Owner action list</span>
+                <span>Prioritized action list</span>
               </div>
               <div className="grant-preview-priority-list">
                 {grantPriorityActions.map(([number, action, timing, tone]) => (
@@ -190,13 +190,13 @@ export default function AutoRepairPageContent() {
 
               <div className="grant-preview-card grant-preview-digest-card">
                 <div className="grant-preview-card-heading">
-                  <h4>Monday executive digest</h4>
-                  <span>Delivered by email</span>
+                  <h4>Executive shop summary</h4>
+                  <span>On demand or scheduled</span>
                 </div>
                 <p>
-                  Grant connects the week across calls, appointments, estimates, deferred work, repair orders, customer updates, reviews, and staff handoffs, then ends with the five things that need the owner next.
+                  Grant connects activity across calls, appointments, estimates, deferred work, repair orders, customer updates, reviews, and staff handoffs, then identifies what needs attention next.
                 </p>
-                <div className="grant-preview-digest-footer"><span>Weekly archive ready</span><strong>Read latest digest</strong></div>
+                <div className="grant-preview-digest-footer"><span>Summary archive ready</span><strong>Read latest summary</strong></div>
               </div>
             </div>
           </div>
@@ -206,7 +206,7 @@ export default function AutoRepairPageContent() {
       <VerticalClosingCta
         eyebrow="See ARKON for auto repair"
         title="See how personalized customer follow-up brings the right work back into the shop."
-        body="We’ll walk through how Naya uses customer and vehicle history to recover deferred work and schedule upcoming maintenance, how Vera handles new repair calls, how Marcus keeps the context attached, and how Grant briefs the owner on what needs attention."
+        body="We’ll walk through how Naya uses customer and vehicle history to recover deferred work and schedule upcoming maintenance, how Vera handles new repair calls, how Marcus keeps the context attached, and how Grant briefs the owner, service manager, or service advisor whenever they need it."
         buttonLabel="Book an auto repair walkthrough"
       />
     </>
