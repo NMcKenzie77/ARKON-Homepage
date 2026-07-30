@@ -29,7 +29,7 @@ const customRouteExpectations = {
   },
   '/insurance': {
     title: 'Turn more quote requests into conversations before the prospect moves on.',
-    requiredMarker: 'insurance-call-demo'
+    requiredMarkers: ['insurance-call-demo', 'insurance-team-section']
   },
   '/salons': {
     title: 'Every call answered. Every booking opportunity kept alive.',
@@ -148,8 +148,8 @@ try {
         assert(countClass(markup, 'industry-card') === expectedCardCount, `${pass}: ${route} business cards did not render completely.`);
         assert(countClass(markup, 'industry-step') === expectedWorkflowCount, `${pass}: ${route} rendered an unexpected number of workflow cards.`);
         assert(countClass(markup, 'industry-faq') === expectedFaqCount, `${pass}: ${route} rendered an unexpected number of FAQ cards.`);
-        if (customExpectation?.requiredMarker) {
-          assert(markup.includes(customExpectation.requiredMarker), `${pass}: ${route} is missing its required dedicated section.`);
+        for (const marker of customExpectation?.requiredMarkers || []) {
+          assert(markup.includes(marker), `${pass}: ${route} is missing required dedicated section marker ${marker}.`);
         }
 
         const revealTags = markup.match(/<[^>]+data-reveal[^>]*>/g) || [];
