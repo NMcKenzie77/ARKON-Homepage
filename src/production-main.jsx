@@ -21,6 +21,7 @@ import './core-team-polish.css';
 import './copy-polish.css';
 import './homepage-logo.css';
 import './pricing.css';
+import './short-term-rental-page.css';
 
 // Keep the already-indexed URL canonical. The descriptive route is an alias only.
 const AUTO_REPAIR_ROUTE = '/garages';
@@ -103,10 +104,20 @@ function RouteContent({ route }) {
   }
 
   if (routePage) {
+    const renderedPage = canonicalRoute === '/short-term-rentals'
+      ? {
+          ...routePage,
+          eyebrow: 'Short-term rental digital AI team',
+          title: 'Keep every guest, cleaner, and property issue moving without living inside your phone.',
+          description:
+            'Your digital team handles guest questions, cleaner coordination, maintenance follow-up, emergency routing, reservation context, and owner briefings so the operation keeps moving even when you are unavailable.'
+        }
+      : routePage;
+
     return (
       <>
         <ClientSeoSync route={canonicalRoute} />
-        <IndustryPage page={routePage} route={canonicalRoute} />
+        <IndustryPage page={renderedPage} route={canonicalRoute} />
       </>
     );
   }
