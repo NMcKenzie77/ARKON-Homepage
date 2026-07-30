@@ -39,6 +39,13 @@ const customRouteExpectations = {
       'Book an insurance agency walkthrough'
     ]
   },
+  '/short-term-rentals': {
+    title: 'Keep every guest, cleaner, and property issue moving without living inside your phone.',
+    requiredMarkers: [
+      'Short-term rental digital AI team',
+      'Your digital team handles guest questions, cleaner coordination, maintenance follow-up, emergency routing, reservation context, and owner briefings so the operation keeps moving even when you are unavailable.'
+    ]
+  },
   '/salons': {
     title: 'Every call answered. Every booking opportunity kept alive.',
     workflowCount: 0,
