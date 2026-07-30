@@ -440,10 +440,10 @@ export default function IndustryPage({ page, route }) {
       <RelatedBusinessPages route={route} />
 
       <VerticalClosingCta
-        eyebrow={`See ARKON for ${page.eyebrow.toLowerCase()}`}
-        title="Walk through the real workflow with ARKON."
-        body="Review the calls, messages, follow-ups, records, handoffs, and owner visibility that matter most for your operation."
-        buttonLabel="Request demo"
+        eyebrow={isInsurance ? 'See ARKON for insurance agencies' : `See ARKON for ${page.eyebrow.toLowerCase()}`}
+        title={isInsurance ? 'See how your agency can respond faster without putting licensed decisions in the wrong hands.' : 'Walk through the real workflow with ARKON.'}
+        body={isInsurance ? 'We’ll walk through how your digital team handles new quote requests, policy-service calls, prospect and renewal follow-up, relationship and policy context, urgent agency email, and on-demand leadership briefings.' : 'Review the calls, messages, follow-ups, records, handoffs, and owner visibility that matter most for your operation.'}
+        buttonLabel={isInsurance ? 'Book an insurance agency walkthrough' : 'Request demo'}
       />
     </main>
   );
