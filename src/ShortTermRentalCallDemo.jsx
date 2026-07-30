@@ -138,6 +138,40 @@ const scenarios = {
       { speaker: 'Message to host', text: 'Jordan, Olivia Chen at Seabreeze Cottage Unit 4 reported an active kitchen-sink leak. She is safe, the shutoff valve is closed, and the on-call plumber has been contacted. I will continue updating the guest and notify you if the issue escalates.', wait: 900, intelligence: true },
       { speaker: 'Naya', text: 'Olivia, the plumber has been contacted and the host has the full update. I’ll message you with the arrival time as soon as it is confirmed.', wait: 900, outcome: true }
     ]
+  },
+  review: {
+    tab: 'Review and return stay',
+    eyebrow: 'The review request follows a stay worth talking about',
+    title: 'We turn “That was a good trip” into “That was amazing. When can we go back?”',
+    description: 'Naya checks for genuine satisfaction, connects the review request to the guest’s actual experience, records what made the stay memorable, and keeps future return-stay preferences attached to the guest profile.',
+    consoleLabel: 'Post-stay guest follow-up',
+    consoleAgent: `Naya · ${EXAMPLE_OPERATOR}`,
+    replayLabel: 'Replay review follow-up',
+    proof: ['Confirms satisfaction first', 'Requests the review naturally', 'Captures what mattered', 'Keeps return intent attached'],
+    property: {
+      label: 'Completed stay and guest profile matched',
+      address: 'Gulfview Loft · Clearwater',
+      status: 'Positive checkout follow-up',
+      facts: ['Guests: Olivia and Daniel Chen', '10th anniversary completed', 'No unresolved stay issues'],
+      context: 'Waterfront evening enjoyed · Guest expressed return interest · Review not yet requested'
+    },
+    contact: {
+      label: 'Returning-guest profile updated',
+      name: 'Olivia Chen',
+      phone: '(727) 555-0138',
+      email: 'olivia.chen@example.com',
+      preference: 'Text updates',
+      assignedAgent: 'Stay owner · Jordan Blake'
+    },
+    messages: [
+      { speaker: 'Naya', text: 'Hi Olivia. I hope you and Daniel made it home safely. How did the anniversary evening and the rest of your stay turn out?', wait: 800 },
+      { speaker: 'Guest', text: 'It was amazing. Island Way and the sunset walk were perfect. We were already talking about coming back next year.', wait: 900 },
+      { speaker: 'Naya', text: 'I’m glad it felt special. I’ve saved the quiet waterfront preference and your anniversary timing, so the team remembers what worked when you return.', wait: 900 },
+      { speaker: 'Guest', text: 'Thank you. That would be great.', wait: 650 },
+      { speaker: 'Naya', text: 'Would you mind sharing that experience in a review? It helps future guests understand what makes the stay different. I’ll send the review link here, and I’ll also note that you may want the same anniversary week next year.', wait: 950 },
+      { speaker: 'Guest', text: 'Absolutely. Send it over.', wait: 650 },
+      { speaker: 'Naya', text: 'Sent. Thank you, Olivia. Your return interest and anniversary preferences are attached to your guest profile so the host can follow up at the right time.', wait: 850, outcome: true }
+    ]
   }
 };
 
