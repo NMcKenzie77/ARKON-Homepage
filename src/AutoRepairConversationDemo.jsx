@@ -16,37 +16,43 @@ const scenarios = {
       'Remembers the prior estimate',
       'Hands the shop a ready-to-book customer'
     ],
+    contactName: 'Michael Torres',
+    contactInitial: 'M',
+    assistantName: 'Naya',
+    channelLabel: 'Text conversation',
     messages: [
       {
-        speaker: 'Naya',
+        type: 'message',
+        from: 'shop',
         text: `Hi Michael, it’s Naya with ${SHOP_NAME}. When your 2018 Honda Accord was in last month, the shop recommended replacing the front brake pads and rotors. You decided to hold off at the time. Would you like me to find an appointment for you?`,
+        time: '10:14 AM',
         wait: 950
       },
-      { speaker: 'Michael', text: 'Yes, I should probably get that taken care of.', wait: 850 },
+      { type: 'message', from: 'customer', text: 'Yes, I should probably get that taken care of.', time: '10:16 AM', wait: 850 },
       {
-        speaker: 'Naya',
+        type: 'message',
+        from: 'shop',
         text: 'Absolutely. The estimate on file was $680. We have Tuesday morning or Thursday afternoon available. Which works better?',
+        time: '10:16 AM',
         wait: 1050
       },
-      { speaker: 'Michael', text: 'Thursday afternoon.', wait: 750 },
+      { type: 'message', from: 'customer', text: 'Thursday afternoon.', time: '10:17 AM', wait: 750 },
       {
-        speaker: 'Naya',
+        type: 'message',
+        from: 'shop',
         text: 'Perfect. I’ll have the shop confirm the exact time with you by text.',
+        time: '10:17 AM',
         wait: 850
       },
       {
-        speaker: 'Message to service advisor',
-        text: 'Michael Torres is ready to schedule the front brake pads and rotors previously estimated at $680 for his 2018 Honda Accord. Thursday afternoon works best. Text is preferred. Confirm the appointment today.',
-        wait: 900,
-        outcome: true
+        type: 'confirmation',
+        title: 'Deferred work recovered',
+        detail: '2018 Honda Accord · Front brakes · $680 estimate',
+        note: 'Thursday afternoon requested · Text preferred',
+        time: '10:18 AM',
+        wait: 900
       }
-    ],
-    record: {
-      label: 'Deferred work recovered',
-      title: 'Michael Torres · 2018 Honda Accord',
-      facts: ['Front brakes', 'Estimated at $680', 'Deferred last month'],
-      next: 'Thursday afternoon requested · Text preferred'
-    }
+    ]
   },
   upcomingMaintenance: {
     tab: 'Schedule upcoming maintenance',
@@ -60,37 +66,43 @@ const scenarios = {
       'Offers approved shop openings',
       'Confirms the next step clearly'
     ],
+    contactName: 'Angela Brooks',
+    contactInitial: 'A',
+    assistantName: 'Naya',
+    channelLabel: 'Text conversation',
     messages: [
       {
-        speaker: 'Naya',
+        type: 'message',
+        from: 'shop',
         text: `Hi Angela, it’s Naya with ${SHOP_NAME}. Your 2021 Toyota RAV4 is approaching the mileage for its next oil service and tire rotation. Would you like me to reserve a time?`,
+        time: '1:42 PM',
         wait: 900
       },
-      { speaker: 'Angela', text: 'Yes. What do you have next week?', wait: 800 },
+      { type: 'message', from: 'customer', text: 'Yes. What do you have next week?', time: '1:44 PM', wait: 800 },
       {
-        speaker: 'Naya',
+        type: 'message',
+        from: 'shop',
         text: 'We have Wednesday at 10:00 or Friday at 2:30 available.',
+        time: '1:44 PM',
         wait: 850
       },
-      { speaker: 'Angela', text: 'Friday at 2:30 works.', wait: 700 },
+      { type: 'message', from: 'customer', text: 'Friday at 2:30 works.', time: '1:45 PM', wait: 700 },
       {
-        speaker: 'Naya',
+        type: 'message',
+        from: 'shop',
         text: 'You’re all set. The shop will send your confirmation and reminder by text.',
+        time: '1:45 PM',
         wait: 850
       },
       {
-        speaker: 'Appointment confirmed',
-        text: 'Angela Brooks · 2021 Toyota RAV4 · Oil service and tire rotation · Friday at 2:30 PM',
-        wait: 850,
-        outcome: true
+        type: 'confirmation',
+        title: 'Upcoming maintenance scheduled',
+        detail: '2021 Toyota RAV4 · Oil service and tire rotation',
+        note: 'Friday · 2:30 PM · Reminder scheduled',
+        time: '1:46 PM',
+        wait: 850
       }
-    ],
-    record: {
-      label: 'Upcoming maintenance scheduled',
-      title: 'Angela Brooks · 2021 Toyota RAV4',
-      facts: ['Oil service', 'Tire rotation', 'Mileage due'],
-      next: 'Friday at 2:30 PM · Reminder scheduled'
-    }
+    ]
   },
   repairCall: {
     tab: 'Customer calls the shop',
@@ -104,41 +116,66 @@ const scenarios = {
       'Understands the concern naturally',
       'Sends the advisor a useful next step'
     ],
+    contactName: 'Michael Torres',
+    contactInitial: 'M',
+    assistantName: 'Vera',
+    channelLabel: 'Live phone call',
     messages: [
-      { speaker: 'Vera', text: `Thank you for calling ${SHOP_NAME}. This is Vera. How can I help you?`, wait: 750 },
-      { speaker: 'Caller', text: 'My check-engine light came on and the car is shaking when I stop.', wait: 850 },
+      { type: 'message', from: 'shop', text: `Thank you for calling ${SHOP_NAME}. This is Vera. How can I help you?`, time: '3:08 PM', wait: 750 },
+      { type: 'message', from: 'customer', text: 'My check-engine light came on and the car is shaking when I stop.', time: '3:08 PM', wait: 850 },
       {
-        speaker: 'Vera',
+        type: 'message',
+        from: 'shop',
         text: 'I’m sorry you’re dealing with that. Is the light steady or flashing, and does the vehicle still feel safe to drive?',
+        time: '3:09 PM',
         wait: 1000
       },
-      { speaker: 'Caller', text: 'It is steady. I can drive it, but I do not want to go far.', wait: 850 },
-      { speaker: 'Vera', text: 'Understood. What year, make, and model is the vehicle?', wait: 800 },
-      { speaker: 'Caller', text: 'A 2018 Honda Accord.', wait: 700 },
-      { speaker: 'Vera', text: 'Thank you. May I get your name and the best way for the shop to reach you?', wait: 850 },
-      { speaker: 'Caller', text: 'Michael Torres. Text is best.', wait: 750 },
+      { type: 'message', from: 'customer', text: 'It is steady. I can drive it, but I do not want to go far.', time: '3:09 PM', wait: 850 },
+      { type: 'message', from: 'shop', text: 'Understood. What year, make, and model is the vehicle?', time: '3:10 PM', wait: 800 },
+      { type: 'message', from: 'customer', text: 'A 2018 Honda Accord.', time: '3:10 PM', wait: 700 },
+      { type: 'message', from: 'shop', text: 'Thank you. May I get your name and the best way for the shop to reach you?', time: '3:11 PM', wait: 850 },
+      { type: 'message', from: 'customer', text: 'Michael Torres. Text is best.', time: '3:11 PM', wait: 750 },
       {
-        speaker: 'Message to service advisor',
-        text: 'Michael Torres has a 2018 Honda Accord with a steady check-engine light and shaking at stops. He says it is drivable but wants to limit distance. Text is best. Contact him today with the earliest diagnostic opening.',
-        wait: 900,
-        outcome: true
+        type: 'confirmation',
+        title: 'Repair opportunity created',
+        detail: '2018 Honda Accord · Check-engine light · Shaking at stops',
+        note: 'Diagnostic appointment needs confirmation · Text preferred',
+        time: '3:12 PM',
+        wait: 900
       }
-    ],
-    record: {
-      label: 'Repair opportunity created',
-      title: 'Michael Torres · 2018 Honda Accord',
-      facts: ['Check-engine light', 'Shakes at stops', 'Drivable with caution'],
-      next: 'Diagnostic appointment needs confirmation'
-    }
+    ]
   }
 };
 
-function TranscriptLine({ item }) {
-  const customer = ['Michael', 'Angela', 'Caller'].includes(item.speaker);
+function MessageBubble({ message }) {
+  if (message.type === 'confirmation') {
+    return (
+      <article className="auto-phone-confirmation" aria-label={`${message.title}. ${message.detail}. ${message.note}.`}>
+        <span className="auto-phone-confirmation-check" aria-hidden="true">✓</span>
+        <div>
+          <strong>{message.title}</strong>
+          <span>{message.detail}</span>
+          <small>{message.note}</small>
+        </div>
+        <time>{message.time}</time>
+      </article>
+    );
+  }
+
   return (
-    <div className={`auto-repair-line ${customer ? 'is-customer' : ''} ${item.outcome ? 'is-outcome' : ''}`}>
-      <span>{item.speaker}</span>
-      <p>{item.text}</p>
+    <div className={`auto-phone-message auto-phone-message-${message.from}`}>
+      <p>{message.text}</p>
+      <time>{message.time}</time>
+    </div>
+  );
+}
+
+function TypingIndicator({ side }) {
+  return (
+    <div className={`auto-phone-typing auto-phone-typing-${side}`} aria-label="Typing">
+      <span />
+      <span />
+      <span />
     </div>
   );
 }
@@ -146,6 +183,7 @@ function TranscriptLine({ item }) {
 export default function AutoRepairConversationDemo() {
   const [activeKey, setActiveKey] = useState('deferredMaintenance');
   const [visibleCount, setVisibleCount] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
   const [replayToken, setReplayToken] = useState(0);
   const transcriptRef = useRef(null);
   const scenario = scenarios[activeKey];
@@ -155,24 +193,37 @@ export default function AutoRepairConversationDemo() {
     const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     if (reducedMotion) {
       setVisibleCount(scenario.messages.length);
+      setIsTyping(false);
       return undefined;
     }
 
     setVisibleCount(0);
+    setIsTyping(false);
     let cancelled = false;
     const timers = [];
 
-    const reveal = index => {
+    const revealNext = index => {
       if (cancelled || index >= scenario.messages.length) return;
-      const timer = window.setTimeout(() => {
+      const message = scenario.messages[index];
+      const showTyping = message.type === 'message';
+
+      if (showTyping) setIsTyping(message.from);
+
+      const revealTimer = window.setTimeout(() => {
         if (cancelled) return;
+        setIsTyping(false);
         setVisibleCount(index + 1);
-        reveal(index + 1);
-      }, index === 0 ? 600 : scenario.messages[index - 1].wait + 650);
-      timers.push(timer);
+
+        const nextTimer = window.setTimeout(() => revealNext(index + 1), message.wait);
+        timers.push(nextTimer);
+      }, showTyping ? 800 : 320);
+
+      timers.push(revealTimer);
     };
 
-    reveal(0);
+    const startTimer = window.setTimeout(() => revealNext(0), 600);
+    timers.push(startTimer);
+
     return () => {
       cancelled = true;
       timers.forEach(timer => window.clearTimeout(timer));
@@ -182,7 +233,7 @@ export default function AutoRepairConversationDemo() {
   useEffect(() => {
     const node = transcriptRef.current;
     if (node) node.scrollTo({ top: node.scrollHeight, behavior: 'smooth' });
-  }, [visibleCount]);
+  }, [visibleCount, isTyping]);
 
   function selectScenario(key) {
     setActiveKey(key);
@@ -220,24 +271,45 @@ export default function AutoRepairConversationDemo() {
         </button>
       </div>
 
-      <div className="auto-repair-console">
-        <div className="auto-repair-console-head">
-          <div>
-            <span>{SHOP_NAME}</span>
-            <strong>{scenario.tab}</strong>
+      <div className="auto-phone-stage">
+        <div className="auto-phone-glow" aria-hidden="true" />
+        <div className="auto-phone-shell">
+          <div className="auto-phone-hardware" aria-hidden="true">
+            <span className="auto-phone-speaker" />
+            <span className="auto-phone-camera" />
           </div>
-          <em>Customer interaction</em>
-        </div>
 
-        <div className="auto-repair-transcript" ref={transcriptRef}>
-          {visibleMessages.map((item, index) => <TranscriptLine item={item} key={`${activeKey}-${index}`} />)}
-        </div>
+          <div className="auto-phone-screen">
+            <div className="auto-phone-statusbar" aria-hidden="true">
+              <span>10:18</span>
+              <span>●●● ᯤ ▰</span>
+            </div>
 
-        <div className="auto-repair-record">
-          <span>{scenario.record.label}</span>
-          <h3>{scenario.record.title}</h3>
-          <div>{scenario.record.facts.map(fact => <strong key={fact}>{fact}</strong>)}</div>
-          <p>{scenario.record.next}</p>
+            <header className="auto-phone-chat-header">
+              <span className="auto-phone-back" aria-hidden="true">‹</span>
+              <span className="auto-phone-avatar" aria-hidden="true">{scenario.contactInitial}</span>
+              <div>
+                <strong>{scenario.contactName}</strong>
+                <small>{scenario.assistantName} · {scenario.channelLabel}</small>
+              </div>
+              <span className="auto-phone-menu" aria-hidden="true">•••</span>
+            </header>
+
+            <div className="auto-phone-shop-label">{SHOP_NAME} · Today</div>
+
+            <div className="auto-phone-transcript" ref={transcriptRef} aria-label={`Animated auto repair interaction with ${scenario.contactName}`}>
+              {visibleMessages.map((message, index) => (
+                <MessageBubble key={`${activeKey}-${index}`} message={message} />
+              ))}
+              {isTyping ? <TypingIndicator side={isTyping} /> : null}
+            </div>
+
+            <div className="auto-phone-composer" aria-hidden="true">
+              <span>＋</span>
+              <div>{activeKey === 'repairCall' ? 'Call notes' : `Message ${scenario.contactName}`}</div>
+              <span>◉</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
