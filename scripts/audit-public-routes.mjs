@@ -29,7 +29,9 @@ const customRouteExpectations = {
   },
   '/insurance': {
     title: 'Turn more quote requests into conversations before the prospect moves on.',
-    requiredMarkers: ['insurance-call-demo', 'insurance-team-section']
+    workflowCount: 0,
+    faqCount: 0,
+    requiredMarkers: ['insurance-call-demo', 'insurance-team-section', 'insurance-grant-section']
   },
   '/salons': {
     title: 'Every call answered. Every booking opportunity kept alive.',
