@@ -21,18 +21,14 @@
 }
 
 [data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-dashboard-preview {
-  width: 100%;
+  width: 86%;
   justify-self: end;
-  transform: scale(0.86);
-  transform-origin: top right;
-  margin-bottom: -91px;
 }
 
 @media (max-width: 980px) {
   [data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-dashboard-preview {
-    transform: scale(0.92);
-    transform-origin: top center;
-    margin-bottom: -52px;
+    width: 92%;
+    justify-self: center;
   }
 }
 
@@ -51,7 +47,6 @@
   }
 
   [data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-dashboard-preview {
-    transform: none;
-    margin-bottom: 0;
+    width: 100%;
   }
 }
