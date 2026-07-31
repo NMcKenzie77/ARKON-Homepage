@@ -19,6 +19,13 @@ function removeSection(source, startMarker, endMarker, label) {
   return `${source.slice(0, start)}${source.slice(end)}`;
 }
 
+function replaceSection(source, startMarker, endMarker, replacement, label) {
+  const start = requireMarker(source, startMarker, `${label} start`);
+  const end = requireMarker(source, endMarker, `${label} end`);
+  if (end <= start) throw new Error(`Invalid ${label} boundaries.`);
+  return `${source.slice(0, start)}${replacement}${source.slice(end)}`;
+}
+
 function replaceRequired(source, from, to, label) {
   if (!source.includes(from)) throw new Error(`Could not find ${label}.`);
   return source.replace(from, to);
@@ -29,7 +36,7 @@ function buildPublicApp() {
   const outputPath = resolve(srcDir, 'App.public.jsx');
   let source = readFileSync(inputPath, 'utf8');
 
-  source = `import DemoRequestForm from './DemoRequestForm.jsx';\n${source}`;
+  source = `import DemoRequestForm from './DemoRequestForm.jsx';\nimport VoiceProof from './VoiceProof.jsx';\n${source}`;
 
   source = removeSection(
     source,
@@ -71,6 +78,14 @@ function buildPublicApp() {
     '\nfunction Footer() {',
     '\nfunction getRoute()',
     'legacy minimal homepage footer'
+  );
+
+  source = replaceSection(
+    source,
+    '\nfunction VoiceLayer() {',
+    '\nfunction RoleViews()',
+    '\nfunction VoiceLayer() {\n  return <VoiceProof />;\n}\n',
+    'homepage voice proof section'
   );
 
   source = replaceRequired(source, "  useClientSeo(route);\n", '', 'duplicate useClientSeo call');
@@ -158,6 +173,10 @@ function buildPublicApp() {
 
   if (!source.includes('<DemoRequestForm />')) {
     throw new Error('Generated App.public.jsx is missing the real demo form.');
+  }
+
+  if (!source.includes('<VoiceProof />')) {
+    throw new Error('Generated App.public.jsx is missing the homepage voice proof.');
   }
 
   writeFileSync(outputPath, source);
