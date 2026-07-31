@@ -36,7 +36,7 @@ function buildPublicApp() {
   const outputPath = resolve(srcDir, 'App.public.jsx');
   let source = readFileSync(inputPath, 'utf8');
 
-  source = `import CompactCoreTeam from './CompactCoreTeam.jsx';\nimport DemoRequestForm from './DemoRequestForm.jsx';\nimport FeaturedSolutions from './FeaturedSolutions.jsx';\nimport VoiceProof from './VoiceProof.jsx';\nimport WorkflowProof from './WorkflowProof.jsx';\n${source}`;
+  source = `import CompactCoreTeam from './CompactCoreTeam.jsx';\nimport DemoRequestForm from './DemoRequestForm.jsx';\nimport FeaturedSolutions from './FeaturedSolutions.jsx';\nimport HomepageVideo from './HomepageVideo.jsx';\nimport VoiceProof from './VoiceProof.jsx';\nimport WorkflowProof from './WorkflowProof.jsx';\n${source}`;
 
   source = removeSection(
     source,
@@ -150,6 +150,12 @@ function buildPublicApp() {
   );
   source = replaceRequired(
     source,
+    '      <Hero />\n      <WalkthroughSection />',
+    '      <Hero />\n      <HomepageVideo />\n      <WalkthroughSection />',
+    'homepage video placement'
+  );
+  source = replaceRequired(
+    source,
     '      <RoleViews />\n      <DashboardProof />\n',
     '',
     'homepage role dashboard renders'
@@ -238,6 +244,10 @@ function buildPublicApp() {
     throw new Error('Generated App.public.jsx is missing the human-team benefit.');
   }
 
+  if (!source.includes('<HomepageVideo />')) {
+    throw new Error('Generated App.public.jsx is missing the Naya homepage video.');
+  }
+
   if (!source.includes('<CompactCoreTeam />')) {
     throw new Error('Generated App.public.jsx is missing the compact core team.');
   }
@@ -259,7 +269,7 @@ function buildPublicApp() {
   }
 
   writeFileSync(outputPath, source);
-  console.log('Generated content-only src/App.public.jsx with the digital-team revenue message.');
+  console.log('Generated content-only src/App.public.jsx with the digital-team message and Naya video.');
 }
 
 function buildRuntimeServer() {
@@ -284,6 +294,20 @@ function buildRuntimeServer() {
     '<p>ARKON handles the repeatable tasks around calls, messages, follow-ups, scheduling, documents, estimates, invoices, and handoffs. Your staff can spend less time chasing details and more time moving the business forward.</p>',
     '<p>ARKON supplies a digital team that handles the routine work behind customer relationships. It answers new inquiries, follows up with leads, nurtures people who are not ready yet, reconnects with past customers, and keeps every opportunity moving toward the right next step. Your employees stay focused on closing business, serving customers, and handling the work that requires skill, judgment, and a real person.</p>',
     'crawlable homepage hero description'
+  );
+
+  source = replaceRequired(
+    source,
+    '    </section>\n    <section>\n      <p class="crawlable-eyebrow">How ARKON moves work forward</p>',
+    `    </section>
+    <section>
+      <p class="crawlable-eyebrow">Meet Naya</p>
+      <h2>See what your ARKON digital team handles in one minute.</h2>
+      <p><a href="https://app.heygen.com/embeds/a477288ba09149e79a11fc9632a638ed">Watch the ARKON overview</a></p>
+    </section>
+    <section>
+      <p class="crawlable-eyebrow">How ARKON moves work forward</p>`,
+    'crawlable homepage video section'
   );
 
   source = removeSection(
@@ -342,6 +366,10 @@ function buildRuntimeServer() {
     throw new Error('Generated runtime server is missing nurturing or customer-reactivation copy.');
   }
 
+  if (!source.includes('a477288ba09149e79a11fc9632a638ed') || !source.includes('See what your ARKON digital team handles in one minute.')) {
+    throw new Error('Generated runtime server is missing the Naya homepage video link.');
+  }
+
   if (source.includes('Meet the core team') || source.includes('renderSimpleCards(team)')) {
     throw new Error('Generated runtime server still contains the oversized homepage core team.');
   }
@@ -367,7 +395,7 @@ function buildRuntimeServer() {
   }
 
   writeFileSync(outputPath, source);
-  console.log('Generated server.runtime.js with the digital-team revenue message.');
+  console.log('Generated server.runtime.js with the digital-team message and Naya video link.');
 }
 
 buildPublicApp();
