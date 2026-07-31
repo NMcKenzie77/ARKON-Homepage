@@ -1,16 +1,12 @@
 import { businessIdentity } from './legal-content.js';
 
 export const RELATED_ROUTE_MAP = {
-  '/real-estate': ['/professional-services', '/insurance', '/home-services'],
-  '/insurance': ['/professional-services', '/real-estate', '/law-firms'],
-  '/short-term-rentals': ['/home-services', '/professional-services', '/real-estate'],
-  '/home-services': ['/garages', '/professional-services', '/short-term-rentals'],
-  '/professional-services': ['/law-firms', '/insurance', '/real-estate'],
-  '/salons': ['/gyms-fitness-studios', '/professional-services', '/home-services'],
-  '/garages': ['/home-services', '/professional-services', '/insurance'],
-  '/medical-dental-offices': ['/professional-services', '/salons', '/law-firms'],
-  '/law-firms': ['/professional-services', '/insurance', '/real-estate'],
-  '/gyms-fitness-studios': ['/salons', '/professional-services', '/home-services']
+  '/real-estate': ['/insurance', '/home-services', '/salons'],
+  '/insurance': ['/real-estate', '/home-services', '/garages'],
+  '/short-term-rentals': ['/home-services', '/salons', '/real-estate'],
+  '/home-services': ['/garages', '/short-term-rentals', '/real-estate'],
+  '/salons': ['/home-services', '/short-term-rentals', '/real-estate'],
+  '/garages': ['/home-services', '/insurance', '/real-estate']
 };
 
 export function getRelatedPages(route, industryPages) {
