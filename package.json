@@ -11,7 +11,7 @@
     "audit:routes": "node scripts/audit-public-routes.mjs",
     "build": "node scripts/build-public-source.mjs && node scripts/audit-public-routes.mjs && node scripts/build-og-image.mjs && vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "start": "node --import ./src/legal-register.js server.js"
+    "start": "node --import ./src/legal-register.js server.runtime.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
