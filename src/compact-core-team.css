@@ -1,0 +1,117 @@
+.compact-team-section {
+  display: grid;
+  gap: 24px;
+}
+
+.compact-team-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.7fr);
+  gap: 34px;
+  align-items: end;
+}
+
+.compact-team-heading h2 {
+  max-width: 620px;
+  margin: 9px 0 0;
+  font-size: clamp(2rem, 4vw, 3.45rem);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.compact-team-heading > p {
+  max-width: 520px;
+  margin: 0;
+  color: #aebcd2;
+  line-height: 1.7;
+}
+
+.compact-team-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 1px solid rgba(171, 190, 218, 0.16);
+  border-bottom: 1px solid rgba(171, 190, 218, 0.16);
+}
+
+.compact-team-card {
+  min-width: 0;
+  padding: 22px 18px 23px;
+  border-right: 1px solid rgba(171, 190, 218, 0.13);
+}
+
+.compact-team-card:last-child {
+  border-right: 0;
+}
+
+.compact-team-card > div {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.compact-team-card strong {
+  color: #f3f7ff;
+  font-size: 1.05rem;
+  letter-spacing: -0.015em;
+}
+
+.compact-team-card span {
+  color: #82f7ca;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.compact-team-card p {
+  margin: 0;
+  color: #8fa0b9;
+  font-size: 0.84rem;
+  line-height: 1.58;
+}
+
+@media (max-width: 980px) {
+  .compact-team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .compact-team-card {
+    border-bottom: 1px solid rgba(171, 190, 218, 0.13);
+  }
+
+  .compact-team-card:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .compact-team-card:last-child {
+    grid-column: 1 / -1;
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .compact-team-heading {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .compact-team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .compact-team-card,
+  .compact-team-card:nth-child(2n) {
+    display: grid;
+    grid-template-columns: minmax(130px, 0.45fr) minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+    border-right: 0;
+  }
+
+  .compact-team-card:last-child {
+    grid-column: auto;
+  }
+
+  .compact-team-card > div {
+    margin-bottom: 0;
+  }
+}
