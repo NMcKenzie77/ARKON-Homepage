@@ -443,13 +443,37 @@ export default function IndustryPage({ page, route }) {
         </>
       ) : null}
 
-      <RelatedBusinessPages route={route} />
+      {!isShortTermRental ? <RelatedBusinessPages route={route} /> : null}
 
       <VerticalClosingCta
-        eyebrow={isInsurance ? 'See ARKON for insurance agencies' : `See ARKON for ${page.eyebrow.toLowerCase()}`}
-        title={isInsurance ? 'See how your agency can respond faster without putting licensed decisions in the wrong hands.' : 'Walk through the real workflow with ARKON.'}
-        body={isInsurance ? 'We’ll walk through how your digital team handles new quote requests, policy-service calls, prospect and renewal follow-up, relationship and policy context, urgent agency email, and on-demand leadership briefings.' : 'Review the calls, messages, follow-ups, records, handoffs, and owner visibility that matter most for your operation.'}
-        buttonLabel={isInsurance ? 'Book an insurance agency walkthrough' : 'Request demo'}
+        eyebrow={
+          isInsurance
+            ? 'See ARKON for insurance agencies'
+            : isShortTermRental
+              ? 'See ARKON for short-term rental portfolios'
+              : `See ARKON for ${page.eyebrow.toLowerCase()}`
+        }
+        title={
+          isInsurance
+            ? 'See how your agency can respond faster without putting licensed decisions in the wrong hands.'
+            : isShortTermRental
+              ? 'Turn a good stay into the kind of experience guests review, remember, and book again.'
+              : 'Walk through the real workflow with ARKON.'
+        }
+        body={
+          isInsurance
+            ? 'We’ll walk through how your digital team handles new quote requests, policy-service calls, prospect and renewal follow-up, relationship and policy context, urgent agency email, and on-demand leadership briefings.'
+            : isShortTermRental
+              ? 'See how your digital team handles guest questions, personalized recommendations, cleaner turnovers, maintenance follow-up, review timing, return-stay opportunities, and owner briefings across the portfolio.'
+              : 'Review the calls, messages, follow-ups, records, handoffs, and owner visibility that matter most for your operation.'
+        }
+        buttonLabel={
+          isInsurance
+            ? 'Book an insurance agency walkthrough'
+            : isShortTermRental
+              ? 'Book a short-term rental walkthrough'
+              : 'Request demo'
+        }
       />
     </main>
   );
