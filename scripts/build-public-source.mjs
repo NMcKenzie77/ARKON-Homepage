@@ -36,7 +36,7 @@ function buildPublicApp() {
   const outputPath = resolve(srcDir, 'App.public.jsx');
   let source = readFileSync(inputPath, 'utf8');
 
-  source = `import DemoRequestForm from './DemoRequestForm.jsx';\nimport FeaturedSolutions from './FeaturedSolutions.jsx';\nimport VoiceProof from './VoiceProof.jsx';\n${source}`;
+  source = `import DemoRequestForm from './DemoRequestForm.jsx';\nimport FeaturedSolutions from './FeaturedSolutions.jsx';\nimport VoiceProof from './VoiceProof.jsx';\nimport WorkflowProof from './WorkflowProof.jsx';\n${source}`;
 
   source = removeSection(
     source,
@@ -82,6 +82,14 @@ function buildPublicApp() {
 
   source = replaceSection(
     source,
+    '\nfunction WalkthroughSection() {',
+    '\nfunction CoreTeam()',
+    '\nfunction WalkthroughSection() {\n  return <WorkflowProof />;\n}\n',
+    'merged homepage workflow proof'
+  );
+
+  source = replaceSection(
+    source,
     '\nfunction Solutions() {',
     '\nfunction VoiceLayer()',
     '\nfunction Solutions() {\n  return <FeaturedSolutions />;\n}\n',
@@ -106,6 +114,12 @@ function buildPublicApp() {
     'legacy route renderer'
   );
 
+  source = replaceRequired(
+    source,
+    '      <WalkthroughSection />\n      <HowItWorks />',
+    '      <WalkthroughSection />',
+    'duplicate homepage workflow render'
+  );
   source = replaceRequired(source, '      <DemoCta />', '      <DemoRequestForm />', 'source-owned demo form');
   source = replaceRequired(source, '      <Header />\n', '', 'homepage header render');
   source = replaceRequired(source, '      <Footer />\n', '', 'homepage footer render');
@@ -124,22 +138,6 @@ function buildPublicApp() {
 
   const replacements = [
     ["{ channel: 'Website inquiry', agent: 'Porter' }", "{ channel: 'Website inquiry', agent: 'ARKON intake' }"],
-    [
-      "{ label: 'Phone call', owner: 'Vera', copy: 'Answers the call, qualifies the caller, captures the details, and routes it when a person is needed.' }",
-      "{ label: 'Phone call', owner: 'Answered and routed', copy: 'The caller is greeted, qualified, and routed with the important details already captured.' }"
-    ],
-    [
-      "{ label: 'Website inquiry', owner: 'Porter', copy: 'Answers questions before someone books or asks for service, captures the lead, and hands it to the business.' }",
-      "{ label: 'Website inquiry', owner: 'Captured and organized', copy: 'The question or request is captured, the lead details are organized, and the handoff is prepared.' }"
-    ],
-    [
-      "{ label: 'Text or client message', owner: 'Naya', copy: 'Responds in the owner’s voice, answers what she can, and follows up when a lead does not convert.' }",
-      "{ label: 'Text or client message', owner: 'Handled in your voice', copy: 'The message receives an approved response, and follow-up continues when the next step is clear.' }"
-    ],
-    [
-      "{ label: 'Email', owner: 'Iris', copy: 'Reads the inbox, scores urgency and importance, and surfaces what needs attention first.' }",
-      "{ label: 'Email', owner: 'Prioritized and surfaced', copy: 'The inbox is sorted by urgency and importance so the right items reach the team first.' }"
-    ],
     [
       "copy: 'Handles inbound and outbound messages in the owner’s voice, answers questions, coordinates requests, and follows up after Porter or Vera captures a lead.'",
       "copy: 'Handles inbound and outbound messages in the owner’s voice, answers questions, coordinates requests, and follows up after calls or website inquiries create a lead.'"
@@ -170,6 +168,7 @@ function buildPublicApp() {
     /\bPorter\b|\bPORTER\b/,
     /useClientSeo|IndustryPage|industryPages/,
     /function DemoCta|front-end only for v1/,
+    /function HowItWorks\(/,
     /function Header\(|<Header \/>/,
     /function Footer\(|<Footer \/>/,
     /SiteFooter|UnifiedHeader|UnifiedFooter/
@@ -189,6 +188,10 @@ function buildPublicApp() {
 
   if (!source.includes('<VoiceProof />')) {
     throw new Error('Generated App.public.jsx is missing the homepage voice proof.');
+  }
+
+  if (!source.includes('<WorkflowProof />')) {
+    throw new Error('Generated App.public.jsx is missing the merged homepage workflow proof.');
   }
 
   writeFileSync(outputPath, source);
