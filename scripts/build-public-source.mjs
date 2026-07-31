@@ -167,16 +167,21 @@ function buildPublicApp() {
   const replacements = [
     [
       '<p className="eyebrow">ARKON Systems</p>',
-      '<p className="eyebrow">AI operating team for service businesses</p>'
+      '<p className="eyebrow">A digital team for service businesses</p>'
     ],
     [
       '<h1 style={{ maxWidth: \'1100px\', fontSize: \'clamp(2.2rem, 4.25vw, 4rem)\', lineHeight: 1.02 }}>Let your existing team focus<br />on the work only they can do.</h1>',
-      '<h1 style={{ maxWidth: \'1100px\', fontSize: \'clamp(2.2rem, 4.25vw, 4rem)\', lineHeight: 1.02 }}>ARKON handles the work around your existing team.</h1>'
+      '<h1 style={{ maxWidth: \'1100px\', fontSize: \'clamp(2.2rem, 4.25vw, 4rem)\', lineHeight: 1.02 }}>Stop letting good customers and warm leads go cold.</h1>'
     ],
     [
       '            ARKON handles the repeatable tasks around calls, messages, follow-ups, scheduling,\n            documents, estimates, invoices, and handoffs. Your staff can spend less time\n            chasing details and more time moving the business forward.',
-      '            ARKON answers calls, handles messages and follow-up, keeps customer history attached,\n            supports scheduling, prepares handoffs, and shows the owner what needs attention.\n            Your staff stays focused on the work that requires a person.'
+      '            ARKON supplies a digital team that handles the routine work behind customer relationships.\n            It answers new inquiries, follows up with leads, nurtures people who are not ready yet,\n            reconnects with past customers, and keeps every opportunity moving toward the right next step.\n            Your employees stay focused on closing business, serving customers, and handling the work\n            that requires skill, judgment, and a real person.'
     ],
+    ['<span>Repeatable tasks handled</span>', '<span>New inquiries answered</span>'],
+    ['<span>Team stays focused</span>', '<span>Warm leads nurtured</span>'],
+    ['<span>Follow-up covered</span>', '<span>Past customers brought back</span>'],
+    ['<span>Handoffs prepared</span>', '<span>Follow-up kept moving</span>'],
+    ['<span>Owner visibility</span>', '<span>Your team stays focused</span>'],
     ["{ channel: 'Website inquiry', agent: 'Porter' }", "{ channel: 'Website inquiry', agent: 'ARKON intake' }"],
     [
       "{ label: 'Website inquiry', name: 'Porter', detail: 'Porter answers pre-booking or pre-service questions, captures the lead, and hands the warm inquiry to the business.' }",
@@ -207,6 +212,7 @@ function buildPublicApp() {
     /core-team-grid|core-team-card|One team, with the right role for each job/,
     /The business pages show how these roles work together/,
     /Let your existing team focus|repeatable tasks around calls/,
+    /AI operating team for service businesses|ARKON handles the work around your existing team/,
     /function Header\(|<Header \/>/,
     /function Footer\(|<Footer \/>/,
     /SiteFooter|UnifiedHeader|UnifiedFooter/
@@ -216,12 +222,20 @@ function buildPublicApp() {
     if (pattern.test(source)) throw new Error(`Generated App.public.jsx failed source guard: ${pattern}.`);
   }
 
-  if (!source.includes('AI operating team for service businesses')) {
-    throw new Error('Generated App.public.jsx is missing the clear homepage product definition.');
+  if (!source.includes('A digital team for service businesses')) {
+    throw new Error('Generated App.public.jsx is missing the digital-team product definition.');
   }
 
-  if (!source.includes('ARKON handles the work around your existing team.')) {
-    throw new Error('Generated App.public.jsx is missing the clarified homepage headline.');
+  if (!source.includes('Stop letting good customers and warm leads go cold.')) {
+    throw new Error('Generated App.public.jsx is missing the revenue-focused homepage headline.');
+  }
+
+  if (!source.includes('nurtures people who are not ready yet') || !source.includes('reconnects with past customers')) {
+    throw new Error('Generated App.public.jsx is missing the nurturing and reactivation value proposition.');
+  }
+
+  if (!source.includes('Your employees stay focused on closing business')) {
+    throw new Error('Generated App.public.jsx is missing the human-team benefit.');
   }
 
   if (!source.includes('<CompactCoreTeam />')) {
@@ -245,7 +259,7 @@ function buildPublicApp() {
   }
 
   writeFileSync(outputPath, source);
-  console.log('Generated content-only src/App.public.jsx with the clarified homepage hero.');
+  console.log('Generated content-only src/App.public.jsx with the digital-team revenue message.');
 }
 
 function buildRuntimeServer() {
@@ -256,19 +270,19 @@ function buildRuntimeServer() {
   source = replaceRequired(
     source,
     '<p class="crawlable-eyebrow">ARKON Systems</p>',
-    '<p class="crawlable-eyebrow">AI operating team for service businesses</p>',
+    '<p class="crawlable-eyebrow">A digital team for service businesses</p>',
     'crawlable homepage hero eyebrow'
   );
   source = replaceRequired(
     source,
     '<h1>Let your existing team focus on the work only they can do.</h1>',
-    '<h1>ARKON handles the work around your existing team.</h1>',
+    '<h1>Stop letting good customers and warm leads go cold.</h1>',
     'crawlable homepage hero headline'
   );
   source = replaceRequired(
     source,
     '<p>ARKON handles the repeatable tasks around calls, messages, follow-ups, scheduling, documents, estimates, invoices, and handoffs. Your staff can spend less time chasing details and more time moving the business forward.</p>',
-    '<p>ARKON answers calls, handles messages and follow-up, keeps customer history attached, supports scheduling, prepares handoffs, and shows the owner what needs attention. Your staff stays focused on the work that requires a person.</p>',
+    '<p>ARKON supplies a digital team that handles the routine work behind customer relationships. It answers new inquiries, follows up with leads, nurtures people who are not ready yet, reconnects with past customers, and keeps every opportunity moving toward the right next step. Your employees stay focused on closing business, serving customers, and handling the work that requires skill, judgment, and a real person.</p>',
     'crawlable homepage hero description'
   );
 
@@ -313,11 +327,19 @@ function buildRuntimeServer() {
   );
 
   if (source.includes('Let your existing team focus') || source.includes('repeatable tasks around calls')) {
-    throw new Error('Generated runtime server still contains the unclear homepage hero.');
+    throw new Error('Generated runtime server still contains the original unclear homepage hero.');
   }
 
-  if (!source.includes('AI operating team for service businesses') || !source.includes('ARKON handles the work around your existing team.')) {
-    throw new Error('Generated runtime server is missing the clarified homepage hero.');
+  if (source.includes('AI operating team for service businesses') || source.includes('ARKON handles the work around your existing team.')) {
+    throw new Error('Generated runtime server still contains the interim homepage positioning.');
+  }
+
+  if (!source.includes('A digital team for service businesses') || !source.includes('Stop letting good customers and warm leads go cold.')) {
+    throw new Error('Generated runtime server is missing the digital-team revenue message.');
+  }
+
+  if (!source.includes('nurtures people who are not ready yet') || !source.includes('reconnects with past customers')) {
+    throw new Error('Generated runtime server is missing nurturing or customer-reactivation copy.');
   }
 
   if (source.includes('Meet the core team') || source.includes('renderSimpleCards(team)')) {
@@ -345,7 +367,7 @@ function buildRuntimeServer() {
   }
 
   writeFileSync(outputPath, source);
-  console.log('Generated server.runtime.js with the clarified homepage hero.');
+  console.log('Generated server.runtime.js with the digital-team revenue message.');
 }
 
 buildPublicApp();
