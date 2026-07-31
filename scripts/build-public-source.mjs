@@ -36,7 +36,7 @@ function buildPublicApp() {
   const outputPath = resolve(srcDir, 'App.public.jsx');
   let source = readFileSync(inputPath, 'utf8');
 
-  source = `import DemoRequestForm from './DemoRequestForm.jsx';\nimport FeaturedSolutions from './FeaturedSolutions.jsx';\nimport VoiceProof from './VoiceProof.jsx';\nimport WorkflowProof from './WorkflowProof.jsx';\n${source}`;
+  source = `import CompactCoreTeam from './CompactCoreTeam.jsx';\nimport DemoRequestForm from './DemoRequestForm.jsx';\nimport FeaturedSolutions from './FeaturedSolutions.jsx';\nimport VoiceProof from './VoiceProof.jsx';\nimport WorkflowProof from './WorkflowProof.jsx';\n${source}`;
 
   source = removeSection(
     source,
@@ -93,6 +93,14 @@ function buildPublicApp() {
     '\nfunction CoreTeam()',
     '\nfunction WalkthroughSection() {\n  return <WorkflowProof />;\n}\n',
     'merged homepage workflow proof'
+  );
+
+  source = replaceSection(
+    source,
+    '\nfunction CoreTeam() {',
+    '\nfunction Solutions()',
+    '\nfunction CoreTeam() {\n  return <CompactCoreTeam />;\n}\n',
+    'compact homepage core team'
   );
 
   source = replaceSection(
@@ -156,23 +164,8 @@ function buildPublicApp() {
     '<span className="brand-mark" aria-hidden="true" />'
   );
 
-  source = replaceRequired(
-    source,
-    "    {\n      name: 'Porter',\n      role: 'Website leads',\n      copy: 'Sits on the website, answers questions before someone books or asks for service, captures lead details, and hands the warm lead to the business.'\n    },\n",
-    '',
-    'Porter core-team card'
-  );
-
   const replacements = [
     ["{ channel: 'Website inquiry', agent: 'Porter' }", "{ channel: 'Website inquiry', agent: 'ARKON intake' }"],
-    [
-      "copy: 'Handles inbound and outbound messages in the owner’s voice, answers questions, coordinates requests, and follows up after Porter or Vera captures a lead.'",
-      "copy: 'Handles inbound and outbound messages in the owner’s voice, answers questions, coordinates requests, and follows up after calls or website inquiries create a lead.'"
-    ],
-    [
-      'ARKON is organized around trained roles. Naya, Vera, Porter, Grant, Marcus, and Iris',
-      'ARKON is organized around trained roles. Naya, Vera, Grant, Marcus, and Iris'
-    ],
     [
       "{ label: 'Website inquiry', name: 'Porter', detail: 'Porter answers pre-booking or pre-service questions, captures the lead, and hands the warm inquiry to the business.' }",
       "{ label: 'Website inquiry', name: 'ARKON intake', detail: 'ARKON captures the question or request, organizes the lead details, and prepares the handoff to the business.' }"
@@ -199,6 +192,7 @@ function buildPublicApp() {
     /function Impact\(|<Impact \/>|How it feels different/,
     /function RoleViews\(|<RoleViews \/>|function DashboardProof\(|<DashboardProof \/>/,
     /RoleDashboard|Role-based visibility|Example dashboard|Today’s work view/,
+    /core-team-grid|core-team-card|One team, with the right role for each job/,
     /function Header\(|<Header \/>/,
     /function Footer\(|<Footer \/>/,
     /SiteFooter|UnifiedHeader|UnifiedFooter/
@@ -206,6 +200,10 @@ function buildPublicApp() {
 
   for (const pattern of forbidden) {
     if (pattern.test(source)) throw new Error(`Generated App.public.jsx failed source guard: ${pattern}.`);
+  }
+
+  if (!source.includes('<CompactCoreTeam />')) {
+    throw new Error('Generated App.public.jsx is missing the compact core team.');
   }
 
   if (!source.includes('<DemoRequestForm />')) {
@@ -225,13 +223,40 @@ function buildPublicApp() {
   }
 
   writeFileSync(outputPath, source);
-  console.log('Generated content-only src/App.public.jsx without the homepage role dashboard.');
+  console.log('Generated content-only src/App.public.jsx with the compact core team.');
 }
 
 function buildRuntimeServer() {
   const inputPath = resolve(rootDir, 'server.js');
   const outputPath = resolve(rootDir, 'server.runtime.js');
   let source = readFileSync(inputPath, 'utf8');
+
+  source = removeSection(
+    source,
+    '  const team = [',
+    '\n  const solutionCards = solutions.map',
+    'crawlable homepage team data'
+  );
+
+  source = replaceSection(
+    source,
+    '    <section>\n      <p class="crawlable-eyebrow">Meet the core team</p>',
+    '    <section id="solutions">',
+    `    <section>
+      <p class="crawlable-eyebrow">The core team</p>
+      <h2>Five roles behind the work.</h2>
+      <p>The business pages show how these roles work together for each industry.</p>
+      <ul>
+        <li><strong>Vera:</strong> calls and prepared handoffs.</li>
+        <li><strong>Naya:</strong> messages and follow-up.</li>
+        <li><strong>Marcus:</strong> customer history and context.</li>
+        <li><strong>Iris:</strong> email prioritization.</li>
+        <li><strong>Grant:</strong> owner alerts and open decisions.</li>
+      </ul>
+    </section>
+`,
+    'crawlable compact core team'
+  );
 
   source = removeSection(
     source,
@@ -247,6 +272,14 @@ function buildRuntimeServer() {
     'crawlable homepage owner dashboard section'
   );
 
+  if (source.includes('Meet the core team') || source.includes('renderSimpleCards(team)')) {
+    throw new Error('Generated runtime server still contains the oversized homepage core team.');
+  }
+
+  if (!source.includes('Five roles behind the work.')) {
+    throw new Error('Generated runtime server is missing the compact core team.');
+  }
+
   if (source.includes('How it feels different')) {
     throw new Error('Generated runtime server still contains the removed homepage impact band.');
   }
@@ -260,7 +293,7 @@ function buildRuntimeServer() {
   }
 
   writeFileSync(outputPath, source);
-  console.log('Generated server.runtime.js without the homepage role dashboard.');
+  console.log('Generated server.runtime.js with the compact core team.');
 }
 
 buildPublicApp();
