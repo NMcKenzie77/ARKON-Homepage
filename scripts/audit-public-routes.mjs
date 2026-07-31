@@ -12,9 +12,12 @@ const businessRoutes = [
   '/insurance',
   '/short-term-rentals',
   '/home-services',
-  '/professional-services',
   '/salons',
-  '/garages',
+  '/garages'
+];
+
+const retiredBusinessRoutes = [
+  '/professional-services',
   '/medical-dental-offices',
   '/law-firms',
   '/gyms-fitness-studios'
@@ -101,7 +104,7 @@ function installAuditWindow(route) {
   };
 }
 
-for (const route of businessRoutes) {
+for (const route of [...businessRoutes, ...retiredBusinessRoutes]) {
   const legacyRouteFile = resolve(rootDir, 'public', route.slice(1), 'index.html');
   assert(
     !existsSync(legacyRouteFile),
@@ -125,10 +128,15 @@ try {
   assert(new Set(crawlablePaths).size === publicRoutes.length, `Expected ${publicRoutes.length} public routes, found ${new Set(crawlablePaths).size}.`);
   for (const route of publicRoutes) assert(crawlablePaths.includes(route), `Route registry is missing ${route}.`);
 
+  for (const route of retiredBusinessRoutes) {
+    assert(!crawlablePaths.includes(route), `Retired route ${route} is still crawlable.`);
+    assert(!industryPages[route], `Retired route ${route} still has public page data.`);
+  }
+
   const solutionRoutes = solutions.map(solution => solution.href).sort();
   assert(
     JSON.stringify(solutionRoutes) === JSON.stringify([...businessRoutes].sort()),
-    'Homepage business cards do not match the complete business route list.'
+    'Homepage business cards do not match the six supported business routes.'
   );
 
   for (const route of businessRoutes) {
@@ -158,6 +166,9 @@ try {
 
       for (const businessRoute of businessRoutes) {
         assert(markup.includes(`href="${businessRoute}"`), `${pass}: ${route} footer is missing ${businessRoute}.`);
+      }
+      for (const retiredRoute of retiredBusinessRoutes) {
+        assert(!markup.includes(`href="${retiredRoute}"`), `${pass}: ${route} still links to retired route ${retiredRoute}.`);
       }
       for (const legalRoute of legalRoutes) {
         assert(markup.includes(`href="${legalRoute}"`), `${pass}: ${route} footer is missing ${legalRoute}.`);
