@@ -7,6 +7,7 @@ import AutoRepairConversationDemo from './AutoRepairConversationDemo.jsx';
 import AutoRepairPageContent from './AutoRepairPageContent.jsx';
 import InsuranceCallDemo from './InsuranceCallDemo.jsx';
 import ShortTermRentalCallDemo from './ShortTermRentalCallDemo.jsx';
+import ShortTermRentalGrantSection from './ShortTermRentalGrantSection.jsx';
 import VerticalClosingCta from './VerticalClosingCta.jsx';
 import { industryPages } from './site-content.js';
 import { getRelatedPages } from './seo-structure.js';
@@ -382,6 +383,8 @@ export default function IndustryPage({ page, route }) {
           <InsuranceTeamSection />
           <InsuranceGrantSection />
         </>
+      ) : isShortTermRental ? (
+        <ShortTermRentalGrantSection />
       ) : (
         <section className="section industry-intro-section">
           <div className="section-heading is-visible" data-reveal>
@@ -400,7 +403,7 @@ export default function IndustryPage({ page, route }) {
         </section>
       )}
 
-      {!isInsurance ? (
+      {!isInsurance && !isShortTermRental ? (
         <>
           <PricingSection plans={page.pricing} />
 
