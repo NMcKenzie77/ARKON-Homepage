@@ -20,6 +20,22 @@
   margin-top: 18px;
 }
 
+[data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-dashboard-preview {
+  width: 100%;
+  justify-self: end;
+  transform: scale(0.86);
+  transform-origin: top right;
+  margin-bottom: -91px;
+}
+
+@media (max-width: 980px) {
+  [data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-dashboard-preview {
+    transform: scale(0.92);
+    transform-origin: top center;
+    margin-bottom: -52px;
+  }
+}
+
 @media (max-width: 780px) {
   [data-business-route="/short-term-rentals"] .industry-hero {
     padding-top: 108px;
@@ -32,5 +48,10 @@
 
   [data-business-route="/short-term-rentals"] .industry-hero-inner h1 {
     font-size: clamp(1.8rem, 8.5vw, 2.55rem);
+  }
+
+  [data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-dashboard-preview {
+    transform: none;
+    margin-bottom: 0;
   }
 }
