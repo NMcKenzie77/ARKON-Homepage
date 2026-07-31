@@ -36,7 +36,7 @@ function buildPublicApp() {
   const outputPath = resolve(srcDir, 'App.public.jsx');
   let source = readFileSync(inputPath, 'utf8');
 
-  source = `import DemoRequestForm from './DemoRequestForm.jsx';\nimport FeaturedSolutions from './FeaturedSolutions.jsx';\nimport VoiceProof from './VoiceProof.jsx';\nimport WorkflowProof from './WorkflowProof.jsx';\n${source}`;
+  source = `import DemoRequestForm from './DemoRequestForm.jsx';\nimport FeaturedSolutions from './FeaturedSolutions.jsx';\nimport RoleDashboard from './RoleDashboard.jsx';\nimport VoiceProof from './VoiceProof.jsx';\nimport WorkflowProof from './WorkflowProof.jsx';\n${source}`;
 
   source = removeSection(
     source,
@@ -111,6 +111,20 @@ function buildPublicApp() {
     'homepage voice proof section'
   );
 
+  source = replaceSection(
+    source,
+    '\nfunction RoleViews() {',
+    '\nfunction Coverage()',
+    '\nfunction RoleViews() {\n  return <RoleDashboard />;\n}\n',
+    'merged role and dashboard section'
+  );
+
+  source = replaceRequired(
+    source,
+    "import { coverageLanes, dashboardRows, roleViews, solutions } from './data.js';",
+    "import { coverageLanes, solutions } from './data.js';",
+    'unused role dashboard data imports'
+  );
   source = replaceRequired(source, "  useClientSeo(route);\n", '', 'duplicate useClientSeo call');
   source = replaceRequired(source, "\n  const page = industryPages[route];\n", '', 'legacy industry page lookup');
 
@@ -126,6 +140,12 @@ function buildPublicApp() {
     '      <WalkthroughSection />\n      <HowItWorks />',
     '      <WalkthroughSection />',
     'duplicate homepage workflow render'
+  );
+  source = replaceRequired(
+    source,
+    '      <RoleViews />\n      <DashboardProof />',
+    '      <RoleViews />',
+    'duplicate role dashboard render'
   );
   source = replaceRequired(source, '      <Impact />\n', '', 'homepage impact render');
   source = replaceRequired(source, '      <DemoCta />', '      <DemoRequestForm />', 'source-owned demo form');
@@ -178,6 +198,7 @@ function buildPublicApp() {
     /function DemoCta|front-end only for v1/,
     /function HowItWorks\(/,
     /function Impact\(|<Impact \/>|How it feels different/,
+    /function DashboardProof\(|<DashboardProof \/>|Today’s attention map|Messages classified/,
     /function Header\(|<Header \/>/,
     /function Footer\(|<Footer \/>/,
     /SiteFooter|UnifiedHeader|UnifiedFooter/
@@ -193,6 +214,10 @@ function buildPublicApp() {
 
   if (!source.includes('<FeaturedSolutions />')) {
     throw new Error('Generated App.public.jsx is missing the featured business types.');
+  }
+
+  if (!source.includes('<RoleDashboard />')) {
+    throw new Error('Generated App.public.jsx is missing the merged role dashboard.');
   }
 
   if (!source.includes('<VoiceProof />')) {
@@ -219,12 +244,40 @@ function buildRuntimeServer() {
     'crawlable homepage impact band'
   );
 
+  source = replaceSection(
+    source,
+    '    <section>\n      <p class="crawlable-eyebrow">Owner visibility</p>',
+    '    <section>\n      <p class="crawlable-eyebrow">The work behind each response</p>',
+    `    <section>
+      <p class="crawlable-eyebrow">Role-based visibility</p>
+      <h2>Each person sees the work they are responsible for.</h2>
+      <p>ARKON gives the owner, manager, agent, receptionist, technician, and admin the context, next actions, and exceptions that belong to their role.</p>
+      <ul>
+        <li>Owners see decisions, exceptions, and what was handled without them.</li>
+        <li>Managers see ownership, schedule pressure, handoffs, and risks.</li>
+        <li>Agents and receptionists see the customers, leads, calls, and follow-up they own.</li>
+        <li>Technicians and admins see job context, documents, records, and review-ready work.</li>
+      </ul>
+      <p><strong>Example dashboard. Sample data only.</strong></p>
+    </section>
+`,
+    'crawlable merged role dashboard'
+  );
+
   if (source.includes('How it feels different')) {
     throw new Error('Generated runtime server still contains the removed homepage impact band.');
   }
 
+  if (source.includes('The owner sees what happened without carrying every detail.')) {
+    throw new Error('Generated runtime server still contains the separate owner dashboard section.');
+  }
+
+  if (!source.includes('Example dashboard. Sample data only.')) {
+    throw new Error('Generated runtime server is missing the role dashboard disclosure.');
+  }
+
   writeFileSync(outputPath, source);
-  console.log('Generated server.runtime.js without the homepage impact band.');
+  console.log('Generated server.runtime.js with the merged role dashboard.');
 }
 
 buildPublicApp();
