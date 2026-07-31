@@ -154,27 +154,6 @@ export const industryPages = {
       ['What if a customer needs a price decision?', 'ARKON routes pricing, approval, and judgment calls to a person instead of guessing.']
     ]
   },
-  '/professional-services': {
-    path: '/professional-services',
-    name: 'Professional Services Workflow Automation',
-    schemaType: 'Service',
-    seoTitle: 'Professional Services Client Intake Automation | ARKON',
-    eyebrow: 'Professional services workflow automation',
-    title: 'Keep client intake, documents, scheduling, and follow-up connected.',
-    description: 'ARKON organizes client intake, scheduling, document requests, approved communication, relationship history, staff handoffs, and owner visibility.',
-    primary: 'Professional service firms need clean intake, reliable scheduling, client follow-up, document requests, and owner visibility. ARKON keeps client context attached so work does not depend on memory or scattered messages.',
-    cards: [
-      ['Client intake', 'Vera captures call details while ARKON organizes website inquiries and the next handoff.'],
-      ['Client communication', 'Naya responds with the firm’s approved tone, standards, and boundaries.'],
-      ['Relationship memory', 'Marcus keeps notes, prior conversations, relationship history, and follow-up context attached.'],
-      ['Owner visibility', 'Grant shows what came in, what was handled, who owns the next step, and what needs review.']
-    ],
-    workflow: ['New client inquiry arrives', 'Document request comes in', 'Follow-up needs to be sent', 'Owner sees what requires attention'],
-    faq: [
-      ['Can ARKON handle confidential matters?', 'Sensitive workflows should be defined carefully. ARKON can route anything requiring judgment, approval, or privacy review.'],
-      ['Does it replace staff?', 'No. ARKON handles repeatable intake and follow-up work so staff can focus on client service and decisions.']
-    ]
-  },
   '/salons': {
     path: '/salons',
     name: 'Salon Booking Workflow Automation',
@@ -217,78 +196,6 @@ export const industryPages = {
       ['Can it work with my shop software?', 'Specific shop-management integrations are scoped during implementation. ARKON can start with defined communication and follow-up workflows before deeper integration.']
     ],
     pricing: pricingPlans
-  },
-  '/medical-dental-offices': {
-    path: '/medical-dental-offices',
-    name: 'Medical and Dental Front Desk Automation',
-    schemaType: 'Service',
-    seoTitle: 'Medical & Dental Front Desk Workflow Automation | ARKON',
-    eyebrow: 'Medical and dental office workflow automation',
-    title: 'Reduce front-desk pressure without hiding clinical judgment calls.',
-    description: 'ARKON supports medical and dental front desks with call intake, appointment requests, cancellations, no-show follow-up, reminders, handoffs, and office visibility.',
-    primary: 'Medical and dental offices face front-desk pressure from calls, appointment requests, cancellations, no-shows, routine reminders, patient questions, and staff handoffs. ARKON supports repeatable scheduling communication while routing clinical, sensitive, or judgment-based matters to the right person.',
-    cards: [
-      ['Front desk calls', 'Vera captures the reason for the call and routes urgent, clinical, or sensitive questions.'],
-      ['Appointment requests', 'ARKON captures website interest and supports approved scheduling follow-up.'],
-      ['Reminder workflows', 'Naya prepares routine reminders, confirmations, and no-show follow-up based on office rules.'],
-      ['Office visibility', 'Grant shows open requests, missed follow-up, escalations, and next actions.']
-    ],
-    workflow: ['Patient requests an appointment', 'Cancellation creates an opening', 'Routine reminder needs to go out', 'Office sees what requires attention'],
-    faq: [
-      ['Does ARKON answer clinical questions?', 'No. Clinical, diagnostic, sensitive, or judgment-based questions should be routed to qualified staff.'],
-      ['Can it help with cancellations and no-shows?', 'Yes. ARKON can support approved reminders, confirmations, cancellation follow-up, and waitlist workflows when the rules are defined.']
-    ]
-  },
-  '/law-firms': {
-    path: '/law-firms',
-    name: 'Law Firm Intake Workflow Automation',
-    schemaType: 'Service',
-    seoTitle: 'Law Firm Intake & Client Follow-Up Automation | ARKON',
-    eyebrow: 'Law firm workflow automation',
-    title: 'Keep intake, documents, schedules, and client follow-up organized.',
-    description: 'ARKON supports law firms with approved intake, attorney scheduling handoffs, email triage, document requests, client follow-up, daily briefs, and owner visibility.',
-    primary: 'Law firms need support around intake, attorney schedules, email triage, client follow-up, document requests, daily briefs, and handoffs. ARKON keeps communication and next steps organized while routing legal advice, sensitive matters, and judgment calls to the right person.',
-    cards: [
-      ['Intake support', 'Vera captures approved call details while ARKON organizes website inquiries without evaluating the legal matter.'],
-      ['Email triage', 'Iris separates urgent client, court, opposing counsel, and routine messages.'],
-      ['Document requests', 'Naya follows approved checklists and timing for missing documents and client updates.'],
-      ['Attorney context', 'Marcus keeps contact history, notes, matter context, and follow-up attached before the handoff.']
-    ],
-    workflow: ['New inquiry reaches the firm', 'Client document is missing', 'Attorney schedule needs a handoff', 'Owner receives the daily attention brief'],
-    faq: [
-      ['Does ARKON provide legal advice?', 'No. ARKON handles approved administrative workflows and routes legal questions or judgment calls to qualified staff.'],
-      ['Can it support paralegals?', 'Yes. ARKON can help organize intake, schedules, email triage, document follow-up, client communication, and daily briefs.']
-    ]
-  },
-  '/gyms-fitness-studios': {
-    path: '/gyms-fitness-studios',
-    name: 'Gym Lead and Member Follow-Up Automation',
-    schemaType: 'Service',
-    seoTitle: 'Gym Lead Follow-Up & Member Retention Automation | ARKON',
-    eyebrow: 'Gym and fitness studio workflow automation',
-    title: 'Protect trial leads, tours, training revenue, and member follow-up.',
-    description: 'ARKON helps gyms and fitness studios manage trial leads, tour bookings, personal-training follow-up, member messages, cancellation handoffs, and owner visibility.',
-    primary: 'Gyms and fitness studios lose revenue when trial leads are not followed up, tours do not get booked, personal training interest goes cold, cancellation questions sit, or members stop showing up without anyone noticing. ARKON keeps calls, website inquiries, member messages, booking support, relationship history, and owner visibility connected.',
-    reality: {
-      eyebrow: 'The studio reality',
-      title: 'Members do not disappear all at once.',
-      body: [
-        'Trial leads go cold when no one follows up. Tours get missed when the front desk is busy. Personal training interest fades when no one owns the next step. Members stop showing up before they officially cancel.',
-        'Retention is not one message. It is the follow-up, context, reminders, handoffs, and visibility that keep the studio from leaking revenue quietly.'
-      ],
-      callout: 'The owner stays in control. ARKON supports the work around membership, retention, and follow-up.'
-    },
-    cards: [
-      ['Keep trial leads warm', 'ARKON captures the inquiry and keeps the tour handoff moving when the front desk is busy.'],
-      ['Protect training revenue', 'Personal training interest needs a clear next step before the member moves on. Marcus keeps follow-up context attached.'],
-      ['Route front desk pressure', 'Class, billing, and cancellation questions create bottlenecks. Vera captures what matters and routes the next step.'],
-      ['Brief the owner', 'Leads, bookings, and cancellations scatter across staff. Grant shows what is slipping and who owns it.']
-    ],
-    workflow: ['Trial lead asks about joining', 'Tour or class question comes in', 'Training interest needs follow-up', 'Owner sees what is slipping'],
-    faq: [
-      ['Can ARKON replace my front desk?', 'No. ARKON handles repeatable work and prepares the handoff so staff can focus on members, tours, classes, training, and decisions.'],
-      ['Can it help with retention and follow-up?', 'Yes. ARKON can prepare reminders, follow-up messages, booking support, member context, and staff handoffs when the workflow rules are defined.']
-    ]
   }
 };
 
