@@ -32,14 +32,8 @@ export default function CompactCoreTeam() {
   return (
     <section className="section compact-team-section" id="team" aria-labelledby="compact-team-title">
       <div className="compact-team-heading" data-reveal>
-        <div>
-          <p className="eyebrow">The core team</p>
-          <h2 id="compact-team-title">Five roles behind the work.</h2>
-        </div>
-        <p>
-          The business pages show how these roles work together for each industry. Here is the
-          simple version.
-        </p>
+        <p className="eyebrow">The core team</p>
+        <h2 id="compact-team-title">Five roles behind the work.</h2>
       </div>
 
       <div className="compact-team-grid">
