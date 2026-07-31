@@ -193,6 +193,7 @@ function buildPublicApp() {
     /function RoleViews\(|<RoleViews \/>|function DashboardProof\(|<DashboardProof \/>/,
     /RoleDashboard|Role-based visibility|Example dashboard|Today’s work view/,
     /core-team-grid|core-team-card|One team, with the right role for each job/,
+    /The business pages show how these roles work together/,
     /function Header\(|<Header \/>/,
     /function Footer\(|<Footer \/>/,
     /SiteFooter|UnifiedHeader|UnifiedFooter/
@@ -245,7 +246,6 @@ function buildRuntimeServer() {
     `    <section>
       <p class="crawlable-eyebrow">The core team</p>
       <h2>Five roles behind the work.</h2>
-      <p>The business pages show how these roles work together for each industry.</p>
       <ul>
         <li><strong>Vera:</strong> calls and prepared handoffs.</li>
         <li><strong>Naya:</strong> messages and follow-up.</li>
@@ -278,6 +278,10 @@ function buildRuntimeServer() {
 
   if (!source.includes('Five roles behind the work.')) {
     throw new Error('Generated runtime server is missing the compact core team.');
+  }
+
+  if (source.includes('The business pages show how these roles work together')) {
+    throw new Error('Generated runtime server still contains the removed core team bridge copy.');
   }
 
   if (source.includes('How it feels different')) {
