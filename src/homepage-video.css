@@ -1,0 +1,75 @@
+.homepage-video-section {
+  position: relative;
+  z-index: 2;
+  width: min(1040px, calc(100% - 40px));
+  margin: -28px auto 54px;
+}
+
+.homepage-video-heading {
+  max-width: 760px;
+  margin: 0 auto 18px;
+  text-align: center;
+}
+
+.homepage-video-heading h2 {
+  margin: 0;
+  font-size: clamp(1.75rem, 3.2vw, 2.8rem);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.homepage-video-shell {
+  position: relative;
+  padding: 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(15, 26, 47, 0.96), rgba(7, 13, 25, 0.94));
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.46);
+  overflow: hidden;
+}
+
+.homepage-video-shell::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(103, 216, 255, 0.32), transparent 38%, rgba(130, 247, 202, 0.18));
+  pointer-events: none;
+}
+
+.homepage-video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 19px;
+  background: #02050d;
+}
+
+.homepage-video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (max-width: 780px) {
+  .homepage-video-section {
+    width: min(100% - 24px, 1040px);
+    margin-top: -14px;
+    margin-bottom: 42px;
+  }
+
+  .homepage-video-heading {
+    margin-bottom: 14px;
+  }
+
+  .homepage-video-shell {
+    padding: 6px;
+    border-radius: 20px;
+  }
+
+  .homepage-video-frame {
+    border-radius: 14px;
+  }
+}
