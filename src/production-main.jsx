@@ -19,6 +19,7 @@ import './request-flow.css';
 import './seo-pages.css';
 import './core-team-polish.css';
 import './copy-polish.css';
+import './voice-proof.css';
 import './homepage-logo.css';
 import './pricing.css';
 import './short-term-rental-page.css';
