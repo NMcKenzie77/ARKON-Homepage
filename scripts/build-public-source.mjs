@@ -165,6 +165,18 @@ function buildPublicApp() {
   );
 
   const replacements = [
+    [
+      '<p className="eyebrow">ARKON Systems</p>',
+      '<p className="eyebrow">AI operating team for service businesses</p>'
+    ],
+    [
+      '<h1 style={{ maxWidth: \'1100px\', fontSize: \'clamp(2.2rem, 4.25vw, 4rem)\', lineHeight: 1.02 }}>Let your existing team focus<br />on the work only they can do.</h1>',
+      '<h1 style={{ maxWidth: \'1100px\', fontSize: \'clamp(2.2rem, 4.25vw, 4rem)\', lineHeight: 1.02 }}>ARKON handles the work around your existing team.</h1>'
+    ],
+    [
+      '            ARKON handles the repeatable tasks around calls, messages, follow-ups, scheduling,\n            documents, estimates, invoices, and handoffs. Your staff can spend less time\n            chasing details and more time moving the business forward.',
+      '            ARKON answers calls, handles messages and follow-up, keeps customer history attached,\n            supports scheduling, prepares handoffs, and shows the owner what needs attention.\n            Your staff stays focused on the work that requires a person.'
+    ],
     ["{ channel: 'Website inquiry', agent: 'Porter' }", "{ channel: 'Website inquiry', agent: 'ARKON intake' }"],
     [
       "{ label: 'Website inquiry', name: 'Porter', detail: 'Porter answers pre-booking or pre-service questions, captures the lead, and hands the warm inquiry to the business.' }",
@@ -194,6 +206,7 @@ function buildPublicApp() {
     /RoleDashboard|Role-based visibility|Example dashboard|Today’s work view/,
     /core-team-grid|core-team-card|One team, with the right role for each job/,
     /The business pages show how these roles work together/,
+    /Let your existing team focus|repeatable tasks around calls/,
     /function Header\(|<Header \/>/,
     /function Footer\(|<Footer \/>/,
     /SiteFooter|UnifiedHeader|UnifiedFooter/
@@ -201,6 +214,14 @@ function buildPublicApp() {
 
   for (const pattern of forbidden) {
     if (pattern.test(source)) throw new Error(`Generated App.public.jsx failed source guard: ${pattern}.`);
+  }
+
+  if (!source.includes('AI operating team for service businesses')) {
+    throw new Error('Generated App.public.jsx is missing the clear homepage product definition.');
+  }
+
+  if (!source.includes('ARKON handles the work around your existing team.')) {
+    throw new Error('Generated App.public.jsx is missing the clarified homepage headline.');
   }
 
   if (!source.includes('<CompactCoreTeam />')) {
@@ -224,13 +245,32 @@ function buildPublicApp() {
   }
 
   writeFileSync(outputPath, source);
-  console.log('Generated content-only src/App.public.jsx with the compact core team.');
+  console.log('Generated content-only src/App.public.jsx with the clarified homepage hero.');
 }
 
 function buildRuntimeServer() {
   const inputPath = resolve(rootDir, 'server.js');
   const outputPath = resolve(rootDir, 'server.runtime.js');
   let source = readFileSync(inputPath, 'utf8');
+
+  source = replaceRequired(
+    source,
+    '<p class="crawlable-eyebrow">ARKON Systems</p>',
+    '<p class="crawlable-eyebrow">AI operating team for service businesses</p>',
+    'crawlable homepage hero eyebrow'
+  );
+  source = replaceRequired(
+    source,
+    '<h1>Let your existing team focus on the work only they can do.</h1>',
+    '<h1>ARKON handles the work around your existing team.</h1>',
+    'crawlable homepage hero headline'
+  );
+  source = replaceRequired(
+    source,
+    '<p>ARKON handles the repeatable tasks around calls, messages, follow-ups, scheduling, documents, estimates, invoices, and handoffs. Your staff can spend less time chasing details and more time moving the business forward.</p>',
+    '<p>ARKON answers calls, handles messages and follow-up, keeps customer history attached, supports scheduling, prepares handoffs, and shows the owner what needs attention. Your staff stays focused on the work that requires a person.</p>',
+    'crawlable homepage hero description'
+  );
 
   source = removeSection(
     source,
@@ -272,6 +312,14 @@ function buildRuntimeServer() {
     'crawlable homepage owner dashboard section'
   );
 
+  if (source.includes('Let your existing team focus') || source.includes('repeatable tasks around calls')) {
+    throw new Error('Generated runtime server still contains the unclear homepage hero.');
+  }
+
+  if (!source.includes('AI operating team for service businesses') || !source.includes('ARKON handles the work around your existing team.')) {
+    throw new Error('Generated runtime server is missing the clarified homepage hero.');
+  }
+
   if (source.includes('Meet the core team') || source.includes('renderSimpleCards(team)')) {
     throw new Error('Generated runtime server still contains the oversized homepage core team.');
   }
@@ -297,7 +345,7 @@ function buildRuntimeServer() {
   }
 
   writeFileSync(outputPath, source);
-  console.log('Generated server.runtime.js with the compact core team.');
+  console.log('Generated server.runtime.js with the clarified homepage hero.');
 }
 
 buildPublicApp();
