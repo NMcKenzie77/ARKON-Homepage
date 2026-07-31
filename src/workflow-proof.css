@@ -4,7 +4,7 @@
   gap: clamp(42px, 6vw, 82px);
   align-items: center;
   padding-top: 64px;
-  padding-bottom: 92px;
+  padding-bottom: 34px;
 }
 
 .workflow-proof-copy {
@@ -194,7 +194,7 @@
 @media (max-width: 620px) {
   .workflow-proof-section {
     padding-top: 46px;
-    padding-bottom: 70px;
+    padding-bottom: 26px;
   }
 
   .workflow-proof-copy h2 {
