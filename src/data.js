@@ -137,12 +137,6 @@ export const solutions = [
     href: '/home-services'
   },
   {
-    name: 'Professional Services',
-    title: 'Intake, scheduling, and client follow-up.',
-    details: 'For firms that need clean handoffs and client context attached.',
-    href: '/professional-services'
-  },
-  {
     name: 'Salons',
     title: 'Bookings, client messages, and follow-up.',
     details: 'For salons that need missed calls, appointments, and client requests covered.',
@@ -153,24 +147,6 @@ export const solutions = [
     title: 'Repair calls, declined work, and return visits.',
     details: 'For shops that need intake, vehicle context, status updates, and recommended-work follow-up.',
     href: '/garages'
-  },
-  {
-    name: 'Medical & Dental',
-    title: 'Appointments, intake, and patient questions.',
-    details: 'For offices that need front-desk coverage and cleaner patient handoffs.',
-    href: '/medical-dental-offices'
-  },
-  {
-    name: 'Law Firms',
-    title: 'Attorney schedules, email, and client follow-up.',
-    details: 'For firms where paralegals keep calendars, inboxes, and attorney handoffs moving.',
-    href: '/law-firms'
-  },
-  {
-    name: 'Gyms & Fitness',
-    title: 'Trial leads, cancellations, and missed follow-up.',
-    details: 'For studios where tours, training interest, member questions, and front-desk handoffs cannot sit.',
-    href: '/gyms-fitness-studios'
   }
 ];
 
