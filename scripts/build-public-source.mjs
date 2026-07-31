@@ -36,7 +36,7 @@ function buildPublicApp() {
   const outputPath = resolve(srcDir, 'App.public.jsx');
   let source = readFileSync(inputPath, 'utf8');
 
-  source = `import DemoRequestForm from './DemoRequestForm.jsx';\nimport VoiceProof from './VoiceProof.jsx';\n${source}`;
+  source = `import DemoRequestForm from './DemoRequestForm.jsx';\nimport FeaturedSolutions from './FeaturedSolutions.jsx';\nimport VoiceProof from './VoiceProof.jsx';\n${source}`;
 
   source = removeSection(
     source,
@@ -78,6 +78,14 @@ function buildPublicApp() {
     '\nfunction Footer() {',
     '\nfunction getRoute()',
     'legacy minimal homepage footer'
+  );
+
+  source = replaceSection(
+    source,
+    '\nfunction Solutions() {',
+    '\nfunction VoiceLayer()',
+    '\nfunction Solutions() {\n  return <FeaturedSolutions />;\n}\n',
+    'featured homepage business types'
   );
 
   source = replaceSection(
@@ -173,6 +181,10 @@ function buildPublicApp() {
 
   if (!source.includes('<DemoRequestForm />')) {
     throw new Error('Generated App.public.jsx is missing the real demo form.');
+  }
+
+  if (!source.includes('<FeaturedSolutions />')) {
+    throw new Error('Generated App.public.jsx is missing the featured business types.');
   }
 
   if (!source.includes('<VoiceProof />')) {
