@@ -207,4 +207,25 @@ function buildPublicApp() {
   console.log('Generated content-only src/App.public.jsx.');
 }
 
+function buildRuntimeServer() {
+  const inputPath = resolve(rootDir, 'server.js');
+  const outputPath = resolve(rootDir, 'server.runtime.js');
+  let source = readFileSync(inputPath, 'utf8');
+
+  source = removeSection(
+    source,
+    '    <section>\n      <p class="crawlable-eyebrow">How it feels different</p>',
+    '    <section id="demo">',
+    'crawlable homepage impact band'
+  );
+
+  if (source.includes('How it feels different')) {
+    throw new Error('Generated runtime server still contains the removed homepage impact band.');
+  }
+
+  writeFileSync(outputPath, source);
+  console.log('Generated server.runtime.js without the homepage impact band.');
+}
+
 buildPublicApp();
+buildRuntimeServer();
