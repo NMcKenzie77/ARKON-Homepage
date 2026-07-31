@@ -20,12 +20,38 @@
   margin-top: 16px;
 }
 
+[data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-grant-copy {
+  top: 118px;
+  padding-top: 8px;
+}
+
+[data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-grant-copy h2 {
+  max-width: 390px;
+  font-size: clamp(1.85rem, 2.35vw, 2.7rem);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+[data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-grant-copy > p:not(.eyebrow) {
+  margin-top: 18px;
+  line-height: 1.62;
+}
+
+[data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-grant-points {
+  margin-top: 22px;
+  padding-top: 18px;
+}
+
 [data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-dashboard-preview {
   width: 86%;
   justify-self: end;
 }
 
 @media (max-width: 980px) {
+  [data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-grant-copy h2 {
+    max-width: 620px;
+  }
+
   [data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-dashboard-preview {
     width: 92%;
     justify-self: center;
@@ -44,6 +70,14 @@
 
   [data-business-route="/short-term-rentals"] .industry-hero-inner h1 {
     font-size: clamp(1.8rem, 8.5vw, 2.55rem);
+  }
+
+  [data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-grant-copy {
+    position: static;
+  }
+
+  [data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-grant-copy h2 {
+    font-size: clamp(1.8rem, 7.5vw, 2.35rem);
   }
 
   [data-business-route="/short-term-rentals"] .short-term-rental-grant-section .real-estate-dashboard-preview {
