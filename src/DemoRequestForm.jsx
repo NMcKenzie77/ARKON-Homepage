@@ -8,12 +8,8 @@ const businessTypes = [
   'Insurance',
   'Short-term rentals',
   'Home services',
-  'Professional services',
   'Salons',
-  'Auto repair shops',
-  'Medical and dental offices',
-  'Law firms',
-  'Gyms and fitness studios'
+  'Auto repair shops'
 ];
 
 function trackAnalyticsEvent(eventName, parameters = {}) {
@@ -125,7 +121,7 @@ export default function DemoRequestForm() {
     <section className="demo-cta" id="demo" data-reveal>
       <div>
         <p className="eyebrow">See it for your business</p>
-        <h2>Choose the closest business type and walk through the real workflow.</h2>
+        <h2>Choose your business type and walk through the real workflow.</h2>
         <p>
           See how ARKON would handle the calls, messages, follow-ups, documents, staff updates,
           and owner visibility in a business like yours.
