@@ -68,6 +68,13 @@ function buildPublicApp() {
 
   source = removeSection(
     source,
+    '\nfunction Impact() {',
+    '\nfunction HomePage()',
+    'homepage impact band'
+  );
+
+  source = removeSection(
+    source,
     '\nfunction IndustryPage({ page }) {',
     '\nfunction NotFoundPage()',
     'legacy duplicate industry-page renderer'
@@ -120,6 +127,7 @@ function buildPublicApp() {
     '      <WalkthroughSection />',
     'duplicate homepage workflow render'
   );
+  source = replaceRequired(source, '      <Impact />\n', '', 'homepage impact render');
   source = replaceRequired(source, '      <DemoCta />', '      <DemoRequestForm />', 'source-owned demo form');
   source = replaceRequired(source, '      <Header />\n', '', 'homepage header render');
   source = replaceRequired(source, '      <Footer />\n', '', 'homepage footer render');
@@ -169,6 +177,7 @@ function buildPublicApp() {
     /useClientSeo|IndustryPage|industryPages/,
     /function DemoCta|front-end only for v1/,
     /function HowItWorks\(/,
+    /function Impact\(|<Impact \/>|How it feels different/,
     /function Header\(|<Header \/>/,
     /function Footer\(|<Footer \/>/,
     /SiteFooter|UnifiedHeader|UnifiedFooter/
