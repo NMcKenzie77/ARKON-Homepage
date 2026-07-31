@@ -102,8 +102,20 @@ function buildPublicApp() {
   const replacements = [
     ["{ channel: 'Website inquiry', agent: 'Porter' }", "{ channel: 'Website inquiry', agent: 'ARKON intake' }"],
     [
+      "{ label: 'Phone call', owner: 'Vera', copy: 'Answers the call, qualifies the caller, captures the details, and routes it when a person is needed.' }",
+      "{ label: 'Phone call', owner: 'Answered and routed', copy: 'The caller is greeted, qualified, and routed with the important details already captured.' }"
+    ],
+    [
       "{ label: 'Website inquiry', owner: 'Porter', copy: 'Answers questions before someone books or asks for service, captures the lead, and hands it to the business.' }",
-      "{ label: 'Website inquiry', owner: 'ARKON intake', copy: 'Captures the question or request, organizes the lead details, and prepares the handoff to the business.' }"
+      "{ label: 'Website inquiry', owner: 'Captured and organized', copy: 'The question or request is captured, the lead details are organized, and the handoff is prepared.' }"
+    ],
+    [
+      "{ label: 'Text or client message', owner: 'Naya', copy: 'Responds in the owner’s voice, answers what she can, and follows up when a lead does not convert.' }",
+      "{ label: 'Text or client message', owner: 'Handled in your voice', copy: 'The message receives an approved response, and follow-up continues when the next step is clear.' }"
+    ],
+    [
+      "{ label: 'Email', owner: 'Iris', copy: 'Reads the inbox, scores urgency and importance, and surfaces what needs attention first.' }",
+      "{ label: 'Email', owner: 'Prioritized and surfaced', copy: 'The inbox is sorted by urgency and importance so the right items reach the team first.' }"
     ],
     [
       "copy: 'Handles inbound and outbound messages in the owner’s voice, answers questions, coordinates requests, and follows up after Porter or Vera captures a lead.'",
