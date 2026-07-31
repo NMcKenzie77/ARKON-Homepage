@@ -1,5 +1,3 @@
-import './voice-proof.css';
-
 export default function VoiceProof() {
   return (
     <section className="section voice-proof-section" id="voice">
