@@ -2,18 +2,18 @@ export const SITE_URL = 'https://www.arkonsysai.com';
 
 export const homeSeo = {
   path: '/',
-  title: 'AI Workflow Automation for Service Businesses | ARKON Systems',
-  description: 'ARKON Systems handles repeatable calls, messages, follow-up, scheduling, records, and handoffs so service-business teams can stay focused.',
+  title: 'Digital Team for Service Businesses | ARKON Systems',
+  description: 'ARKON supplies a digital team that answers inquiries, follows up with prospective and past customers, keeps customer history organized, and prepares the next step for your staff.',
   schemaType: 'SoftwareApplication',
   schemaName: 'ARKON Systems',
-  eyebrow: 'ARKON Systems',
-  h1: 'Let your existing team focus on the work only they can do.'
+  eyebrow: 'A digital team for service businesses',
+  h1: 'Stop letting good customers and warm leads go cold.'
 };
 
 export const howItWorksSeo = {
   path: '/how-it-works',
-  title: 'How ARKON Works | AI Workflow Automation for Service Businesses',
-  description: 'See how ARKON routes calls, website inquiries, messages, email, records, follow-up, and owner alerts using the business’s rules.',
+  title: 'How ARKON Works | Digital Team for Service Businesses',
+  description: 'See how ARKON handles calls, inquiries, messages, email, customer history, follow-up, handoffs, and owner alerts using your business rules.',
   schemaType: 'WebPage',
   schemaName: 'How ARKON Works',
   eyebrow: 'How ARKON handles a request',
@@ -72,10 +72,10 @@ export const pricingPlans = [
 export const industryPages = {
   '/real-estate': {
     path: '/real-estate',
-    name: 'Real Estate Workflow Automation',
+    name: 'Real Estate Digital Team',
     schemaType: 'Service',
-    seoTitle: 'Real Estate Lead Follow-Up & Workflow Automation | ARKON',
-    eyebrow: 'Real estate workflow automation',
+    seoTitle: 'Real Estate Lead Follow-Up & Customer Response | ARKON',
+    eyebrow: 'Real estate digital team',
     title: 'Keep real estate leads, showing requests, and follow-up moving.',
     description: 'ARKON gives real estate teams structured lead response, showing-request routing, seller and buyer follow-up, CRM context, and owner visibility.',
     primary: 'Real estate teams lose deals when leads wait, showing requests sit, seller calls are missed, or agent follow-up depends on someone remembering every detail. ARKON keeps calls, website inquiries, client messages, relationship history, and agent handoffs connected.',
@@ -93,10 +93,10 @@ export const industryPages = {
   },
   '/insurance': {
     path: '/insurance',
-    name: 'Insurance Agency Workflow Automation',
+    name: 'Insurance Agency Digital Team',
     schemaType: 'Service',
-    seoTitle: 'Insurance Agency Workflow Automation & Follow-Up | ARKON',
-    eyebrow: 'Insurance agency workflow automation',
+    seoTitle: 'Insurance Agency Follow-Up & Customer Service | ARKON',
+    eyebrow: 'Insurance agency digital team',
     title: 'Keep quote requests, policyholder questions, and producer follow-up organized.',
     description: 'ARKON organizes insurance quote requests, policyholder questions, renewal follow-up, documents, producer handoffs, CRM updates, and agency visibility.',
     primary: 'Insurance agencies lose time when quote requests, renewal questions, document requests, and producer follow-up scatter across calls, email, texts, and the CRM. ARKON keeps the front office, producers, admins, and owner view connected.',
@@ -114,10 +114,10 @@ export const industryPages = {
   },
   '/short-term-rentals': {
     path: '/short-term-rentals',
-    name: 'Short-Term Rental Workflow Automation',
+    name: 'Short-Term Rental Digital Team',
     schemaType: 'Service',
-    seoTitle: 'Short-Term Rental Guest Messaging Automation | ARKON',
-    eyebrow: 'Short-term rental workflow automation',
+    seoTitle: 'Short-Term Rental Guest Messaging & Operations | ARKON',
+    eyebrow: 'Short-term rental digital team',
     title: 'Keep guest, cleaner, and vendor communication moving.',
     description: 'ARKON organizes short-term rental guest messaging, cleaner coordination, vendor updates, urgent-issue routing, follow-up, and host visibility.',
     primary: 'Short-term rental operators deal with guest messages, cleaner coordination, vendor updates, urgent issues, check-in questions, and host visibility. ARKON keeps stay operations moving without every message landing on the host.',
@@ -135,10 +135,10 @@ export const industryPages = {
   },
   '/home-services': {
     path: '/home-services',
-    name: 'Home Service Workflow Automation',
+    name: 'Home Services Digital Team',
     schemaType: 'Service',
-    seoTitle: 'Home Service Call & Scheduling Automation | ARKON',
-    eyebrow: 'Home services workflow automation',
+    seoTitle: 'Home Service Call Response & Customer Follow-Up | ARKON',
+    eyebrow: 'Home services digital team',
     title: 'Turn missed calls and estimate requests into organized next steps.',
     description: 'ARKON helps home service businesses manage inbound calls, estimate requests, scheduling, technician context, customer updates, and owner visibility.',
     primary: 'Home service businesses lose money when calls are missed, estimate requests wait, technicians lack context, invoices create confusion, or customers need updates. ARKON keeps front-desk work, field updates, customer communication, and the owner view connected.',
@@ -156,10 +156,10 @@ export const industryPages = {
   },
   '/salons': {
     path: '/salons',
-    name: 'Salon Booking Workflow Automation',
+    name: 'Salon Digital Team',
     schemaType: 'Service',
-    seoTitle: 'Salon Booking & Client Follow-Up Automation | ARKON',
-    eyebrow: 'Salon workflow automation',
+    seoTitle: 'Salon Booking Response & Client Follow-Up | ARKON',
+    eyebrow: 'Salon digital team',
     title: 'Protect bookings when the salon is too busy to answer.',
     description: 'ARKON helps salons manage missed calls, online booking requests, client messages, appointment follow-up, staff handoffs, and owner visibility.',
     primary: 'Salons miss revenue when calls go unanswered, booking requests sit, client messages pile up, or appointment follow-up depends on the busiest person in the room. ARKON keeps booking communication, client context, staff handoffs, and the owner view connected.',
@@ -177,10 +177,10 @@ export const industryPages = {
   },
   '/garages': {
     path: '/garages',
-    name: 'Auto Repair Shop Workflow Automation',
+    name: 'Auto Repair Shop Digital Team',
     schemaType: 'Service',
-    seoTitle: 'Auto Repair Shop Call & Follow-Up Automation | ARKON',
-    eyebrow: 'Auto repair shop workflow automation',
+    seoTitle: 'Auto Repair Call Response & Customer Follow-Up | ARKON',
+    eyebrow: 'Auto repair digital team',
     title: 'Stop losing repair work to missed calls and weak follow-up.',
     description: 'ARKON helps auto repair shops manage repair calls, estimate requests, vehicle context, status updates, declined-work follow-up, return visits, and owner visibility.',
     primary: 'Auto repair shops lose time when repair calls interrupt the bay, estimate requests wait, declined work is never followed up, or customers call repeatedly for status updates. ARKON supports front-desk intake, vehicle context, scheduling, declined-work follow-up, status updates, and owner visibility.',
