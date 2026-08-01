@@ -55,6 +55,24 @@ await replaceExact(
   '<div className="real-estate-call-thinking" role="status" aria-label="Conversation continuing"><span aria-hidden="true" /><span aria-hidden="true" /><span aria-hidden="true" /></div>'
 );
 
+await replaceExact(
+  'src/SalonConversationDemo.jsx',
+  '<div className={`phone-typing phone-typing-${side}`} aria-label="Typing">\n      <span />\n      <span />\n      <span />\n    </div>',
+  '<div className={`phone-typing phone-typing-${side}`} role="status" aria-label="Typing">\n      <span aria-hidden="true" />\n      <span aria-hidden="true" />\n      <span aria-hidden="true" />\n    </div>'
+);
+
+await replaceExact(
+  'src/SalonConversationDemo.jsx',
+  '<div className="conversation-proof-row" aria-label="Conversation demonstration features">',
+  '<div className="conversation-proof-row" role="group" aria-label="Conversation demonstration features">'
+);
+
+await replaceExact(
+  'src/SalonConversationDemo.jsx',
+  '<div className="phone-transcript" ref={transcriptRef} aria-label={`Animated example conversation with ${ASSISTANT_NAME}`}>',
+  '<div className="phone-transcript" ref={transcriptRef} role="log" aria-live="polite" aria-label={`Animated example conversation with ${ASSISTANT_NAME}`}>'
+);
+
 const jsxFiles = (await readdir(srcDir)).filter(name => name.endsWith('.jsx'));
 let dashboardNavigationCount = 0;
 
