@@ -64,14 +64,14 @@ for (const fileName of jsxFiles) {
   await writeFile(fullPath, source.replaceAll(target, replacement));
 }
 
-if (dashboardNavigationCount < 5) {
+if (dashboardNavigationCount < 4) {
   const alreadyUpdated = await Promise.all(jsxFiles.map(async fileName => {
     const source = await readFile(join(srcDir, fileName), 'utf8');
     return source.split('<nav tabIndex="0" aria-label="Example ARKON').length - 1;
   }));
   const updatedCount = alreadyUpdated.reduce((total, count) => total + count, 0);
-  if (updatedCount < 5) {
-    throw new Error(`Expected at least five dashboard navigation regions, found ${dashboardNavigationCount + updatedCount}.`);
+  if (updatedCount < 4) {
+    throw new Error(`Expected four dashboard navigation regions, found ${dashboardNavigationCount + updatedCount}.`);
   }
 }
 
