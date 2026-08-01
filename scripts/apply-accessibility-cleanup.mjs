@@ -29,6 +29,12 @@ await replaceExact(
         <h2>See how a request moves through ARKON.</h2>`
 );
 
+await replaceExact(
+  'server.js',
+  `  "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com",`,
+  `  "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://fonts.googleapis.com https://fonts.gstatic.com",`
+);
+
 const multilineThinkingBefore = `            <div className="real-estate-call-thinking" aria-label="Conversation continuing">
               <span />
               <span />
