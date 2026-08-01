@@ -140,10 +140,10 @@ function MessageBubble({ message }) {
 
 function TypingIndicator({ side }) {
   return (
-    <div className={`phone-typing phone-typing-${side}`} aria-label="Typing">
-      <span />
-      <span />
-      <span />
+    <div className={`phone-typing phone-typing-${side}`} role="status" aria-label="Typing">
+      <span aria-hidden="true" />
+      <span aria-hidden="true" />
+      <span aria-hidden="true" />
     </div>
   );
 }
@@ -245,7 +245,7 @@ export default function SalonConversationDemo() {
           ))}
         </div>
 
-        <div className="conversation-proof-row" aria-label="Conversation demonstration features">
+        <div className="conversation-proof-row" role="group" aria-label="Conversation demonstration features">
           <span>Uses the salon’s voice</span>
           <span>Knows client history</span>
           <span>Books approved times</span>
@@ -283,7 +283,7 @@ export default function SalonConversationDemo() {
 
             <div className="phone-day-label">Today</div>
 
-            <div className="phone-transcript" ref={transcriptRef} aria-label={`Animated example conversation with ${ASSISTANT_NAME}`}>
+            <div className="phone-transcript" ref={transcriptRef} role="log" aria-live="polite" aria-label={`Animated example conversation with ${ASSISTANT_NAME}`}>
               {visibleMessages.map((message, index) => (
                 <MessageBubble key={`${activeKey}-${index}`} message={message} />
               ))}
