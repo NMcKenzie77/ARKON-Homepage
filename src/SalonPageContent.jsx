@@ -45,7 +45,7 @@ export default function SalonPageContent() {
       <section className="section salon-capabilities-section" aria-labelledby="salon-capabilities-title">
         <div className="salon-section-heading">
           <div>
-            <p className="eyebrow">Meet your digital AI team</p>
+            <p className="eyebrow">Meet your digital team</p>
             <h2 id="salon-capabilities-title">Your digital team keeps every call, booking, and follow-up moving while your staff stays with clients.</h2>
           </div>
           <p>
@@ -106,7 +106,7 @@ export default function SalonPageContent() {
 
       <VerticalClosingCta
         eyebrow="See ARKON for salons"
-        title="See how a digital AI team can protect bookings without pulling staff away from clients."
+        title="See how a digital team can protect bookings without pulling staff away from clients."
         body="We’ll show how Vera answers calls, Naya handles messages and follow-up, Marcus keeps client context attached, and Grant surfaces bookings, schedule gaps, and decisions. From there, we can determine what makes sense for your salon."
         buttonLabel="Book a salon walkthrough"
       />
