@@ -59,22 +59,10 @@ export default function CookieConsent() {
   const closeButtonRef = useRef(null);
   const manageButtonRef = useRef(null);
   const returnFocusRef = useRef(null);
+  const pendingFocusRestoreRef = useRef(false);
 
-  function restoreFocus() {
-    window.setTimeout(() => {
-      const previous = returnFocusRef.current;
-      if (previous instanceof HTMLElement && document.contains(previous)) {
-        previous.focus();
-        return;
-      }
-
-      if (manageButtonRef.current instanceof HTMLElement && document.contains(manageButtonRef.current)) {
-        manageButtonRef.current.focus();
-        return;
-      }
-
-      document.querySelector('.site-header a, .site-header button')?.focus();
-    }, 0);
+  function requestFocusRestore() {
+    pendingFocusRestoreRef.current = true;
   }
 
   function openSettings() {
@@ -87,9 +75,9 @@ export default function CookieConsent() {
 
   function closeSettings({ restoreBanner = true } = {}) {
     const shouldRestoreBanner = restoreBanner && !readSavedChoice();
+    requestFocusRestore();
     setShowSettings(false);
     if (shouldRestoreBanner) setShowBanner(true);
-    restoreFocus();
   }
 
   useEffect(() => {
@@ -105,6 +93,25 @@ export default function CookieConsent() {
     window.addEventListener('arkon:open-cookie-settings', handleOpenSettings);
     return () => window.removeEventListener('arkon:open-cookie-settings', handleOpenSettings);
   }, []);
+
+  useEffect(() => {
+    if (showSettings || !pendingFocusRestoreRef.current) return undefined;
+
+    const focusTimer = window.setTimeout(() => {
+      const previous = returnFocusRef.current;
+      if (previous instanceof HTMLElement && document.contains(previous)) {
+        previous.focus();
+      } else if (manageButtonRef.current instanceof HTMLElement && document.contains(manageButtonRef.current)) {
+        manageButtonRef.current.focus();
+      } else {
+        document.querySelector('.site-header a, .site-header button')?.focus();
+      }
+
+      pendingFocusRestoreRef.current = false;
+    }, 0);
+
+    return () => window.clearTimeout(focusTimer);
+  }, [showBanner, showSettings]);
 
   useEffect(() => {
     if (!showSettings) return undefined;
@@ -155,9 +162,9 @@ export default function CookieConsent() {
   function commit(choice) {
     const saved = saveChoice(choice);
     setDraftChoice(saved);
+    requestFocusRestore();
     setShowBanner(false);
     setShowSettings(false);
-    restoreFocus();
   }
 
   return (
