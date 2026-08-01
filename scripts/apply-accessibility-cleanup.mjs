@@ -21,8 +21,12 @@ async function replaceExact(path, before, after, expectedCount = 1) {
 
 await replaceExact(
   'src/App.jsx',
-  '<h3>See how a request moves through ARKON.</h3>',
-  '<h2>See how a request moves through ARKON.</h2>'
+  `<div className="request-animation-header">
+        <p className="eyebrow">Workflow animation</p>
+        <h3>See how a request moves through ARKON.</h3>`,
+  `<div className="request-animation-header">
+        <p className="eyebrow">Workflow animation</p>
+        <h2>See how a request moves through ARKON.</h2>`
 );
 
 const multilineThinkingBefore = `            <div className="real-estate-call-thinking" aria-label="Conversation continuing">
