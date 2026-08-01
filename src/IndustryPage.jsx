@@ -144,7 +144,7 @@ function InsuranceTeamSection() {
     <section className="section insurance-team-section" aria-labelledby="insurance-team-title">
       <div className="insurance-section-heading">
         <div>
-          <p className="eyebrow">Meet your insurance agency digital AI team</p>
+          <p className="eyebrow">Meet your insurance agency digital team</p>
           <h2 id="insurance-team-title">Every quote request, service need, and follow-up reaches the right person with the context already attached.</h2>
         </div>
         <p>
@@ -300,7 +300,7 @@ export default function IndustryPage({ page, route }) {
   if (route === '/real-estate') {
     const realEstateBannerPage = {
       ...page,
-      eyebrow: 'Real estate digital AI team',
+      eyebrow: 'Real estate digital team',
       title: 'Answer new leads now. Re-engage the opportunities already in your database.',
       description:
         'Vera answers in the office’s name, Paige provides approved listing and property intelligence, Naya follows up with past buyers and sellers, Marcus keeps relationship context attached, and Grant shows which opportunities need an agent.'
@@ -318,10 +318,10 @@ export default function IndustryPage({ page, route }) {
   if (route === '/salons') {
     const salonBannerPage = {
       ...page,
-      eyebrow: 'Salon digital AI team',
-      title: 'Every call answered. Every booking opportunity kept alive.',
+      eyebrow: 'Salon digital team',
+      title: 'Keep every call and booking opportunity moving.',
       description:
-        'ARKON gives your salon a named digital AI team. Vera answers calls live, Naya handles messages and follow-up, Marcus keeps client history attached, and Grant shows the owner what needs attention.'
+        'ARKON gives your salon a named digital team. Vera answers calls live, Naya handles messages and follow-up, Marcus keeps client history attached, and Grant shows the owner what needs attention.'
     };
 
     return (
@@ -336,7 +336,7 @@ export default function IndustryPage({ page, route }) {
   if (route === '/garages') {
     const autoRepairBannerPage = {
       ...page,
-      eyebrow: 'Auto repair digital AI team',
+      eyebrow: 'Auto repair digital team',
       title: 'Bring customers back for the work their vehicles still need.',
       description:
         'Naya uses each customer’s vehicle history, prior recommendations, estimates, timing, and communication preferences to recover deferred work and schedule upcoming maintenance. Vera answers new repair calls, Marcus keeps the history attached, and Grant shows the owner what needs attention.'
@@ -356,7 +356,7 @@ export default function IndustryPage({ page, route }) {
   const bannerPage = isInsurance
     ? {
         ...page,
-        eyebrow: 'Insurance agency digital AI team',
+        eyebrow: 'Insurance agency digital team',
         title: 'Turn more quote requests into conversations before the prospect moves on.',
         description:
           'Vera answers new quote and policy-service calls in the agency’s name. Naya follows up with prospects using the coverage request, prior conversation, producer, and preferred contact method. Marcus keeps the relationship and policy context attached. Grant briefs the agency owner, sales manager, or producer whenever they need it.'
