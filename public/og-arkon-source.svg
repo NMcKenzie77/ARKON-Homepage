@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
   <title id="title">ARKON Systems social preview</title>
-  <desc id="desc">ARKON Systems. Repeatable work handled. Your team stays focused.</desc>
+  <desc id="desc">ARKON Systems. A digital team that keeps customer opportunities moving.</desc>
   <defs>
     <radialGradient id="blueGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(120 80) rotate(38) scale(430 360)">
       <stop stop-color="#4f8cff" stop-opacity="0.38"/>
@@ -51,10 +51,10 @@
   <text x="96" y="229" fill="#eef5ff" font-family="DejaVu Sans, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="-1.5">ARKON</text>
   <text x="312" y="220" fill="#9fb0ca" font-family="DejaVu Sans, Arial, sans-serif" font-size="25" font-weight="500">Systems</text>
 
-  <text x="96" y="333" fill="#eef5ff" font-family="DejaVu Sans, Arial, sans-serif" font-size="59" font-weight="800" letter-spacing="-2">Repeatable work handled.</text>
-  <text x="96" y="406" fill="#82f7ca" font-family="DejaVu Sans, Arial, sans-serif" font-size="59" font-weight="800" letter-spacing="-2">Your team stays focused.</text>
+  <text x="96" y="333" fill="#eef5ff" font-family="DejaVu Sans, Arial, sans-serif" font-size="51" font-weight="800" letter-spacing="-1.7">A digital team that keeps</text>
+  <text x="96" y="399" fill="#82f7ca" font-family="DejaVu Sans, Arial, sans-serif" font-size="51" font-weight="800" letter-spacing="-1.7">customer opportunities moving.</text>
 
-  <text x="100" y="476" fill="#9fb0ca" font-family="DejaVu Sans, Arial, sans-serif" font-size="27" font-weight="400">Calls, messages, follow-up, scheduling, records, and handoffs</text>
+  <text x="100" y="476" fill="#9fb0ca" font-family="DejaVu Sans, Arial, sans-serif" font-size="27" font-weight="400">Calls, inquiries, follow-up, customer history, and handoffs</text>
   <text x="100" y="513" fill="#9fb0ca" font-family="DejaVu Sans, Arial, sans-serif" font-size="27" font-weight="400">organized around the way your business actually works.</text>
 
   <g stroke="#67d8ff" stroke-opacity="0.62" stroke-width="3">
