@@ -1,6 +1,5 @@
 name: Live Homepage Spacing Audit
 
-# Re-run after the corrected staging spacing deployment.
 on:
   pull_request:
     branches:
@@ -34,6 +33,7 @@ jobs:
         run: node scripts/audit-live-homepage-spacing.mjs
 
       - name: Upload spacing report and screenshots
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: homepage-spacing-audit
