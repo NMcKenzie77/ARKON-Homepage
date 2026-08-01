@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './cookie-consent.css';
 
 const STORAGE_KEY = 'arkon_consent_v1';
@@ -55,6 +55,42 @@ export default function CookieConsent() {
   const [draftChoice, setDraftChoice] = useState(DEFAULT_CHOICE);
   const [showBanner, setShowBanner] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const dialogRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  const manageButtonRef = useRef(null);
+  const returnFocusRef = useRef(null);
+
+  function restoreFocus() {
+    window.setTimeout(() => {
+      const previous = returnFocusRef.current;
+      if (previous instanceof HTMLElement && document.contains(previous)) {
+        previous.focus();
+        return;
+      }
+
+      if (manageButtonRef.current instanceof HTMLElement && document.contains(manageButtonRef.current)) {
+        manageButtonRef.current.focus();
+        return;
+      }
+
+      document.querySelector('.site-header a, .site-header button')?.focus();
+    }, 0);
+  }
+
+  function openSettings() {
+    returnFocusRef.current = document.activeElement;
+    const latest = readSavedChoice() || normalizeChoice(window.arkonConsent) || DEFAULT_CHOICE;
+    setDraftChoice(latest);
+    setShowSettings(true);
+    setShowBanner(false);
+  }
+
+  function closeSettings({ restoreBanner = true } = {}) {
+    const shouldRestoreBanner = restoreBanner && !readSavedChoice();
+    setShowSettings(false);
+    if (shouldRestoreBanner) setShowBanner(true);
+    restoreFocus();
+  }
 
   useEffect(() => {
     const existing = readSavedChoice();
@@ -65,22 +101,63 @@ export default function CookieConsent() {
       setShowBanner(true);
     }
 
-    const openSettings = () => {
-      const latest = readSavedChoice() || normalizeChoice(window.arkonConsent) || DEFAULT_CHOICE;
-      setDraftChoice(latest);
-      setShowSettings(true);
-      setShowBanner(false);
-    };
-
-    window.addEventListener('arkon:open-cookie-settings', openSettings);
-    return () => window.removeEventListener('arkon:open-cookie-settings', openSettings);
+    const handleOpenSettings = () => openSettings();
+    window.addEventListener('arkon:open-cookie-settings', handleOpenSettings);
+    return () => window.removeEventListener('arkon:open-cookie-settings', handleOpenSettings);
   }, []);
+
+  useEffect(() => {
+    if (!showSettings) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const focusTimer = window.setTimeout(() => closeButtonRef.current?.focus(), 0);
+
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeSettings();
+        return;
+      }
+
+      if (event.key !== 'Tab' || !dialogRef.current) return;
+
+      const focusable = [...dialogRef.current.querySelectorAll(
+        'button:not([disabled]), input:not([disabled]), a[href], select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )].filter(element => !element.hasAttribute('hidden'));
+
+      if (!focusable.length) {
+        event.preventDefault();
+        dialogRef.current.focus();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.clearTimeout(focusTimer);
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [showSettings]);
 
   function commit(choice) {
     const saved = saveChoice(choice);
     setDraftChoice(saved);
     setShowBanner(false);
     setShowSettings(false);
+    restoreFocus();
   }
 
   return (
@@ -99,11 +176,12 @@ export default function CookieConsent() {
             <button type="button" className="cookie-secondary" onClick={() => commit(DEFAULT_CHOICE)}>
               Reject nonessential
             </button>
-            <button type="button" className="cookie-secondary" onClick={() => {
-              setDraftChoice(readSavedChoice() || normalizeChoice(window.arkonConsent));
-              setShowSettings(true);
-              setShowBanner(false);
-            }}>
+            <button
+              ref={manageButtonRef}
+              type="button"
+              className="cookie-secondary"
+              onClick={openSettings}
+            >
               Manage settings
             </button>
             <button type="button" className="cookie-primary" onClick={() => commit({ analytics: true, advertising: true })}>
@@ -114,17 +192,41 @@ export default function CookieConsent() {
       ) : null}
 
       {showSettings ? (
-        <div className="cookie-modal-backdrop" role="presentation" onMouseDown={event => {
-          if (event.target === event.currentTarget) setShowSettings(false);
-        }}>
-          <section className="cookie-modal" role="dialog" aria-modal="true" aria-labelledby="cookie-settings-title">
+        <div
+          className="cookie-modal-backdrop"
+          role="presentation"
+          onMouseDown={event => {
+            if (event.target === event.currentTarget) closeSettings();
+          }}
+        >
+          <section
+            ref={dialogRef}
+            className="cookie-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cookie-settings-title"
+            aria-describedby="cookie-settings-description"
+            tabIndex="-1"
+          >
             <div className="cookie-modal-heading">
               <div>
                 <p className="eyebrow">Privacy choices</p>
                 <h2 id="cookie-settings-title">Cookie settings</h2>
               </div>
-              <button type="button" className="cookie-close" onClick={() => setShowSettings(false)} aria-label="Close cookie settings">×</button>
+              <button
+                ref={closeButtonRef}
+                type="button"
+                className="cookie-close"
+                onClick={() => closeSettings()}
+                aria-label="Close cookie settings"
+              >
+                ×
+              </button>
             </div>
+
+            <p id="cookie-settings-description" className="cookie-modal-note">
+              Choose which optional technologies ARKON Systems may use on this website.
+            </p>
 
             <div className="cookie-setting-row">
               <div>
