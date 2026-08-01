@@ -34,7 +34,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' data: https://fonts.gstatic.com",
   "img-src 'self' data: https:",
-  "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com",
+  "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://fonts.googleapis.com https://fonts.gstatic.com",
   "frame-src https://app.heygen.com",
   "media-src 'self' blob: https:",
   "worker-src 'self' blob:",
