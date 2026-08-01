@@ -322,7 +322,7 @@ export default function ShortTermRentalCallDemo() {
       <section className="section insurance-team-section short-term-rental-team-section" aria-labelledby="short-term-rental-team-title">
         <div className="insurance-section-heading">
           <div>
-            <p className="eyebrow">Meet your short-term rental digital AI team</p>
+            <p className="eyebrow">Meet your short-term rental digital team</p>
             <h2 id="short-term-rental-team-title">Every guest, cleaner, vendor, and property issue reaches the right person with the stay context already attached.</h2>
           </div>
           <p>
