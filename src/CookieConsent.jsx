@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import './cookie-consent.css';
 
 const STORAGE_KEY = 'arkon_consent_v1';
@@ -94,23 +94,19 @@ export default function CookieConsent() {
     return () => window.removeEventListener('arkon:open-cookie-settings', handleOpenSettings);
   }, []);
 
-  useEffect(() => {
-    if (showSettings || !pendingFocusRestoreRef.current) return undefined;
+  useLayoutEffect(() => {
+    if (showSettings || !pendingFocusRestoreRef.current) return;
 
-    const focusTimer = window.setTimeout(() => {
-      const previous = returnFocusRef.current;
-      if (previous instanceof HTMLElement && document.contains(previous)) {
-        previous.focus();
-      } else if (manageButtonRef.current instanceof HTMLElement && document.contains(manageButtonRef.current)) {
-        manageButtonRef.current.focus();
-      } else {
-        document.querySelector('.site-header a, .site-header button')?.focus();
-      }
+    const previous = returnFocusRef.current;
+    if (previous instanceof HTMLElement && document.contains(previous)) {
+      previous.focus();
+    } else if (manageButtonRef.current instanceof HTMLElement && document.contains(manageButtonRef.current)) {
+      manageButtonRef.current.focus();
+    } else {
+      document.querySelector('.site-header a, .site-header button')?.focus();
+    }
 
-      pendingFocusRestoreRef.current = false;
-    }, 0);
-
-    return () => window.clearTimeout(focusTimer);
+    pendingFocusRestoreRef.current = false;
   }, [showBanner, showSettings]);
 
   useEffect(() => {
