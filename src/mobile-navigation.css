@@ -1,0 +1,310 @@
+.mobile-menu-button {
+  display: none;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.055);
+  cursor: pointer;
+}
+
+.mobile-menu-icon {
+  position: relative;
+  width: 18px;
+  height: 14px;
+}
+
+.mobile-menu-icon::before,
+.mobile-menu-icon::after,
+.mobile-menu-icon span {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transition: transform 180ms ease, top 180ms ease, opacity 180ms ease;
+}
+
+.mobile-menu-icon::before { top: 0; }
+.mobile-menu-icon span { top: 6px; }
+.mobile-menu-icon::after { top: 12px; }
+
+.mobile-menu-button[aria-expanded='true'] .mobile-menu-icon::before {
+  top: 6px;
+  transform: rotate(45deg);
+}
+
+.mobile-menu-button[aria-expanded='true'] .mobile-menu-icon span {
+  opacity: 0;
+}
+
+.mobile-menu-button[aria-expanded='true'] .mobile-menu-icon::after {
+  top: 6px;
+  transform: rotate(-45deg);
+}
+
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 105;
+  border: 0;
+  background: rgba(2, 6, 15, 0.72);
+  backdrop-filter: blur(8px);
+  cursor: default;
+}
+
+.mobile-site-navigation {
+  position: fixed;
+  top: 88px;
+  right: 10px;
+  z-index: 110;
+  width: min(420px, calc(100% - 20px));
+  max-height: calc(100dvh - 102px);
+  overflow-y: auto;
+  padding: 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at top right, rgba(103, 216, 255, 0.12), transparent 44%),
+    rgba(7, 13, 26, 0.98);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.52);
+}
+
+.mobile-site-navigation strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--subtle);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mobile-menu-links,
+.mobile-business-links {
+  display: grid;
+  gap: 6px;
+}
+
+.mobile-menu-links a,
+.mobile-business-links a {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 15px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.025);
+  font-size: 0.94rem;
+  font-weight: 700;
+}
+
+.mobile-menu-links a::after,
+.mobile-business-links a::after {
+  content: '›';
+  color: var(--blue);
+  font-size: 1.2rem;
+}
+
+.mobile-menu-links a:hover,
+.mobile-menu-links a:focus-visible,
+.mobile-business-links a:hover,
+.mobile-business-links a:focus-visible {
+  border-color: var(--line-strong);
+  color: var(--text);
+  background: rgba(103, 216, 255, 0.08);
+  outline: none;
+}
+
+.mobile-menu-section {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.mobile-menu-cta {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  border-radius: 999px;
+  color: #06111f;
+  background: linear-gradient(135deg, var(--blue), var(--mint));
+  font-weight: 850;
+  box-shadow: 0 16px 42px rgba(103, 216, 255, 0.24);
+}
+
+@media (max-width: 780px) {
+  .site-header {
+    z-index: 120;
+    padding: 0 10px 0 12px;
+  }
+
+  .site-header .desktop-nav,
+  .site-header .nav-cta {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+
+  .auto-repair-page {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .auto-repair-page .auto-repair-demo-section,
+  .auto-repair-page .auto-phone-stage,
+  .auto-repair-page .auto-phone-shell,
+  .auto-repair-page .real-estate-dashboard-preview,
+  .auto-repair-page .grant-preview-main {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .auto-repair-page .auto-phone-stage {
+    width: 100%;
+    overflow: clip;
+  }
+
+  .auto-repair-page .auto-phone-glow {
+    width: min(320px, 88vw);
+    height: min(320px, 88vw);
+  }
+
+  .grant-preview-sidebar nav span {
+    font-size: 0.68rem;
+    line-height: 1.2;
+  }
+
+  .grant-preview-topline h3 {
+    font-size: 1rem;
+    line-height: 1.16;
+  }
+
+  .grant-preview-topline p {
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+
+  .grant-preview-actions span,
+  .grant-preview-actions strong {
+    min-height: 36px;
+    font-size: 0.66rem;
+  }
+
+  .grant-preview-briefing-head span,
+  .grant-preview-briefing-footer > span,
+  .grant-preview-card-heading > span,
+  .grant-preview-digest-footer span {
+    font-size: 0.64rem;
+    line-height: 1.35;
+  }
+
+  .grant-preview-briefing-head h4 {
+    font-size: 0.96rem;
+  }
+
+  .grant-preview-briefing-head > strong {
+    font-size: 0.62rem;
+  }
+
+  .grant-preview-briefing > p,
+  .grant-preview-digest-card > p {
+    font-size: 0.76rem;
+    line-height: 1.52;
+  }
+
+  .grant-preview-briefing-footer strong,
+  .grant-preview-briefing-footer em {
+    min-height: 34px;
+    font-size: 0.64rem;
+  }
+
+  .grant-preview-stat strong {
+    font-size: 1.08rem;
+  }
+
+  .grant-preview-stat span {
+    font-size: 0.64rem;
+    line-height: 1.35;
+  }
+
+  .grant-preview-card-heading h4 {
+    font-size: 0.76rem;
+    line-height: 1.35;
+  }
+
+  .grant-preview-priority-list > div > span {
+    font-size: 0.64rem;
+  }
+
+  .grant-preview-priority-list > div > strong {
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .grant-preview-tag {
+    font-size: 0.62rem;
+    line-height: 1.3;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .grant-preview-momentum-list > div {
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+
+  .grant-preview-momentum-list > div > span {
+    white-space: normal;
+  }
+
+  .grant-preview-digest-footer strong {
+    font-size: 0.66rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand-mark {
+    width: 31px;
+    height: 31px;
+  }
+
+  .brand strong {
+    font-size: 0.84rem;
+  }
+
+  .brand small {
+    font-size: 0.63rem;
+  }
+
+  .mobile-site-navigation {
+    padding: 14px;
+    border-radius: 22px;
+  }
+
+  .grant-preview-main {
+    padding: 11px;
+  }
+
+  .grant-preview-stats {
+    gap: 6px;
+  }
+
+  .grant-preview-stat,
+  .grant-preview-card,
+  .grant-preview-briefing {
+    padding: 9px;
+  }
+}
