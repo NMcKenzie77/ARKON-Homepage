@@ -48,7 +48,7 @@ const customRouteExpectations = {
     workflowCount: 0,
     faqCount: 0,
     requiredMarkers: [
-      'Short-term rental digital AI team',
+      'Short-term rental digital team',
       'Your digital team handles guest questions, cleaner coordination, maintenance follow-up, emergency routing, reservation context, and owner briefings so the operation keeps moving even when you are unavailable.',
       'data-short-term-rental-call-demo="true"',
       'Guest asks a question',
@@ -63,7 +63,7 @@ const customRouteExpectations = {
     ]
   },
   '/salons': {
-    title: 'Every call answered. Every booking opportunity kept alive.',
+    title: 'Keep every call and booking opportunity moving.',
     workflowCount: 0,
     faqCount: 0
   },
