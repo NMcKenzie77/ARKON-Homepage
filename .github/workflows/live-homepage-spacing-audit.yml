@@ -1,5 +1,6 @@
 name: Live Homepage Spacing Audit
 
+# Final run against the rendered-app-scoped staging deployment.
 on:
   pull_request:
     branches:
