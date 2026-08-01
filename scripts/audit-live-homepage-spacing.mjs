@@ -27,8 +27,8 @@ const sections = [
   { name: 'Core team', selector: '.compact-team-section' },
   { name: 'Business types', selector: '.featured-solutions-section' },
   { name: 'Business voice', selector: '.voice-proof-section' },
-  { name: 'Coverage', selector: '#coverage' },
-  { name: 'Demo request', selector: '.demo-cta' }
+  { name: 'Coverage', selector: '.voice-proof-section + .section' },
+  { name: 'Demo request', selector: '.voice-proof-section + .section + .demo-cta' }
 ];
 
 function assert(condition, message) {
