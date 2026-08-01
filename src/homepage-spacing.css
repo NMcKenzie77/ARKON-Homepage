@@ -25,12 +25,12 @@
   padding-bottom: 0;
 }
 
-#coverage.section {
+.voice-proof-section + .section {
   padding-top: 88px;
   padding-bottom: 0;
 }
 
-#coverage + .demo-cta {
+.voice-proof-section + .section + .demo-cta {
   margin-top: 88px;
 }
 
@@ -51,12 +51,12 @@
   }
 
   .voice-proof-section,
-  #coverage.section {
+  .voice-proof-section + .section {
     padding-top: 64px;
     padding-bottom: 0;
   }
 
-  #coverage + .demo-cta {
+  .voice-proof-section + .section + .demo-cta {
     margin-top: 64px;
   }
 }
