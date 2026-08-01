@@ -526,13 +526,6 @@ function crawlableHomeHtml() {
     { title: 'Keep it sounding like your business', copy: 'Messages follow your tone, standards, and rules so customers still feel like they are dealing with your team.' }
   ];
 
-  const team = [
-    { title: 'Naya — Client and guest communication', copy: 'Handles inbound and outbound messages in the owner’s voice and follows up after calls or website inquiries create a lead.' },
-    { title: 'Vera — Voice reception', copy: 'Answers inbound calls, gathers key details, and routes the call when a person is needed.' },
-    { title: 'Grant — Owner intelligence', copy: 'Surfaces risks, open work, and the owner digest of what needs action.' },
-    { title: 'Marcus — CRM and relationship memory', copy: 'Keeps records, interaction history, pipeline stages, notes, tags, and follow-up context attached.' },
-    { title: 'Iris — Inbox triage', copy: 'Scores urgency and importance, prioritizes the inbox, and flags new client or lead inquiries.' }
-  ];
 
   const solutionCards = solutions.map(solution => `
     <a class="crawlable-card crawlable-link-card" href="${escapeHtml(solution.href)}">
@@ -549,10 +542,15 @@ function crawlableHomeHtml() {
 
   return `<main class="crawlable-page" data-crawlable-page="true">
     <section>
-      <p class="crawlable-eyebrow">ARKON Systems</p>
-      <h1>Let your existing team focus on the work only they can do.</h1>
-      <p>ARKON handles the repeatable tasks around calls, messages, follow-ups, scheduling, documents, estimates, invoices, and handoffs. Your staff can spend less time chasing details and more time moving the business forward.</p>
+      <p class="crawlable-eyebrow">A digital team for service businesses</p>
+      <h1>Stop letting good customers and warm leads go cold.</h1>
+      <p>ARKON supplies a digital team that handles the routine work behind customer relationships. It answers new inquiries, follows up with leads, nurtures people who are not ready yet, reconnects with past customers, and keeps every opportunity moving toward the right next step. Your employees stay focused on closing business, serving customers, and handling the work that requires skill, judgment, and a real person.</p>
       <p><a href="/#how">See how it works</a> <a href="/#solutions">Choose your business type</a></p>
+    </section>
+    <section>
+      <p class="crawlable-eyebrow">Meet Naya</p>
+      <h2>See what your ARKON digital team handles in one minute.</h2>
+      <p><a href="https://app.heygen.com/embeds/a477288ba09149e79a11fc9632a638ed">Watch the ARKON overview</a></p>
     </section>
     <section>
       <p class="crawlable-eyebrow">How ARKON moves work forward</p>
@@ -568,9 +566,15 @@ function crawlableHomeHtml() {
       <div class="crawlable-grid">${renderSimpleCards(ideaCards)}</div>
     </section>
     <section>
-      <p class="crawlable-eyebrow">Meet the core team</p>
-      <h2>One team, with the right role for each job.</h2>
-      <div class="crawlable-grid">${renderSimpleCards(team)}</div>
+      <p class="crawlable-eyebrow">The core team</p>
+      <h2>Five roles behind the work.</h2>
+      <ul>
+        <li><strong>Vera:</strong> calls and prepared handoffs.</li>
+        <li><strong>Naya:</strong> messages and follow-up.</li>
+        <li><strong>Marcus:</strong> customer history and context.</li>
+        <li><strong>Iris:</strong> email prioritization.</li>
+        <li><strong>Grant:</strong> owner alerts and open decisions.</li>
+      </ul>
     </section>
     <section id="solutions">
       <p class="crawlable-eyebrow">Choose your business type</p>
@@ -584,19 +588,9 @@ function crawlableHomeHtml() {
       <p>ARKON uses the business’s greetings, tone, standards, boundaries, and escalation rules. Sensitive or urgent issues are routed instead of answered blindly.</p>
     </section>
     <section>
-      <p class="crawlable-eyebrow">Owner visibility</p>
-      <h2>The owner sees what happened without carrying every detail.</h2>
-      <p>Messages become organized actions, owners see what matters, and employees start with context.</p>
-    </section>
-    <section>
       <p class="crawlable-eyebrow">The work behind each response</p>
       <h2>One customer experience. The right role behind each step.</h2>
       <div class="crawlable-grid">${coverageCards}</div>
-    </section>
-    <section>
-      <p class="crawlable-eyebrow">How it feels different</p>
-      <h2>The business feels present, prepared, and coordinated, even when the owner is not.</h2>
-      <ul><li>Customers feel remembered</li><li>Responses sound like the business</li><li>Employees know what to do</li><li>Owners see what matters</li></ul>
     </section>
     <section id="demo">
       <p class="crawlable-eyebrow">See it for your business</p>

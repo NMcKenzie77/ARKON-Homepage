@@ -11,13 +11,14 @@
     "audit:routes": "node scripts/audit-public-routes.mjs",
     "build": "node scripts/build-public-source.mjs && node scripts/audit-public-routes.mjs && node scripts/build-og-image.mjs && vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "start": "node --import ./src/legal-register.js server.runtime.js"
+    "start": "node --import ./src/legal-register.js server.runtime.js",
+    "audit:server": "node scripts/audit-server-hardening.mjs"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "react": "latest",
-    "react-dom": "latest",
+    "@vitejs/plugin-react": "6.0.5",
+    "vite": "8.2.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "sharp": "0.35.3"
   },
   "devDependencies": {}

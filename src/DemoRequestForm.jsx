@@ -64,18 +64,6 @@ export default function DemoRequestForm() {
       return;
     }
 
-    const emailMessage = [
-      `Company name: ${companyName}`,
-      `Telephone number: ${phone}`,
-      `Website link: ${website || 'Not provided'}`,
-      `Contact consent: Yes, for this request`,
-      `Consent recorded: ${consentRecordedAt}`,
-      `Privacy version: ${PRIVACY_VERSION}`,
-      '',
-      'Lead message:',
-      message || 'No message provided'
-    ].join('\n');
-
     setIsSubmitting(true);
     setStatus('Sending request...');
 
@@ -87,9 +75,11 @@ export default function DemoRequestForm() {
           name,
           email,
           phone,
+          companyName,
+          website,
           businessType,
           sourcePath: window.location.pathname,
-          message: emailMessage,
+          message,
           companyWebsite,
           contactConsent,
           consentRecordedAt,
