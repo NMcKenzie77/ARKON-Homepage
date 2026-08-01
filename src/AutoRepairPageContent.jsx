@@ -93,7 +93,7 @@ export default function AutoRepairPageContent() {
         <div className="real-estate-dashboard-preview" aria-label="Preview of the Grant auto repair command center">
           <aside className="grant-preview-sidebar">
             <div className="grant-preview-logo">ARK<span>O</span>N</div>
-            <nav aria-label="Example ARKON dashboard navigation">
+            <nav tabIndex="0" aria-label="Example ARKON dashboard navigation">
               <span>Today</span>
               <span>Schedule</span>
               <span>Customers · Marcus</span>

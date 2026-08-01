@@ -55,7 +55,7 @@
   --grant-slate: #5b6b82;
   --grant-red: #c8102e;
   --grant-green: #1f7a4d;
-  --grant-amber: #b97a00;
+  --grant-amber: #8a5600;
   position: relative;
   display: grid;
   grid-template-columns: 122px minmax(0, 1fr);
@@ -646,4 +646,10 @@
   .grant-preview-priority-list .grant-preview-tag {
     grid-column: 2;
   }
+}
+
+.grant-preview-sidebar nav:focus-visible {
+  outline: 3px solid #67d8ff;
+  outline-offset: 3px;
+  border-radius: 8px;
 }

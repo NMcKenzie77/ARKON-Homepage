@@ -228,7 +228,7 @@ function RequestFlowAnimation({ compact = false }) {
     <div className={compact ? 'request-animation compact' : 'request-animation'} data-reveal aria-label="Animated ARKON request workflow">
       <div className="request-animation-header">
         <p className="eyebrow">Workflow animation</p>
-        <h3>See how a request moves through ARKON.</h3>
+        <h2>See how a request moves through ARKON.</h2>
         <p>
           The visual shows the control points: who responds first, what ARKON is allowed to do,
           where the history comes from, and what the owner sees.

@@ -348,10 +348,10 @@ export default function InsuranceCallDemo() {
             <TranscriptItem item={item} key={`${activeKey}-${index}-${item.speaker}`} />
           ))}
           {visibleCount < scenario.messages.length ? (
-            <div className="real-estate-call-thinking" aria-label="Conversation continuing">
-              <span />
-              <span />
-              <span />
+            <div className="real-estate-call-thinking" role="status" aria-label="Conversation continuing">
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
+              <span aria-hidden="true" />
             </div>
           ) : null}
         </div>

@@ -46,7 +46,7 @@ export default function ShortTermRentalGrantSection() {
       <div className="real-estate-dashboard-preview" aria-label="Preview of the Grant short-term rental portfolio command center">
         <aside className="grant-preview-sidebar">
           <div className="grant-preview-logo">ARK<span>O</span>N</div>
-          <nav aria-label="Example ARKON short-term rental dashboard navigation">
+          <nav tabIndex="0" aria-label="Example ARKON short-term rental dashboard navigation">
             <span>Today</span>
             <span>Properties · Marcus</span>
             <span>Guests · Marcus</span>

@@ -313,7 +313,7 @@ export default function ShortTermRentalCallDemo() {
           <div className="real-estate-call-transcript" ref={transcriptRef} aria-live="polite">
             {visibleMessages.map((item, index) => <TranscriptItem item={item} key={`${activeKey}-${index}-${item.speaker}`} />)}
             {visibleCount < scenario.messages.length ? (
-              <div className="real-estate-call-thinking" aria-label="Conversation continuing"><span /><span /><span /></div>
+              <div className="real-estate-call-thinking" role="status" aria-label="Conversation continuing"><span aria-hidden="true" /><span aria-hidden="true" /><span aria-hidden="true" /></div>
             ) : null}
           </div>
         </div>
