@@ -27,6 +27,7 @@ try {
 
     if (menuButtonCount === 1) {
       await button.click();
+      await page.waitForTimeout(75);
       const nav = page.getByRole('navigation', { name: 'Mobile navigation' });
       menuVisible = await nav.isVisible();
       firstLinkFocused = await page.evaluate(() => document.activeElement?.textContent?.trim() === 'How it works');
