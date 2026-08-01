@@ -22,13 +22,13 @@ const viewports = [
 ];
 
 const sections = [
-  { name: 'Meet Naya', selector: '.homepage-video-section' },
-  { name: 'Workflow proof', selector: '.workflow-proof-section' },
-  { name: 'Core team', selector: '.compact-team-section' },
-  { name: 'Business types', selector: '.featured-solutions-section' },
-  { name: 'Business voice', selector: '.voice-proof-section' },
-  { name: 'Coverage', selector: '.voice-proof-section + .section' },
-  { name: 'Demo request', selector: '.voice-proof-section + .section + .demo-cta' }
+  { name: 'Meet Naya', selector: '#root > main > .homepage-video-section' },
+  { name: 'Workflow proof', selector: '#root > main > .workflow-proof-section' },
+  { name: 'Core team', selector: '#root > main > .compact-team-section' },
+  { name: 'Business types', selector: '#root > main > .featured-solutions-section' },
+  { name: 'Business voice', selector: '#root > main > .voice-proof-section' },
+  { name: 'Coverage', selector: '#root > main > .voice-proof-section + .section' },
+  { name: 'Demo request', selector: '#root > main > .voice-proof-section + .section + .demo-cta' }
 ];
 
 function assert(condition, message) {
@@ -46,21 +46,45 @@ async function getVisualBounds(page, section) {
       return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 0 && rect.height > 0;
     });
 
+    const elementRect = element.getBoundingClientRect();
+    const style = getComputedStyle(element);
+
     if (!children.length) {
-      const rect = element.getBoundingClientRect();
-      return { top: rect.top, bottom: rect.bottom, height: rect.height };
+      return {
+        top: elementRect.top,
+        bottom: elementRect.bottom,
+        height: elementRect.height,
+        elementTop: elementRect.top,
+        elementBottom: elementRect.bottom,
+        paddingTop: Number.parseFloat(style.paddingTop) || 0,
+        paddingBottom: Number.parseFloat(style.paddingBottom) || 0,
+        marginTop: Number.parseFloat(style.marginTop) || 0,
+        marginBottom: Number.parseFloat(style.marginBottom) || 0
+      };
     }
 
     const rects = children.map(child => child.getBoundingClientRect());
     const top = Math.min(...rects.map(rect => rect.top));
     const bottom = Math.max(...rects.map(rect => rect.bottom));
-    return { top, bottom, height: bottom - top };
+
+    return {
+      top,
+      bottom,
+      height: bottom - top,
+      elementTop: elementRect.top,
+      elementBottom: elementRect.bottom,
+      paddingTop: Number.parseFloat(style.paddingTop) || 0,
+      paddingBottom: Number.parseFloat(style.paddingBottom) || 0,
+      marginTop: Number.parseFloat(style.marginTop) || 0,
+      marginBottom: Number.parseFloat(style.marginBottom) || 0
+    };
   });
 }
 
 await mkdir(outputDir, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const reports = [];
+let auditError = null;
 
 try {
   for (const viewport of viewports) {
@@ -107,41 +131,51 @@ try {
     const transitions = [];
     for (let index = 0; index < bounds.length - 1; index += 1) {
       const gap = Math.round((bounds[index + 1].top - bounds[index].bottom) * 10) / 10;
-      const expected = viewport.expected[index];
-      const minimum = expected - viewport.tolerance;
-      const maximum = expected + viewport.tolerance;
-
-      assert(
-        gap >= minimum && gap <= maximum,
-        `${viewport.name}: ${bounds[index].name} → ${bounds[index + 1].name} measured ${gap}px; expected ${expected}px ± ${viewport.tolerance}px.`
-      );
-
       transitions.push({
         from: bounds[index].name,
         to: bounds[index + 1].name,
         gap,
-        expected
+        expected: viewport.expected[index]
       });
     }
-
-    assert(!consoleErrors.length, `${viewport.name}: browser errors detected:\n${consoleErrors.join('\n')}`);
 
     await page.screenshot({
       path: `${outputDir}/homepage-${viewport.name}.png`,
       fullPage: true
     });
 
-    reports.push({
+    const report = {
       viewport: viewport.name,
       width: viewport.width,
       height: viewport.height,
+      scrollY: await page.evaluate(() => window.scrollY),
+      documentHeight: await page.evaluate(() => document.documentElement.scrollHeight),
+      bounds,
       transitions,
-      documentHeight: await page.evaluate(() => document.documentElement.scrollHeight)
-    });
+      consoleErrors
+    };
+    reports.push(report);
+    await writeFile(`${outputDir}/spacing-report.json`, `${JSON.stringify(reports, null, 2)}\n`);
 
-    console.log(`${viewport.name} homepage spacing passed.`);
+    console.log(`${viewport.name} homepage spacing measurements:`);
     for (const transition of transitions) {
       console.log(`  ${transition.from} → ${transition.to}: ${transition.gap}px`);
+    }
+
+    try {
+      for (let index = 0; index < transitions.length; index += 1) {
+        const transition = transitions[index];
+        const expected = viewport.expected[index];
+        const minimum = expected - viewport.tolerance;
+        const maximum = expected + viewport.tolerance;
+        assert(
+          transition.gap >= minimum && transition.gap <= maximum,
+          `${viewport.name}: ${transition.from} → ${transition.to} measured ${transition.gap}px; expected ${expected}px ± ${viewport.tolerance}px.`
+        );
+      }
+      assert(!consoleErrors.length, `${viewport.name}: browser errors detected:\n${consoleErrors.join('\n')}`);
+    } catch (error) {
+      auditError = auditError || error;
     }
 
     await context.close();
@@ -150,5 +184,5 @@ try {
   await browser.close();
 }
 
-await writeFile(`${outputDir}/spacing-report.json`, `${JSON.stringify(reports, null, 2)}\n`);
+if (auditError) throw auditError;
 console.log('Live homepage spacing audit passed.');
