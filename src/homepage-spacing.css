@@ -6,32 +6,32 @@
 }
 
 #root > main > .workflow-proof-section {
-  padding-top: 72px;
+  padding-top: 48px;
   padding-bottom: 0;
 }
 
 #root > main > .compact-team-section {
-  padding-top: 72px;
+  padding-top: 56px;
   padding-bottom: 0;
 }
 
 #root > main > .featured-solutions-section {
-  padding-top: 80px;
+  padding-top: 64px;
   padding-bottom: 0;
 }
 
 #root > main > .voice-proof-section {
-  padding-top: 88px;
+  padding-top: 64px;
   padding-bottom: 0;
 }
 
 #root > main > .voice-proof-section + .section {
-  padding-top: 88px;
+  padding-top: 64px;
   padding-bottom: 0;
 }
 
 #root > main > .voice-proof-section + .section + .demo-cta {
-  margin-top: 88px;
+  margin-top: 64px;
 }
 
 @media (max-width: 780px) {
@@ -39,24 +39,24 @@
     margin-bottom: 0;
   }
 
-  #root > main > .workflow-proof-section,
+  #root > main > .workflow-proof-section {
+    padding-top: 36px;
+    padding-bottom: 0;
+  }
+
   #root > main > .compact-team-section {
+    padding-top: 40px;
+    padding-bottom: 0;
+  }
+
+  #root > main > .featured-solutions-section,
+  #root > main > .voice-proof-section,
+  #root > main > .voice-proof-section + .section {
     padding-top: 48px;
     padding-bottom: 0;
   }
 
-  #root > main > .featured-solutions-section {
-    padding-top: 56px;
-    padding-bottom: 0;
-  }
-
-  #root > main > .voice-proof-section,
-  #root > main > .voice-proof-section + .section {
-    padding-top: 64px;
-    padding-bottom: 0;
-  }
-
   #root > main > .voice-proof-section + .section + .demo-cta {
-    margin-top: 64px;
+    margin-top: 48px;
   }
 }
