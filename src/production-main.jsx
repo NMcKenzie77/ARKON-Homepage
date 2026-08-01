@@ -10,6 +10,7 @@ import SiteHeader from './SiteHeader.jsx';
 import './legal-register.js';
 import { industryPages, seoPages, SITE_URL } from './site-content.js';
 import './styles.css';
+import './homepage-spacing.css';
 import './hero-compact.css';
 import './walkthrough.css';
 import './hero-shrink.css';
