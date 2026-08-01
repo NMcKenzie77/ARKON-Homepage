@@ -1,0 +1,30 @@
+name: Live Accessibility Audit
+
+on:
+  pull_request:
+    branches:
+      - staging
+
+permissions:
+  contents: read
+
+jobs:
+  live-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out audit branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install audit tools
+        run: npm install --no-save --package-lock=false playwright @axe-core/playwright
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Audit public Railway staging
+        run: node scripts/live-accessibility-audit.mjs
