@@ -57,7 +57,7 @@ export default function AutoRepairPageContent() {
       <section className="section auto-repair-team-section" aria-labelledby="auto-repair-team-title">
         <div className="auto-repair-section-heading">
           <div>
-            <p className="eyebrow">Meet your auto repair digital AI team</p>
+            <p className="eyebrow">Meet your auto repair digital team</p>
             <h2 id="auto-repair-team-title">The shop reaches the right customer with the right vehicle context before the opportunity disappears.</h2>
           </div>
           <p>
