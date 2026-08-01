@@ -14,7 +14,7 @@ export default function HomepageVideo() {
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    const focusTimer = window.setTimeout(() => closeButtonRef.current?.focus(), 50);
+    const focusTimer = window.setTimeout(() => closeButtonRef.current?.focus(), 0);
 
     function handleKeyDown(event) {
       if (event.key === 'Escape') {
@@ -62,10 +62,10 @@ export default function HomepageVideo() {
         <div className="homepage-video-card" data-reveal>
           <div className="homepage-video-copy">
             <p className="eyebrow">Meet Naya</p>
-            <h2 id="homepage-video-title">See how ARKON keeps customer opportunities moving.</h2>
+            <h2 id="homepage-video-title">See ARKON in action in one minute.</h2>
             <p>
-              In one minute, see how your digital team answers inquiries, follows up with customers,
-              reconnects with past customers, and prepares the next step for your staff.
+              See how your digital team answers inquiries, follows up, reconnects with past customers,
+              and prepares the next step for your staff.
             </p>
             <button
               ref={watchButtonRef}
@@ -124,6 +124,7 @@ export default function HomepageVideo() {
                 className="homepage-video-close"
                 type="button"
                 aria-label="Close video"
+                autoFocus
                 onClick={closeVideo}
               >
                 ×
@@ -136,6 +137,7 @@ export default function HomepageVideo() {
                 title="Naya explains the ARKON digital team"
                 allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
                 referrerPolicy="strict-origin-when-cross-origin"
+                onLoad={() => closeButtonRef.current?.focus()}
                 allowFullScreen
               />
             </div>
