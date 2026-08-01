@@ -1,0 +1,62 @@
+/* Homepage-only vertical rhythm.
+   Each transition owns one spacing value so adjacent sections do not stack padding. */
+
+.homepage-video-section {
+  margin-bottom: 0;
+}
+
+.workflow-proof-section {
+  padding-top: 72px;
+  padding-bottom: 0;
+}
+
+.compact-team-section {
+  padding-top: 72px;
+  padding-bottom: 0;
+}
+
+.featured-solutions-section {
+  padding-top: 80px;
+  padding-bottom: 0;
+}
+
+.voice-proof-section {
+  padding-top: 88px;
+  padding-bottom: 0;
+}
+
+#coverage.section {
+  padding-top: 88px;
+  padding-bottom: 0;
+}
+
+#coverage + .demo-cta {
+  margin-top: 88px;
+}
+
+@media (max-width: 780px) {
+  .homepage-video-section {
+    margin-bottom: 0;
+  }
+
+  .workflow-proof-section,
+  .compact-team-section {
+    padding-top: 48px;
+    padding-bottom: 0;
+  }
+
+  .featured-solutions-section {
+    padding-top: 56px;
+    padding-bottom: 0;
+  }
+
+  .voice-proof-section,
+  #coverage.section {
+    padding-top: 64px;
+    padding-bottom: 0;
+  }
+
+  #coverage + .demo-cta {
+    margin-top: 64px;
+  }
+}
