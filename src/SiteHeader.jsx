@@ -20,15 +20,12 @@ const businessLinks = [
 export default function SiteHeader({ showPricing = false }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef(null);
-  const firstMenuLinkRef = useRef(null);
 
   useEffect(() => {
     if (!menuOpen) return undefined;
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-
-    const focusTimer = window.setTimeout(() => firstMenuLinkRef.current?.focus(), 0);
 
     function handleKeyDown(event) {
       if (event.key !== 'Escape') return;
@@ -39,7 +36,6 @@ export default function SiteHeader({ showPricing = false }) {
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      window.clearTimeout(focusTimer);
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = previousOverflow;
     };
@@ -95,7 +91,7 @@ export default function SiteHeader({ showPricing = false }) {
             <div className="mobile-menu-links">
               {primaryLinks.map((link, index) => (
                 <a
-                  ref={index === 0 ? firstMenuLinkRef : null}
+                  autoFocus={index === 0}
                   href={link.href}
                   key={link.href}
                   onClick={() => closeMenu()}
