@@ -1,0 +1,95 @@
+name: Live Site Audit
+
+on:
+  pull_request:
+    branches:
+      - staging
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Check out audit branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install application dependencies
+        run: npm install
+
+      - name: Verify production build
+        run: npm run build
+
+      - name: Install audit tools
+        run: npm install --no-save playwright @axe-core/playwright lighthouse
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run route, browser, accessibility, form, and cookie audit
+        env:
+          AUDIT_BASE_URL: https://arkon-homepage-staging.up.railway.app
+        run: node scripts/live-site-audit.mjs
+
+      - name: Lighthouse homepage mobile
+        continue-on-error: true
+        run: >-
+          npx lighthouse https://arkon-homepage-staging.up.railway.app/
+          --quiet
+          --chrome-flags="--headless --no-sandbox"
+          --only-categories=performance,accessibility,best-practices,seo
+          --output=json
+          --output-path=audit-output/lighthouse-home-mobile.json
+
+      - name: Lighthouse homepage desktop
+        continue-on-error: true
+        run: >-
+          npx lighthouse https://arkon-homepage-staging.up.railway.app/
+          --quiet
+          --preset=desktop
+          --chrome-flags="--headless --no-sandbox"
+          --only-categories=performance,accessibility,best-practices,seo
+          --output=json
+          --output-path=audit-output/lighthouse-home-desktop.json
+
+      - name: Lighthouse real estate mobile
+        continue-on-error: true
+        run: >-
+          npx lighthouse https://arkon-homepage-staging.up.railway.app/real-estate
+          --quiet
+          --chrome-flags="--headless --no-sandbox"
+          --only-categories=performance,accessibility,best-practices,seo
+          --output=json
+          --output-path=audit-output/lighthouse-real-estate-mobile.json
+
+      - name: Lighthouse short-term rentals mobile
+        continue-on-error: true
+        run: >-
+          npx lighthouse https://arkon-homepage-staging.up.railway.app/short-term-rentals
+          --quiet
+          --chrome-flags="--headless --no-sandbox"
+          --only-categories=performance,accessibility,best-practices,seo
+          --output=json
+          --output-path=audit-output/lighthouse-short-term-rentals-mobile.json
+
+      - name: Summarize Lighthouse reports
+        if: always()
+        run: node scripts/summarize-lighthouse.mjs
+
+      - name: Upload audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: arkon-live-site-audit
+          path: audit-output
+          if-no-files-found: warn
+          retention-days: 7
