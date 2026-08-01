@@ -1,6 +1,7 @@
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 
 const outputDir = 'audit-output';
+await mkdir(outputDir, { recursive: true });
 const files = (await readdir(outputDir)).filter(name => name.startsWith('lighthouse-') && name.endsWith('.json'));
 const summaries = [];
 
