@@ -1,0 +1,40 @@
+name: Mobile Step 1 Audit
+
+on:
+  pull_request:
+    branches:
+      - staging
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out audit branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright
+        run: npm install --no-save playwright
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Validate mobile experience
+        run: node scripts/mobile-step1-audit.mjs
+
+      - name: Upload mobile evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: arkon-mobile-step1-audit
+          path: mobile-step1-output
+          if-no-files-found: warn
+          retention-days: 7
