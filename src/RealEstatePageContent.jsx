@@ -76,7 +76,7 @@ export default function RealEstatePageContent() {
       <section className="section real-estate-team-section" aria-labelledby="real-estate-team-title">
         <div className="real-estate-section-heading">
           <div>
-            <p className="eyebrow">Meet your real estate digital AI team</p>
+            <p className="eyebrow">Meet your real estate digital team</p>
             <h2 id="real-estate-team-title">Your digital team answers new inquiries and keeps past opportunities from going silent.</h2>
           </div>
           <p>
@@ -242,7 +242,7 @@ export default function RealEstatePageContent() {
 
       <VerticalClosingCta
         eyebrow="See ARKON for real estate"
-        title="See how your digital AI team keeps opportunities moving from first inquiry to owner briefing."
+        title="See how your digital team keeps opportunities moving from first inquiry to owner briefing."
         body="We’ll walk through how Vera answers new calls, Naya follows up, Paige supplies property context, Marcus maintains relationship and pipeline history, Caleb coordinates showings, Iris watches the inbox, Grace manages reviews, and Grant actively briefs you on what matters."
         buttonLabel="Book a real estate walkthrough"
       />
