@@ -5,7 +5,7 @@ export default function VerticalClosingCta({
   title,
   body,
   buttonLabel,
-  href = '/#demo'
+  href = '/demo'
 }) {
   return (
     <section className="demo-cta industry-cta vertical-closing-cta is-visible" data-reveal>
