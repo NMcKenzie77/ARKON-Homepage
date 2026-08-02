@@ -36,7 +36,7 @@ function buildPublicApp() {
   const outputPath = resolve(srcDir, 'App.public.jsx');
   let source = readFileSync(inputPath, 'utf8');
 
-  source = `import CompactCoreTeam from './CompactCoreTeam.jsx';\nimport DemoRequestForm from './DemoRequestForm.jsx';\nimport FeaturedSolutions from './FeaturedSolutions.jsx';\nimport HomepageVideo from './HomepageVideo.jsx';\nimport VoiceProof from './VoiceProof.jsx';\nimport WorkflowProof from './WorkflowProof.jsx';\n${source}`;
+  source = `import CompactCoreTeam from './CompactCoreTeam.jsx';\nimport FeaturedSolutions from './FeaturedSolutions.jsx';\nimport HomepageDemoCta from './HomepageDemoCta.jsx';\nimport HomepageVideo from './HomepageVideo.jsx';\nimport VoiceProof from './VoiceProof.jsx';\nimport WorkflowProof from './WorkflowProof.jsx';\n${source}`;
 
   source = removeSection(
     source,
@@ -161,7 +161,7 @@ function buildPublicApp() {
     'homepage role dashboard renders'
   );
   source = replaceRequired(source, '      <Impact />\n', '', 'homepage impact render');
-  source = replaceRequired(source, '      <DemoCta />', '      <DemoRequestForm />', 'source-owned demo form');
+  source = replaceRequired(source, '      <DemoCta />', '      <HomepageDemoCta />', 'dedicated demo page CTA');
   source = replaceRequired(source, '      <Header />\n', '', 'homepage header render');
   source = replaceRequired(source, '      <Footer />\n', '', 'homepage footer render');
 
@@ -210,7 +210,7 @@ function buildPublicApp() {
   const forbidden = [
     /\bPorter\b|\bPORTER\b/,
     /useClientSeo|IndustryPage|industryPages/,
-    /function DemoCta|front-end only for v1/,
+    /function DemoCta|front-end only for v1|DemoRequestForm|demo-form/,
     /function HowItWorks\(/,
     /function Impact\(|<Impact \/>|How it feels different/,
     /function RoleViews\(|<RoleViews \/>|function DashboardProof\(|<DashboardProof \/>/,
@@ -253,8 +253,8 @@ function buildPublicApp() {
     throw new Error('Generated App.public.jsx is missing the compact core team.');
   }
 
-  if (!source.includes('<DemoRequestForm />')) {
-    throw new Error('Generated App.public.jsx is missing the real demo form.');
+  if (!source.includes('<HomepageDemoCta />')) {
+    throw new Error('Generated App.public.jsx is missing the compact link to the dedicated demo page.');
   }
 
   if (!source.includes('<FeaturedSolutions />')) {
@@ -270,7 +270,7 @@ function buildPublicApp() {
   }
 
   writeFileSync(outputPath, source);
-  console.log('Generated content-only src/App.public.jsx with the digital-team message and Naya video.');
+  console.log('Generated content-only src/App.public.jsx with the digital-team message, Naya video, and dedicated demo-page CTA.');
 }
 
 function buildRuntimeServer() {
@@ -351,6 +351,22 @@ function buildRuntimeServer() {
     'crawlable homepage owner dashboard section'
   );
 
+  source = replaceSection(
+    source,
+    '    <section id="demo">',
+    '  </main>`;',
+    `    <section>
+      <p class="crawlable-eyebrow">See it for your business</p>
+      <h2>Walk through one real workflow with ARKON.</h2>
+      <p>Choose a call, inquiry, follow-up, customer message, staff handoff, or owner escalation and see how ARKON would handle it using your business rules.</p>
+      <p><a href="/demo">See ARKON work</a></p>
+    </section>
+`,
+    'crawlable homepage demo-page CTA'
+  );
+
+  source = source.replaceAll('href="/#demo"', 'href="/demo"');
+
   if (source.includes('Let your existing team focus') || source.includes('repeatable tasks around calls')) {
     throw new Error('Generated runtime server still contains the original unclear homepage hero.');
   }
@@ -395,12 +411,20 @@ function buildRuntimeServer() {
     throw new Error('Generated runtime server still contains the removed homepage coverage section.');
   }
 
+  if (source.includes('Choose the closest business type and walk through the real workflow.')) {
+    throw new Error('Generated runtime server still contains the full homepage demo form copy.');
+  }
+
+  if (!source.includes('<a href="/demo">See ARKON work</a>')) {
+    throw new Error('Generated runtime server is missing the dedicated demo-page link.');
+  }
+
   if (source.includes('Role-based visibility') || source.includes('Example dashboard. Sample data only.')) {
     throw new Error('Generated runtime server still contains the removed homepage role dashboard.');
   }
 
   writeFileSync(outputPath, source);
-  console.log('Generated server.runtime.js with the digital-team message and Naya video link.');
+  console.log('Generated server.runtime.js with the digital-team message, Naya video link, and dedicated demo route.');
 }
 
 buildPublicApp();
