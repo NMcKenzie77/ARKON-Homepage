@@ -66,7 +66,7 @@ export default function SiteHeader({ showPricing = false }) {
           {showPricing ? <a href="#pricing">Pricing</a> : null}
         </nav>
 
-        <a className="nav-cta" href="/#demo">Book a demo</a>
+        <a className="nav-cta" href="/demo">Book a demo</a>
 
         <button
           ref={menuButtonRef}
@@ -120,7 +120,7 @@ export default function SiteHeader({ showPricing = false }) {
               <div className="mobile-menu-links">
                 <a href="/contact" onClick={() => closeMenu()}>Contact ARKON</a>
               </div>
-              <a className="mobile-menu-cta" href="/#demo" onClick={() => closeMenu()}>Book a demo</a>
+              <a className="mobile-menu-cta" href="/demo" onClick={() => closeMenu()}>Book a demo</a>
             </div>
           </nav>
         </>
