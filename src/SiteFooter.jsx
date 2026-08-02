@@ -8,7 +8,7 @@ const platformLinks = [
   { label: 'Core team', href: '/#team' },
   { label: 'Business types', href: '/#solutions' },
   { label: 'Your voice', href: '/#voice' },
-  { label: 'Book a demo', href: '/#demo' }
+  { label: 'See ARKON work', href: '/demo' }
 ];
 
 const legalLinks = [
