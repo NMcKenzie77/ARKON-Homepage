@@ -75,9 +75,10 @@ const customRouteExpectations = {
   }
 };
 
+const conversionRoutes = ['/demo'];
 const legalRoutes = ['/privacy', '/terms', '/data-security', '/contact'];
-const publicRoutes = ['/', '/how-it-works', ...businessRoutes, ...legalRoutes];
-const renderedRoutes = [...businessRoutes, ...legalRoutes];
+const publicRoutes = ['/', '/how-it-works', ...conversionRoutes, ...businessRoutes, ...legalRoutes];
+const renderedRoutes = [...conversionRoutes, ...businessRoutes, ...legalRoutes];
 
 function count(source, needle) {
   return source.split(needle).length - 1;
@@ -133,6 +134,12 @@ try {
     assert(!industryPages[route], `Retired route ${route} still has public page data.`);
   }
 
+  const demoPage = industryPages['/demo'];
+  assert(demoPage?.pageType === 'demo', '/demo is not registered as the conversion page.');
+  assert(demoPage.path === '/demo', '/demo has a mismatched path.');
+  assert(Array.isArray(demoPage.cards) && demoPage.cards.length === 6, '/demo must define six workflow choices.');
+  assert(Array.isArray(demoPage.faq) && demoPage.faq.length === 3, '/demo must define three visible questions.');
+
   const solutionRoutes = solutions.map(solution => solution.href).sort();
   assert(
     JSON.stringify(solutionRoutes) === JSON.stringify([...businessRoutes].sort()),
@@ -163,6 +170,7 @@ try {
       assert(count(markup, 'data-master-header="true"') === 1, `${pass}: ${route} does not have exactly one master header.`);
       assert(count(markup, 'data-master-footer="true"') === 1, `${pass}: ${route} does not have exactly one master footer.`);
       assert(!markup.includes('site-footer site-footer-complete'), `${pass}: ${route} still contains the conflicting legacy footer class.`);
+      assert(markup.includes('href="/demo"'), `${pass}: ${route} is missing the dedicated demo-page link.`);
 
       for (const businessRoute of businessRoutes) {
         assert(markup.includes(`href="${businessRoute}"`), `${pass}: ${route} footer is missing ${businessRoute}.`);
@@ -172,6 +180,15 @@ try {
       }
       for (const legalRoute of legalRoutes) {
         assert(markup.includes(`href="${legalRoute}"`), `${pass}: ${route} footer is missing ${legalRoute}.`);
+      }
+
+      if (route === '/demo') {
+        assert(markup.includes('data-public-route="/demo"'), `${pass}: /demo did not select the dedicated conversion-page renderer.`);
+        assert(markup.includes('See how ARKON handles a real customer workflow.'), `${pass}: /demo is missing its primary title.`);
+        assert(countClass(markup, 'demo-workflow-card') === 6, `${pass}: /demo did not render all six workflow choices.`);
+        assert(countClass(markup, 'demo-faq-grid') === 1, `${pass}: /demo is missing the visible questions section.`);
+        assert(markup.includes('id="request-demo"'), `${pass}: /demo is missing the request form anchor.`);
+        assert(markup.includes('Request working session'), `${pass}: /demo is missing the working-session submit action.`);
       }
 
       if (businessRoutes.includes(route)) {
