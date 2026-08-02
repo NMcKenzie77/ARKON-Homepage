@@ -22,7 +22,13 @@ function trackAnalyticsEvent(eventName, parameters = {}) {
   });
 }
 
-export default function DemoRequestForm() {
+export default function DemoRequestForm({
+  id = 'demo',
+  className = '',
+  eyebrow = 'See it for your business',
+  title = 'Choose your business type and walk through the real workflow.',
+  description = 'See how ARKON would handle the calls, messages, follow-ups, documents, staff updates, and owner visibility in a business like yours.'
+}) {
   const [status, setStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const analyticsStarted = useRef(false);
@@ -107,15 +113,14 @@ export default function DemoRequestForm() {
     }
   }
 
+  const sectionClassName = ['demo-cta', className].filter(Boolean).join(' ');
+
   return (
-    <section className="demo-cta" id="demo" data-reveal>
+    <section className={sectionClassName} id={id} data-reveal>
       <div>
-        <p className="eyebrow">See it for your business</p>
-        <h2>Choose your business type and walk through the real workflow.</h2>
-        <p>
-          See how ARKON would handle the calls, messages, follow-ups, documents, staff updates,
-          and owner visibility in a business like yours.
-        </p>
+        <p className="eyebrow">{eyebrow}</p>
+        <h2>{title}</h2>
+        <p>{description}</p>
       </div>
 
       <form
@@ -157,10 +162,10 @@ export default function DemoRequestForm() {
         </label>
 
         <label>
-          Message
+          Workflow to review
           <textarea
             name="message"
-            placeholder="Tell us what kind of workflow you want ARKON to handle."
+            placeholder="Example: missed calls after 5 p.m., website estimate requests, lead follow-up, customer messages, staff handoffs, or owner escalations."
             rows="5"
           />
         </label>
@@ -179,7 +184,7 @@ export default function DemoRequestForm() {
         </label>
 
         <button className="primary-button" type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Sending...' : 'Request demo'}
+          {isSubmitting ? 'Sending...' : 'Request working session'}
         </button>
 
         <small className="demo-status" role="status" aria-live="polite">
