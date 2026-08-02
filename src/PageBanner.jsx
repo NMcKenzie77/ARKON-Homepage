@@ -26,8 +26,8 @@ export default function PageBanner({ page, route, animate = true }) {
     ? (isContactPage ? 'Book a demo' : 'Contact ARKON')
     : 'Request demo';
   const primaryHref = isLegalPage
-    ? (isContactPage ? '/#demo' : '/contact')
-    : '/#demo';
+    ? (isContactPage ? '/demo' : '/contact')
+    : '/demo';
   const secondaryLabel = isLegalPage ? 'Back to homepage' : 'See how ARKON works';
   const secondaryHref = isLegalPage ? '/' : '/how-it-works';
 
