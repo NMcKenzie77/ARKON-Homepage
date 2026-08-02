@@ -48,6 +48,12 @@ const callSteps = [
   ['04', 'Decide whether it is worth pursuing', 'We identify the practical next step. The demonstration is a working session, not a commitment to purchase.']
 ];
 
+const questions = [
+  ['How long does the demonstration take?', 'The working session is designed to take approximately 20 minutes and stay focused on one workflow.'],
+  ['Do I have to purchase anything?', 'No. The demonstration is a working session, not a commitment to purchase.'],
+  ['Will the demonstration use my exact systems?', 'The session maps the systems and information involved. Specific integrations and implementation requirements are scoped after the workflow is understood.']
+];
+
 export default function DemoPage() {
   return (
     <main className="demo-page" data-public-route="/demo">
@@ -131,6 +137,21 @@ export default function DemoPage() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="section demo-faq-section" aria-labelledby="demo-faq-title">
+        <div className="section-heading">
+          <p className="eyebrow">Before you book</p>
+          <h2 id="demo-faq-title">What business owners usually need to know.</h2>
+        </div>
+        <div className="demo-faq-grid">
+          {questions.map(([question, answer]) => (
+            <article key={question}>
+              <h3>{question}</h3>
+              <p>{answer}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="demo-no-pressure" aria-label="Demonstration commitment statement">
