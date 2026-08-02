@@ -70,6 +70,31 @@ export const pricingPlans = [
 ];
 
 export const industryPages = {
+  '/demo': {
+    path: '/demo',
+    pageType: 'demo',
+    name: 'See ARKON Work',
+    schemaType: 'WebPage',
+    seoTitle: 'See ARKON Work | Request a Workflow Demonstration',
+    eyebrow: 'See ARKON work',
+    title: 'See how ARKON handles a real customer workflow.',
+    description: 'Choose one workflow from your business and see what the customer experiences, what ARKON handles, what your employee receives, and what the owner sees.',
+    primary: 'The demonstration focuses on one practical workflow instead of giving you a generic software tour. ARKON maps the business rules, shows where a person remains involved, and walks through the full handoff.',
+    cards: [
+      ['Missed or after-hours call', 'See how ARKON answers in the business name, captures what the customer needs, and prepares the right handoff.'],
+      ['New website inquiry', 'See how a new request is organized, qualified, and kept moving before the prospective customer loses interest.'],
+      ['Lead follow-up', 'See how ARKON follows approved timing and messaging while keeping the prior conversation and next action attached.'],
+      ['Customer message', 'See how routine questions are handled in the business voice and sensitive issues are routed instead of guessed at.'],
+      ['Staff handoff', 'See the organized request, customer context, prior activity, and next action your employee receives.'],
+      ['Owner escalation', 'See how handled work is separated from the decisions, risks, and exceptions that actually need the owner.']
+    ],
+    workflow: ['Choose one real workflow', 'Map the business rules and systems', 'Walk through the customer response and staff handoff', 'Decide whether the workflow is worth pursuing'],
+    faq: [
+      ['How long does the demonstration take?', 'The working session is designed to take approximately 20 minutes and stay focused on one workflow.'],
+      ['Do I have to purchase anything?', 'No. The demonstration is a working session, not a commitment to purchase.'],
+      ['Will the demonstration use my exact systems?', 'The session maps the systems and information involved. Specific integrations and implementation requirements are scoped after the workflow is understood.']
+    ]
+  },
   '/real-estate': {
     path: '/real-estate',
     name: 'Real Estate Digital Team',
