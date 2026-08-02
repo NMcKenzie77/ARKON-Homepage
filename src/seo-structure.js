@@ -146,7 +146,7 @@ export function buildStructuredData({ route, seo, industryPages, siteUrl }) {
     });
   }
 
-  if (industryPage && industryPage.pageType !== 'legal') {
+  if (industryPage && !['legal', 'demo'].includes(industryPage.pageType)) {
     const serviceId = `${pageUrl}#service`;
     graph.push({
       '@type': 'Service',
