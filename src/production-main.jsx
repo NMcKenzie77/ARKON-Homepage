@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.public.jsx';
 import CookieConsent from './CookieConsent.jsx';
+import DemoPage from './DemoPage.jsx';
 import IndustryPage from './IndustryPage.jsx';
 import LegalPage from './LegalPage.jsx';
 import PageBanner from './PageBanner.jsx';
@@ -92,6 +93,15 @@ function ClientSeoSync({ route }) {
 function RouteContent({ route }) {
   const routePage = getRoutePage(route);
   const canonicalRoute = getCanonicalRoute(route);
+
+  if (canonicalRoute === '/demo') {
+    return (
+      <>
+        <ClientSeoSync route="/demo" />
+        <DemoPage />
+      </>
+    );
+  }
 
   if (routePage?.pageType === 'legal') {
     return (
