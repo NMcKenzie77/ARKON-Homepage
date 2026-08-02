@@ -3,7 +3,7 @@ import { existsSync, readFileSync, statSync } from 'node:fs';
 import { extname, join, normalize, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { brotliCompressSync, constants as zlibConstants, gzipSync } from 'node:zlib';
-import { coverageLanes, solutions } from './src/data.js';
+import { solutions } from './src/data.js';
 import { crawlablePaths, industryPages, seoPages, SITE_URL } from './src/site-content.js';
 import { buildStructuredData, getBreadcrumbItems, getRelatedPages } from './src/seo-structure.js';
 
@@ -541,11 +541,6 @@ function crawlableHomeHtml() {
       <p>${escapeHtml(solution.details)}</p>
     </a>`).join('');
 
-  const coverageCards = coverageLanes.map(lane => `
-    <article class="crawlable-card">
-      <h3>${escapeHtml(lane.lane)}</h3>
-      <p>${escapeHtml(lane.copy)}</p>
-    </article>`).join('');
 
   return `<main class="crawlable-page" data-crawlable-page="true">
     <section>
@@ -587,11 +582,6 @@ function crawlableHomeHtml() {
       <p class="crawlable-eyebrow">Owner visibility</p>
       <h2>The owner sees what happened without carrying every detail.</h2>
       <p>Messages become organized actions, owners see what matters, and employees start with context.</p>
-    </section>
-    <section>
-      <p class="crawlable-eyebrow">The work behind each response</p>
-      <h2>One customer experience. The right role behind each step.</h2>
-      <div class="crawlable-grid">${coverageCards}</div>
     </section>
     <section>
       <p class="crawlable-eyebrow">How it feels different</p>

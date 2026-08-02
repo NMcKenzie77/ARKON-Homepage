@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { coverageLanes, dashboardRows, roleViews, solutions } from './data.js';
+import { dashboardRows, roleViews, solutions } from './data.js';
 
 const industryPages = {
   '/real-estate': {
@@ -605,33 +605,6 @@ function DashboardProof() {
   );
 }
 
-function Coverage() {
-  return (
-    <section className="section" id="coverage">
-      <div className="section-heading" data-reveal>
-        <p className="eyebrow">The work behind each response</p>
-        <h2>One customer experience. The right role behind each step.</h2>
-        <p>
-          The customer experiences one smooth response. Behind the scenes, ARKON activates the
-          roles needed for memory, voice, scheduling, preparation, routing, or owner visibility.
-        </p>
-      </div>
-
-      <div className="coverage-grid">
-        {coverageLanes.map(lane => (
-          <article className="coverage-card" key={lane.lane} data-reveal>
-            <h3>{lane.lane}</h3>
-            <p>{lane.copy}</p>
-            <div className="chip-row">
-              {lane.chips.map(chip => <span key={chip}>{chip}</span>)}
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function Impact() {
   const items = ['Customers feel remembered', 'Responses sound like the business', 'Employees know what to do', 'Owners see what matters'];
   return (
@@ -694,7 +667,6 @@ function HomePage() {
       <VoiceLayer />
       <RoleViews />
       <DashboardProof />
-      <Coverage />
       <Impact />
       <DemoCta />
     </main>

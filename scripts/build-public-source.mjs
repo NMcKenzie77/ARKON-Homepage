@@ -122,14 +122,14 @@ function buildPublicApp() {
   source = removeSection(
     source,
     '\nfunction RoleViews() {',
-    '\nfunction Coverage()',
+    '\nfunction HomePage()',
     'homepage role views and dashboard sections'
   );
 
   source = replaceRequired(
     source,
-    "import { coverageLanes, dashboardRows, roleViews, solutions } from './data.js';",
-    "import { coverageLanes, solutions } from './data.js';",
+    "import { dashboardRows, roleViews, solutions } from './data.js';",
+    "import { solutions } from './data.js';",
     'unused role dashboard data imports'
   );
   source = replaceRequired(source, "  useClientSeo(route);\n", '', 'duplicate useClientSeo call');
@@ -214,6 +214,7 @@ function buildPublicApp() {
     /function HowItWorks\(/,
     /function Impact\(|<Impact \/>|How it feels different/,
     /function RoleViews\(|<RoleViews \/>|function DashboardProof\(|<DashboardProof \/>/,
+    /function Coverage\(|<Coverage \/>|The work behind each response|One customer experience\. The right role behind each step\./,
     /RoleDashboard|Role-based visibility|Example dashboard|Today’s work view/,
     /core-team-grid|core-team-card|One team, with the right role for each job/,
     /The business pages show how these roles work together/,
@@ -346,7 +347,7 @@ function buildRuntimeServer() {
   source = removeSection(
     source,
     '    <section>\n      <p class="crawlable-eyebrow">Owner visibility</p>',
-    '    <section>\n      <p class="crawlable-eyebrow">The work behind each response</p>',
+    '    <section id="demo">',
     'crawlable homepage owner dashboard section'
   );
 
@@ -388,6 +389,10 @@ function buildRuntimeServer() {
 
   if (source.includes('The owner sees what happened without carrying every detail.')) {
     throw new Error('Generated runtime server still contains the separate owner dashboard section.');
+  }
+
+  if (source.includes('The work behind each response') || source.includes('One customer experience. The right role behind each step.')) {
+    throw new Error('Generated runtime server still contains the removed homepage coverage section.');
   }
 
   if (source.includes('Role-based visibility') || source.includes('Example dashboard. Sample data only.')) {

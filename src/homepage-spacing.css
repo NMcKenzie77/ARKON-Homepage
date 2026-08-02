@@ -25,12 +25,7 @@
   padding-bottom: 0;
 }
 
-#root > main > .voice-proof-section + .section {
-  padding-top: 64px;
-  padding-bottom: 0;
-}
-
-#root > main > .voice-proof-section + .section + .demo-cta {
+#root > main > .voice-proof-section + .demo-cta {
   margin-top: 64px;
 }
 
@@ -50,13 +45,12 @@
   }
 
   #root > main > .featured-solutions-section,
-  #root > main > .voice-proof-section,
-  #root > main > .voice-proof-section + .section {
+  #root > main > .voice-proof-section {
     padding-top: 48px;
     padding-bottom: 0;
   }
 
-  #root > main > .voice-proof-section + .section + .demo-cta {
+  #root > main > .voice-proof-section + .demo-cta {
     margin-top: 48px;
   }
 }
