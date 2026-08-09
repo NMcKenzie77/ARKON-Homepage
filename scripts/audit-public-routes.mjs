@@ -43,13 +43,14 @@ const customRouteExpectations = {
     ]
   },
   '/short-term-rentals': {
-    title: 'Keep every guest, cleaner, and property issue moving without living inside your phone.',
+    title: 'Your rental shouldn&#x27;t be your second job.',
     cardCount: 4,
     workflowCount: 0,
     faqCount: 0,
     requiredMarkers: [
-      'Short-term rental digital team',
-      'Your digital team handles guest questions, cleaner coordination, maintenance follow-up, emergency routing, reservation context, and owner briefings so the operation keeps moving even when you are unavailable.',
+      'HostHalo for short-term rental owners',
+      'HostHalo keeps guest questions, cleaner coordination, turnovers, follow-up, and routine stay operations moving, so you can get your time back without sacrificing the guest experience.',
+      'See how HostHalo works',
       'data-short-term-rental-call-demo="true"',
       'Guest asks a question',
       'Where should we go?',
