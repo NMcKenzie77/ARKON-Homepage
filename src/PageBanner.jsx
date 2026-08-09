@@ -22,12 +22,17 @@ function BannerBreadcrumbs({ route, page }) {
 export default function PageBanner({ page, route, animate = true }) {
   const isLegalPage = page.pageType === 'legal';
   const isContactPage = route === '/contact';
-  const primaryLabel = isLegalPage
-    ? (isContactPage ? 'Book a demo' : 'Contact ARKON')
-    : 'Request demo';
-  const primaryHref = isLegalPage
-    ? (isContactPage ? '/demo' : '/contact')
-    : '/demo';
+  const isShortTermRentalPage = route === '/short-term-rentals';
+  const primaryLabel = isShortTermRentalPage
+    ? 'See how HostHalo works'
+    : isLegalPage
+      ? (isContactPage ? 'Book a demo' : 'Contact ARKON')
+      : 'Request demo';
+  const primaryHref = isShortTermRentalPage
+    ? '#short-term-rental-call-title'
+    : isLegalPage
+      ? (isContactPage ? '/demo' : '/contact')
+      : '/demo';
   const secondaryLabel = isLegalPage ? 'Back to homepage' : 'See how ARKON works';
   const secondaryHref = isLegalPage ? '/' : '/how-it-works';
 
@@ -46,7 +51,7 @@ export default function PageBanner({ page, route, animate = true }) {
           <p>{page.description}</p>
           <div className="hero-actions">
             <a className="primary-button" href={primaryHref}>{primaryLabel}</a>
-            <a className="secondary-button" href={secondaryHref}>{secondaryLabel}</a>
+            {!isShortTermRentalPage ? <a className="secondary-button" href={secondaryHref}>{secondaryLabel}</a> : null}
           </div>
         </div>
       </section>
