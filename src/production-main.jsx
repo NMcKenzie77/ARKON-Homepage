@@ -119,10 +119,10 @@ function RouteContent({ route }) {
     const renderedPage = canonicalRoute === '/short-term-rentals'
       ? {
           ...routePage,
-          eyebrow: 'Short-term rental digital team',
-          title: 'Keep every guest, cleaner, and property issue moving without living inside your phone.',
+          eyebrow: 'HostHalo for short-term rental owners',
+          title: "Your rental shouldn't be your second job.",
           description:
-            'Your digital team handles guest questions, cleaner coordination, maintenance follow-up, emergency routing, reservation context, and owner briefings so the operation keeps moving even when you are unavailable.'
+            'HostHalo keeps guest questions, cleaner coordination, turnovers, follow-up, and routine stay operations moving, so you can get your time back without sacrificing the guest experience.'
         }
       : routePage;
 
