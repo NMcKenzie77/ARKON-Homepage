@@ -10,7 +10,7 @@ const rootDir = resolve(scriptsDir, '..');
 const businessRoutes = [
   '/short-term-rentals',
   '/real-estate',
-  '/garages',
+  '/auto-repair',
   '/contractors'
 ];
 
@@ -21,7 +21,9 @@ const retiredBusinessRoutes = [
   '/professional-services',
   '/medical-dental-offices',
   '/law-firms',
-  '/gyms-fitness-studios'
+  '/gyms-fitness-studios',
+  '/garages',
+  '/auto-repair-shops'
 ];
 
 const customRouteExpectations = {
@@ -51,7 +53,7 @@ const customRouteExpectations = {
       'Four items need your attention today.'
     ]
   },
-  '/garages': {
+  '/auto-repair': {
     title: 'Bring customers back for the work their vehicles still need.',
     cardCount: 4,
     workflowCount: 0,
