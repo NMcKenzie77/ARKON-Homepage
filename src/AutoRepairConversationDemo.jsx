@@ -9,12 +9,13 @@ const scenarios = {
     eyebrow: 'Naya follows up with the customer’s actual vehicle history',
     title: 'The customer hears about the work they already discussed, not a generic reminder.',
     description:
-      'Naya uses the customer’s name, vehicle, prior recommendation, timing, estimate, and communication preference to bring the right customer back for the right work.',
+      'Naya uses the customer’s name, vehicle, prior recommendation, and estimate to offer shop-approved drop-off times by text. Once the customer confirms an available time, the appointment is added to the shop calendar.',
     proof: [
       'Uses the customer’s name and vehicle',
       'References the exact deferred work',
       'Remembers the prior estimate',
-      'Hands the shop a ready-to-book customer'
+      'Offers shop-approved arrival windows',
+      'Books after the customer confirms'
     ],
     contactName: 'Michael Torres',
     contactInitial: 'M',
@@ -32,23 +33,23 @@ const scenarios = {
       {
         type: 'message',
         from: 'shop',
-        text: 'Absolutely. The estimate on file was $680. We have Tuesday morning or Thursday afternoon available. Which works better?',
+        text: 'Absolutely. The estimate on file was $680. I can offer Thursday, October 8, from 3:30 to 4:00 PM for drop-off. Would you like me to book that arrival window?',
         time: '10:16 AM',
         wait: 1050
       },
-      { type: 'message', from: 'customer', text: 'Thursday afternoon.', time: '10:17 AM', wait: 750 },
+      { type: 'message', from: 'customer', text: 'Yes, please book it.', time: '10:17 AM', wait: 750 },
       {
         type: 'message',
         from: 'shop',
-        text: 'Perfect. I’ll have the shop confirm the exact time with you by text.',
+        text: 'You’re confirmed for drop-off Thursday, October 8, from 3:30 to 4:00 PM. I’ll send your confirmation by text shortly. That’s your arrival window, not the repair start time.',
         time: '10:17 AM',
         wait: 850
       },
       {
         type: 'confirmation',
-        title: 'Deferred work recovered',
+        title: 'Drop-off appointment confirmed',
         detail: '2018 Honda Accord · Front brakes · $680 estimate',
-        note: 'Thursday afternoon requested · Text preferred',
+        note: 'Thu, Oct 8 · 3:30–4:00 PM arrival window · Calendar updated',
         time: '10:18 AM',
         wait: 900
       }
@@ -141,6 +142,38 @@ const scenarios = {
         detail: '2018 Honda Accord · Check-engine light · Shaking at stops',
         note: 'Diagnostic appointment needs confirmation · Text preferred',
         time: '3:12 PM',
+        wait: 900
+      }
+    ]
+  },
+  phoneBooking: {
+    tab: 'Book a drop-off by phone',
+    eyebrow: 'Vera books by phone using the shop calendar',
+    title: 'Customers can confirm an available drop-off time on the call.',
+    description:
+      'Vera checks the shop’s configured arrival windows, repeats the exact time, and books only after the customer confirms. The shop’s calendar remains the source of truth.',
+    proof: [
+      'Checks configured shop availability',
+      'Offers valid arrival windows',
+      'Gets the customer’s clear yes',
+      'Adds the confirmed drop-off to the calendar'
+    ],
+    contactName: 'Michael Torres',
+    contactInitial: 'M',
+    assistantName: 'Vera',
+    channelLabel: 'Live phone call',
+    messages: [
+      { type: 'message', from: 'shop', text: `Thanks for calling ${SHOP_NAME}. This is Vera. I can help schedule your brake service.`, time: '3:08 PM', wait: 750 },
+      { type: 'message', from: 'customer', text: 'Great. When can I bring in my 2018 Honda Accord?', time: '3:08 PM', wait: 850 },
+      { type: 'message', from: 'shop', text: 'I have Thursday, October 8, with a 3:30 to 4:00 PM drop-off window available. Would you like me to book that?', time: '3:09 PM', wait: 950 },
+      { type: 'message', from: 'customer', text: 'Yes, that works.', time: '3:09 PM', wait: 750 },
+      { type: 'message', from: 'shop', text: 'You’re confirmed for that arrival window. The shop will send your appointment details shortly.', time: '3:10 PM', wait: 850 },
+      {
+        type: 'confirmation',
+        title: 'Drop-off appointment confirmed',
+        detail: 'Michael Torres · 2018 Honda Accord · Front brakes',
+        note: 'Thu, Oct 8 · 3:30–4:00 PM arrival window · Calendar updated',
+        time: '3:10 PM',
         wait: 900
       }
     ]
@@ -330,7 +363,7 @@ export default function AutoRepairConversationDemo() {
     setReplayToken(token => token + 1);
   }
 
-  const isCallScenario = activeKey === 'repairCall' || activeKey === 'afterHours';
+  const isCallScenario = activeKey === 'repairCall' || activeKey === 'phoneBooking' || activeKey === 'afterHours';
 
   return (
     <section className="auto-repair-demo-section" aria-labelledby="auto-repair-demo-title">
