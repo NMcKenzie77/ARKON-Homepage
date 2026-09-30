@@ -55,17 +55,19 @@ const customRouteExpectations = {
   },
   '/auto-repair': {
     title: 'Keep repair calls answered and declined work moving.',
-    cardCount: 5,
+    cardCount: 6,
     workflowCount: 0,
     faqCount: 5,
     requiredMarkers: [
       'Auto repair shop communication automation',
-      'Naya follows up on declined work and repair estimates.',
+      'Naya follows up and books drop-offs by text.',
       'Naya sends reminders when maintenance is due.',
+      'Vera answers repair calls and books by phone.',
       'Iris keeps shop email from burying customer requests.',
       'Illustrative sample shop and figures.',
       'Can ARKON work with my auto repair shop software?',
-      'Can ARKON follow up on declined repairs and estimates?'
+      'Can ARKON follow up on declined repairs and estimates?',
+      'Can ARKON book service appointments by text or phone?'
     ]
   },
   '/contractors': {

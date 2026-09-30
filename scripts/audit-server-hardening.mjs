@@ -119,7 +119,7 @@ const validPayload = {
   phone: '(305) 555-0188',
   companyName: 'Jordan Service Group',
   website: 'https://example.com',
-  businessType: 'Home services',
+  businessType: 'Contractors',
   sourcePath: '/',
   message: 'Please show me the workflow.',
   companyWebsite: '',

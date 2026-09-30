@@ -6,8 +6,8 @@ import './real-estate-dashboard-preview.css';
 const teamCards = [
   {
     number: '01',
-    title: 'Naya follows up on declined work and repair estimates.',
-    copy: 'Naya uses the customer’s name, vehicle, recommended service, prior estimate, timing, and contact preference to make declined-service follow-up relevant to the original shop visit.'
+    title: 'Naya follows up and books drop-offs by text.',
+    copy: 'Naya uses the customer’s name, vehicle, recommended service, and prior estimate to bring declined work back into the conversation. When the customer is ready, she offers shop-approved arrival windows and books after they confirm.'
   },
   {
     number: '02',
@@ -16,8 +16,8 @@ const teamCards = [
   },
   {
     number: '03',
-    title: 'Vera answers repair calls and captures the issue.',
-    copy: 'Vera captures the customer, vehicle, concern, drivability, timing, and contact preference so the advisor receives useful repair-call intake instead of a vague callback note.'
+    title: 'Vera answers repair calls and books by phone.',
+    copy: 'Vera captures the customer, vehicle, and concern, then can offer and book an available drop-off window by phone after the customer confirms. Urgent or judgment-based requests go to the shop team.'
   },
   {
     number: '04',
@@ -26,8 +26,13 @@ const teamCards = [
   },
   {
     number: '05',
-    title: 'Marcus and Grant keep history and priorities visible.',
-    copy: 'Marcus keeps customer, vehicle, recommendation, estimate, and conversation history attached. Grant turns shop activity into on-demand briefings, prioritized action lists, and custom business summaries.'
+    title: 'Marcus keeps customer and vehicle history together.',
+    copy: 'Marcus connects prior visits, estimates, recommended work, vehicle details, and customer conversations so the shop can pick up with the right context.'
+  },
+  {
+    number: '06',
+    title: 'Grant briefs the owner on what needs attention.',
+    copy: 'Grant turns shop activity into on-demand briefings, prioritized action lists, and custom business summaries for owners, service managers, and advisors.'
   }
 ];
 
@@ -67,7 +72,7 @@ export default function AutoRepairPageContent() {
             <h2 id="auto-repair-team-title">Keep repair calls, estimates, and service follow-up connected to the right vehicle.</h2>
           </div>
           <p>
-            Naya follows up on declined service and upcoming maintenance. Vera handles repair calls, Iris organizes shop email, Marcus keeps customer and vehicle history attached, and Grant briefs the owner, service manager, or service advisor.
+            Naya follows up and books available drop-offs by text. Vera answers calls and books by phone. Iris organizes shop email, Marcus keeps customer and vehicle history attached, and Grant briefs the owner, service manager, or service advisor.
           </p>
         </div>
 
@@ -228,7 +233,7 @@ export default function AutoRepairPageContent() {
       <VerticalClosingCta
         eyebrow="See ARKON for auto repair"
         title="See how auto repair call and follow-up automation fits your shop."
-        body="Walk through repair-call intake, estimate and declined-service follow-up, maintenance reminders, vehicle history, email triage, and the handoffs your service team controls."
+        body="Walk through phone and text appointment booking, repair-call intake, estimate and declined-service follow-up, maintenance reminders, vehicle history, email triage, and the handoffs your service team controls."
         buttonLabel="Book an auto repair walkthrough"
       />
     </>
