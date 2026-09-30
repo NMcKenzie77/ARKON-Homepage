@@ -85,7 +85,7 @@ export const industryPages = {
       ['Can ARKON schedule site visits?', 'Scheduling depends on your availability rules and calendar setup. Requests needing confirmation can be routed to your team.']
     ]
   },
-  '/garages': {
+  '/auto-repair': {
     path: '/garages',
     name: 'Auto Repair Shop Digital Team',
     schemaType: 'Service',
