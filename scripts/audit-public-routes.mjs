@@ -8,19 +8,22 @@ const scriptsDir = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(scriptsDir, '..');
 
 const businessRoutes = [
-  '/real-estate',
-  '/insurance',
   '/short-term-rentals',
-  '/home-services',
-  '/salons',
-  '/garages'
+  '/real-estate',
+  '/auto-repair',
+  '/contractors'
 ];
 
 const retiredBusinessRoutes = [
+  '/insurance',
+  '/home-services',
+  '/salons',
   '/professional-services',
   '/medical-dental-offices',
   '/law-firms',
-  '/gyms-fitness-studios'
+  '/gyms-fitness-studios',
+  '/garages',
+  '/auto-repair-shops'
 ];
 
 const customRouteExpectations = {
@@ -29,18 +32,6 @@ const customRouteExpectations = {
     cardCount: 5,
     workflowCount: 0,
     faqCount: 0
-  },
-  '/insurance': {
-    title: 'Turn more quote requests into conversations before the prospect moves on.',
-    workflowCount: 0,
-    faqCount: 0,
-    requiredMarkers: [
-      'insurance-call-demo',
-      'insurance-team-section',
-      'insurance-grant-section',
-      'See how your agency can respond faster without putting licensed decisions in the wrong hands.',
-      'Book an insurance agency walkthrough'
-    ]
   },
   '/short-term-rentals': {
     title: 'Your rental shouldn&#x27;t be your second job.',
@@ -63,16 +54,28 @@ const customRouteExpectations = {
       'Four items need your attention today.'
     ]
   },
-  '/salons': {
-    title: 'Keep every call and booking opportunity moving.',
+  '/auto-repair': {
+    title: 'Keep repair calls answered and declined work moving.',
+    cardCount: 6,
     workflowCount: 0,
-    faqCount: 0
+    faqCount: 5,
+    requiredMarkers: [
+      'Auto repair shop communication automation',
+      'Naya follows up and books drop-offs by text.',
+      'Naya sends reminders when maintenance is due.',
+      'Vera answers repair calls and books by phone.',
+      'Iris keeps shop email from burying customer requests.',
+      'Illustrative sample shop and figures.',
+      'Can ARKON work with my auto repair shop software?',
+      'Can ARKON follow up on declined repairs and estimates?',
+      'Can ARKON book service appointments by text or phone?'
+    ]
   },
-  '/garages': {
-    title: 'Bring customers back for the work their vehicles still need.',
+  '/contractors': {
+    title: 'Keep estimate requests and customer follow-up moving between jobs.',
     cardCount: 4,
-    workflowCount: 0,
-    faqCount: 0
+    workflowCount: 4,
+    faqCount: 2
   }
 };
 
@@ -144,7 +147,7 @@ try {
   const solutionRoutes = solutions.map(solution => solution.href).sort();
   assert(
     JSON.stringify(solutionRoutes) === JSON.stringify([...businessRoutes].sort()),
-    'Homepage business cards do not match the six supported business routes.'
+    'Homepage business cards do not match the four supported business routes.'
   );
 
   for (const route of businessRoutes) {
@@ -156,6 +159,19 @@ try {
     assert(Array.isArray(page.workflow) && page.workflow.length >= 4, `${route} is missing workflow steps.`);
     assert(Array.isArray(page.faq) && page.faq.length >= 2, `${route} is missing FAQs.`);
   }
+
+  assert(
+    industryPages['/auto-repair'].seoTitle.includes('Auto Repair Shop Automation'),
+    'Auto Repair page title does not target the approved shop-automation search intent.'
+  );
+  assert(
+    industryPages['/auto-repair'].description.includes('declined-service follow-up'),
+    'Auto Repair meta description is missing declined-service follow-up language.'
+  );
+  assert(
+    industryPages['/auto-repair'].description.includes('maintenance reminders'),
+    'Auto Repair meta description is missing maintenance-reminder language.'
+  );
 
   for (const route of legalRoutes) {
     const page = industryPages[route];
@@ -207,6 +223,10 @@ try {
         assert(countClass(markup, 'industry-faq') === expectedFaqCount, `${pass}: ${route} rendered an unexpected number of FAQ cards.`);
         for (const marker of customExpectation?.requiredMarkers || []) {
           assert(markup.includes(marker), `${pass}: ${route} is missing required dedicated section marker ${marker}.`);
+        }
+        if (route === '/auto-repair') {
+          assert(!markup.includes('Reviews · Grace'), `${pass}: Auto Repair still attributes reviews to an unexplained team member.`);
+          assert(!markup.includes('$1,500'), `${pass}: Auto Repair exposes pricing that is not approved for the public site.`);
         }
 
         const revealTags = markup.match(/<[^>]+data-reveal[^>]*>/g) || [];

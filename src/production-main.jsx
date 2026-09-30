@@ -27,8 +27,8 @@ import './pricing.css';
 import './short-term-rental-page.css';
 
 // Keep the already-indexed URL canonical. The descriptive route is an alias only.
-const AUTO_REPAIR_ROUTE = '/garages';
-const AUTO_REPAIR_ALIAS = '/auto-repair-shops';
+const AUTO_REPAIR_ROUTE = '/auto-repair';
+const AUTO_REPAIR_ALIASES = new Set(['/garages', '/auto-repair-shops']);
 
 export function normalizeRoute(pathname = '/') {
   const path = String(pathname || '/').split('?')[0].split('#')[0];
@@ -38,7 +38,7 @@ export function normalizeRoute(pathname = '/') {
 function getBrowserRoute() {
   const route = normalizeRoute(window.location.pathname);
 
-  if (route === AUTO_REPAIR_ALIAS) {
+  if (AUTO_REPAIR_ALIASES.has(route)) {
     window.history.replaceState({}, '', AUTO_REPAIR_ROUTE);
     return AUTO_REPAIR_ROUTE;
   }
@@ -47,17 +47,17 @@ function getBrowserRoute() {
 }
 
 function getRoutePage(route) {
-  if (route === AUTO_REPAIR_ALIAS) return industryPages[AUTO_REPAIR_ROUTE];
+  if (AUTO_REPAIR_ALIASES.has(route)) return industryPages[AUTO_REPAIR_ROUTE];
   return industryPages[route];
 }
 
 function getSeoPage(route) {
-  if (route === AUTO_REPAIR_ALIAS) return seoPages[AUTO_REPAIR_ROUTE];
+  if (AUTO_REPAIR_ALIASES.has(route)) return seoPages[AUTO_REPAIR_ROUTE];
   return seoPages[route];
 }
 
 function getCanonicalRoute(route) {
-  return route === AUTO_REPAIR_ALIAS ? AUTO_REPAIR_ROUTE : route;
+  return AUTO_REPAIR_ALIASES.has(route) ? AUTO_REPAIR_ROUTE : route;
 }
 
 function setMetaContent(selector, value) {

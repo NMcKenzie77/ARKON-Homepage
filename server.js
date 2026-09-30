@@ -17,12 +17,10 @@ const DEMO_RATE_LIMIT_MAX = 5;
 const DEMO_RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const demoRateLimits = new Map();
 const allowedBusinessTypes = new Set([
-  'Real estate',
-  'Insurance',
   'Short-term rentals',
-  'Home services',
-  'Salons',
-  'Auto repair shops'
+  'Real estate',
+  'Auto repair shops',
+  'Contractors'
 ]);
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -779,6 +777,21 @@ createServer(async (req, res) => {
 
   const reqUrl = req.url || '/';
   const pathname = reqUrl.split('?')[0];
+  const routeRedirects = {
+    '/home-services': '/contractors',
+    '/garages': '/auto-repair',
+    '/auto-repair-shops': '/auto-repair'
+  };
+  const redirectTarget = routeRedirects[normalizedPath(reqUrl)];
+  if (redirectTarget) {
+    const query = reqUrl.includes('?') ? reqUrl.slice(reqUrl.indexOf('?')) : '';
+    res.writeHead(308, {
+      location: `${redirectTarget}${query}`,
+      'cache-control': 'public, max-age=3600'
+    });
+    res.end();
+    return;
+  }
 
   if (pathname === '/api/demo-request') {
     await handleDemoRequest(req, res);

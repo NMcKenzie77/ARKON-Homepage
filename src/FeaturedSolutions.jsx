@@ -8,7 +8,7 @@ export default function FeaturedSolutions() {
         <p className="eyebrow">Choose your business type</p>
         <h2>See ARKON in a business like yours.</h2>
         <p>
-          ARKON is focused on six industries. Each page shows the calls, messages, follow-up,
+          ARKON is focused on four business types. Each page shows the calls, messages, follow-up,
           records, handoffs, and owner view for that kind of business.
         </p>
       </div>

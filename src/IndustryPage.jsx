@@ -333,13 +333,10 @@ export default function IndustryPage({ page, route }) {
     );
   }
 
-  if (route === '/garages') {
+  if (route === '/auto-repair') {
     const autoRepairBannerPage = {
       ...page,
-      eyebrow: 'Auto repair digital team',
-      title: 'Bring customers back for the work their vehicles still need.',
-      description:
-        'Naya uses each customer’s vehicle history, prior recommendations, estimates, timing, and communication preferences to recover deferred work and schedule upcoming maintenance. Vera answers new repair calls, Marcus keeps the history attached, and Grant shows the owner what needs attention.'
+      description: page.heroDescription || page.description
     };
 
     return (

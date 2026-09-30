@@ -67,6 +67,21 @@
   overflow: hidden;
 }
 
+.auto-repair-faq-section {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto 84px;
+}
+
+.auto-repair-page .grant-preview-topline small {
+  display: inline-block;
+  margin-top: 5px;
+  color: var(--grant-slate);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 .auto-repair-team-card > span {
   display: inline-flex;
   align-items: center;

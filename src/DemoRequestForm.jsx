@@ -4,12 +4,10 @@ import './demo-request-form.css';
 const PRIVACY_VERSION = '2026-07-28';
 
 const businessTypes = [
-  'Real estate',
-  'Insurance',
   'Short-term rentals',
-  'Home services',
-  'Salons',
-  'Auto repair shops'
+  'Real estate',
+  'Auto repair shops',
+  'Contractors'
 ];
 
 function trackAnalyticsEvent(eventName, parameters = {}) {
