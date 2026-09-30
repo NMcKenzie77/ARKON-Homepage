@@ -8,15 +8,16 @@ const scriptsDir = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(scriptsDir, '..');
 
 const businessRoutes = [
-  '/real-estate',
-  '/insurance',
   '/short-term-rentals',
-  '/home-services',
-  '/salons',
-  '/garages'
+  '/real-estate',
+  '/garages',
+  '/contractors'
 ];
 
 const retiredBusinessRoutes = [
+  '/insurance',
+  '/home-services',
+  '/salons',
   '/professional-services',
   '/medical-dental-offices',
   '/law-firms',
@@ -29,18 +30,6 @@ const customRouteExpectations = {
     cardCount: 5,
     workflowCount: 0,
     faqCount: 0
-  },
-  '/insurance': {
-    title: 'Turn more quote requests into conversations before the prospect moves on.',
-    workflowCount: 0,
-    faqCount: 0,
-    requiredMarkers: [
-      'insurance-call-demo',
-      'insurance-team-section',
-      'insurance-grant-section',
-      'See how your agency can respond faster without putting licensed decisions in the wrong hands.',
-      'Book an insurance agency walkthrough'
-    ]
   },
   '/short-term-rentals': {
     title: 'Keep every guest, cleaner, and property issue moving without living inside your phone.',
@@ -62,16 +51,17 @@ const customRouteExpectations = {
       'Four items need your attention today.'
     ]
   },
-  '/salons': {
-    title: 'Keep every call and booking opportunity moving.',
-    workflowCount: 0,
-    faqCount: 0
-  },
   '/garages': {
     title: 'Bring customers back for the work their vehicles still need.',
     cardCount: 4,
     workflowCount: 0,
     faqCount: 0
+  },
+  '/contractors': {
+    title: 'Keep estimate requests and customer follow-up moving between jobs.',
+    cardCount: 4,
+    workflowCount: 4,
+    faqCount: 2
   }
 };
 
@@ -136,7 +126,7 @@ try {
   const solutionRoutes = solutions.map(solution => solution.href).sort();
   assert(
     JSON.stringify(solutionRoutes) === JSON.stringify([...businessRoutes].sort()),
-    'Homepage business cards do not match the six supported business routes.'
+    'Homepage business cards do not match the four supported business routes.'
   );
 
   for (const route of businessRoutes) {
