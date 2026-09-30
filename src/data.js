@@ -113,40 +113,28 @@ export const coverageLanes = [
 
 export const solutions = [
   {
-    name: 'Real Estate',
-    title: 'Leads, showings, and agent handoffs.',
-    details: 'For teams that need faster response and cleaner follow-up.',
-    href: '/real-estate'
-  },
-  {
-    name: 'Insurance',
-    title: 'Quotes, renewals, and policyholder requests.',
-    details: 'For agencies managing prospects, clients, producers, and admins.',
-    href: '/insurance'
-  },
-  {
     name: 'Short-Term Rentals',
     title: 'Guests, cleaners, and urgent stay issues.',
     details: 'For operators who need guest and property details organized.',
     href: '/short-term-rentals'
   },
   {
-    name: 'Home Services',
-    title: 'Calls, estimates, and job updates.',
-    details: 'For service businesses handling customers, schedules, and field work.',
-    href: '/home-services'
-  },
-  {
-    name: 'Salons',
-    title: 'Bookings, client messages, and follow-up.',
-    details: 'For salons that need missed calls, appointments, and client requests covered.',
-    href: '/salons'
+    name: 'Real Estate',
+    title: 'Leads, showings, and agent handoffs.',
+    details: 'For teams that need faster response and cleaner follow-up.',
+    href: '/real-estate'
   },
   {
     name: 'Auto Repair Shops',
     title: 'Repair calls, declined work, and return visits.',
     details: 'For shops that need intake, vehicle context, status updates, and recommended-work follow-up.',
     href: '/garages'
+  },
+  {
+    name: 'Contractors',
+    title: 'Project inquiries, estimates, and customer updates.',
+    details: 'For contractors who need requests and follow-up organized between jobs.',
+    href: '/contractors'
   }
 ];
 
