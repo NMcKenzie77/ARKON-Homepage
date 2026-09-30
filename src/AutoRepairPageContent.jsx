@@ -26,8 +26,13 @@ const teamCards = [
   },
   {
     number: '05',
-    title: 'Marcus and Grant keep history and priorities visible.',
-    copy: 'Marcus keeps customer, vehicle, recommendation, estimate, and conversation history attached. Grant turns shop activity into on-demand briefings, prioritized action lists, and custom business summaries.'
+    title: 'Marcus keeps customer and vehicle history together.',
+    copy: 'Marcus connects prior visits, estimates, recommended work, vehicle details, and customer conversations so the shop can pick up with the right context.'
+  },
+  {
+    number: '06',
+    title: 'Grant briefs the owner on what needs attention.',
+    copy: 'Grant turns shop activity into on-demand briefings, prioritized action lists, and custom business summaries for owners, service managers, and advisors.'
   }
 ];
 
