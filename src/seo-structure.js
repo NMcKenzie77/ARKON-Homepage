@@ -1,12 +1,10 @@
 import { businessIdentity } from './legal-content.js';
 
 export const RELATED_ROUTE_MAP = {
-  '/real-estate': ['/insurance', '/home-services', '/salons'],
-  '/insurance': ['/real-estate', '/home-services', '/garages'],
-  '/short-term-rentals': ['/home-services', '/salons', '/real-estate'],
-  '/home-services': ['/garages', '/short-term-rentals', '/real-estate'],
-  '/salons': ['/home-services', '/short-term-rentals', '/real-estate'],
-  '/garages': ['/home-services', '/insurance', '/real-estate']
+  '/short-term-rentals': ['/real-estate', '/garages', '/contractors'],
+  '/real-estate': ['/short-term-rentals', '/garages', '/contractors'],
+  '/garages': ['/short-term-rentals', '/real-estate', '/contractors'],
+  '/contractors': ['/short-term-rentals', '/real-estate', '/garages']
 };
 
 export function getRelatedPages(route, industryPages) {
