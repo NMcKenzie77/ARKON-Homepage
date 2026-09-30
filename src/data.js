@@ -128,7 +128,7 @@ export const solutions = [
     name: 'Auto Repair Shops',
     title: 'Repair calls, declined work, and return visits.',
     details: 'For shops that need intake, vehicle context, status updates, and recommended-work follow-up.',
-    href: '/garages'
+    href: '/auto-repair'
   },
   {
     name: 'Contractors',
