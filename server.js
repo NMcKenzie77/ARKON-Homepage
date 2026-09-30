@@ -789,7 +789,8 @@ createServer(async (req, res) => {
   const pathname = reqUrl.split('?')[0];
   const routeRedirects = {
     '/home-services': '/contractors',
-    '/auto-repair-shops': '/garages'
+    '/garages': '/auto-repair',
+    '/auto-repair-shops': '/auto-repair'
   };
   const redirectTarget = routeRedirects[normalizedPath(reqUrl)];
   if (redirectTarget) {
