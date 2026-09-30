@@ -20,54 +20,6 @@ export const howItWorksSeo = {
   h1: 'One business. Different ways people reach out.'
 };
 
-export const pricingPlans = [
-  {
-    name: 'Follow-Up Starter',
-    fit: 'Smaller shops, mobile mechanics, price-sensitive general repair',
-    pilot: '$799/mo',
-    target: '$999-$1,250/mo after proof',
-    setup: '$1,000 setup',
-    summary: 'Start with customer follow-up, simple notes, missed-call capture, review requests, and an owner weekly brief.',
-    includes: ['Naya follow-up', 'Marcus customer memory', 'Voice memo notes', 'Review requests']
-  },
-  {
-    name: 'Follow-Up Plus',
-    fit: 'Diagnostic and general shops with moderate volume',
-    pilot: '$999/mo',
-    target: '$1,500/mo after proof',
-    setup: '$1,250 setup',
-    summary: 'Adds more structure around inspection notes, diagnostic follow-up, and owner visibility without heavy integrations.',
-    includes: ['Starter features', 'Structured notes', 'Diagnostic follow-up', 'Better owner dashboard']
-  },
-  {
-    name: 'Shop Operator',
-    fit: 'Busy independent shops, tire, brake, and alignment shops',
-    pilot: '$1,250/mo',
-    target: '$1,750/mo after proof',
-    setup: '$1,500 setup',
-    summary: 'For shops where calls, texts, declined work, tech notes, scheduling handoffs, reviews, and owner visibility all matter.',
-    includes: ['Calls and texts workflow', 'Declined-work recovery', 'Tech voice notes', 'Scheduling handoffs']
-  },
-  {
-    name: 'Shop Command',
-    fit: 'Premium independent, European, import, performance, or serious owner-operated shops',
-    pilot: '$1,750/mo',
-    target: '$2,500/mo after proof',
-    setup: '$2,500-$3,500 setup',
-    summary: 'A fuller operating layer with Vera, Naya, Marcus, handoffs, reminders, reviews, owner briefs, and tech or advisor voice notes.',
-    includes: ['Vera voice intake', 'Naya follow-up', 'Grant owner brief', 'Tech and advisor notes']
-  },
-  {
-    name: 'Enterprise',
-    fit: 'Multi-location, fleet-heavy, dealership, or larger service operations',
-    pilot: 'Discovery first',
-    target: '$5,000+/mo',
-    setup: '$7,500+ setup',
-    summary: 'Custom operating layer for locations that need deeper routing, management reporting, fleet or unit memory, and scoped integrations.',
-    includes: ['Multi-location dashboards', 'Fleet or unit memory', 'Custom routing', 'Management reports'],
-    enterprise: true
-  }
-];
 
 export const industryPages = {
   '/real-estate': {
@@ -91,27 +43,6 @@ export const industryPages = {
       ['Can it work with my CRM?', 'ARKON is designed around contact history, notes, pipeline stages, and follow-up records. Specific CRM integrations are handled during implementation.']
     ]
   },
-  '/insurance': {
-    path: '/insurance',
-    name: 'Insurance Agency Digital Team',
-    schemaType: 'Service',
-    seoTitle: 'Insurance Agency Follow-Up & Customer Service | ARKON',
-    eyebrow: 'Insurance agency digital team',
-    title: 'Keep quote requests, policyholder questions, and producer follow-up organized.',
-    description: 'ARKON organizes insurance quote requests, policyholder questions, renewal follow-up, documents, producer handoffs, CRM updates, and agency visibility.',
-    primary: 'Insurance agencies lose time when quote requests, renewal questions, document requests, and producer follow-up scatter across calls, email, texts, and the CRM. ARKON keeps the front office, producers, admins, and owner view connected.',
-    cards: [
-      ['Quote requests', 'ARKON captures website leads and prepares approved follow-up before prospects go cold.'],
-      ['Inbound calls', 'Vera answers, qualifies, captures details, and routes policy or quote questions to the right person.'],
-      ['CRM memory', 'Marcus keeps contact records, relationship notes, pipeline stage, tags, and follow-up reminders attached.'],
-      ['Inbox triage', 'Iris scores urgency and importance so policyholder, carrier, and prospect emails do not get buried.']
-    ],
-    workflow: ['Prospect asks for a quote', 'Policyholder sends a document request', 'Renewal question comes in', 'Producer gets context before the callback'],
-    faq: [
-      ['Does ARKON give insurance advice?', 'No. ARKON follows the agency’s rules and routes licensed or judgment-based questions to the right person.'],
-      ['Can it help producers follow up?', 'Yes. ARKON can prepare follow-up, attach context, update records, and keep the owner informed.']
-    ]
-  },
   '/short-term-rentals': {
     path: '/short-term-rentals',
     name: 'Short-Term Rental Digital Team',
@@ -133,46 +64,25 @@ export const industryPages = {
       ['Can it sound like the host?', 'Yes. ARKON is designed to follow the host’s tone, standards, boundaries, and escalation rules.']
     ]
   },
-  '/home-services': {
-    path: '/home-services',
-    name: 'Home Services Digital Team',
+  '/contractors': {
+    path: '/contractors',
+    name: 'Contractor Digital Team',
     schemaType: 'Service',
-    seoTitle: 'Home Service Call Response & Customer Follow-Up | ARKON',
-    eyebrow: 'Home services digital team',
-    title: 'Turn missed calls and estimate requests into organized next steps.',
-    description: 'ARKON helps home service businesses manage inbound calls, estimate requests, scheduling, technician context, customer updates, and owner visibility.',
-    primary: 'Home service businesses lose money when calls are missed, estimate requests wait, technicians lack context, invoices create confusion, or customers need updates. ARKON keeps front-desk work, field updates, customer communication, and the owner view connected.',
+    seoTitle: 'Contractor Call Response & Estimate Follow-Up | ARKON',
+    eyebrow: 'Contractor digital team',
+    title: 'Keep estimate requests and customer follow-up moving between jobs.',
+    description: 'ARKON helps contractors organize inbound calls, project inquiries, estimate requests, customer updates, job context, follow-up, and owner visibility.',
+    primary: 'Contractors often take calls while on site or between jobs. Estimate requests can sit, customers may need a progress update, and follow-up can get lost across calls, texts, and email. ARKON keeps the request and its context organized, prepares routine follow-up, and routes pricing or project decisions to your team.',
     cards: [
-      ['Inbound calls', 'Vera answers calls, qualifies customers, captures job details, and routes urgent or judgment-based requests.'],
-      ['Estimate requests', 'ARKON captures website requests and prepares follow-up when a customer does not convert.'],
-      ['Job context', 'Marcus keeps customer history, notes, prior work, and appointment details attached.'],
-      ['Owner visibility', 'Grant shows open issues, handled requests, escalations, and next actions.']
+      ['Inbound calls', 'Vera captures who is calling, the type of project, location, timing, and the best next step, then routes requests that need a person.'],
+      ['Estimate requests', 'ARKON organizes project details from website inquiries and prepares the handoff so the right person can review the request.'],
+      ['Customer and job context', 'Marcus keeps contact history, project notes, prior conversations, and next steps together for the team.'],
+      ['Follow-up and handoffs', 'Naya supports approved customer follow-up while Grant keeps open requests and items needing owner attention visible.']
     ],
-    workflow: ['Customer calls for service', 'Website estimate request comes in', 'Technician needs notes', 'Owner sees what needs attention'],
+    workflow: ['A homeowner calls while the crew is on site', 'A project inquiry arrives through the website', 'The estimator receives project details before calling back', 'The owner sees requests still waiting for a next step'],
     faq: [
-      ['Can ARKON schedule jobs?', 'ARKON can support scheduling when rules, availability, and calendar workflows are defined.'],
-      ['What if a customer needs a price decision?', 'ARKON routes pricing, approval, and judgment calls to a person instead of guessing.']
-    ]
-  },
-  '/salons': {
-    path: '/salons',
-    name: 'Salon Digital Team',
-    schemaType: 'Service',
-    seoTitle: 'Salon Booking Response & Client Follow-Up | ARKON',
-    eyebrow: 'Salon digital team',
-    title: 'Protect bookings when the salon is too busy to answer.',
-    description: 'ARKON helps salons manage missed calls, online booking requests, client messages, appointment follow-up, staff handoffs, and owner visibility.',
-    primary: 'Salons miss revenue when calls go unanswered, booking requests sit, client messages pile up, or appointment follow-up depends on the busiest person in the room. ARKON keeps booking communication, client context, staff handoffs, and the owner view connected.',
-    cards: [
-      ['Missed call coverage', 'Vera captures what the client needs and routes requests that require a stylist or manager.'],
-      ['Booking requests', 'ARKON captures website interest and prepares follow-up before the client books somewhere else.'],
-      ['Client memory', 'Marcus keeps service history, preferences, notes, and prior conversations attached.'],
-      ['Owner visibility', 'Grant shows missed opportunities, open requests, follow-up, and staff handoffs.']
-    ],
-    workflow: ['Client calls while staff are busy', 'Booking request arrives online', 'Appointment question needs follow-up', 'Owner sees what still needs attention'],
-    faq: [
-      ['Can ARKON book appointments?', 'ARKON can support booking when services, staff availability, timing rules, and calendar workflows are defined.'],
-      ['Will messages sound generic?', 'No. ARKON is designed to use the salon’s greetings, tone, standards, and escalation rules.']
+      ['Does ARKON create project estimates?', 'No. ARKON can collect project details and prepare a handoff, while your team makes scope and pricing decisions.'],
+      ['Can ARKON schedule site visits?', 'Scheduling depends on your availability rules and calendar setup. Requests needing confirmation can be routed to your team.']
     ]
   },
   '/garages': {
@@ -195,7 +105,6 @@ export const industryPages = {
       ['Does ARKON replace the service advisor?', 'No. ARKON handles repeatable communication, context, and follow-up so advisors can focus on customers, approvals, and repair decisions.'],
       ['Can it work with my shop software?', 'Specific shop-management integrations are scoped during implementation. ARKON can start with defined communication and follow-up workflows before deeper integration.']
     ],
-    pricing: pricingPlans
   }
 };
 
