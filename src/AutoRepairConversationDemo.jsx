@@ -267,6 +267,40 @@ const scenarios = {
         wait: 900
       }
     ]
+  },
+  inboxTriage: {
+    tab: 'Iris sorts a busy inbox',
+    eyebrow: 'Iris routes the request with context',
+    title: 'High value requests reach the right person with the key details attached.',
+    description: 'Iris reviews incoming shop email, identifies the customer and vehicle when possible, and surfaces the request and next action for the team.',
+    proof: ['Recognizes estimate and fleet inquiries', 'Surfaces time-sensitive requests', 'Keeps the original message available', 'Routes the next step to the right person'],
+    contactName: 'Northside Shop Inbox',
+    contactInitial: 'I',
+    assistantName: 'Iris',
+    channelLabel: 'Email triage',
+    messages: [
+      { type: 'message', from: 'customer', text: 'Subject: Fleet maintenance quote. We have 12 vans due for service next month. Can someone send availability and a quote?', time: '9:12 AM', wait: 900 },
+      { type: 'message', from: 'shop', text: 'Iris flagged this as a fleet opportunity and attached the sender, requested timing, and vehicle count.', time: '9:12 AM', wait: 950 },
+      { type: 'message', from: 'shop', text: 'Assigned to: Service Manager · Priority: High · Suggested next step: Review capacity and prepare a fleet response.', time: '9:13 AM', wait: 950 },
+      { type: 'confirmation', title: 'Fleet inquiry routed', detail: '12 vans · Service requested next month', note: 'High priority · Service Manager review', time: '9:13 AM', wait: 850 }
+    ]
+  },
+  customerHistory: {
+    tab: 'Marcus finds the vehicle history',
+    eyebrow: 'Marcus brings the shop’s history together',
+    title: 'The team can see what was recommended and what happened next.',
+    description: 'Marcus connects customer, vehicle, estimate, repair, and conversation records so staff can answer with the right context.',
+    proof: ['Matches the customer to a vehicle', 'Shows prior repair visits', 'Keeps estimates and recommendations attached', 'Makes the next follow-up visible'],
+    contactName: 'Michael Torres',
+    contactInitial: 'M',
+    assistantName: 'Marcus',
+    channelLabel: 'Customer history',
+    messages: [
+      { type: 'message', from: 'customer', text: 'Can you remind me what the shop recommended for my Accord last month?', time: '10:14 AM', wait: 900 },
+      { type: 'message', from: 'shop', text: 'Marcus matched Michael Torres to his 2018 Honda Accord and pulled the most recent visit.', time: '10:14 AM', wait: 950 },
+      { type: 'message', from: 'shop', text: 'Visit summary: front brake pads and rotors recommended; estimate $680; customer deferred. No appointment is currently booked.', time: '10:15 AM', wait: 950 },
+      { type: 'confirmation', title: 'Vehicle history ready', detail: '2018 Honda Accord · Front brakes · $680 estimate', note: 'Deferred last visit · Follow-up available to Naya', time: '10:15 AM', wait: 850 }
+    ]
   }
 };
 
@@ -364,6 +398,7 @@ export default function AutoRepairConversationDemo() {
   }
 
   const isCallScenario = activeKey === 'repairCall' || activeKey === 'phoneBooking' || activeKey === 'afterHours';
+  const isInboxScenario = activeKey === 'inboxTriage' || activeKey === 'customerHistory';
 
   return (
     <section className="auto-repair-demo-section" aria-labelledby="auto-repair-demo-title">
@@ -431,7 +466,7 @@ export default function AutoRepairConversationDemo() {
 
             <div className="auto-phone-composer" aria-hidden="true">
               <span>＋</span>
-              <div>{isCallScenario ? 'Call notes' : `Message ${scenario.contactName}`}</div>
+              <div>{isCallScenario ? 'Call notes' : isInboxScenario ? 'Shop activity' : `Message ${scenario.contactName}`}</div>
               <span>◉</span>
             </div>
           </div>
