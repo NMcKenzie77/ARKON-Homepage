@@ -55,7 +55,7 @@ const customRouteExpectations = {
   },
   '/auto-repair': {
     title: 'Keep repair calls answered and declined work moving.',
-    cardCount: 5,
+    cardCount: 6,
     workflowCount: 0,
     faqCount: 5,
     requiredMarkers: [
