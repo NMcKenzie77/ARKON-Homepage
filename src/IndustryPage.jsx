@@ -333,7 +333,7 @@ export default function IndustryPage({ page, route }) {
     );
   }
 
-  if (route === '/garages') {
+  if (route === '/auto-repair') {
     const autoRepairBannerPage = {
       ...page,
       eyebrow: 'Auto repair digital team',
