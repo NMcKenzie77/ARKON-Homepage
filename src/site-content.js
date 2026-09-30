@@ -86,7 +86,7 @@ export const industryPages = {
     ]
   },
   '/auto-repair': {
-    path: '/garages',
+    path: '/auto-repair',
     name: 'Auto Repair Shop Digital Team',
     schemaType: 'Service',
     seoTitle: 'Auto Repair Call Response & Customer Follow-Up | ARKON',
