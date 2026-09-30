@@ -1,27 +1,33 @@
 import VerticalClosingCta from './VerticalClosingCta.jsx';
+import { industryPages } from './site-content.js';
 import './auto-repair-page.css';
 import './real-estate-dashboard-preview.css';
 
 const teamCards = [
   {
     number: '01',
-    title: 'Naya brings deferred work back into the shop.',
-    copy: 'Naya follows up using the customer’s name, vehicle, actual recommendation, prior estimate, timing, and contact preference so the message feels connected to the service conversation that already happened.'
+    title: 'Naya follows up on declined work and repair estimates.',
+    copy: 'Naya uses the customer’s name, vehicle, recommended service, prior estimate, timing, and contact preference to make declined-service follow-up relevant to the original shop visit.'
   },
   {
     number: '02',
-    title: 'Naya keeps upcoming maintenance from being missed.',
-    copy: 'When service is coming due, Naya reaches out with the right vehicle and maintenance context, offers approved openings, and keeps the visit moving toward the schedule.'
+    title: 'Naya sends reminders when maintenance is due.',
+    copy: 'When service is coming due, Naya reaches out with the vehicle and maintenance context, follows the shop’s approved timing, and keeps the customer’s next step clear.'
   },
   {
     number: '03',
-    title: 'Vera answers new repair calls live.',
-    copy: 'Vera captures the customer, vehicle, concern, drivability, timing, and contact preference so the advisor receives a useful intake instead of a vague callback note.'
+    title: 'Vera answers repair calls and captures the issue.',
+    copy: 'Vera captures the customer, vehicle, concern, drivability, timing, and contact preference so the advisor receives useful repair-call intake instead of a vague callback note.'
   },
   {
     number: '04',
-    title: 'Marcus and Grant keep the history and priorities visible.',
-    copy: 'Marcus keeps the customer, vehicle, recommendations, estimates, and conversations attached. Grant turns activity across the shop into on-demand briefings, prioritized action lists, and custom business summaries.'
+    title: 'Iris keeps shop email from burying customer requests.',
+    copy: 'Iris prioritizes new customer inquiries and messages that need attention, so estimate requests and important shop emails reach the right person.'
+  },
+  {
+    number: '05',
+    title: 'Marcus and Grant keep history and priorities visible.',
+    copy: 'Marcus keeps customer, vehicle, recommendation, estimate, and conversation history attached. Grant turns shop activity into on-demand briefings, prioritized action lists, and custom business summaries.'
   }
 ];
 
@@ -57,11 +63,11 @@ export default function AutoRepairPageContent() {
       <section className="section auto-repair-team-section" aria-labelledby="auto-repair-team-title">
         <div className="auto-repair-section-heading">
           <div>
-            <p className="eyebrow">Meet your auto repair digital team</p>
-            <h2 id="auto-repair-team-title">The shop reaches the right customer with the right vehicle context before the opportunity disappears.</h2>
+            <p className="eyebrow">Auto repair shop communication automation</p>
+            <h2 id="auto-repair-team-title">Keep repair calls, estimates, and service follow-up connected to the right vehicle.</h2>
           </div>
           <p>
-            Naya brings deferred and upcoming maintenance back into the schedule. Vera handles new repair calls. Marcus keeps the customer and vehicle history attached. Grant briefs the owner, service manager, or service advisor whenever they need it.
+            Naya follows up on declined service and upcoming maintenance. Vera handles repair calls, Iris organizes shop email, Marcus keeps customer and vehicle history attached, and Grant briefs the owner, service manager, or service advisor.
           </p>
         </div>
 
@@ -102,7 +108,7 @@ export default function AutoRepairPageContent() {
               <span>Follow-up · Naya</span>
               <span>Estimates</span>
               <span>Repair orders</span>
-              <span>Reviews · Grace</span>
+              <span>Reviews</span>
               <span>Inbox · Iris</span>
               <span className="active">Briefings · Grant</span>
               <span>Settings</span>
@@ -115,6 +121,7 @@ export default function AutoRepairPageContent() {
               <div>
                 <h3>Northside Auto Care Command Center · Grant</h3>
                 <p>Where the shop stands, what needs attention, what work is moving, and where revenue or customer trust may be slipping.</p>
+                <small>Illustrative sample shop and figures. A live view reflects the shop’s configured data.</small>
               </div>
               <div className="grant-preview-actions"><span>Custom summary</span><strong>Run briefing</strong></div>
             </div>
@@ -203,10 +210,25 @@ export default function AutoRepairPageContent() {
         </div>
       </section>
 
+      <section className="section industry-faq-section auto-repair-faq-section" aria-labelledby="auto-repair-faq-title">
+        <div className="section-heading is-visible" data-reveal>
+          <p className="eyebrow">Auto repair automation questions</p>
+          <h2 id="auto-repair-faq-title">Fits around your service advisors and shop systems.</h2>
+        </div>
+        <div className="industry-faq-grid">
+          {industryPages['/auto-repair'].faq.map(([question, answer]) => (
+            <article className="industry-faq is-visible" key={question} data-reveal>
+              <h3>{question}</h3>
+              <p>{answer}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <VerticalClosingCta
         eyebrow="See ARKON for auto repair"
-        title="See how personalized customer follow-up brings the right work back into the shop."
-        body="We’ll walk through how Naya uses customer and vehicle history to recover deferred work and schedule upcoming maintenance, how Vera handles new repair calls, how Marcus keeps the context attached, and how Grant briefs the owner, service manager, or service advisor whenever they need it."
+        title="See how auto repair call and follow-up automation fits your shop."
+        body="Walk through repair-call intake, estimate and declined-service follow-up, maintenance reminders, vehicle history, email triage, and the handoffs your service team controls."
         buttonLabel="Book an auto repair walkthrough"
       />
     </>

@@ -89,21 +89,25 @@ export const industryPages = {
     path: '/auto-repair',
     name: 'Auto Repair Shop Digital Team',
     schemaType: 'Service',
-    seoTitle: 'Auto Repair Call Response & Customer Follow-Up | ARKON',
-    eyebrow: 'Auto repair digital team',
-    title: 'Stop losing repair work to missed calls and weak follow-up.',
-    description: 'ARKON helps auto repair shops manage repair calls, estimate requests, vehicle context, status updates, declined-work follow-up, return visits, and owner visibility.',
-    primary: 'Auto repair shops lose time when repair calls interrupt the bay, estimate requests wait, declined work is never followed up, or customers call repeatedly for status updates. ARKON supports front-desk intake, vehicle context, scheduling, declined-work follow-up, status updates, and owner visibility.',
+    seoTitle: 'Auto Repair Shop Automation for Calls & Follow-Up | ARKON',
+    eyebrow: 'Auto repair shop communication automation',
+    title: 'Keep repair calls answered and declined work moving.',
+    description: 'ARKON automates customer communication for auto repair shops: repair-call intake, estimate follow-up, declined-service follow-up, maintenance reminders, and vehicle history.',
+    heroDescription: 'Naya follows up on declined repairs and upcoming maintenance using vehicle history and prior recommendations. Vera handles repair calls, Iris organizes incoming email, Marcus keeps customer and vehicle details together, and Grant shows owners what needs attention.',
+    primary: 'Auto repair shops lose time when calls interrupt the bay, estimate requests wait, declined work is never followed up, or customers call repeatedly for status updates. ARKON automates front-office communication around repair calls, estimate follow-up, declined service, maintenance reminders, and customer updates. It keeps vehicle context attached and routes pricing, repair decisions, or urgent concerns to the shop’s staff.',
     cards: [
       ['Repair calls', 'Vera answers, captures the vehicle and concern, and routes urgent or judgment-based requests.'],
-      ['Estimate requests', 'ARKON captures online requests and prepares follow-up when a customer does not schedule.'],
-      ['Vehicle context', 'Marcus keeps customer, vehicle, prior repair, estimate, and follow-up history attached.'],
-      ['Declined work follow-up', 'Naya follows approved timing and messaging so recommended work does not disappear after the first visit.']
+      ['Estimate follow-up', 'ARKON captures online requests and prepares the next follow-up when a customer has not scheduled.'],
+      ['Vehicle and customer history', 'Marcus keeps prior repairs, estimates, recommendations, and follow-up context attached.'],
+      ['Declined service and maintenance reminders', 'Naya follows approved timing and messaging so recommended work and upcoming service do not disappear after the visit. Iris organizes incoming email and surfaces requests that need attention.']
     ],
     workflow: ['Customer calls about a repair', 'Estimate request comes in', 'Vehicle status update is needed', 'Declined work is due for follow-up'],
     faq: [
-      ['Does ARKON replace the service advisor?', 'No. ARKON handles repeatable communication, context, and follow-up so advisors can focus on customers, approvals, and repair decisions.'],
-      ['Can it work with my shop software?', 'Specific shop-management integrations are scoped during implementation. ARKON can start with defined communication and follow-up workflows before deeper integration.']
+      ['Does ARKON replace the service advisor?', 'No. ARKON handles approved, repeatable communication and follow-up so advisors can focus on customers, approvals, and repair decisions.'],
+      ['Can ARKON work with my auto repair shop software?', 'ARKON focuses on front-office communication and follow-up. Compatibility and data flows for an existing shop-management system are confirmed during implementation.'],
+      ['Can ARKON follow up on declined repairs and estimates?', 'Naya can follow up using the shop’s approved timing and messages, with the customer, vehicle, recommendation, and estimate context available for that workflow.'],
+      ['Can ARKON book service appointments?', 'Scheduling depends on the shop’s calendar and approved availability rules. When a visit needs confirmation, ARKON captures the customer’s preferred time and hands it to the shop.'],
+      ['Who handles pricing, diagnostics, or urgent questions?', 'ARKON follows the shop’s rules and routes pricing decisions, repair advice, approvals, and urgent concerns to the appropriate person.']
     ],
   }
 };
