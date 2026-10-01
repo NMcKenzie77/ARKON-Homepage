@@ -9,13 +9,13 @@ const scenarios = {
     eyebrow: 'Naya follows up with the customer’s actual vehicle history',
     title: 'The customer hears about the work they already discussed, not a generic reminder.',
     description:
-      'Naya uses the customer’s name, vehicle, prior recommendation, and estimate to offer shop-approved drop-off times by text. Once the customer confirms an available time, the appointment is added to the shop calendar.',
+      'Naya uses the customer’s name, vehicle, prior recommendation, and estimate for follow-up with shop-approved messaging. If the customer wants to schedule, Naya captures a preferred time unless the shop’s configured calendar rules allow confirmation.',
     proof: [
       'Uses the customer’s name and vehicle',
       'References the exact deferred work',
       'Remembers the prior estimate',
-      'Offers shop-approved arrival windows',
-      'Books after the customer confirms'
+      'Uses shop-approved follow-up messaging',
+      'Captures a preferred time for the shop when needed'
     ],
     contactName: 'Michael Torres',
     contactInitial: 'M',
@@ -25,7 +25,7 @@ const scenarios = {
       {
         type: 'message',
         from: 'shop',
-        text: `Hi Michael, it’s Naya with ${SHOP_NAME}. When your 2018 Honda Accord was in last month, the shop recommended replacing the front brake pads and rotors. You decided to hold off at the time. Would you like me to find an appointment for you?`,
+        text: `Hi Michael, it’s Naya with ${SHOP_NAME}. When your 2018 Honda Accord was in last month, the shop recommended replacing the front brake pads and rotors. You decided to hold off at the time. Would you like the shop to follow up about scheduling?`,
         time: '10:14 AM',
         wait: 950
       },
@@ -33,23 +33,23 @@ const scenarios = {
       {
         type: 'message',
         from: 'shop',
-        text: 'Absolutely. The estimate on file was $680. I can offer Thursday, October 8, from 3:30 to 4:00 PM for drop-off. Would you like me to book that arrival window?',
+        text: 'Absolutely. I’ll let the team know you’re ready to discuss a time for the shop to look at it.',
         time: '10:16 AM',
         wait: 1050
       },
-      { type: 'message', from: 'customer', text: 'Yes, please book it.', time: '10:17 AM', wait: 750 },
+      { type: 'message', from: 'customer', text: 'Yes, please have them follow up.', time: '10:17 AM', wait: 750 },
       {
         type: 'message',
         from: 'shop',
-        text: 'You’re confirmed for drop-off Thursday, October 8, from 3:30 to 4:00 PM. I’ll send your confirmation by text shortly. That’s your arrival window, not the repair start time.',
+        text: 'I’ve shared your request with the shop. They’ll follow up to confirm an available time.',
         time: '10:17 AM',
         wait: 850
       },
       {
         type: 'confirmation',
-        title: 'Drop-off appointment confirmed',
-        detail: '2018 Honda Accord · Front brakes · $680 estimate',
-        note: 'Thu, Oct 8 · 3:30–4:00 PM arrival window · Calendar updated',
+        title: 'Scheduling request sent to shop',
+        detail: '2018 Honda Accord · Front brakes',
+        note: 'Preferred time captured · Shop follow-up needed',
         time: '10:18 AM',
         wait: 900
       }
@@ -60,12 +60,12 @@ const scenarios = {
     eyebrow: 'Naya reaches out before routine work gets missed',
     title: 'The reminder is tied to the customer, the vehicle, and the service coming due.',
     description:
-      'Naya uses the actual vehicle and maintenance timing, offers approved openings, and turns a routine reminder into a scheduled visit.',
+      'Naya uses vehicle and maintenance context for a reminder that follows the shop’s approved timing and messaging.',
     proof: [
       'Uses the customer’s vehicle',
       'Names the service coming due',
-      'Offers approved shop openings',
-      'Confirms the next step clearly'
+      'Follows approved timing and messaging',
+      'Captures a preferred time if requested'
     ],
     contactName: 'Angela Brooks',
     contactInitial: 'A',
@@ -75,7 +75,7 @@ const scenarios = {
       {
         type: 'message',
         from: 'shop',
-        text: `Hi Angela, it’s Naya with ${SHOP_NAME}. Your 2021 Toyota RAV4 is approaching the mileage for its next oil service and tire rotation. Would you like me to reserve a time?`,
+        text: `Hi Angela, it’s Naya with ${SHOP_NAME}. Your 2021 Toyota RAV4 is approaching the mileage for its next oil service and tire rotation. Would you like the shop to follow up about scheduling?`,
         time: '1:42 PM',
         wait: 900
       },
@@ -83,23 +83,23 @@ const scenarios = {
       {
         type: 'message',
         from: 'shop',
-        text: 'We have Wednesday at 10:00 or Friday at 2:30 available.',
+        text: 'I’ll pass along your preferred days so the shop can confirm availability.',
         time: '1:44 PM',
         wait: 850
       },
-      { type: 'message', from: 'customer', text: 'Friday at 2:30 works.', time: '1:45 PM', wait: 700 },
+      { type: 'message', from: 'customer', text: 'Friday afternoon would work.', time: '1:45 PM', wait: 700 },
       {
         type: 'message',
         from: 'shop',
-        text: 'You’re all set. The shop will send your confirmation and reminder by text.',
+        text: 'I’ve shared that preference with the shop. They’ll confirm an available time.',
         time: '1:45 PM',
         wait: 850
       },
       {
         type: 'confirmation',
-        title: 'Upcoming maintenance scheduled',
+        title: 'Maintenance follow-up prepared',
         detail: '2021 Toyota RAV4 · Oil service and tire rotation',
-        note: 'Friday · 2:30 PM · Reminder scheduled',
+        note: 'Preferred time captured · Shop confirmation needed',
         time: '1:46 PM',
         wait: 850
       }
@@ -148,15 +148,15 @@ const scenarios = {
   },
   phoneBooking: {
     tab: 'Book a drop-off by phone',
-    eyebrow: 'Vera books by phone using the shop calendar',
-    title: 'Customers can confirm an available drop-off time on the call.',
+    eyebrow: 'Vera uses the shop’s scheduling rules',
+    title: 'A configured calendar can support phone scheduling.',
     description:
-      'Vera checks the shop’s configured arrival windows, repeats the exact time, and books only after the customer confirms. The shop’s calendar remains the source of truth.',
+      'When the shop’s configured calendar and availability rules allow scheduling, Vera can confirm an available time with the customer. Otherwise, she captures the preferred time and hands it to the shop.',
     proof: [
       'Checks configured shop availability',
       'Offers valid arrival windows',
       'Gets the customer’s clear yes',
-      'Adds the confirmed drop-off to the calendar'
+      'Captures the preferred time for staff when needed'
     ],
     contactName: 'Michael Torres',
     contactInitial: 'M',
@@ -167,12 +167,12 @@ const scenarios = {
       { type: 'message', from: 'customer', text: 'Great. When can I bring in my 2018 Honda Accord?', time: '3:08 PM', wait: 850 },
       { type: 'message', from: 'shop', text: 'I have Thursday, October 8, with a 3:30 to 4:00 PM drop-off window available. Would you like me to book that?', time: '3:09 PM', wait: 950 },
       { type: 'message', from: 'customer', text: 'Yes, that works.', time: '3:09 PM', wait: 750 },
-      { type: 'message', from: 'shop', text: 'You’re confirmed for that arrival window. The shop will send your appointment details shortly.', time: '3:10 PM', wait: 850 },
+      { type: 'message', from: 'shop', text: 'I’ve recorded your preference. The shop will confirm an available time.', time: '3:10 PM', wait: 850 },
       {
         type: 'confirmation',
-        title: 'Drop-off appointment confirmed',
+        title: 'Preferred time captured',
         detail: 'Michael Torres · 2018 Honda Accord · Front brakes',
-        note: 'Thu, Oct 8 · 3:30–4:00 PM arrival window · Calendar updated',
+        note: 'Staff confirmation needed',
         time: '3:10 PM',
         wait: 900
       }
