@@ -22,7 +22,7 @@ const teamCards = [
   {
     number: '04',
     title: 'Iris keeps shop email from burying customer requests.',
-    copy: 'Iris organizes incoming shop email and surfaces customer requests that need attention. Staff can review the same email on a phone or computer; it remains email, not text messaging.'
+    copy: 'Have 30 emails to get through? Iris reads and triages the inbox, then surfaces which messages need attention first. Staff open the original emails in their usual inbox on a phone or computer.'
   },
   {
     number: '05',
