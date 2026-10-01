@@ -472,7 +472,6 @@ export default function AutoRepairConversationDemo() {
             </div>
           </div>
         </div>
-      )
       ) : (
         <div className="auto-phone-stage">
           <div className="auto-phone-glow" aria-hidden="true" />
