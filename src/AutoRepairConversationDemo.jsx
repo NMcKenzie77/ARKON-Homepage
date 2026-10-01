@@ -270,8 +270,8 @@ const scenarios = {
   },
   inboxTriage: {
     tab: 'Iris sorts a busy inbox',
-    eyebrow: 'Email inbox triage'
-    title: '30 emails to get through? Iris shows what needs attention first.'
+    eyebrow: 'Email inbox triage',
+    title: '30 emails to get through? Iris shows what needs attention first.',
     description: 'Iris reads and triages incoming shop email, then surfaces the messages that need attention most. Staff open the original email in their usual inbox on a phone or computer.',
     proof: ['Reads incoming shop email', 'Surfaces the most important messages', 'Groups requests by what needs attention', 'Keeps original emails available to staff'],
     contactName: 'Northside Shop Inbox',
