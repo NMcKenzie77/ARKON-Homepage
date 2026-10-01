@@ -270,25 +270,24 @@ const scenarios = {
   },
   inboxTriage: {
     tab: 'Iris sorts a busy inbox',
-    eyebrow: 'Iris routes the request with context',
-    title: 'Iris organizes email so shop requests do not get buried.',
-    description: 'Iris sorts incoming shop email and surfaces the request and next step for staff. The message stays email whether someone reviews it on a phone or a computer.',
-    proof: ['Keeps the original email intact', 'Surfaces the customer request', 'Adds useful context for staff', 'Prepares the next step for review'],
+    eyebrow: 'Email inbox triage'
+    title: '30 emails to get through? Iris shows what needs attention first.'
+    description: 'Iris reads and triages incoming shop email, then surfaces the messages that need attention most. Staff open the original email in their usual inbox on a phone or computer.',
+    proof: ['Reads incoming shop email', 'Surfaces the most important messages', 'Groups requests by what needs attention', 'Keeps original emails available to staff'],
     contactName: 'Northside Shop Inbox',
     contactInitial: 'I',
     assistantName: 'Iris',
     channelLabel: 'Email inbox',
-    emailSubject: 'Service availability request',
-    emailSender: 'Fleet maintenance inquiry',
-    emailReceived: 'Today · 9:12 AM',
-    emailBody: 'We are looking for service availability for several vehicles next month. Could someone review this request and follow up?',
-    emailRequestType: 'Service inquiry',
-    emailNextStep: 'Staff review and response',
+    emailItems: [
+      { priority: 'Review first', subject: 'Customer waiting on estimate follow-up', sender: 'Customer email', reason: 'The customer is waiting for the shop’s next step.' },
+      { priority: 'Needs attention', subject: 'Question about vehicle status', sender: 'Current customer', reason: 'A staff update is needed.' },
+      { priority: 'Staff review', subject: 'Fleet service inquiry', sender: 'Business inquiry', reason: 'The request needs a shop response.' }
+    ],
     messages: [
-      { type: 'message', from: 'customer', text: 'Email received: service availability request for next month.', time: '9:12 AM', wait: 900 },
-      { type: 'message', from: 'shop', text: 'Iris organized the incoming email and surfaced the request for staff review.', time: '9:12 AM', wait: 950 },
-      { type: 'message', from: 'shop', text: 'Suggested next step: Review the request and prepare a response.', time: '9:13 AM', wait: 950 },
-      { type: 'confirmation', title: 'Email ready for staff review', detail: 'Service availability request', note: 'Original email retained · Staff response needed', time: '9:13 AM', wait: 850 }
+      { type: 'message', from: 'customer', text: '30 incoming shop emails need triage.', time: '9:12 AM', wait: 900 },
+      { type: 'message', from: 'shop', text: 'Iris read and organized the inbox, surfacing customer follow-up, vehicle status, and fleet inquiry emails for staff review.', time: '9:12 AM', wait: 950 },
+      { type: 'message', from: 'shop', text: 'The team can open each original message in its regular email inbox.', time: '9:13 AM', wait: 950 },
+      { type: 'confirmation', title: 'Priority emails surfaced', detail: 'Example inbox · 30 emails', note: 'Original messages stay in the shop email inbox', time: '9:13 AM', wait: 850 }
     ]
   },
   customerHistory: {
@@ -439,40 +438,39 @@ export default function AutoRepairConversationDemo() {
       </div>
 
       {isEmailScenario ? (
-        <div className="auto-email-stage" aria-label="Email inbox preview for phone or computer">
-          <div className="auto-email-window">
-            <header className="auto-email-toolbar">
-              <span className="auto-email-brand-mark" aria-hidden="true">✉</span>
-              <div><strong>{SHOP_NAME}</strong><small>Shop email</small></div>
-              <span className="auto-email-label">EMAIL</span>
+        <div className="auto-inbox-stage" aria-label="Example email inbox triage with 30 emails">
+          <div className="auto-inbox-window">
+            <header className="auto-inbox-toolbar">
+              <span className="auto-inbox-mark" aria-hidden="true">✉</span>
+              <div><strong>{SHOP_NAME}</strong><small>Email inbox</small></div>
+              <span className="auto-inbox-count">Example · 30 emails</span>
             </header>
-            <nav className="auto-email-folder-row" aria-label="Email folders">
-              <span className="active">Inbox</span>
-              <span>Needs review</span>
-              <span>Handled</span>
+            <nav className="auto-inbox-folders" aria-label="Email inbox folders">
+              <span className="active">Inbox <b>30</b></span>
+              <span>Needs attention</span>
+              <span>Other messages</span>
             </nav>
-            <div className="auto-email-content">
-              <article className="auto-email-message">
-                <div className="auto-email-message-meta">
-                  <span className="auto-email-avatar" aria-hidden="true">E</span>
-                  <div><strong>{scenario.emailSender}</strong><small>{scenario.emailReceived}</small></div>
-                </div>
-                <p className="auto-email-to">To: {SHOP_NAME}</p>
-                <h3>{scenario.emailSubject}</h3>
-                <p className="auto-email-body">{scenario.emailBody}</p>
-                <div className="auto-email-original">Original email · Available to open from the shop’s email account</div>
-              </article>
-              <aside className="auto-email-triage" aria-label="Iris email triage">
-                <div className="auto-email-triage-heading"><span>I</span><div><strong>Iris</strong><small>Email triage</small></div></div>
-                <p>Request surfaced for the shop team</p>
-                <dl>
-                  <div><dt>Request type</dt><dd>{scenario.emailRequestType}</dd></div>
-                  <div><dt>Next step</dt><dd>{scenario.emailNextStep}</dd></div>
-                </dl>
-              </aside>
+            <div className="auto-inbox-heading">
+              <div><p>IRIS’S PRIORITY LIST</p><h3>What needs attention first</h3></div>
+              <span>Sorted from the inbox</span>
+            </div>
+            <div className="auto-inbox-list">
+              {scenario.emailItems.map((item, index) => (
+                <article className="auto-inbox-item" key={item.subject}>
+                  <span className="auto-inbox-rank">{index + 1}</span>
+                  <div className="auto-inbox-item-main">
+                    <div className="auto-inbox-item-top"><strong>{item.subject}</strong><span>{item.priority}</span></div>
+                    <small>{item.sender}</small>
+                    <p>{item.reason}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="auto-inbox-footer">
+              <div className="auto-inbox-iris"><span>I</span><p><strong>Iris</strong><small>Reads and triages shop email</small></p></div>
+              <p>Original emails stay in the shop inbox, ready for staff to open on a phone or computer.</p>
             </div>
           </div>
-          <p className="auto-email-device-note">The message remains email on a phone or computer.</p>
         </div>
       ) : (
         <div className="auto-phone-stage">
