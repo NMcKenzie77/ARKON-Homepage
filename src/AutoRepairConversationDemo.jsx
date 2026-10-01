@@ -298,8 +298,8 @@ const scenarios = {
     messages: [
       { type: 'message', from: 'customer', text: 'Can you remind me what the shop recommended for my Accord last month?', time: '10:14 AM', wait: 900 },
       { type: 'message', from: 'shop', text: 'Marcus matched Michael Torres to his 2018 Honda Accord and pulled the most recent visit.', time: '10:14 AM', wait: 950 },
-      { type: 'message', from: 'shop', text: 'Visit summary: front brake pads and rotors recommended; estimate $680; customer deferred. No appointment is currently booked.', time: '10:15 AM', wait: 950 },
-      { type: 'confirmation', title: 'Vehicle history ready', detail: '2018 Honda Accord · Front brakes · $680 estimate', note: 'Deferred last visit · Follow-up available to Naya', time: '10:15 AM', wait: 850 }
+      { type: 'message', from: 'shop', text: 'Visit summary: front brake pads and rotors recommended; estimate details; customer deferred. No appointment is currently booked.', time: '10:15 AM', wait: 950 },
+      { type: 'confirmation', title: 'Vehicle history ready', detail: '2018 Honda Accord · Front brakes · Prior estimate on file', note: 'Deferred last visit · Follow-up available to Naya', time: '10:15 AM', wait: 850 }
     ]
   }
 };
