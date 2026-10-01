@@ -6,18 +6,18 @@ import './real-estate-dashboard-preview.css';
 const teamCards = [
   {
     number: '01',
-    title: 'Naya follows up and books drop-offs by text.',
-    copy: 'Naya uses the customer’s name, vehicle, recommended service, and prior estimate to bring declined work back into the conversation. When the customer is ready, she offers shop-approved arrival windows and books after they confirm.'
+    title: 'Naya follows up on estimates and declined work.',
+    copy: 'Naya uses the customer, vehicle, recommended service, and estimate context for follow-up using the shop’s approved timing and messages. When scheduling needs confirmation, she captures the preferred time and hands it to the shop.'
   },
   {
     number: '02',
-    title: 'Naya sends reminders when maintenance is due.',
+    title: 'Naya sends maintenance reminders.',
     copy: 'When service is coming due, Naya reaches out with the vehicle and maintenance context, follows the shop’s approved timing, and keeps the customer’s next step clear.'
   },
   {
     number: '03',
-    title: 'Vera answers repair calls and books by phone.',
-    copy: 'Vera captures the customer, vehicle, and concern, then can offer and book an available drop-off window by phone after the customer confirms. Urgent or judgment-based requests go to the shop team.'
+    title: 'Vera handles repair calls, including multiple calls at once.',
+    copy: 'Vera captures the customer, vehicle, and concern and can handle multiple calls at once within configured capacity. Urgent or judgment-based requests go to the shop team. Scheduling follows configured availability; otherwise, Vera captures the preferred time for staff.'
   },
   {
     number: '04',
@@ -37,29 +37,29 @@ const teamCards = [
 ];
 
 const grantMoneyStats = [
-  ['$18,460', 'Repair work in motion'],
-  ['$4,280', 'Deferred work ready'],
-  ['11', 'Vehicles scheduled today'],
-  ['3', 'Priority actions', 'alert']
+  ['Repair work', 'In motion'],
+  ['Deferred work', 'Ready for follow-up'],
+  ['Vehicle schedule', 'Needs review'],
+  ['Priority actions', 'Needs attention', 'alert']
 ];
 
 const grantPriorityActions = [
   ['01', 'Approve the revised estimate for the 2017 Ford F-150.', 'Customer waiting', 'red'],
-  ['02', 'Call Michael Torres about the recovered brake job.', 'Ready to book', 'amber'],
-  ['03', 'Review the parts delay affecting Angela Brooks’s RAV4.', 'Promise time at risk', 'red']
+  ['02', 'Follow up on a declined repair.', 'Ready to book', 'amber'],
+  ['03', 'Review a vehicle status update.', 'Promise time at risk', 'red']
 ];
 
 const grantCalendarStats = [
-  ['11', 'Vehicles scheduled today'],
-  ['27', 'Vehicles this week'],
-  ['$8,940', 'Approved work today'],
-  ['$2,160', 'Waiting on approval']
+  ['Today', 'Vehicle schedule'],
+  ['This week', 'Vehicle schedule'],
+  ['Approved work', 'Ready to move'],
+  ['Waiting', 'Needs approval']
 ];
 
 const grantTeamRows = [
-  ['Service desk', '$12,800', '8 open opportunities', 'Healthy', 'green'],
-  ['Technician queue', '14 active jobs', '2 behind promise time', 'Needs attention', 'red'],
-  ['Deferred-work follow-up', '$4,280', '6 customers ready', 'Opportunity', 'amber']
+  ['Service desk', 'Customer requests', 'Follow-up in progress', 'Healthy', 'green'],
+  ['Technician queue', 'Active jobs', 'Promise time review', 'Needs attention', 'red'],
+  ['Deferred-work follow-up', 'Customer responses', 'Next step ready', 'Opportunity', 'amber']
 ];
 
 export default function AutoRepairPageContent() {
@@ -72,7 +72,7 @@ export default function AutoRepairPageContent() {
             <h2 id="auto-repair-team-title">Keep repair calls, estimates, and service follow-up connected to the right vehicle.</h2>
           </div>
           <p>
-            Naya follows up and books available drop-offs by text. Vera answers calls and books by phone. Iris organizes shop email, Marcus keeps customer and vehicle history attached, and Grant briefs the owner, service manager, or service advisor.
+            Vera handles repair-call intake and can manage multiple calls at once within configured capacity. Naya follows approved estimate, declined-service, and maintenance follow-up. Iris organizes shop email, Marcus keeps customer and vehicle history attached, and Grant briefs the owner, service manager, or service advisor.
           </p>
         </div>
 
@@ -90,7 +90,7 @@ export default function AutoRepairPageContent() {
       <section className="section real-estate-grant-section" aria-labelledby="auto-repair-grant-title">
         <div className="real-estate-grant-copy">
           <p className="eyebrow real-estate-grant-eyebrow">Your chief of staff</p>
-          <h2 id="auto-repair-grant-title">Grant is your shop’s chief of staff, available 24/7.</h2>
+          <h2 id="auto-repair-grant-title">Grant is your shop’s chief of staff, ready when you need a briefing.</h2>
           <p>
             Grant gives the owner, service manager, or service advisor a clear briefing whenever they need it, covering repair revenue in motion, deferred work, today’s schedule, customer issues, technician workload, parts delays, and anything that needs a decision.
           </p>
@@ -126,7 +126,7 @@ export default function AutoRepairPageContent() {
               <div>
                 <h3>Northside Auto Care Command Center · Grant</h3>
                 <p>Where the shop stands, what needs attention, what work is moving, and where revenue or customer trust may be slipping.</p>
-                <small>Illustrative sample shop and figures. A live view reflects the shop’s configured data.</small>
+                <small>Illustrative workflow preview. A live view reflects the shop’s configured data.</small>
               </div>
               <div className="grant-preview-actions"><span>Custom summary</span><strong>Run briefing</strong></div>
             </div>
@@ -135,12 +135,12 @@ export default function AutoRepairPageContent() {
               <div className="grant-preview-briefing-head">
                 <div>
                   <span>Grant briefing</span>
-                  <h4>Three items need attention before 9 AM.</h4>
+                  <h4>Items are ready for your attention.</h4>
                 </div>
                 <strong>Needs attention</strong>
               </div>
               <p>
-                Good morning. You have $18,460 in repair work in motion, $4,280 in deferred work ready for follow-up, and 11 vehicles on today’s schedule. Michael Torres is ready to book the brake work quoted last month, the F-150 customer is waiting on a revised estimate, and one parts delay may affect this afternoon’s promise time. Everything else is moving normally.
+                Review the customer requests waiting for a response, follow-up due on declined work, and any schedule or parts updates that need a staff decision.
               </p>
               <div className="grant-preview-briefing-footer">
                 <span>Generated on demand</span>
@@ -159,7 +159,7 @@ export default function AutoRepairPageContent() {
 
             <div className="grant-preview-card grant-preview-priority-card">
               <div className="grant-preview-card-heading">
-                <h4>What needs attention before 9 AM</h4>
+                <h4>What needs attention</h4>
                 <span>Prioritized action list</span>
               </div>
               <div className="grant-preview-priority-list">
@@ -233,7 +233,7 @@ export default function AutoRepairPageContent() {
       <VerticalClosingCta
         eyebrow="See ARKON for auto repair"
         title="See how auto repair call and follow-up automation fits your shop."
-        body="Walk through phone and text appointment booking, repair-call intake, estimate and declined-service follow-up, maintenance reminders, vehicle history, email triage, and the handoffs your service team controls."
+        body="Walk through repair-call intake, estimate and declined-service follow-up, maintenance reminders, vehicle history, email triage, and the handoffs your service team controls."
         buttonLabel="Book an auto repair walkthrough"
       />
     </>
