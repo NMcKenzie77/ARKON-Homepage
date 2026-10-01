@@ -117,7 +117,7 @@ export const industryPages = {
     seoTitle: 'Auto Repair Shop Automation to Recover Lost Work | ARKON',
     eyebrow: 'Auto repair shop communication automation',
     title: 'Auto repair shop automation that keeps lost service opportunities from going cold.',
-    description: 'Auto repair automation for calls, estimate and declined-service follow-up, maintenance reminders, and vehicle history. Keep lost work in view. Request a demo.',
+    description: 'Auto repair automation for calls, estimate and declined-service follow-up, maintenance reminders, and vehicle history. Recover lost work. Request a demo.',
     heroDescription: 'Vera handles repair-call intake, captures the vehicle and concern, and can handle multiple calls at once within your configured capacity. Naya follows up on estimates, declined service, and maintenance using shop-approved timing and messages. Marcus keeps vehicle history attached, Iris organizes incoming email, and Grant surfaces what needs attention.',
     primary: 'Calls can interrupt the bay, estimates can go cold, declined work can be forgotten, and customers may call for status updates. ARKON automates approved, repeatable front-office communication for repair-call intake, estimate follow-up, declined service, maintenance reminders, vehicle history, and customer updates. Scheduling follows the shop’s configured calendar and availability rules; when a time cannot be confirmed, ARKON captures the customer’s preferred time and hands it to the shop. Pricing, diagnostics, repair advice, approvals, and urgent concerns go to staff.',
     cards: [
@@ -134,7 +134,8 @@ export const industryPages = {
       ['Can ARKON book service appointments?', 'Scheduling depends on the shop’s calendar and approved availability rules. When an appointment cannot be confirmed within those rules, ARKON captures the customer’s preferred time and hands it to the shop.'],
       ['Who handles pricing, diagnostics, or urgent questions?', 'ARKON follows the shop’s rules and routes pricing decisions, repair advice, approvals, and urgent concerns to the appropriate person.']
     ],
-  }};
+  }
+};
 
 export const seoPages = {
   '/': homeSeo,
