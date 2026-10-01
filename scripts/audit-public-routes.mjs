@@ -62,7 +62,7 @@ const customRouteExpectations = {
     requiredMarkers: [
       'Auto repair shop communication automation',
       'Naya follows up on estimates and declined work.',
-      'Naya sends reminders when maintenance is due.',
+      'Naya sends maintenance reminders.',
       'Vera handles repair calls, including multiple calls at once.',
       'Iris keeps shop email from burying customer requests.',
       'Illustrative workflow preview.',
