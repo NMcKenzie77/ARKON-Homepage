@@ -271,18 +271,24 @@ const scenarios = {
   inboxTriage: {
     tab: 'Iris sorts a busy inbox',
     eyebrow: 'Iris routes the request with context',
-    title: 'High value requests reach the right person with the key details attached.',
-    description: 'Iris reviews incoming shop email, identifies the customer and vehicle when possible, and surfaces the request and next action for the team.',
-    proof: ['Recognizes estimate and fleet inquiries', 'Surfaces time-sensitive requests', 'Keeps the original message available', 'Routes the next step to the right person'],
+    title: 'Iris organizes email so shop requests do not get buried.',
+    description: 'Iris sorts incoming shop email and surfaces the request and next step for staff. The message stays email whether someone reviews it on a phone or a computer.',
+    proof: ['Keeps the original email intact', 'Surfaces the customer request', 'Adds useful context for staff', 'Prepares the next step for review'],
     contactName: 'Northside Shop Inbox',
     contactInitial: 'I',
     assistantName: 'Iris',
-    channelLabel: 'Email triage',
+    channelLabel: 'Email inbox',
+    emailSubject: 'Service availability request',
+    emailSender: 'Fleet maintenance inquiry',
+    emailReceived: 'Today · 9:12 AM',
+    emailBody: 'We are looking for service availability for several vehicles next month. Could someone review this request and follow up?',
+    emailRequestType: 'Service inquiry',
+    emailNextStep: 'Staff review and response',
     messages: [
-      { type: 'message', from: 'customer', text: 'Subject: Fleet maintenance quote. We have 12 vans due for service next month. Can someone send availability and a quote?', time: '9:12 AM', wait: 900 },
-      { type: 'message', from: 'shop', text: 'Iris flagged this as a fleet opportunity and attached the sender, requested timing, and vehicle count.', time: '9:12 AM', wait: 950 },
-      { type: 'message', from: 'shop', text: 'Assigned to: Service Manager · Priority: High · Suggested next step: Review capacity and prepare a fleet response.', time: '9:13 AM', wait: 950 },
-      { type: 'confirmation', title: 'Fleet inquiry routed', detail: '12 vans · Service requested next month', note: 'High priority · Service Manager review', time: '9:13 AM', wait: 850 }
+      { type: 'message', from: 'customer', text: 'Email received: service availability request for next month.', time: '9:12 AM', wait: 900 },
+      { type: 'message', from: 'shop', text: 'Iris organized the incoming email and surfaced the request for staff review.', time: '9:12 AM', wait: 950 },
+      { type: 'message', from: 'shop', text: 'Suggested next step: Review the request and prepare a response.', time: '9:13 AM', wait: 950 },
+      { type: 'confirmation', title: 'Email ready for staff review', detail: 'Service availability request', note: 'Original email retained · Staff response needed', time: '9:13 AM', wait: 850 }
     ]
   },
   customerHistory: {
@@ -399,6 +405,7 @@ export default function AutoRepairConversationDemo() {
 
   const isCallScenario = activeKey === 'repairCall' || activeKey === 'phoneBooking' || activeKey === 'afterHours';
   const isInboxScenario = activeKey === 'inboxTriage' || activeKey === 'customerHistory';
+  const isEmailScenario = activeKey === 'inboxTriage';
 
   return (
     <section className="auto-repair-demo-section" aria-labelledby="auto-repair-demo-title">
@@ -431,47 +438,85 @@ export default function AutoRepairConversationDemo() {
         </button>
       </div>
 
-      <div className="auto-phone-stage">
-        <div className="auto-phone-glow" aria-hidden="true" />
-        <div className="auto-phone-shell">
-          <div className="auto-phone-hardware" aria-hidden="true">
-            <span className="auto-phone-speaker" />
-            <span className="auto-phone-camera" />
-          </div>
-
-          <div className="auto-phone-screen">
-            <div className="auto-phone-statusbar" aria-hidden="true">
-              <span>{activeKey === 'afterHours' ? '8:46' : '10:18'}</span>
-              <span>●●● ᯤ ▰</span>
-            </div>
-
-            <header className="auto-phone-chat-header">
-              <span className="auto-phone-back" aria-hidden="true">‹</span>
-              <span className="auto-phone-avatar" aria-hidden="true">{scenario.contactInitial}</span>
-              <div>
-                <strong>{scenario.contactName}</strong>
-                <small>{scenario.assistantName} · {scenario.channelLabel}</small>
-              </div>
-              <span className="auto-phone-menu" aria-hidden="true">•••</span>
+      {isEmailScenario ? (
+        <div className="auto-email-stage" aria-label="Email inbox preview for phone or computer">
+          <div className="auto-email-window">
+            <header className="auto-email-toolbar">
+              <span className="auto-email-brand-mark" aria-hidden="true">✉</span>
+              <div><strong>{SHOP_NAME}</strong><small>Shop email</small></div>
+              <span className="auto-email-label">EMAIL</span>
             </header>
-
-            <div className="auto-phone-shop-label">{SHOP_NAME} · {activeKey === 'afterHours' ? 'After hours' : 'Today'}</div>
-
-            <div className="auto-phone-transcript" ref={transcriptRef} aria-label={`Animated auto repair interaction with ${scenario.contactName}`}>
-              {visibleMessages.map((message, index) => (
-                <MessageBubble key={`${activeKey}-${index}`} message={message} />
-              ))}
-              {isTyping ? <TypingIndicator side={isTyping} /> : null}
+            <nav className="auto-email-folder-row" aria-label="Email folders">
+              <span className="active">Inbox</span>
+              <span>Needs review</span>
+              <span>Handled</span>
+            </nav>
+            <div className="auto-email-content">
+              <article className="auto-email-message">
+                <div className="auto-email-message-meta">
+                  <span className="auto-email-avatar" aria-hidden="true">E</span>
+                  <div><strong>{scenario.emailSender}</strong><small>{scenario.emailReceived}</small></div>
+                </div>
+                <p className="auto-email-to">To: {SHOP_NAME}</p>
+                <h3>{scenario.emailSubject}</h3>
+                <p className="auto-email-body">{scenario.emailBody}</p>
+                <div className="auto-email-original">Original email · Available to open from the shop’s email account</div>
+              </article>
+              <aside className="auto-email-triage" aria-label="Iris email triage">
+                <div className="auto-email-triage-heading"><span>I</span><div><strong>Iris</strong><small>Email triage</small></div></div>
+                <p>Request surfaced for the shop team</p>
+                <dl>
+                  <div><dt>Request type</dt><dd>{scenario.emailRequestType}</dd></div>
+                  <div><dt>Next step</dt><dd>{scenario.emailNextStep}</dd></div>
+                </dl>
+              </aside>
+            </div>
+          </div>
+          <p className="auto-email-device-note">The message remains email on a phone or computer.</p>
+        </div>
+      ) : (
+        <div className="auto-phone-stage">
+          <div className="auto-phone-glow" aria-hidden="true" />
+          <div className="auto-phone-shell">
+            <div className="auto-phone-hardware" aria-hidden="true">
+              <span className="auto-phone-speaker" />
+              <span className="auto-phone-camera" />
             </div>
 
-            <div className="auto-phone-composer" aria-hidden="true">
-              <span>＋</span>
-              <div>{isCallScenario ? 'Call notes' : isInboxScenario ? 'Shop activity' : `Message ${scenario.contactName}`}</div>
-              <span>◉</span>
+            <div className="auto-phone-screen">
+              <div className="auto-phone-statusbar" aria-hidden="true">
+                <span>{activeKey === 'afterHours' ? '8:46' : '10:18'}</span>
+                <span>●●● ᯤ ▰</span>
+              </div>
+
+              <header className="auto-phone-chat-header">
+                <span className="auto-phone-back" aria-hidden="true">‹</span>
+                <span className="auto-phone-avatar" aria-hidden="true">{scenario.contactInitial}</span>
+                <div>
+                  <strong>{scenario.contactName}</strong>
+                  <small>{scenario.assistantName} · {scenario.channelLabel}</small>
+                </div>
+                <span className="auto-phone-menu" aria-hidden="true">•••</span>
+              </header>
+
+              <div className="auto-phone-shop-label">{SHOP_NAME} · {activeKey === 'afterHours' ? 'After hours' : 'Today'}</div>
+
+              <div className="auto-phone-transcript" ref={transcriptRef} aria-label={`Animated auto repair interaction with ${scenario.contactName}`}>
+                {visibleMessages.map((message, index) => (
+                  <MessageBubble key={`${activeKey}-${index}`} message={message} />
+                ))}
+                {isTyping ? <TypingIndicator side={isTyping} /> : null}
+              </div>
+
+              <div className="auto-phone-composer" aria-hidden="true">
+                <span>＋</span>
+                <div>{isCallScenario ? 'Call notes' : isInboxScenario ? 'Shop activity' : `Message ${scenario.contactName}`}</div>
+                <span>◉</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
