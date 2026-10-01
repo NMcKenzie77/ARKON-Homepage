@@ -221,7 +221,7 @@ function RequestFlowAnimation({ compact = false }) {
     { channel: 'Email', agent: 'Iris' }
   ];
 
-  const safeActions = ['Answer', 'Follow up', 'Schedule', 'Update record', 'Create task', 'Route'];
+  const safeActions = ['Answer', 'Follow up', 'Draft reply', 'Schedule', 'Update record', 'Create task', 'Route'];
   const ownerStatuses = ['Handled', 'Waiting', 'Escalated', 'Needs review'];
 
   return (
@@ -297,7 +297,7 @@ function WalkthroughSection() {
     { label: 'Phone call', owner: 'Vera', copy: 'Answers the call, qualifies the caller, captures the details, and routes it when a person is needed.' },
     { label: 'Website inquiry', owner: 'Porter', copy: 'Answers questions before someone books or asks for service, captures the lead, and hands it to the business.' },
     { label: 'Text or client message', owner: 'Naya', copy: 'Responds in the owner’s voice, answers what she can, and follows up when a lead does not convert.' },
-    { label: 'Email', owner: 'Iris', copy: 'Reads the inbox, scores urgency and importance, and surfaces what needs attention first.' }
+    { label: 'Email', owner: 'Iris', copy: 'Reads and prioritizes incoming email, surfaces what needs attention first, and drafts replies for staff to review.' }
   ];
 
   return (
@@ -421,7 +421,7 @@ function CoreTeam() {
     {
       name: 'Iris',
       role: 'Inbox triage',
-      copy: 'Reads incoming email, scores urgency and importance, surfaces a prioritized inbox, sends urgent alerts, and flags new client or lead inquiries to Marcus.'
+      copy: 'Reads incoming email, ranks messages by urgency and importance, and drafts replies for staff review before they are sent. If you have 30 emails, Iris shows which ones need attention first.'
     }
   ];
 
@@ -432,7 +432,7 @@ function CoreTeam() {
         <h2>One team, with the right role for each job.</h2>
         <p>
           ARKON is organized around trained roles. Naya, Vera, Porter, Grant, Marcus, and Iris
-          handle communication, calls, website leads, owner visibility, relationship history, and inbox triage.
+          handle communication, calls, website leads, owner visibility, relationship history, and inbox triage with reply drafts.
         </p>
       </div>
 
@@ -706,7 +706,7 @@ function RequestFlowPage() {
     { label: 'Phone call', name: 'Vera', detail: 'Vera answers, qualifies the caller, gathers details, and routes the call when a person is needed.' },
     { label: 'Website inquiry', name: 'Porter', detail: 'Porter answers pre-booking or pre-service questions, captures the lead, and hands the warm inquiry to the business.' },
     { label: 'Text or client message', name: 'Naya', detail: 'Naya responds in the owner’s voice, handles allowed questions, coordinates requests, and follows up when needed.' },
-    { label: 'Email', name: 'Iris', detail: 'Iris reads the inbox, scores urgency and importance, surfaces what matters, and flags new inquiries to Marcus.' }
+    { label: 'Email', name: 'Iris', detail: 'Iris prioritizes incoming email, flags messages that need attention, and drafts replies for staff review.' }
   ];
 
   const steps = [
@@ -795,7 +795,7 @@ function RequestFlowPage() {
         <h2>“Here’s how ARKON works.”</h2>
         <p>
           When someone reaches out, the request is handled by the role built for that channel.
-          Vera answers calls. Porter handles website inquiries. Iris sorts email. I handle client and guest messages in your voice.
+          Vera answers calls. Porter handles website inquiries. Iris triages email and drafts replies for staff review. I handle client and guest messages in your voice.
           Your business rules decide what ARKON can handle, Marcus keeps the relationship history attached, and Grant keeps the owner informed.
         </p>
       </section>
