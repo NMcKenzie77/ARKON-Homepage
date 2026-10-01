@@ -114,24 +114,24 @@ export const industryPages = {
     path: '/auto-repair',
     name: 'Auto Repair Shop Digital Team',
     schemaType: 'Service',
-    seoTitle: 'Auto Repair Shop Automation for Calls & Follow-Up | ARKON',
+    seoTitle: 'Auto Repair Shop Automation to Recover Lost Work | ARKON',
     eyebrow: 'Auto repair shop communication automation',
-    title: 'Keep repair calls answered and declined work moving.',
-    description: 'Auto repair shop automation for calls, declined-service follow-up, maintenance reminders, and drop-off booking by text with Naya or phone with Vera.',
-    heroDescription: 'Naya follows up on declined repairs and upcoming maintenance by text and can book an available drop-off after the customer confirms. Vera answers calls and can book by phone using the same shop calendar. Iris organizes incoming email, Marcus keeps customer and vehicle details together, and Grant shows owners what needs attention.',
-    primary: 'Auto repair shops lose time when calls interrupt the bay, estimate requests wait, declined work is never followed up, or customers call repeatedly for status updates. ARKON automates front-office communication around repair calls, estimate follow-up, declined service, maintenance reminders, and customer updates. Naya can help customers book a drop-off by text, while Vera can book by phone, using the shop’s configured calendar, availability, and confirmation rules. ARKON keeps vehicle context attached and routes pricing decisions, repair advice, or urgent concerns to the shop’s staff.',
+    title: 'Auto repair shop automation that keeps lost service opportunities from going cold.',
+    description: 'Auto repair automation for calls, estimate and declined-service follow-up, maintenance reminders, and vehicle history. Recover lost work. Request a demo.',
+    heroDescription: 'Vera handles repair-call intake, captures the vehicle and concern, and can handle multiple calls at once within your configured capacity. Naya follows up on estimates, declined service, and maintenance using shop-approved timing and messages. Marcus keeps vehicle history attached, Iris organizes incoming email, and Grant surfaces what needs attention.',
+    primary: 'Calls can interrupt the bay, estimates can go cold, declined work can be forgotten, and customers may call for status updates. ARKON automates approved, repeatable front-office communication for repair-call intake, estimate follow-up, declined service, maintenance reminders, vehicle history, and customer updates. Scheduling follows the shop’s configured calendar and availability rules; when a time cannot be confirmed, ARKON captures the customer’s preferred time and hands it to the shop. Pricing, diagnostics, repair advice, approvals, and urgent concerns go to staff.',
     cards: [
-      ['Repair calls and phone booking', 'Vera answers, captures the vehicle and concern, and books an available drop-off by phone after the customer confirms. Urgent or judgment-based requests go to the shop team.'],
-      ['Estimate follow-up', 'ARKON captures online requests and prepares the next follow-up when a customer has not scheduled.'],
-      ['Vehicle and customer history', 'Marcus keeps prior repairs, estimates, recommendations, and follow-up context attached.'],
-      ['Text follow-up and booking', 'Naya follows approved timing, brings back declined work, and books an available drop-off by text after the customer confirms. Iris organizes incoming email and surfaces requests that need attention.']
+      ['Repair call intake', 'Vera captures the customer, vehicle, and concern. She can handle multiple calls at once within configured capacity and routes urgent or judgment-based requests to staff.'],
+      ['Estimate and declined-service follow-up', 'ARKON captures online requests and prepares the next follow-up when a customer has not scheduled. Naya follows the shop’s approved timing and messaging for declined work.'],
+      ['Maintenance reminders and vehicle history', 'Naya sends reminders using shop-approved timing and messaging. Marcus keeps prior repairs, estimates, recommendations, and follow-up context attached.'],
+      ['Vehicle status updates and inbox triage', 'ARKON helps organize customer status updates and routes requests that need attention. Iris organizes incoming email and surfaces important shop inquiries.']
     ],
     workflow: ['Customer calls about a repair', 'Estimate request comes in', 'Vehicle status update is needed', 'Declined work is due for follow-up'],
     faq: [
       ['Does ARKON replace the service advisor?', 'No. ARKON handles approved, repeatable communication and follow-up so advisors can focus on customers, approvals, and repair decisions.'],
-      ['Can ARKON work with my auto repair shop software?', 'ARKON focuses on front-office communication and follow-up. Compatibility and data flows for an existing shop-management system are confirmed during implementation.'],
+      ['Can ARKON work with my auto repair shop software?', 'Compatibility and data flows for an existing shop-management system are confirmed during implementation.'],
       ['Can ARKON follow up on declined repairs and estimates?', 'Naya can follow up using the shop’s approved timing and messages, with the customer, vehicle, recommendation, and estimate context available for that workflow.'],
-      ['Can ARKON book service appointments by text or phone?', 'Yes. Naya can book an available drop-off by text, and Vera can book by phone when the shop enables booking. They check the shop’s configured availability, repeat the exact arrival window, and create the appointment only after the customer confirms. Requests outside those rules go to the shop team. A drop-off window is not a promised repair start time.'],
+      ['Can ARKON book service appointments?', 'Scheduling depends on the shop’s calendar and approved availability rules. When an appointment cannot be confirmed within those rules, ARKON captures the customer’s preferred time and hands it to the shop.'],
       ['Who handles pricing, diagnostics, or urgent questions?', 'ARKON follows the shop’s rules and routes pricing decisions, repair advice, approvals, and urgent concerns to the appropriate person.']
     ],
   }
