@@ -421,7 +421,7 @@ function CoreTeam() {
     {
       name: 'Iris',
       role: 'Inbox triage',
-      copy: 'Reads incoming email, ranks messages by urgency and importance, and drafts replies for staff review before they are sent. If you have 30 emails, Iris shows which ones need attention first.'
+      copy: 'Reads incoming email, ranks messages by urgency and importance, drafts replies for staff review, sends urgent alerts, and flags new client or lead inquiries to Marcus. With 30 emails, Iris shows which need attention first.'
     }
   ];
 
@@ -706,7 +706,7 @@ function RequestFlowPage() {
     { label: 'Phone call', name: 'Vera', detail: 'Vera answers, qualifies the caller, gathers details, and routes the call when a person is needed.' },
     { label: 'Website inquiry', name: 'Porter', detail: 'Porter answers pre-booking or pre-service questions, captures the lead, and hands the warm inquiry to the business.' },
     { label: 'Text or client message', name: 'Naya', detail: 'Naya responds in the owner’s voice, handles allowed questions, coordinates requests, and follows up when needed.' },
-    { label: 'Email', name: 'Iris', detail: 'Iris prioritizes incoming email, flags messages that need attention, and drafts replies for staff review.' }
+    { label: 'Email', name: 'Iris', detail: 'Iris prioritizes incoming email, flags new inquiries to Marcus, and drafts replies for staff review.' }
   ];
 
   const steps = [
