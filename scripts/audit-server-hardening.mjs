@@ -229,6 +229,22 @@ try {
   assert(productionRobotsText.includes('Allow: /'), 'Production robots.txt is not crawlable.');
   assert(productionRobotsText.includes('Sitemap:'), 'Production robots.txt is missing the sitemap.');
 
+  const existingRealEstate = await request({ port: productionPort, path: '/real-estate' });
+  assert(existingRealEstate.status === 200, `Expected the existing /real-estate page to remain available, received ${existingRealEstate.status}.`);
+  assert(existingRealEstate.headers['x-frame-options'] === 'DENY', 'The existing /real-estate page must retain the global frame denial.');
+  assert(decodedBody(existingRealEstate).includes('Keep real estate leads, showing requests, and follow-up moving.'), 'The existing /real-estate page content changed unexpectedly.');
+
+  const funnelPage = await request({ port: productionPort, path: '/real-estate-digital-team?embed=1' });
+  assert(funnelPage.status === 200, `Expected the standalone real-estate funnel to return 200, received ${funnelPage.status}.`);
+  assert(!funnelPage.headers['x-frame-options'], 'The funnel page must not keep the global X-Frame-Options denial.');
+  const funnelPolicy = String(funnelPage.headers['content-security-policy'] || '');
+  assert(funnelPolicy.includes('frame-ancestors https://gohighlevel.com'), 'The funnel page is missing the narrow HighLevel frame allowlist.');
+  assert(funnelPolicy.includes('https://*.msgsndr.com'), 'The funnel page is missing the HighLevel published-page domain allowlist.');
+  assert(!funnelPolicy.includes(`frame-ancestors 'none'`), 'The funnel page still blocks all framing.');
+  const funnelHtml = decodedBody(funnelPage);
+  assert(funnelHtml.includes('Don\'t let the next client go cold'), 'The served funnel page is missing its real-estate headline.');
+  assert(funnelHtml.includes('/real-estate-digital-team/team.webp'), 'The served funnel page is missing its ARKON team photo.');
+
   console.log('Server hardening audit passed: headers, compression, staging noindex, validation, origin checks, payload limits, and rate limiting.');
 } finally {
   await stopServer(stagingServer);
