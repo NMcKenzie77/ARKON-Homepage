@@ -39,6 +39,8 @@ const contentSecurityPolicy = [
   "manifest-src 'self'"
 ].join('; ');
 
+const EMBEDDABLE_FUNNEL_PATH = '/real-estate-digital-team';
+
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
@@ -146,21 +148,38 @@ function isAllowedRequestOrigin(req) {
 }
 
 function applySecurityHeaders(req, res) {
+  const requestPath = normalizedPath(req.url || '/');
+  const isEmbeddableFunnel = requestPath === EMBEDDABLE_FUNNEL_PATH;
+  const funnelFrameAncestors = [
+    'https://gohighlevel.com',
+    'https://*.gohighlevel.com',
+    'https://msgsndr.com',
+    'https://*.msgsndr.com',
+    'https://leadconnectorhq.com',
+    'https://*.leadconnectorhq.com',
+    'https://arkonsysai.com',
+    'https://*.arkonsysai.com'
+  ].join(' ');
+  const policy = isEmbeddableFunnel
+    ? contentSecurityPolicy.replace(
+        "frame-ancestors 'none'",
+        `frame-ancestors ${funnelFrameAncestors}`
+      )
+    : contentSecurityPolicy;
   const headers = {
-    'content-security-policy': contentSecurityPolicy,
+    'content-security-policy': policy,
     'strict-transport-security': 'max-age=31536000; includeSubDomains',
     'x-content-type-options': 'nosniff',
-    'x-frame-options': 'DENY',
     'referrer-policy': 'strict-origin-when-cross-origin',
     'permissions-policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
     'x-permitted-cross-domain-policies': 'none',
     'x-dns-prefetch-control': 'off'
   };
 
+  if (!isEmbeddableFunnel) headers['x-frame-options'] = 'DENY';
   for (const [name, value] of Object.entries(headers)) res.setHeader(name, value);
   if (isStagingRequest(req)) res.setHeader('x-robots-tag', 'noindex, nofollow, noarchive');
 }
-
 function appendVary(currentValue, value) {
   const values = String(currentValue || '')
     .split(',')
@@ -695,7 +714,7 @@ function crawlableHtml(route, isKnownRoute) {
 }
 
 function injectSeo(html, route, isKnownRoute, requestedPath) {
-  const seo = isKnownRoute ? seoPages[route] : notFoundSeo;
+  const seo = seoPages[route] || notFoundSeo;
   const canonical = isKnownRoute
     ? `${siteUrl}${route === '/' ? '/' : route}`
     : `${siteUrl}${requestedPath}`;
@@ -815,7 +834,8 @@ createServer(async (req, res) => {
   }
 
   const requestedPath = normalizedPath(reqUrl);
-  const isKnownRoute = Boolean(seoPages[requestedPath]);
+  const isStandaloneFunnel = requestedPath === EMBEDDABLE_FUNNEL_PATH;
+  const isKnownRoute = Boolean(seoPages[requestedPath]) || isStandaloneFunnel;
   const route = isKnownRoute ? requestedPath : '/';
 
   if (pathname === '/robots.txt') {
@@ -842,6 +862,10 @@ createServer(async (req, res) => {
   }
 
   if (existsSync(filePath) && statSync(filePath).isDirectory()) filePath = join(filePath, 'index.html');
+  if (isStandaloneFunnel && !existsSync(filePath)) {
+    sendResponse(req, res, 404, { 'content-type': 'text/plain; charset=utf-8' }, 'Funnel page not found.');
+    return;
+  }
   if (!existsSync(filePath)) filePath = appShellPath;
 
   const ext = extname(filePath).toLowerCase();
@@ -852,13 +876,15 @@ createServer(async (req, res) => {
 
   if (ext === '.html') {
     const rawHtml = readFileSync(filePath, 'utf8');
-    const html = injectCrawlableContent(
-      injectCrawlableStyles(
-        injectSeo(rawHtml, route, isKnownRoute, requestedPath)
-      ),
-      route,
-      isKnownRoute
-    );
+    const html = isStandaloneFunnel
+      ? rawHtml
+      : injectCrawlableContent(
+          injectCrawlableStyles(
+            injectSeo(rawHtml, route, isKnownRoute, requestedPath)
+          ),
+          route,
+          isKnownRoute
+        );
 
     sendResponse(req, res, isKnownRoute ? 200 : 404, headers, html);
     return;
