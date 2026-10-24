@@ -9,12 +9,13 @@ const scenarios = {
     eyebrow: 'Naya follows up with the customer’s actual vehicle history',
     title: 'The customer hears about the work they already discussed, not a generic reminder.',
     description:
-      'Naya uses the customer’s name, vehicle, prior recommendation, timing, estimate, and communication preference to bring the right customer back for the right work.',
+      'Naya uses the customer’s name, vehicle, prior recommendation, and estimate to offer shop-approved drop-off times by text. Once the customer confirms an available time, the appointment is added to the shop calendar.',
     proof: [
       'Uses the customer’s name and vehicle',
       'References the exact deferred work',
       'Remembers the prior estimate',
-      'Hands the shop a ready-to-book customer'
+      'Offers shop-approved arrival windows',
+      'Books after the customer confirms'
     ],
     contactName: 'Michael Torres',
     contactInitial: 'M',
@@ -32,23 +33,23 @@ const scenarios = {
       {
         type: 'message',
         from: 'shop',
-        text: 'Absolutely. The estimate on file was $680. We have Tuesday morning or Thursday afternoon available. Which works better?',
+        text: 'Absolutely. The estimate on file was $680. I can offer Thursday, October 8, from 3:30 to 4:00 PM for drop-off. Would you like me to book that arrival window?',
         time: '10:16 AM',
         wait: 1050
       },
-      { type: 'message', from: 'customer', text: 'Thursday afternoon.', time: '10:17 AM', wait: 750 },
+      { type: 'message', from: 'customer', text: 'Yes, please book it.', time: '10:17 AM', wait: 750 },
       {
         type: 'message',
         from: 'shop',
-        text: 'Perfect. I’ll have the shop confirm the exact time with you by text.',
+        text: 'You’re confirmed for drop-off Thursday, October 8, from 3:30 to 4:00 PM. I’ll send your confirmation by text shortly. That’s your arrival window, not the repair start time.',
         time: '10:17 AM',
         wait: 850
       },
       {
         type: 'confirmation',
-        title: 'Deferred work recovered',
+        title: 'Drop-off appointment confirmed',
         detail: '2018 Honda Accord · Front brakes · $680 estimate',
-        note: 'Thursday afternoon requested · Text preferred',
+        note: 'Thu, Oct 8 · 3:30–4:00 PM arrival window · Calendar updated',
         time: '10:18 AM',
         wait: 900
       }
@@ -145,6 +146,38 @@ const scenarios = {
       }
     ]
   },
+  phoneBooking: {
+    tab: 'Book a drop-off by phone',
+    eyebrow: 'Vera books by phone using the shop calendar',
+    title: 'Customers can confirm an available drop-off time on the call.',
+    description:
+      'Vera checks the shop’s configured arrival windows, repeats the exact time, and books only after the customer confirms. The shop’s calendar remains the source of truth.',
+    proof: [
+      'Checks configured shop availability',
+      'Offers valid arrival windows',
+      'Gets the customer’s clear yes',
+      'Adds the confirmed drop-off to the calendar'
+    ],
+    contactName: 'Michael Torres',
+    contactInitial: 'M',
+    assistantName: 'Vera',
+    channelLabel: 'Live phone call',
+    messages: [
+      { type: 'message', from: 'shop', text: `Thanks for calling ${SHOP_NAME}. This is Vera. I can help schedule your brake service.`, time: '3:08 PM', wait: 750 },
+      { type: 'message', from: 'customer', text: 'Great. When can I bring in my 2018 Honda Accord?', time: '3:08 PM', wait: 850 },
+      { type: 'message', from: 'shop', text: 'I have Thursday, October 8, with a 3:30 to 4:00 PM drop-off window available. Would you like me to book that?', time: '3:09 PM', wait: 950 },
+      { type: 'message', from: 'customer', text: 'Yes, that works.', time: '3:09 PM', wait: 750 },
+      { type: 'message', from: 'shop', text: 'You’re confirmed for that arrival window. The shop will send your appointment details shortly.', time: '3:10 PM', wait: 850 },
+      {
+        type: 'confirmation',
+        title: 'Drop-off appointment confirmed',
+        detail: 'Michael Torres · 2018 Honda Accord · Front brakes',
+        note: 'Thu, Oct 8 · 3:30–4:00 PM arrival window · Calendar updated',
+        time: '3:10 PM',
+        wait: 900
+      }
+    ]
+  },
   afterHours: {
     tab: 'The shop is closed',
     eyebrow: 'Vera answers even when the team has gone home',
@@ -233,6 +266,40 @@ const scenarios = {
         time: '8:46 PM',
         wait: 900
       }
+    ]
+  },
+  inboxTriage: {
+    tab: 'Iris sorts a busy inbox',
+    eyebrow: 'Iris routes the request with context',
+    title: 'High value requests reach the right person with the key details attached.',
+    description: 'Iris reviews incoming shop email, identifies the customer and vehicle when possible, and surfaces the request and next action for the team.',
+    proof: ['Recognizes estimate and fleet inquiries', 'Surfaces time-sensitive requests', 'Keeps the original message available', 'Routes the next step to the right person'],
+    contactName: 'Northside Shop Inbox',
+    contactInitial: 'I',
+    assistantName: 'Iris',
+    channelLabel: 'Email triage',
+    messages: [
+      { type: 'message', from: 'customer', text: 'Subject: Fleet maintenance quote. We have 12 vans due for service next month. Can someone send availability and a quote?', time: '9:12 AM', wait: 900 },
+      { type: 'message', from: 'shop', text: 'Iris flagged this as a fleet opportunity and attached the sender, requested timing, and vehicle count.', time: '9:12 AM', wait: 950 },
+      { type: 'message', from: 'shop', text: 'Assigned to: Service Manager · Priority: High · Suggested next step: Review capacity and prepare a fleet response.', time: '9:13 AM', wait: 950 },
+      { type: 'confirmation', title: 'Fleet inquiry routed', detail: '12 vans · Service requested next month', note: 'High priority · Service Manager review', time: '9:13 AM', wait: 850 }
+    ]
+  },
+  customerHistory: {
+    tab: 'Marcus finds the vehicle history',
+    eyebrow: 'Marcus brings the shop’s history together',
+    title: 'The team can see what was recommended and what happened next.',
+    description: 'Marcus connects customer, vehicle, estimate, repair, and conversation records so staff can answer with the right context.',
+    proof: ['Matches the customer to a vehicle', 'Shows prior repair visits', 'Keeps estimates and recommendations attached', 'Makes the next follow-up visible'],
+    contactName: 'Michael Torres',
+    contactInitial: 'M',
+    assistantName: 'Marcus',
+    channelLabel: 'Customer history',
+    messages: [
+      { type: 'message', from: 'customer', text: 'Can you remind me what the shop recommended for my Accord last month?', time: '10:14 AM', wait: 900 },
+      { type: 'message', from: 'shop', text: 'Marcus matched Michael Torres to his 2018 Honda Accord and pulled the most recent visit.', time: '10:14 AM', wait: 950 },
+      { type: 'message', from: 'shop', text: 'Visit summary: front brake pads and rotors recommended; estimate $680; customer deferred. No appointment is currently booked.', time: '10:15 AM', wait: 950 },
+      { type: 'confirmation', title: 'Vehicle history ready', detail: '2018 Honda Accord · Front brakes · $680 estimate', note: 'Deferred last visit · Follow-up available to Naya', time: '10:15 AM', wait: 850 }
     ]
   }
 };
@@ -330,7 +397,8 @@ export default function AutoRepairConversationDemo() {
     setReplayToken(token => token + 1);
   }
 
-  const isCallScenario = activeKey === 'repairCall' || activeKey === 'afterHours';
+  const isCallScenario = activeKey === 'repairCall' || activeKey === 'phoneBooking' || activeKey === 'afterHours';
+  const isInboxScenario = activeKey === 'inboxTriage' || activeKey === 'customerHistory';
 
   return (
     <section className="auto-repair-demo-section" aria-labelledby="auto-repair-demo-title">
@@ -398,7 +466,7 @@ export default function AutoRepairConversationDemo() {
 
             <div className="auto-phone-composer" aria-hidden="true">
               <span>＋</span>
-              <div>{isCallScenario ? 'Call notes' : `Message ${scenario.contactName}`}</div>
+              <div>{isCallScenario ? 'Call notes' : isInboxScenario ? 'Shop activity' : `Message ${scenario.contactName}`}</div>
               <span>◉</span>
             </div>
           </div>
