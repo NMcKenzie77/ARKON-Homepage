@@ -106,20 +106,10 @@ function RouteContent({ route }) {
   }
 
   if (routePage) {
-    const renderedPage = canonicalRoute === '/short-term-rentals'
-      ? {
-          ...routePage,
-          eyebrow: 'Short-term rental digital team',
-          title: 'Keep every guest, cleaner, and property issue moving without living inside your phone.',
-          description:
-            'Your digital team handles guest questions, cleaner coordination, maintenance follow-up, emergency routing, reservation context, and owner briefings so the operation keeps moving even when you are unavailable.'
-        }
-      : routePage;
-
     return (
       <>
         <ClientSeoSync route={canonicalRoute} />
-        <IndustryPage page={renderedPage} route={canonicalRoute} />
+        <IndustryPage page={routePage} route={canonicalRoute} />
       </>
     );
   }
