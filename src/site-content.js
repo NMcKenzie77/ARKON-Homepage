@@ -92,7 +92,7 @@ export const industryPages = {
     seoTitle: 'Auto Repair Shop Automation for Calls & Follow-Up | ARKON',
     eyebrow: 'Auto repair shop communication automation',
     title: 'Stop letting repair calls and declined work wait.',
-    description: 'Handle repair-call intake and keep estimate, declined-service, and maintenance reminders moving with customer and vehicle history in view.',
+    description: 'Handle repair-call intake and keep estimate, declined-service follow-up, and maintenance reminders moving with customer and vehicle history in view.',
     heroDescription: 'Naya follows up on declined repairs and upcoming maintenance using vehicle history and prior recommendations. Vera handles repair calls, Iris organizes incoming email, Marcus keeps customer and vehicle details together, and Grant shows owners what needs attention.',
     primary: 'Auto repair shops lose time when calls interrupt the bay, estimate requests wait, declined work is never followed up, or customers call repeatedly for status updates. ARKON automates front-office communication around repair calls, estimate follow-up, declined service, maintenance reminders, and customer updates. It keeps vehicle context attached and routes pricing, repair decisions, or urgent concerns to the shop’s staff.',
     cards: [
