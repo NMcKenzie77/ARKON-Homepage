@@ -28,19 +28,19 @@ const retiredBusinessRoutes = [
 
 const customRouteExpectations = {
   '/real-estate': {
-    title: 'Answer new leads now. Re-engage the opportunities already in your database.',
+    title: "Stop losing real estate leads while you're with clients."
     cardCount: 5,
     workflowCount: 0,
     faqCount: 0
   },
   '/short-term-rentals': {
-    title: 'Keep every guest, cleaner, and property issue moving without living inside your phone.',
+    title: "Stop letting guest messages wait while you're managing the stay."
     cardCount: 4,
     workflowCount: 0,
     faqCount: 0,
     requiredMarkers: [
       'Short-term rental digital team',
-      'Your digital team handles guest questions, cleaner coordination, maintenance follow-up, emergency routing, reservation context, and owner briefings so the operation keeps moving even when you are unavailable.',
+      'Keep guest messages, check-in questions, cleaner coordination, and urgent stay issues moving with a digital team for short-term rental hosts.',
       'data-short-term-rental-call-demo="true"',
       'Guest asks a question',
       'Where should we go?',
@@ -54,7 +54,7 @@ const customRouteExpectations = {
     ]
   },
   '/auto-repair': {
-    title: 'Keep repair calls answered and declined work moving.',
+    title: 'Stop letting repair calls and declined work wait.'
     cardCount: 5,
     workflowCount: 0,
     faqCount: 5,
@@ -69,7 +69,7 @@ const customRouteExpectations = {
     ]
   },
   '/contractors': {
-    title: 'Keep estimate requests and customer follow-up moving between jobs.',
+    title: 'Stop losing estimate requests while you\'re on the job.'
     cardCount: 4,
     workflowCount: 4,
     faqCount: 2
@@ -145,10 +145,18 @@ try {
     assert(page, `Missing business page data for ${route}.`);
     assert(page.path === route, `${route} has a mismatched path.`);
     assert(page.name && page.title && page.description && page.primary, `${route} is missing required copy.`);
+    assert(page.seoTitle && page.seoTitle.length <= 60, `${route} is missing a concise SEO title.`);
+    assert(page.description.length <= 160, `${route} meta description exceeds 160 characters.`);
+    assert(page.title === customRouteExpectations[route]?.title || !customRouteExpectations[route]?.title, `${route} visible headline differs from its SEO content record.`);
     assert(Array.isArray(page.cards) && page.cards.length === 4, `${route} must have four business cards.`);
     assert(Array.isArray(page.workflow) && page.workflow.length >= 4, `${route} is missing workflow steps.`);
     assert(Array.isArray(page.faq) && page.faq.length >= 2, `${route} is missing FAQs.`);
   }
+
+  const seoTitles = businessRoutes.map(route => industryPages[route].seoTitle);
+  const metaDescriptions = businessRoutes.map(route => industryPages[route].description);
+  assert(new Set(seoTitles).size === businessRoutes.length, 'Business SEO titles are not unique.');
+  assert(new Set(metaDescriptions).size === businessRoutes.length, 'Business meta descriptions are not unique.');
 
   assert(
     industryPages['/auto-repair'].seoTitle.includes('Auto Repair Shop Automation'),
