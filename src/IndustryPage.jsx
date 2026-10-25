@@ -300,10 +300,7 @@ export default function IndustryPage({ page, route }) {
   if (route === '/real-estate') {
     const realEstateBannerPage = {
       ...page,
-      eyebrow: 'Real estate digital team',
-      title: 'Answer new leads now. Re-engage the opportunities already in your database.',
-      description:
-        'Vera answers in the office’s name, Paige provides approved listing and property intelligence, Naya follows up with past buyers and sellers, Marcus keeps relationship context attached, and Grant shows which opportunities need an agent.'
+      eyebrow: 'Real estate digital team'
     };
 
     return (
