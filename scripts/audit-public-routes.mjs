@@ -28,13 +28,13 @@ const retiredBusinessRoutes = [
 
 const customRouteExpectations = {
   '/real-estate': {
-    title: "Stop losing real estate leads while you're with clients."
+    title: "Stop losing real estate leads while you're with clients.",
     cardCount: 5,
     workflowCount: 0,
     faqCount: 0
   },
   '/short-term-rentals': {
-    title: "Stop letting guest messages wait while you're managing the stay."
+    title: "Stop letting guest messages wait while you're managing the stay.",
     cardCount: 4,
     workflowCount: 0,
     faqCount: 0,
@@ -54,7 +54,7 @@ const customRouteExpectations = {
     ]
   },
   '/auto-repair': {
-    title: 'Stop letting repair calls and declined work wait.'
+    title: 'Stop letting repair calls and declined work wait.',
     cardCount: 5,
     workflowCount: 0,
     faqCount: 5,
@@ -69,7 +69,7 @@ const customRouteExpectations = {
     ]
   },
   '/contractors': {
-    title: 'Stop losing estimate requests while you\'re on the job.'
+    title: 'Stop losing estimate requests while you\'re on the job.',
     cardCount: 4,
     workflowCount: 4,
     faqCount: 2
